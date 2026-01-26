@@ -1,0 +1,53 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    :root {
+        --background: 210 100% 6%;
+        --foreground: 0 0% 98%;
+        --card: 217 33% 12%;
+        --card-foreground: 0 0% 98%;
+        --primary: 165 71% 61%;
+        --primary-foreground: 0 0% 98%;
+        --secondary: 240 7% 21%;
+        --muted: 240 7% 18%;
+        --muted-foreground: 240 5% 60%;
+        --border: 240 7% 21%;
+        --input: 240 7% 18%;
+        --ring: 165 71% 61%;
+    }
+
+    body {
+        @apply bg-[hsl(var(--background))] text-[hsl(var(--foreground))];
+    }
+}
+
+@layer components {
+    .btn-primary {
+        @apply px-4 py-2 bg-[hsl(var(--primary))] text-[hsl(var(--primary-foreground))] rounded-lg hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-[hsl(var(--ring))] transition-all;
+    }
+
+    .btn-secondary {
+        @apply px-4 py-2 bg-[hsl(var(--secondary))] text-[hsl(var(--foreground))] rounded-lg hover:opacity-80 focus:outline-none focus:ring-2 focus:ring-[hsl(var(--ring))] transition-all;
+    }
+
+    .btn-danger {
+        @apply px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 transition-all;
+    }
+
+    .input-field {
+        @apply mt-1 block w-full rounded-lg bg-[hsl(var(--input))] border border-[hsl(var(--border))] text-[hsl(var(--foreground))] shadow-sm focus:border-[hsl(var(--ring))] focus:ring-2 focus:ring-[hsl(var(--ring))];
+    }
+
+    .card {
+        @apply bg-[hsl(var(--card))] text-[hsl(var(--card-foreground))] rounded-lg border border-[hsl(var(--border))] shadow-sm p-6;
+    }
+
+    .badge {
+        @apply inline-flex items-center px-2 py-1 rounded-md text-xs font-medium;
+    }
+
+    .badge-primary {
+        @apply bg-[hsl(var(--primary))]/20 text-[hsl(var(--primary))];    }
+}
