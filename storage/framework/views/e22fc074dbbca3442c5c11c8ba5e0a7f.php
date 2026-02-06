@@ -48,9 +48,7 @@
                 <button class="flex-1 pb-3 text-sm font-medium text-[hsl(var(--primary))] border-b-2 border-[hsl(var(--primary))]">
                     Iniciar Sesión
                 </button>
-                <a href="<?php echo e(route('register')); ?>" class="flex-1 pb-3 text-sm font-medium text-[hsl(var(--muted-foreground))] hover:text-white text-center">
-                    Registrarse
-                </a>
+                <!-- Registrarse solo accesible via invitación, no se muestra aquí -->
             </div>
 
             <!-- Google Button -->
@@ -121,6 +119,16 @@
                     Acceder al Panel
                 </button>
             </form>
+
+            <!-- Crear Nueva Agencia -->
+            <div class="pt-4 border-t border-[hsl(var(--border))]">
+                <p class="text-sm text-[hsl(var(--muted-foreground))] text-center mb-3">
+                    ¿Eres nuevo?
+                </p>
+                <a href="<?php echo e(route('register')); ?>" class="w-full block px-4 py-3 bg-[#1a1f26] border border-[hsl(var(--primary))] text-[hsl(var(--primary))] font-medium rounded-lg hover:bg-[hsl(var(--primary))]/10 transition-colors text-center">
+                    + Registra tu Agencia
+                </a>
+            </div>
 
             <!-- Footer -->
             <div class="space-y-3 text-center text-xs text-[hsl(var(--muted-foreground))]">

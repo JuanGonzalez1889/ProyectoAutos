@@ -22,6 +22,11 @@ return [
         'team_foreign_key' => 'team_id',
     ],
 
+    'foreign_keys' => [
+        'permission_id' => 'permission_id',
+        'role_id' => 'role_id',
+    ],
+
     'register_permission_check_method' => true,
     'register_octane_reset_listener' => false,
 

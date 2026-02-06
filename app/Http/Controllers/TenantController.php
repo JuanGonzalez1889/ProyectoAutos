@@ -31,7 +31,7 @@ class TenantController extends Controller
             'admin_name' => 'required|string|max:255',
             'admin_email' => 'required|email|unique:users,email',
             'password' => 'required|string|min:8|confirmed',
-            'domain' => 'required|string|max:255|unique:domains,domain|regex:/^[a-z0-9-]+$/',
+            'domain' => 'required|string|max:255|unique:domains,domain|regex:/^[a-z0-9]+(?:-[a-z0-9]+)*$/',
             'phone' => 'nullable|string|max:20',
             'address' => 'nullable|string',
         ]);
@@ -63,10 +63,9 @@ class TenantController extends Controller
             // 3. Crear la Agencia con tenant_id
             $agencia = Agencia::create([
                 'tenant_id' => $tenant->id,
-                'name' => $validated['agencia_name'],
-                'address' => $validated['address'] ?? '',
-                'phone' => $validated['phone'] ?? '',
-                'email' => $validated['admin_email'],
+                'nombre' => $validated['agencia_name'],
+                'ubicacion' => $validated['address'] ?? '',
+                'telefono' => $validated['phone'] ?? '',
             ]);
 
             // 4. Crear el usuario administrador
@@ -79,8 +78,8 @@ class TenantController extends Controller
                 'is_active' => true,
             ]);
 
-            // 5. Asignar rol de ADMIN usando Spatie Permission
-            $admin->assignRole('ADMIN');
+            // 5. Asignar rol de AGENCIERO usando Spatie Permission
+            $admin->assignRole('AGENCIERO');
 
             DB::commit();
 
@@ -187,5 +186,55 @@ class TenantController extends Controller
             
             return back()->withErrors(['error' => 'Error al eliminar el tenant: ' . $e->getMessage()]);
         }
+    }
+
+    /**
+     * Validar disponibilidad de dominio (API pública)
+     */
+    public function validateDomain(Request $request)
+    {
+        $domain = $request->get('domain');
+
+        if (!$domain) {
+            return response()->json([
+                'available' => false,
+                'message' => 'Dominio requerido',
+            ]);
+        }
+
+        // Construcción del dominio completo
+        $fullDomain = $domain . '.misaas.com';
+
+        // Verificar si ya existe
+        $exists = Domain::where('domain', $fullDomain)->exists();
+
+        if ($exists) {
+            return response()->json([
+                'available' => false,
+                'message' => '❌ Este dominio ya está en uso',
+            ]);
+        }
+
+        // Validar formato
+        if (!preg_match('/^[a-z0-9]+(?:-[a-z0-9]+)*$/', $domain)) {
+            return response()->json([
+                'available' => false,
+                'message' => '❌ Dominio inválido (solo letras, números y guiones)',
+            ]);
+        }
+
+        // Validar longitud
+        if (strlen($domain) < 3 || strlen($domain) > 63) {
+            return response()->json([
+                'available' => false,
+                'message' => '❌ Dominio debe tener entre 3 y 63 caracteres',
+            ]);
+        }
+
+        return response()->json([
+            'available' => true,
+            'message' => '✓ Dominio disponible',
+            'domain' => $fullDomain,
+        ]);
     }
 }

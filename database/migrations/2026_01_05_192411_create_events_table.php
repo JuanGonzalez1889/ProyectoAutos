@@ -20,7 +20,7 @@ return new class extends Migration
             $table->dateTime('end_time');
             $table->string('location')->nullable();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->foreignId('agencia_id')->nullable()->constrained('agencias')->onDelete('cascade');
+            $table->unsignedBigInteger('agencia_id')->nullable();
             $table->string('client_name')->nullable();
             $table->string('client_phone')->nullable();
             $table->string('related_to')->nullable(); // 'vehicle', 'client', etc.

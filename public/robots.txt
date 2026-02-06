@@ -1,2 +1,20 @@
+# Robots.txt para AutoWeb Pro
+# https://www.robotstxt.org/robotstxt.html
+
 User-agent: *
-Disallow:
+Allow: /
+Disallow: /admin
+Disallow: /admin/*
+Disallow: /api/
+Disallow: /login
+Disallow: /register
+Disallow: /password/
+Disallow: /storage/
+Disallow: /webhooks/
+
+# Sitemap location
+Sitemap: {{APP_URL}}/sitemap.xml
+
+# Crawl delay (opcional - 10 segundos)
+Crawl-delay: 10
+

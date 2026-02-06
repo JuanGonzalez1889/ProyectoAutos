@@ -21,7 +21,7 @@ return new class extends Migration
             $table->text('notes')->nullable();
             $table->foreignId('vehicle_id')->nullable()->constrained()->nullOnDelete();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete(); // Colaborador asignado
-            $table->foreignId('agencia_id')->constrained('agencias')->cascadeOnDelete();
+            $table->unsignedBigInteger('agencia_id')->nullable();
             $table->timestamp('contacted_at')->nullable();
             $table->timestamp('next_follow_up')->nullable();
             $table->decimal('budget', 12, 2)->nullable();

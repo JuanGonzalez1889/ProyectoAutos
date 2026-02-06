@@ -8,6 +8,16 @@ function editText(field, title){
   currentField = field;
   document.getElementById('modalTitle').textContent = title;
   document.getElementById('modalTextarea').value = getFieldValue(field);
+  // Cargar el color correspondiente si existe
+  let colorField = field + '_color';
+  let colorValue = getFieldValue(colorField);
+  if (!colorValue || !/^#[0-9A-Fa-f]{6}$/.test(colorValue)) {
+    // fallback por campo
+    if(field === 'home_description' || field === 'agency_name') colorValue = '#fff';
+    else if(field === 'nosotros_description') colorValue = '#222';
+    else colorValue = '#fff';
+  }
+  document.getElementById('modalTextColor').value = colorValue;
   document.getElementById('textModal').classList.remove('hidden');
 }
 function closeTextModal(){
@@ -25,7 +35,7 @@ function saveText(){
   fd.append(currentField, value);
   fd.append(currentField + '_color', color);
   fd.append('template','{{ $template ?? "moderno" }}');
-  const fields=['home_description','nosotros_description','nosotros_url','contact_message','phone','email','whatsapp','logo_url','banner_url','primary_color','secondary_color','facebook_url','instagram_url','linkedin_url'];
+  const fields=['home_description','nosotros_description','nosotros_url','contact_message','phone','email','whatsapp','logo_url','banner_url','primary_color','secondary_color','facebook_url','instagram_url','linkedin_url','agency_name','navbar_agency_name','hero_title','hero_title_color'];
   fields.forEach(f=>{ if(f!==currentField && f!==(currentField+'_color')){ fd.append(f, getFieldValue(f)); } });
   fd.append('show_vehicles','{{ $settings->show_vehicles ?? 1 }}');
   fd.append('show_contact_form','{{ $settings->show_contact_form ?? 1 }}');
@@ -98,7 +108,7 @@ function saveContact(){
   fd.append('_method','PATCH');
   fd.append('phone', phone); fd.append('email', email); fd.append('whatsapp', whatsapp);
   fd.append('template','{{ $template ?? "moderno" }}');
-  ;['home_description','nosotros_description','nosotros_url','contact_message','logo_url','banner_url','primary_color','secondary_color','facebook_url','instagram_url','linkedin_url'].forEach(f=>fd.append(f,getFieldValue(f)));
+  ;['home_description','nosotros_description','nosotros_url','contact_message','logo_url','banner_url','primary_color','secondary_color','facebook_url','instagram_url','linkedin_url','agency_name','navbar_agency_name'].forEach(f=>fd.append(f,getFieldValue(f)));
   fd.append('show_vehicles','{{ $settings->show_vehicles ?? 1 }}');
   fd.append('show_contact_form','{{ $settings->show_contact_form ?? 1 }}');
   fetch('{{ route("admin.landing-config.update") }}',{method:'POST', headers:{'X-Requested-With':'XMLHttpRequest','Accept':'application/json'}, body:fd})
@@ -121,7 +131,7 @@ function saveStats(){
   fd.append('stat2', document.getElementById('modalStat2').value||'98%');
   fd.append('stat3', document.getElementById('modalStat3').value||'24h');
   fd.append('template','{{ $template ?? "moderno" }}');
-  ;['home_description','nosotros_description','nosotros_url','contact_message','phone','email','whatsapp','logo_url','banner_url','primary_color','secondary_color','facebook_url','instagram_url','linkedin_url'].forEach(f=>fd.append(f,getFieldValue(f)));
+  ;['home_description','nosotros_description','nosotros_url','contact_message','phone','email','whatsapp','logo_url','banner_url','primary_color','secondary_color','facebook_url','instagram_url','linkedin_url','agency_name','navbar_agency_name'].forEach(f=>fd.append(f,getFieldValue(f)));
   fd.append('show_vehicles','{{ $settings->show_vehicles ?? 1 }}');
   fd.append('show_contact_form','{{ $settings->show_contact_form ?? 1 }}');
   fetch('{{ route("admin.landing-config.update") }}',{method:'POST', headers:{'X-Requested-With':'XMLHttpRequest','Accept':'application/json'}, body:fd})
@@ -131,24 +141,31 @@ function saveStats(){
 
 function getFieldValue(field){
   const values = {
-    home_description: {!! json_encode($settings->home_description ?? '') !!},
-    nosotros_description: {!! json_encode($settings->nosotros_description ?? '') !!},
-    nosotros_url: {!! json_encode($settings->nosotros_url ?? '') !!},
-    agency_name: {!! json_encode($tenant->name ?? '') !!},
-    contact_message: {!! json_encode($settings->contact_message ?? '') !!},
-    phone: {!! json_encode($settings->phone ?? '') !!},
-    email: {!! json_encode($settings->email ?? '') !!},
-    whatsapp: {!! json_encode($settings->whatsapp ?? '') !!},
-    facebook_url: {!! json_encode($settings->facebook_url ?? '') !!},
-    instagram_url: {!! json_encode($settings->instagram_url ?? '') !!},
-    linkedin_url: {!! json_encode($settings->linkedin_url ?? '') !!},
-    logo_url: {!! json_encode($settings->logo_url ?? '') !!},
-    banner_url: {!! json_encode($settings->banner_url ?? '') !!},
-    primary_color: {!! json_encode($settings->primary_color ?? '#8b5cf6') !!},
-    secondary_color: {!! json_encode($settings->secondary_color ?? '#1e293b') !!},
-    stat1: {!! json_encode($settings->stat1 ?? '150+') !!},
-    stat2: {!! json_encode($settings->stat2 ?? '98%') !!},
-    stat3: {!! json_encode($settings->stat3 ?? '24h') !!}
+    home_description: @json($settings->home_description ?? ''),
+    home_description_color: @json($settings->home_description_color ?? '#fff'),
+    nosotros_description: @json($settings->nosotros_description ?? ''),
+    nosotros_description_color: @json($settings->nosotros_description_color ?? '#222'),
+    hero_title: @json($settings->hero_title ?? 'Título principal del sitio'),
+    hero_title_color: @json($settings->hero_title_color ?? '#fff'),
+    agency_name: @json($settings->agency_name ?? $tenant->name ?? ''),
+    agency_name_color: @json($settings->agency_name_color ?? '#fff'),
+    navbar_agency_name: @json($settings->navbar_agency_name ?? $tenant->name ?? ''),
+    navbar_agency_name_color: @json($settings->navbar_agency_name_color ?? '#fff'),
+    nosotros_url: @json($settings->nosotros_url ?? ''),
+    contact_message: @json($settings->contact_message ?? ''),
+    phone: @json($settings->phone ?? ''),
+    email: @json($settings->email ?? ''),
+    whatsapp: @json($settings->whatsapp ?? ''),
+    facebook_url: @json($settings->facebook_url ?? ''),
+    instagram_url: @json($settings->instagram_url ?? ''),
+    linkedin_url: @json($settings->linkedin_url ?? ''),
+    logo_url: @json($settings->logo_url ?? ''),
+    banner_url: @json($settings->banner_url ?? ''),
+    primary_color: @json($settings->primary_color ?? '#8b5cf6'),
+    secondary_color: @json($settings->secondary_color ?? '#1e293b'),
+    stat1: @json($settings->stat1 ?? '150+'),
+    stat2: @json($settings->stat2 ?? '98%'),
+    stat3: @json($settings->stat3 ?? '24h')
   };
   return values[field] || '';
 }
@@ -159,7 +176,7 @@ function updateField(field, value){
   fd.append('_method','PATCH');
   fd.append(field, value);
   fd.append('template','{{ $template ?? "moderno" }}');
-  const fields=['home_description','nosotros_description','nosotros_url','contact_message','phone','email','whatsapp','logo_url','banner_url','primary_color','secondary_color','facebook_url','instagram_url','linkedin_url'];
+  const fields=['home_description','nosotros_description','nosotros_url','contact_message','phone','email','whatsapp','logo_url','banner_url','primary_color','secondary_color','facebook_url','instagram_url','linkedin_url','agency_name','navbar_agency_name'];
   fields.forEach(f=>{ if(f!==field){ fd.append(f, getFieldValue(f)); } });
   fd.append('show_vehicles','{{ $settings->show_vehicles ?? 1 }}');
   fd.append('show_contact_form','{{ $settings->show_contact_form ?? 1 }}');
@@ -170,7 +187,7 @@ function updateField(field, value){
 </script>
 
 <!-- Modales -->
-<div id="textModal" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+<div id="textModal" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center z-[99999] p-4">
   <div class="bg-white rounded-lg shadow-xl max-w-2xl w-full">
     <div class="p-6 border-b"><h3 class="text-xl font-bold text-gray-900" id="modalTitle">Editar Texto</h3></div>
     <div class="p-6">
@@ -225,7 +242,7 @@ window.addEventListener('DOMContentLoaded', function() {
 @endif
   </script>
 
-<div id="imageModal" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+<div id="imageModal" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center z-[99999] p-4">
   <div class="bg-white rounded-lg shadow-xl max-w-md w-full">
     <div class="p-6 border-b"><h3 class="text-xl font-bold text-gray-900">Cambiar Imagen</h3></div>
     <div class="p-6 space-y-4">
@@ -246,7 +263,7 @@ window.addEventListener('DOMContentLoaded', function() {
   </div>
 </div>
 
-<div id="contactModal" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+<div id="contactModal" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center z-[99999] p-4">
   <div class="bg-white rounded-lg shadow-xl max-w-md w-full">
     <div class="p-6 border-b"><h3 class="text-xl font-bold text-gray-900">Información de Contacto</h3></div>
     <div class="p-6 space-y-3">
@@ -261,7 +278,7 @@ window.addEventListener('DOMContentLoaded', function() {
   </div>
 </div>
 
-<div id="statsModal" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+<div id="statsModal" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center z-[99999] p-4">
   <div class="bg-white rounded-lg shadow-xl max-w-md w-full">
     <div class="p-6 border-b"><h3 class="text-xl font-bold text-gray-900">Estadísticas</h3></div>
     <div class="p-6 space-y-3">

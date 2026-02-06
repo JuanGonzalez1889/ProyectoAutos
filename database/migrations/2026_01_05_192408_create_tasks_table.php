@@ -19,7 +19,7 @@ return new class extends Migration
             $table->enum('priority', ['low', 'medium', 'high'])->default('medium');
             $table->date('due_date')->nullable();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->foreignId('agencia_id')->nullable()->constrained('agencias')->onDelete('cascade');
+            $table->unsignedBigInteger('agencia_id')->nullable();
             $table->string('related_to')->nullable(); // 'vehicle', 'client', 'deal', etc.
             $table->unsignedBigInteger('related_id')->nullable();
             $table->timestamps();

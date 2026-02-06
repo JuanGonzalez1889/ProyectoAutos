@@ -1,0 +1,54 @@
+# ===================================================================
+# CRON JOBS PARA AUTOWEB PRO
+# ===================================================================
+# Instalación: sudo crontab -e -u www-data
+# Luego pegar el contenido de este archivo
+# ===================================================================
+
+# Laravel Scheduler (EJECUTAR CADA MINUTO)
+# El scheduler de Laravel gestiona internamente los tiempos de cada tarea
+* * * * * cd /var/www/autoweb-pro && php artisan schedule:run >> /dev/null 2>&1
+
+# Limpiar logs antiguos (30 días) - Ejecutar diariamente a las 3 AM
+0 3 * * * find /var/www/autoweb-pro/storage/logs -name "*.log" -type f -mtime +30 -delete
+
+# Limpiar cache de sesiones antiguas - Ejecutar semanalmente
+0 4 * * 0 find /var/lib/php/sessions -type f -mtime +7 -delete
+
+# Limpiar archivos temporales de compilación - Ejecutar semanalmente
+0 5 * * 0 cd /var/www/autoweb-pro && find storage/framework/views -name "*.php" -type f -mtime +30 -delete
+
+# Optimizar tablas de base de datos - Ejecutar mensualmente
+0 6 1 * * cd /var/www/autoweb-pro && php artisan db:optimize >> /dev/null 2>&1
+
+# ===================================================================
+# TAREAS DEL SCHEDULER DE LARAVEL (Configuradas en app/Console/Kernel.php)
+# ===================================================================
+# Estas tareas se ejecutan automáticamente si el scheduler está activo:
+#
+# - Backups diarios (2 AM): php artisan backup:run
+# - Limpieza de backups antiguos (1 AM): php artisan backup:clean
+# - Generación de sitemap (semanalmente): php artisan sitemap:generate
+# - Limpieza de logs: php artisan logs:clear
+#
+# Para agregar más tareas, editar app/Console/Kernel.php:
+#
+# protected function schedule(Schedule $schedule)
+# {
+#     $schedule->command('backup:clean')->daily()->at('01:00');
+#     $schedule->command('backup:run')->daily()->at('02:00');
+# }
+# ===================================================================
+
+# ===================================================================
+# VERIFICACIÓN DE CRON JOBS
+# ===================================================================
+# Ver cron jobs activos:
+#   sudo crontab -l -u www-data
+#
+# Ver logs de cron:
+#   grep CRON /var/log/syslog
+#
+# Verificar que el scheduler está funcionando:
+#   cd /var/www/autoweb-pro && php artisan schedule:list
+# ===================================================================

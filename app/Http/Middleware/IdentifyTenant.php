@@ -15,6 +15,21 @@ class IdentifyTenant
      */
     public function handle(Request $request, Closure $next)
     {
+        file_put_contents(storage_path('logs/google-callback.log'), "IdentifyTenant START - Path: {$request->getPathInfo()}\n", FILE_APPEND);
+        
+        // Excluir rutas de autenticación y callbacks
+        $path = $request->getPathInfo();
+        if (in_array($path, ['/auth/google', '/auth/google/callback', '/login', '/register', '/logout', '/password/reset', '/password/forgot', '/subscriptions', '/webhooks'])) {
+            file_put_contents(storage_path('logs/google-callback.log'), "IdentifyTenant: Ruta exacta excluida\n", FILE_APPEND);
+            return $next($request);
+        }
+        if (str_starts_with($path, '/auth/') || str_starts_with($path, '/password/') || str_starts_with($path, '/subscriptions') || str_starts_with($path, '/webhooks')) {
+            file_put_contents(storage_path('logs/google-callback.log'), "IdentifyTenant: Ruta con prefijo excluida\n", FILE_APPEND);
+            return $next($request);
+        }
+
+        file_put_contents(storage_path('logs/google-callback.log'), "IdentifyTenant: Procesando normalmente\n", FILE_APPEND);
+
         // Obtener el host actual (dominio)
         $host = $request->getHost();
         

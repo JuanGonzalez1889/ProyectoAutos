@@ -11,6 +11,14 @@ class ResolveTenantFromDomain
 {
     public function handle(Request $request, Closure $next)
     {
+        // Excluir rutas de autenticación
+        $path = $request->getPathInfo();
+        if (str_starts_with($path, '/auth/') || str_starts_with($path, '/login') || str_starts_with($path, '/register') || 
+            str_starts_with($path, '/logout') || str_starts_with($path, '/password/') || str_starts_with($path, '/subscriptions') ||
+            str_starts_with($path, '/webhooks')) {
+            return $next($request);
+        }
+
         $host = $request->getHost();
         
         // Remover www

@@ -7,24 +7,52 @@
     <title>{{ $tenant->name ?? 'Agencia de Autos' }}</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    @php
+        $font = $settings->font_family ?? '';
+        $googleFonts = [
+            'Roboto, sans-serif' => 'Roboto',
+            'Open Sans, sans-serif' => 'Open+Sans',
+            'Montserrat, sans-serif' => 'Montserrat',
+            'Lato, sans-serif' => 'Lato',
+            'Poppins, sans-serif' => 'Poppins',
+            'Inter, sans-serif' => 'Inter',
+            'Nunito, sans-serif' => 'Nunito',
+            'Oswald, sans-serif' => 'Oswald',
+            'Raleway, sans-serif' => 'Raleway',
+            'Merriweather, serif' => 'Merriweather',
+            'Playfair Display, serif' => 'Playfair+Display',
+            'Muli, sans-serif' => 'Muli',
+            'Quicksand, sans-serif' => 'Quicksand',
+            'Source Sans Pro, sans-serif' => 'Source+Sans+Pro',
+            'Work Sans, sans-serif' => 'Work+Sans',
+            'PT Sans, sans-serif' => 'PT+Sans',
+            'Ubuntu, sans-serif' => 'Ubuntu',
+            'Fira Sans, sans-serif' => 'Fira+Sans',
+        ];
+        $fontUrl = isset($googleFonts[$font]) ? 'https://fonts.googleapis.com/css?family=' . $googleFonts[$font] . ':400,700&display=swap' : null;
+    @endphp
+    @if($fontUrl)
+        <link href="{{ $fontUrl }}" rel="stylesheet">
+    @endif
     <style>
         :root {
             --primary-color: {{ $settings && $settings->primary_color ? $settings->primary_color : '#00d084' }};
             --secondary-color: {{ $settings && $settings->secondary_color ? $settings->secondary_color : '#0a0f14' }};
             --tertiary-color: {{ $settings && $settings->tertiary_color ? $settings->tertiary_color : '#ffaa00' }};
         }
-        
+        body { font-family: {{ $settings->font_family ?? 'inherit' }}; }
+
         * { scroll-behavior: smooth; }
-        
+
         .hero-text {
             text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
         }
-        
+
         .vehicle-card {
             position: relative;
             overflow: hidden;
         }
-        
+
         .vehicle-card::after {
             content: '';
             position: absolute;
@@ -35,11 +63,11 @@
             background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
             transition: left 0.5s;
         }
-        
+
         .vehicle-card:hover::after {
             left: 100%;
         }
-        
+
         @if(isset($editMode) && $editMode)
         .editable-section {
             position: relative;
@@ -64,7 +92,7 @@
             justify-content: center;
             cursor: pointer;
             box-shadow: 0 2px 8px rgba(0,0,0,0.3);
-            z-index: 50;
+            z-index: 100000 !important;
         }
         .editable-section:hover .edit-btn {
             display: flex;
@@ -76,48 +104,12 @@
         @endif
     </style>
 </head>
-<body style="background-color: var(--secondary-color);" class="text-white">
+<body style="background-color: var(--secondary-color); zoom: 1.2;" class="text-white">
     @if(isset($editMode) && $editMode)
     <script>
-        let currentField = null;
-
-        // Editar texto
-        function editText(field, title) {
-            currentField = field;
-            document.getElementById('modalTitle').textContent = title;
-            document.getElementById('modalTextarea').value = getFieldValue(field);
-            document.getElementById('textModal').classList.remove('hidden');
-        }
-
-        function closeTextModal() {
-            document.getElementById('textModal').classList.add('hidden');
-            currentField = null;
-        }
-
-        function saveText() {
-            if (!currentField) return;
-            
-            const value = document.getElementById('modalTextarea').value;
-            updateField(currentField, value);
-            closeTextModal();
-        }
-
-        // Editar imagen
-        function editImage(field) {
-            currentField = field;
-            document.getElementById('modalImageUrl').value = getFieldValue(field);
-            document.getElementById('modalImageFile').value = '';
-            document.getElementById('imagePreview').classList.add('hidden');
-            document.getElementById('imageModal').classList.remove('hidden');
-        }
-
-        function closeImageModal() {
-            document.getElementById('imageModal').classList.add('hidden');
-            document.getElementById('modalImageFile').value = '';
-            document.getElementById('modalImageUrl').value = '';
-            document.getElementById('imagePreview').classList.add('hidden');
-            currentField = null;
-        }
+        // Eliminar declaración duplicada de currentField para evitar errores JS
+        // let currentField = null;
+        // ...existing code...
 
         async function saveImage() {
             if (!currentField) return;
@@ -311,24 +303,24 @@
         // Helper para obtener valores actuales
         function getFieldValue(field) {
             const values = {
-                home_description: {!! json_encode($settings->home_description ?? '') !!},
-                nosotros_description: {!! json_encode($settings->nosotros_description ?? '') !!},
-                nosotros_url: {!! json_encode($settings->nosotros_url ?? '') !!},
-                agency_name: {!! json_encode($tenant->name ?? '') !!},
-                contact_message: {!! json_encode($settings->contact_message ?? '') !!},
-                phone: {!! json_encode($settings->phone ?? '') !!},
-                email: {!! json_encode($settings->email ?? '') !!},
-                whatsapp: {!! json_encode($settings->whatsapp ?? '') !!},
-                facebook_url: {!! json_encode($settings->facebook_url ?? '') !!},
-                instagram_url: {!! json_encode($settings->instagram_url ?? '') !!},
-                linkedin_url: {!! json_encode($settings->linkedin_url ?? '') !!},
-                logo_url: {!! json_encode($settings->logo_url ?? '') !!},
-                banner_url: {!! json_encode($settings->banner_url ?? '') !!},
-                primary_color: {!! json_encode($settings->primary_color ?? '#8b5cf6') !!},
-                secondary_color: {!! json_encode($settings->secondary_color ?? '#1e293b') !!},
-                stat1: {!! json_encode($settings->stat1 ?? '150+') !!},
-                stat2: {!! json_encode($settings->stat2 ?? '98%') !!},
-                stat3: {!! json_encode($settings->stat3 ?? '24h') !!}
+                home_description: @json($settings->home_description ?? ''),
+                nosotros_description: @json($settings->nosotros_description ?? ''),
+                nosotros_url: @json($settings->nosotros_url ?? ''),
+                agency_name: @json($tenant->name ?? ''),
+                contact_message: @json($settings->contact_message ?? ''),
+                phone: @json($settings->phone ?? ''),
+                email: @json($settings->email ?? ''),
+                whatsapp: @json($settings->whatsapp ?? ''),
+                facebook_url: @json($settings->facebook_url ?? ''),
+                instagram_url: @json($settings->instagram_url ?? ''),
+                linkedin_url: @json($settings->linkedin_url ?? ''),
+                logo_url: @json($settings->logo_url ?? ''),
+                banner_url: @json($settings->banner_url ?? ''),
+                primary_color: @json($settings->primary_color ?? '#8b5cf6'),
+                secondary_color: @json($settings->secondary_color ?? '#1e293b'),
+                stat1: @json($settings->stat1 ?? '150+'),
+                stat2: @json($settings->stat2 ?? '98%'),
+                stat3: @json($settings->stat3 ?? '24h')
             };
             return values[field] || '';
         }
@@ -392,7 +384,7 @@
     @endif
     
     <!-- Navbar Deportivo -->
-    <nav class="sticky top-0 z-50 backdrop-blur-lg border-b" style="border-color: var(--primary-color);">
+    <nav class="sticky top-0 z-50 backdrop-blur-lg border-b" style="border-color: var(--primary-color); zoom: 1.2;">
         <div class="max-w-7xl mx-auto px-6 py-3 flex justify-between items-center">
             <div class="flex items-center gap-3">
                 @if(isset($editMode) && $editMode)
@@ -415,7 +407,7 @@
                 @endif
                 @if(isset($editMode) && $editMode)
                     <div class="editable-section inline-block">
-                        <span class="font-black text-xl tracking-wider">{{ $tenant->name }}</span>
+                        <span class="font-black text-xl tracking-wider" style="color: {{ $settings->agency_name_color ?? '#fff' }}">{{ $tenant->name }}</span>
                         <div class="edit-btn" onclick="editText('agency_name', 'Editar Nombre de Agencia')">
                             <i class="fa fa-pencil"></i>
                         </div>
@@ -426,14 +418,16 @@
             </div>
             <div class="flex items-center gap-6">
                 <div class="hidden md:flex gap-6">
-                    <a href="#inicio" class="text-white font-bold hover:opacity-80 transition">INICIO</a>
-                    <a href="#vehiculos" class="text-white font-bold hover:opacity-80 transition">VEHÍCULOS</a>
-                    <a href="#nosotros" class="text-white font-bold hover:opacity-80 transition">NOSOTROS</a>
-                    <a href="#contacto" class="text-white font-bold hover:opacity-80 transition">CONTACTO</a>
+                    <a href="#inicio" class="font-bold" style="color: {{ $settings->navbar_links_color ?? 'var(--navbar-text-color, #fff)' }}">INICIO</a>
+                    <a href="{{ route('public.vehiculos') }}" class="font-bold" style="color: {{ $settings->navbar_links_color ?? 'var(--navbar-text-color, #fff)' }}">VEHÍCULOS</a>
+                    <a href="#nosotros" class="font-bold" style="color: {{ $settings->navbar_links_color ?? 'var(--navbar-text-color, #fff)' }}">NOSOTROS</a>
+                    <a href="#contacto" class="font-bold" style="color: {{ $settings->navbar_links_color ?? 'var(--navbar-text-color, #fff)' }}">CONTACTO</a>
                 </div>
-                <a href="{{ route('login') }}" class="px-6 py-2 rounded-full font-bold transition hover:scale-105" style="background-color: var(--primary-color); color: var(--secondary-color);">
-                    ACCESO
-                </a>
+                @auth
+                    <a href="{{ route('admin.dashboard') }}" class="px-6 py-2 rounded-full font-bold transition hover:scale-105" style="background-color: var(--primary-color); color: var(--secondary-color);">
+                        PANEL ADMIN
+                    </a>
+                @endauth
             </div>
         </div>
     </nav>
@@ -466,7 +460,7 @@
             
             @if(isset($editMode) && $editMode)
                 <div class="editable-section block mb-6">
-                    <h1 class="text-7xl md:text-8xl font-black hero-text tracking-tighter">
+                    <h1 class="text-7xl md:text-8xl font-black hero-text tracking-tighter" style="color: {{ $settings->agency_name_color ?? '#fff' }}">
                         {{ $tenant->name }}
                     </h1>
                     <div class="edit-btn" onclick="editText('agency_name', 'Editar Título Principal')">
@@ -474,14 +468,14 @@
                     </div>
                 </div>
             @else
-                <h1 class="text-7xl md:text-8xl font-black mb-6 hero-text tracking-tighter">
+                <h1 class="text-7xl md:text-8xl font-black mb-6 hero-text tracking-tighter" style="color: {{ $settings->agency_name_color ?? '#fff' }}">
                     {{ $tenant->name }}
                 </h1>
             @endif
             
             @if(isset($editMode) && $editMode)
                 <div class="editable-section block mb-8">
-                    <p class="text-2xl md:text-3xl hero-text font-light max-w-3xl mx-auto">
+                    <p class="text-2xl md:text-3xl hero-text font-light max-w-3xl mx-auto" style="color: {{ $settings->home_description_color ?? '#fff' }}">
                         {{ $settings->home_description ?? 'El poder en tus manos' }}
                     </p>
                     <div class="edit-btn" onclick="editText('home_description', 'Editar Descripción Principal')">
@@ -489,13 +483,16 @@
                     </div>
                 </div>
             @else
-                <p class="text-2xl md:text-3xl mb-8 hero-text font-light max-w-3xl mx-auto">
+                <p class="text-2xl md:text-3xl mb-8 hero-text font-light max-w-3xl mx-auto" style="color: {{ $settings->home_description_color ?? '#fff' }}">
                     {{ $settings->home_description ?? 'El poder en tus manos' }}
                 </p>
             @endif
+    @if(isset($editMode) && $editMode)
+        @include('public.templates.partials.editor-scripts')
+    @endif
 
             <div class="mt-8">
-                <a href="#vehiculos" class="inline-block px-8 py-4 rounded-full font-bold text-lg transition hover:shadow-2xl hover:scale-105" style="background-color: var(--primary-color); color: var(--secondary-color);">
+                <a href="{{ route('public.vehiculos') }}" class="inline-block px-8 py-4 rounded-full font-bold text-lg transition hover:shadow-2xl hover:scale-105" style="background-color: var(--primary-color); color: var(--secondary-color);">
                     EXPLORAR CATÁLOGO ↓
                 </a>
             </div>
@@ -506,7 +503,7 @@
     @if($settings->show_vehicles && count($vehicles) > 0)
         <div id="vehiculos" class="max-w-7xl mx-auto px-6 py-20">
             <div class="mb-16">
-                <h2 class="text-6xl font-black mb-4">NUESTRO ARSENAL</h2>
+                <h2 class="text-6xl font-black mb-4 auto-contrast-title">NUESTRO ARSENAL</h2>
                 <div class="w-24 h-2" style="background-color: var(--primary-color);"></div>
             </div>
 
@@ -544,20 +541,21 @@
     <!-- Nosotros Deportivo -->
     <div id="nosotros" class="max-w-7xl mx-auto px-6 py-20 border-t" style="border-color: rgba(239, 68, 68, 0.2);">
         <div class="mb-16">
-            <h2 class="text-6xl font-black mb-4">SOBRE NOSOTROS</h2>
+            <h2 class="text-6xl font-black mb-4 auto-contrast-title">SOBRE NOSOTROS</h2>
             <div class="w-24 h-2" style="background-color: var(--primary-color);"></div>
         </div>
 
         <div class="grid md:grid-cols-2 gap-12 items-center">
-            @if(isset($editMode) && $editMode)
-                <div class="editable-section">
-                    <div>
-                        <p class="text-lg text-gray-300 mb-8 leading-relaxed font-semibold whitespace-pre-line">{{ $settings->nosotros_description ?? 'Somos una agencia de autos con más de 15 años de experiencia en el mercado automotriz. Nos dedicamos a ofrecer vehículos de alta calidad con los mejores precios del mercado.\n\nNuestro equipo de profesionales está comprometido en brindarte la mejor atención y asesoramiento para que encuentres el vehículo perfecto que se adapte a tus necesidades.' }}</p>
-                    </div>
-                    <div class="edit-btn" onclick="editText('nosotros_description', 'Editar Sección Nosotros')">
-                        <i class="fa fa-pencil"></i>
-                    </div>
-                    @if(isset($editMode) && $editMode)
+                @if(isset($editMode) && $editMode)
+                    <div class="editable-section">
+                        <div>
+                            <p class="text-lg mb-8 leading-relaxed font-semibold whitespace-pre-line" style="color: {{ $settings->nosotros_description_color ?? '#222' }};">
+                                {{ $settings->nosotros_description ?? 'Somos una agencia de autos con más de 15 años de experiencia en el mercado automotriz. Nos dedicamos a ofrecer vehículos de alta calidad con los mejores precios del mercado.\n\nNuestro equipo de profesionales está comprometido en brindarte la mejor atención y asesoramiento para que encuentres el vehículo perfecto que se adapte a tus necesidades.' }}
+                            </p>
+                        </div>
+                        <div class="edit-btn" onclick="editText('nosotros_description', 'Editar Sección Nosotros')">
+                            <i class="fa fa-pencil"></i>
+                        </div>
                         <div class="editable-section grid grid-cols-3 gap-4">
                             <div class="p-4 rounded-lg text-center" style="background: linear-gradient(135deg, var(--primary-color)22, var(--primary-color)11); border: 1px solid var(--primary-color);">
                                 <div class="text-4xl font-black" style="color: var(--primary-color);">{{ $settings->stat1 ?? '150+' }}</div>
@@ -575,23 +573,7 @@
                                 <i class="fa fa-pencil"></i>
                             </div>
                         </div>
-                    @else
-                        <div class="grid grid-cols-3 gap-4">
-                            <div class="p-4 rounded-lg text-center" style="background: linear-gradient(135deg, var(--primary-color)22, var(--primary-color)11); border: 1px solid var(--primary-color);">
-                                <div class="text-4xl font-black" style="color: var(--primary-color);">150+</div>
-                                <p class="text-gray-400 text-sm font-bold mt-2">AUTOS VENDIDOS</p>
-                            </div>
-                            <div class="p-4 rounded-lg text-center" style="background: linear-gradient(135deg, var(--primary-color)22, var(--primary-color)11); border: 1px solid var(--primary-color);">
-                                <div class="text-4xl font-black" style="color: var(--primary-color);">98%</div>
-                                <p class="text-gray-400 text-sm font-bold mt-2">SATISFACCIÓN</p>
-                            </div>
-                            <div class="p-4 rounded-lg text-center" style="background: linear-gradient(135deg, var(--primary-color)22, var(--primary-color)11); border: 1px solid var(--primary-color);">
-                                <div class="text-4xl font-black" style="color: var(--primary-color);">24h</div>
-                                <p class="text-gray-400 text-sm font-bold mt-2">ATENCIÓN</p>
-                            </div>
-                        </div>
-                    @endif
-                </div>
+                    </div>
                 <div class="editable-section rounded-lg overflow-hidden shadow-2xl">
                     <img src="{{ $settings->nosotros_url ?? 'https://images.unsplash.com/photo-1487730116645-74489c95b41b?w=600&h=500&fit=crop' }}" alt="Nosotros" class="w-full h-full object-cover">
                     <div class="edit-btn" onclick="editImage('nosotros_url')">
@@ -600,7 +582,7 @@
                 </div>
             @else
                 <div>
-                    <p class="text-lg text-gray-300 mb-8 leading-relaxed font-semibold whitespace-pre-line">{{ $settings->nosotros_description ?? 'Somos una agencia de autos con más de 15 años de experiencia en el mercado automotriz. Nos dedicamos a ofrecer vehículos de alta calidad con los mejores precios del mercado.\n\nNuestro equipo de profesionales está comprometido en brindarte la mejor atención y asesoramiento para que encuentres el vehículo perfecto que se adapte a tus necesidades.' }}</p>
+                    <p class="text-lg mb-8 leading-relaxed font-semibold whitespace-pre-line" style="color: {{ $settings->nosotros_description_color ?? '#222' }}">{{ $settings->nosotros_description ?? 'Somos una agencia de autos con más de 15 años de experiencia en el mercado automotriz. Nos dedicamos a ofrecer vehículos de alta calidad con los mejores precios del mercado.\n\nNuestro equipo de profesionales está comprometido en brindarte la mejor atención y asesoramiento para que encuentres el vehículo perfecto que se adapte a tus necesidades.' }}</p>
                     <div class="grid grid-cols-3 gap-4">
                         <div class="p-4 rounded-lg text-center" style="background: linear-gradient(135deg, var(--primary-color)22, var(--primary-color)11); border: 1px solid var(--primary-color);">
                             <div class="text-4xl font-black" style="color: var(--primary-color);">{{ $settings->stat1 ?? '150+' }}</div>
@@ -630,7 +612,35 @@
             
             <div class="max-w-7xl mx-auto relative z-10">
                 <div class="mb-16">
-                    <h2 class="text-6xl font-black mb-4">CONTACTO</h2>
+                    <h2 class="text-6xl font-black mb-4 auto-contrast-title">CONTACTO</h2>
+                        <script>
+                        // Contraste automático para títulos principales y de sección
+                        function getContrastYIQ(hexcolor) {
+                            hexcolor = hexcolor.replace('#', '');
+                            if(hexcolor.length === 3) hexcolor = hexcolor.split('').map(x=>x+x).join('');
+                            var r = parseInt(hexcolor.substr(0,2),16);
+                            var g = parseInt(hexcolor.substr(2,2),16);
+                            var b = parseInt(hexcolor.substr(4,2),16);
+                            var yiq = ((r*299)+(g*587)+(b*114))/1000;
+                            return (yiq >= 180) ? '#222' : '#fff';
+                        }
+                        function applyTitleContrast() {
+                            let bg = getComputedStyle(document.body).backgroundColor;
+                            let hex = window.getComputedStyle(document.body).getPropertyValue('--secondary-color') || '#fff';
+                            if(hex.startsWith('#')) {
+                                // ok
+                            } else if(bg) {
+                                // fallback: rgb to hex
+                                let rgb = bg.match(/\d+/g);
+                                if(rgb) hex = '#' + rgb.map(x=>(+x).toString(16).padStart(2,'0')).join('');
+                            }
+                            document.querySelectorAll('.auto-contrast-title').forEach(el=>{
+                                el.style.color = getContrastYIQ(hex.trim());
+                            });
+                        }
+                        document.addEventListener('DOMContentLoaded', applyTitleContrast);
+                        window.addEventListener('settings:updated', applyTitleContrast);
+                        </script>
                     <div class="w-24 h-2" style="background-color: var(--primary-color);"></div>
                 </div>
 
@@ -710,7 +720,7 @@
                     </div>
 
                     <div>
-                        <form action="{{ route('public.contact') }}" method="POST" class="space-y-4">
+                        <form id="contactForm" action="{{ \App\Helpers\RouteHelper::publicContactRoute() }}" method="POST" class="space-y-4 relative z-0" style="z-index:0 !important;">
                             @csrf
                             <input type="text" name="name" placeholder="NOMBRE COMPLETO" required class="w-full px-4 py-3 bg-gray-800 text-white placeholder-gray-500 border-b-2" style="border-color: var(--primary-color);">
                             <input type="email" name="email" placeholder="CORREO ELECTRÓNICO" required class="w-full px-4 py-3 bg-gray-800 text-white placeholder-gray-500 border-b-2" style="border-color: var(--primary-color);">
@@ -743,7 +753,27 @@
         }
     </script>
 
-    @if(isset($editMode) && $editMode)
+        @if(isset($editMode) && $editMode)
+        <script>
+        // Bloquear interacción del formulario de contacto cuando el modal está abierto
+        function setContactFormPointerEvents(block) {
+            var form = document.getElementById('contactForm');
+            if(form) form.style.pointerEvents = block ? 'none' : '';
+        }
+        // Hook en la apertura/cierre del modal de contacto
+        (function() {
+            var origEditContact = window.editContact;
+            window.editContact = function() {
+                setContactFormPointerEvents(true);
+                origEditContact();
+            };
+            var origCloseContactModal = window.closeContactModal;
+            window.closeContactModal = function() {
+                setContactFormPointerEvents(false);
+                origCloseContactModal();
+            };
+        })();
+        </script>
     <!-- Modal para editar texto -->
     <div id="textModal" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
         <div class="bg-white rounded-lg shadow-xl max-w-2xl w-full">
@@ -808,8 +838,9 @@
         </div>
     </div>
 
-    <!-- Modal para editar contacto -->
-    <div id="contactModal" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+    <!-- Modal para editar contacto (único, funcional, centrado y oculto por defecto) -->
+    <!-- Modal para editar contacto (siempre al final del body, z-index máximo) -->
+    <div id="contactModal" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center p-4" style="z-index:999999999 !important;">
         <div class="bg-white rounded-lg shadow-xl max-w-md w-full">
             <div class="p-6 border-b">
                 <h3 class="text-xl font-bold text-gray-900">Información de Contacto</h3>
@@ -817,15 +848,15 @@
             <div class="p-6 space-y-4">
                 <div>
                     <label class="text-sm font-medium text-gray-700 mb-1 block">Teléfono</label>
-                    <input type="text" id="modalPhone" placeholder="+54 9 11 1234-5678" class="w-full px-4 py-2 border rounded-lg text-gray-900">
+                    <input type="text" id="modalPhone" class="w-full px-4 py-2 border rounded-lg text-gray-900">
                 </div>
                 <div>
                     <label class="text-sm font-medium text-gray-700 mb-1 block">Email</label>
-                    <input type="email" id="modalEmail" placeholder="contacto@ejemplo.com" class="w-full px-4 py-2 border rounded-lg text-gray-900">
+                    <input type="email" id="modalEmail" class="w-full px-4 py-2 border rounded-lg text-gray-900">
                 </div>
                 <div>
-                    <label class="text-sm font-medium text-gray-700 mb-1 block">WhatsApp</label>
-                    <input type="text" id="modalWhatsapp" placeholder="+54 9 11 1234-5678" class="w-full px-4 py-2 border rounded-lg text-gray-900">
+                    <label class="text-sm font-medium text-gray-700 mb-1 block">Whatsapp</label>
+                    <input type="text" id="modalWhatsapp" class="w-full px-4 py-2 border rounded-lg text-gray-900">
                 </div>
             </div>
             <div class="p-6 border-t flex justify-end gap-3">
@@ -837,7 +868,17 @@
                 </button>
             </div>
         </div>
-    </div>
+        </div>
+
+        <script>
+        // Mover el modal al final del body para evitar stacking context
+        document.addEventListener('DOMContentLoaded', function() {
+            var modal = document.getElementById('contactModal');
+            if (modal && modal.parentNode !== document.body) {
+                document.body.appendChild(modal);
+            }
+        });
+        </script>
 
     <!-- Modal para editar estadísticas -->
     <div id="statsModal" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
@@ -872,34 +913,34 @@
 
     @endif
 
-    @if(isset($editMode) && $editMode)
-    <script>
-    window.addEventListener('DOMContentLoaded', function() {
-      if (typeof editText === 'function') {
-        const originalEditText = editText;
-        editText = function(field, title) {
-          originalEditText(field, title);
-          const noNameOption = document.getElementById('noNameOption');
-          const noNameCheckbox = document.getElementById('noNameCheckbox');
-          const noNameTip = document.getElementById('noNameTip');
-          if(field === 'agency_name') {
-            noNameOption.classList.remove('hidden');
-            if(noNameTip) noNameTip.classList.remove('hidden');
-            noNameCheckbox.checked = (document.getElementById('modalTextarea').value.trim() === '');
-            noNameCheckbox.onchange = function() {
-              if(this.checked) {
-                document.getElementById('modalTextarea').value = '';
-              }
-            };
-          } else {
-            noNameOption.classList.add('hidden');
-            if(noNameTip) noNameTip.classList.add('hidden');
-            noNameCheckbox.onchange = null;
-          }
-        }
-      }
-    });
-    </script>
-    @endif
+        @if(isset($editMode) && $editMode)
+        <script>
+        window.addEventListener('DOMContentLoaded', function() {
+            if (typeof editText === 'function') {
+                const originalEditText = editText;
+                editText = function(field, title) {
+                    originalEditText(field, title);
+                    const noNameOption = document.getElementById('noNameOption');
+                    const noNameCheckbox = document.getElementById('noNameCheckbox');
+                    const noNameTip = document.getElementById('noNameTip');
+                    if(field === 'agency_name') {
+                        noNameOption.classList.remove('hidden');
+                        if(noNameTip) noNameTip.classList.remove('hidden');
+                        noNameCheckbox.checked = (document.getElementById('modalTextarea').value.trim() === '');
+                        noNameCheckbox.onchange = function() {
+                            if(this.checked) {
+                                document.getElementById('modalTextarea').value = '';
+                            }
+                        };
+                    } else {
+                        noNameOption.classList.add('hidden');
+                        if(noNameTip) noNameTip.classList.add('hidden');
+                        noNameCheckbox.onchange = null;
+                    }
+                }
+            }
+        });
+        </script>
+        @endif
 </body>
 </html>

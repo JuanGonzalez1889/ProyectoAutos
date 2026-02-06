@@ -13,7 +13,18 @@
 
         <!-- Tarjeta de Registro -->
         <div class="bg-[hsl(var(--card))] border border-[hsl(var(--border))] rounded-lg shadow-lg p-8">
-            <form action="javascript:void(0);" method="POST" class="space-y-5">
+            @if ($errors->any())
+                <div class="mb-6 p-4 bg-red-500/10 border border-red-500/20 rounded-lg">
+                    <p class="text-red-500 font-semibold mb-2 text-sm">❌ Errores encontrados:</p>
+                    <ul class="text-red-400 text-xs space-y-1">
+                        @foreach($errors->all() as $error)
+                            <li>• {{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
+            <form action="{{ route('tenants.register') }}" method="POST" class="space-y-5">
                 @csrf
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -109,12 +120,15 @@
                                    required
                                    value="{{ old('domain') }}"
                                    class="flex-1 px-4 py-2.5 bg-[hsl(var(--background))] border border-[hsl(var(--border))] rounded-lg text-[hsl(var(--foreground))] focus:outline-none focus:ring-2 focus:ring-[hsl(var(--primary))] focus:border-transparent"
-                                   placeholder="miagencia">
+                                   placeholder="miagencia"
+                                   oninput="validateDomainInput(this.value)">
                             <span class="text-[hsl(var(--muted-foreground))] font-medium">.misaas.com</span>
+                            <span id="domainStatus" class="text-2xl w-6 h-6 flex items-center justify-center"></span>
                         </div>
                         <p class="mt-1 text-xs text-[hsl(var(--muted-foreground))]">
                             Ej: Si pones "miagencia", tu URL será miagencia.misaas.com
                         </p>
+                        <p id="domainMessage" class="mt-2 text-sm text-gray-400"></p>
                         @error('domain')
                         <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
                         @enderror
@@ -180,5 +194,56 @@
             <p>¿Preguntas? <a href="mailto:soporte@proyectoautos.com" class="text-[hsl(var(--primary))] hover:underline">Contacta con soporte</a></p>
         </div>
     </div>
+</div>
+
+<script>
+let domainValidationTimeout;
+
+function validateDomainInput(domain) {
+    const statusSpan = document.getElementById('domainStatus');
+    const messageSpan = document.getElementById('domainMessage');
+
+    // Limpiar mensaje anterior
+    statusSpan.textContent = '';
+    messageSpan.textContent = '';
+
+    if (!domain || domain.length < 3) {
+        return;
+    }
+
+    // Debounce: esperar a que el usuario deje de escribir
+    clearTimeout(domainValidationTimeout);
+    domainValidationTimeout = setTimeout(() => {
+        fetch(`{{ route('api.validate-domain') }}?domain=${encodeURIComponent(domain)}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.available) {
+                    statusSpan.textContent = '✓';
+                    statusSpan.className = 'text-2xl w-6 h-6 flex items-center justify-center text-green-400 font-bold';
+                    messageSpan.textContent = data.message;
+                    messageSpan.className = 'mt-2 text-sm text-green-400';
+                } else {
+                    statusSpan.textContent = '✗';
+                    statusSpan.className = 'text-2xl w-6 h-6 flex items-center justify-center text-red-400 font-bold';
+                    messageSpan.textContent = data.message;
+                    messageSpan.className = 'mt-2 text-sm text-red-400';
+                }
+            })
+            .catch(error => {
+                console.error('Error validando dominio:', error);
+                messageSpan.textContent = 'Error al validar dominio';
+                messageSpan.className = 'mt-2 text-sm text-gray-400';
+            });
+    }, 500); // Esperar 500ms después de que el usuario deje de escribir
+}
+
+// Validar dominio al cargar si hay un valor previo
+document.addEventListener('DOMContentLoaded', function() {
+    const domainInput = document.getElementById('domain');
+    if (domainInput.value) {
+        validateDomainInput(domainInput.value);
+    }
+});
+</script>
 </div>
 @endsection

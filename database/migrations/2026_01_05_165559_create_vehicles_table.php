@@ -33,7 +33,7 @@ return new class extends Migration
             $table->string('status')->default('draft'); // draft, published, sold
             $table->boolean('featured')->default(false);
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->foreignId('agencia_id')->nullable()->constrained()->onDelete('set null');
+            $table->unsignedBigInteger('agencia_id')->nullable();
             $table->timestamps();
         });
     }

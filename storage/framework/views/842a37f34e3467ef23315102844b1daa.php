@@ -18,63 +18,109 @@
 <body class="bg-black text-white m-0 p-0">
     <!-- Barra Superior Flotante -->
     <div class="fixed top-0 left-0 right-0 z-40 bg-slate-900 border-b border-slate-700 shadow-2xl">
-        <div class="h-20 px-8 flex items-center justify-between">
+        <div class="h-24 px-8 flex items-center justify-between">
             <!-- Izquierda: Logo y título -->
             <div class="flex items-center gap-6">
+                                <!-- Eliminado: ahora el color de links navbar está junto a los otros colores principales -->
+                                <!-- Eliminado: ahora el color de links navbar está junto a los otros colores principales -->
                 <a href="<?php echo e(route('admin.landing-template.select')); ?>" class="flex items-center gap-2 hover:opacity-70 transition">
-                    <i class="fas fa-arrow-left text-white text-lg"></i>
-                    <span class="text-sm font-medium text-gray-400">Volver</span>
+                    <i class="fas fa-arrow-left text-white text-xl"></i>
+                    <span class="text-base font-medium text-gray-400">Volver</span>
                 </a>
                 <div class="w-px h-8 bg-slate-700"></div>
                 <div>
-                    <h2 class="text-white font-bold text-lg">Editor Visual</h2>
-                    <p class="text-xs text-gray-400"><?php echo e(ucfirst($template)); ?> — Clickea los elementos para editar</p>
+                    <h2 class="text-white font-bold text-xl">Editor Visual</h2>
+                    <p class="text-sm text-gray-400"><?php echo e(ucfirst($template)); ?> — Clickea los elementos para editar</p>
                 </div>
             </div>
 
             <!-- Centro: Selectores de Color -->
             <div class="flex items-center gap-6">
                 <div>
-                    <label class="text-xs text-gray-400 block mb-2 font-medium">🎨 Color Primario</label>
+                    <label class="text-sm text-gray-400 block mb-2 font-medium">🎨 Color Primario</label>
                     <div class="flex gap-2 items-center">
-                        <input type="color" id="primaryColor" value="<?php echo e($settings->primary_color ?? '#8b5cf6'); ?>" class="h-9 w-14 rounded cursor-pointer border border-slate-700">
-                        <input type="text" id="primaryColorText" value="<?php echo e($settings->primary_color ?? '#8b5cf6'); ?>" class="w-24 px-2 h-9 bg-slate-800 border border-slate-700 rounded text-xs font-mono text-white" readonly>
+                        <input type="color" id="primaryColor" value="<?php echo e($settings->primary_color ?? '#8b5cf6'); ?>" class="h-11 w-16 rounded cursor-pointer border border-slate-700">
+                        <input type="text" id="primaryColorText" value="<?php echo e($settings->primary_color ?? '#8b5cf6'); ?>" class="w-28 px-2 h-11 bg-slate-800 border border-slate-700 rounded text-sm font-mono text-white" readonly>
                     </div>
                 </div>
                 <div>
-                    <label class="text-xs text-gray-400 block mb-2 font-medium">🎨 Color Secundario</label>
+                    <label class="text-sm text-gray-400 block mb-2 font-medium">🎨 Color Secundario</label>
                     <div class="flex gap-2 items-center">
-                        <input type="color" id="secondaryColor" value="<?php echo e($settings->secondary_color ?? '#1e293b'); ?>" class="h-9 w-14 rounded cursor-pointer border border-slate-700">
-                        <input type="text" id="secondaryColorText" value="<?php echo e($settings->secondary_color ?? '#1e293b'); ?>" class="w-24 px-2 h-9 bg-slate-800 border border-slate-700 rounded text-xs font-mono text-white" readonly>
+                        <input type="color" id="secondaryColor" value="<?php echo e($settings->secondary_color ?? '#1e293b'); ?>" class="h-11 w-16 rounded cursor-pointer border border-slate-700">
+                        <input type="text" id="secondaryColorText" value="<?php echo e($settings->secondary_color ?? '#1e293b'); ?>" class="w-28 px-2 h-11 bg-slate-800 border border-slate-700 rounded text-sm font-mono text-white" readonly>
                     </div>
                 </div>
                 <div>
-                    <label class="text-xs text-gray-400 block mb-2 font-medium">🎨 Color Terciario</label>
+                    <label class="text-sm text-gray-400 block mb-2 font-medium">🎨 Color Terciario</label>
                     <div class="flex gap-2 items-center">
-                        <input type="color" id="tertiaryColor" value="<?php echo e($settings->tertiary_color ?? '#ffaa00'); ?>" class="h-9 w-14 rounded cursor-pointer border border-slate-700">
-                        <input type="text" id="tertiaryColorText" value="<?php echo e($settings->tertiary_color ?? '#ffaa00'); ?>" class="w-24 px-2 h-9 bg-slate-800 border border-slate-700 rounded text-xs font-mono text-white" readonly>
+                        <input type="color" id="tertiaryColor" value="<?php echo e($settings->tertiary_color ?? '#ffaa00'); ?>" class="h-11 w-16 rounded cursor-pointer border border-slate-700">
+                        <input type="text" id="tertiaryColorText" value="<?php echo e($settings->tertiary_color ?? '#ffaa00'); ?>" class="w-28 px-2 h-11 bg-slate-800 border border-slate-700 rounded text-sm font-mono text-white" readonly>
                     </div>
+                </div>
+                <div>
+                    <label class="text-sm text-gray-400 block mb-2 font-medium">🔗 Color Links Navbar</label>
+                    <div class="flex gap-2 items-center">
+                        <input type="color" id="navbarLinksColor" value="<?php echo e($settings->navbar_links_color ?? '#ffffff'); ?>" class="h-11 w-16 rounded cursor-pointer border border-slate-700">
+                        <input type="text" id="navbarLinksColorText" value="<?php echo e($settings->navbar_links_color ?? '#ffffff'); ?>" class="w-28 px-2 h-11 bg-slate-800 border border-slate-700 rounded text-sm font-mono text-white" readonly>
+                    </div>
+                </div>
+                <div>
+                    <label class="text-sm text-gray-400 block mb-2 font-medium">🔤 Fuente Global</label>
+                    <select id="fontFamilySelect" class="h-11 w-56 bg-slate-800 border border-slate-700 rounded text-sm text-white px-2">
+                        <option value="" <?php echo e(empty($settings->font_family) ? 'selected' : ''); ?>>(Por defecto)</option>
+                        <option value="Roboto, sans-serif" <?php echo e($settings->font_family === 'Roboto, sans-serif' ? 'selected' : ''); ?>>Roboto</option>
+                        <option value="Open Sans, sans-serif" <?php echo e($settings->font_family === 'Open Sans, sans-serif' ? 'selected' : ''); ?>>Open Sans</option>
+                        <option value="Montserrat, sans-serif" <?php echo e($settings->font_family === 'Montserrat, sans-serif' ? 'selected' : ''); ?>>Montserrat</option>
+                        <option value="Lato, sans-serif" <?php echo e($settings->font_family === 'Lato, sans-serif' ? 'selected' : ''); ?>>Lato</option>
+                        <option value="Poppins, sans-serif" <?php echo e($settings->font_family === 'Poppins, sans-serif' ? 'selected' : ''); ?>>Poppins</option>
+                        <option value="Inter, sans-serif" <?php echo e($settings->font_family === 'Inter, sans-serif' ? 'selected' : ''); ?>>Inter</option>
+                        <option value="Nunito, sans-serif" <?php echo e($settings->font_family === 'Nunito, sans-serif' ? 'selected' : ''); ?>>Nunito</option>
+                        <option value="Oswald, sans-serif" <?php echo e($settings->font_family === 'Oswald, sans-serif' ? 'selected' : ''); ?>>Oswald</option>
+                        <option value="Raleway, sans-serif" <?php echo e($settings->font_family === 'Raleway, sans-serif' ? 'selected' : ''); ?>>Raleway</option>
+                        <option value="Merriweather, serif" <?php echo e($settings->font_family === 'Merriweather, serif' ? 'selected' : ''); ?>>Merriweather</option>
+                        <option value="Playfair Display, serif" <?php echo e($settings->font_family === 'Playfair Display, serif' ? 'selected' : ''); ?>>Playfair Display</option>
+                        <option value="Muli, sans-serif" <?php echo e($settings->font_family === 'Muli, sans-serif' ? 'selected' : ''); ?>>Muli</option>
+                        <option value="Quicksand, sans-serif" <?php echo e($settings->font_family === 'Quicksand, sans-serif' ? 'selected' : ''); ?>>Quicksand</option>
+                        <option value="Source Sans Pro, sans-serif" <?php echo e($settings->font_family === 'Source Sans Pro, sans-serif' ? 'selected' : ''); ?>>Source Sans Pro</option>
+                        <option value="Work Sans, sans-serif" <?php echo e($settings->font_family === 'Work Sans, sans-serif' ? 'selected' : ''); ?>>Work Sans</option>
+                        <option value="PT Sans, sans-serif" <?php echo e($settings->font_family === 'PT Sans, sans-serif' ? 'selected' : ''); ?>>PT Sans</option>
+                        <option value="Ubuntu, sans-serif" <?php echo e($settings->font_family === 'Ubuntu, sans-serif' ? 'selected' : ''); ?>>Ubuntu</option>
+                        <option value="Fira Sans, sans-serif" <?php echo e($settings->font_family === 'Fira Sans, sans-serif' ? 'selected' : ''); ?>>Fira Sans</option>
+                        <option value="Arial, Helvetica, sans-serif" <?php echo e($settings->font_family === 'Arial, Helvetica, sans-serif' ? 'selected' : ''); ?>>Arial</option>
+                        <option value="Tahoma, Geneva, sans-serif" <?php echo e($settings->font_family === 'Tahoma, Geneva, sans-serif' ? 'selected' : ''); ?>>Tahoma</option>
+                        <option value="Verdana, Geneva, sans-serif" <?php echo e($settings->font_family === 'Verdana, Geneva, sans-serif' ? 'selected' : ''); ?>>Verdana</option>
+                        <option value="Times New Roman, Times, serif" <?php echo e($settings->font_family === 'Times New Roman, Times, serif' ? 'selected' : ''); ?>>Times New Roman</option>
+                        <option value="Georgia, serif" <?php echo e($settings->font_family === 'Georgia, serif' ? 'selected' : ''); ?>>Georgia</option>
+                        <option value="Courier New, Courier, monospace" <?php echo e($settings->font_family === 'Courier New, Courier, monospace' ? 'selected' : ''); ?>>Courier New</option>
+                        <option value="monospace" <?php echo e($settings->font_family === 'monospace' ? 'selected' : ''); ?>>Monospace</option>
+                    </select>
                 </div>
             </div>
 
             <!-- Derecha: Botones de acción -->
             <div class="flex items-center gap-3">
-                <button onclick="saveColors()" class="px-5 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg text-sm font-semibold transition flex items-center gap-2 shadow-lg">
-                    <i class="fas fa-check"></i>
-                    Guardar
+                <button onclick="publishLanding()" class="px-6 py-3 bg-green-600 hover:bg-green-700 text-white rounded-lg text-base font-semibold transition flex items-center gap-2 shadow-lg" id="publishBtn">
+                    <i class="fas fa-rocket"></i>
+                    Publicar
                 </button>
-                <a href="<?php echo e(route('public.landing')); ?>" target="_blank" class="px-5 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-semibold transition flex items-center gap-2 shadow-lg">
+                <a href="<?php echo e($previewUrl); ?>" target="_blank" class="px-6 py-3 bg-slate-600 hover:bg-slate-700 text-white rounded-lg text-base font-semibold transition flex items-center gap-2 shadow-lg" <?php if($primaryDomain): ?> title="Abrirá <?php echo e($primaryDomain->domain); ?>. En local, agregá <?php echo e($primaryDomain->domain); ?> -> 127.0.0.1 en hosts." <?php endif; ?>>
                     <i class="fas fa-external-link-alt"></i>
-                    Ver en vivo
+                    Previsualizar
                 </a>
             </div>
         </div>
     </div>
 
     <!-- Contenedor principal (debajo de la barra) -->
-    <div class="h-screen w-screen overflow-hidden" style="padding-top: 100px;">
+    <div class="h-screen w-screen overflow-hidden" style="padding-top: 120px;">
         <iframe src="<?php echo e(route('landing.preview', $template)); ?>?edit=true" class="w-full h-full border-none" title="Vista previa editable de la landing page" id="editorFrame"></iframe>
     </div>
+
+    <!-- Botón flotante de guardado (fallback si no se ve la barra superior) -->
+    <button onclick="publishLanding()" class="fixed bottom-6 right-6 z-50 px-5 py-3 bg-green-600 hover:bg-green-700 text-white rounded-full text-sm font-semibold transition flex items-center gap-2 shadow-2xl" id="publishBtnFloating">
+        <i class="fas fa-save"></i>
+        Guardar cambios
+    </button>
 
     <script>
         function updateColor(type, value) {
@@ -84,6 +130,8 @@
                 document.getElementById('secondaryColorText').value = value;
             } else if (type === 'tertiary') {
                 document.getElementById('tertiaryColorText').value = value;
+            } else if (type === 'navbarLinks') {
+                document.getElementById('navbarLinksColorText').value = value;
             }
         }
 
@@ -154,10 +202,17 @@
             return values[field] || '';
         }
 
-        window.saveColors = function() {
+        window.publishLanding = function() {
+            const btn = document.getElementById('publishBtn');
+            const originalText = btn.innerHTML;
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Publicando...';
+
             const primaryColor = document.getElementById('primaryColor').value;
             const secondaryColor = document.getElementById('secondaryColor').value;
             const tertiaryColor = document.getElementById('tertiaryColor').value;
+            const navbarLinksColor = document.getElementById('navbarLinksColor').value;
+            const fontFamily = document.getElementById('fontFamilySelect').value;
 
             const formData = new FormData();
             formData.append('_token', document.querySelector('meta[name="csrf-token"]').content);
@@ -165,6 +220,8 @@
             formData.append('primary_color', primaryColor);
             formData.append('secondary_color', secondaryColor);
             formData.append('tertiary_color', tertiaryColor);
+            formData.append('navbar_links_color', navbarLinksColor);
+            formData.append('font_family', fontFamily);
             formData.append('template', '<?php echo e($template); ?>');
 
             // Mantener valores actuales usando un objeto
@@ -210,24 +267,40 @@
             })
             .then(response => response.json())
             .then(data => {
+                btn.disabled = false;
+                btn.innerHTML = originalText;
                 if (data.success) {
-                    // Recargar página completa para ver los cambios
-                    location.reload();
+                    // Mostrar notificación de éxito
+                    showNotification('✅ Landing page publicada correctamente', 'success');
+                    // Recargar después de 1.5 segundos
+                    setTimeout(() => location.reload(), 1500);
                 } else {
-                    alert('❌ Error al guardar: ' + (data.message || 'Error desconocido'));
+                    showNotification('❌ Error al publicar: ' + (data.message || 'Error desconocido'), 'error');
                 }
             })
             .catch(error => {
                 console.error('Error:', error);
-                alert('❌ Error al guardar');
+                btn.disabled = false;
+                btn.innerHTML = originalText;
+                showNotification('❌ Error al publicar', 'error');
             });
+        };
+
+        function showNotification(message, type) {
+            const notification = document.createElement('div');
+            notification.className = `fixed top-6 right-6 px-6 py-3 rounded-lg text-white font-semibold z-50 animate-fadeIn ${
+                type === 'success' ? 'bg-green-600' : 'bg-red-600'
+            }`;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            setTimeout(() => notification.remove(), 3000);
         }
 
-        // Permitir guardar con Ctrl+S
+        // Permitir publicar con Ctrl+S
         document.addEventListener('keydown', (e) => {
             if (e.ctrlKey && e.key === 's') {
                 e.preventDefault();
-                saveColors();
+                publishLanding();
             }
         });
 
@@ -240,6 +313,9 @@
         });
         document.getElementById('tertiaryColor').addEventListener('change', function() {
             updateColor('tertiary', this.value);
+        });
+        document.getElementById('navbarLinksColor').addEventListener('change', function() {
+            updateColor('navbarLinks', this.value);
         });
     </script>
 </body>

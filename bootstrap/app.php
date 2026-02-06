@@ -5,6 +5,9 @@ use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 
 $app = Application::configure(basePath: dirname(__DIR__))
+    ->withProviders([
+        \App\Providers\RouteServiceProvider::class,
+    ])
     ->withRouting(
         web: __DIR__.'/../routes/web.php',
         api: __DIR__.'/../routes/api.php',
@@ -12,14 +15,28 @@ $app = Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
+        // Trust proxies (CloudFlare, AWS ELB, Nginx)
+        $middleware->trustProxies(at: '*');
+        
         // Middleware global para identificar tenant
         $middleware->append(\App\Http\Middleware\IdentifyTenant::class);
         $middleware->append(\App\Http\Middleware\ResolveTenantFromDomain::class);
+        $middleware->append(\App\Http\Middleware\InitializeTenancyByUser::class);
+        
+        // Validar suscripción en rutas autenticadas
+        $middleware->append(\App\Http\Middleware\ValidateSubscription::class);
+        
+        // Security headers en todas las respuestas
+        $middleware->append(\App\Http\Middleware\SecurityHeadersMiddleware::class);
+        
+        // Force HTTPS en producción
+        $middleware->append(\App\Http\Middleware\ForceHttps::class);
 
         $middleware->alias([
             'role' => \Spatie\Permission\Middleware\RoleMiddleware::class,
             'permission' => \Spatie\Permission\Middleware\PermissionMiddleware::class,
             'role_or_permission' => \Spatie\Permission\Middleware\RoleOrPermissionMiddleware::class,
+            'check_permission' => \App\Http\Middleware\CheckPermission::class,
             'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         ]);
     })

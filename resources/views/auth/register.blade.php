@@ -98,6 +98,18 @@
                 </div>
 
                 <div class="space-y-2">
+                    <label for="agency_name" class="text-sm text-[hsl(var(--muted-foreground))]">Nombre de la Agencia</label>
+                    <div class="relative">
+                        <svg class="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[hsl(var(--muted-foreground))]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"></path>
+                        </svg>
+                        <input type="text" id="agency_name" name="agency_name" value="{{ old('agency_name') }}" required
+                               class="w-full pl-10 pr-4 py-3 bg-[#1a1f26] border border-[hsl(var(--border))] rounded-lg text-white placeholder-[hsl(var(--muted-foreground))] focus:outline-none focus:ring-2 focus:ring-[hsl(var(--ring))]"
+                               placeholder="Mi Agencia de Autos">
+                    </div>
+                </div>
+
+                <div class="space-y-2">
                     <label for="email" class="text-sm text-[hsl(var(--muted-foreground))]">Correo Electrónico</label>
                     <div class="relative">
                         <svg class="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[hsl(var(--muted-foreground))]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -133,20 +145,47 @@
                     </div>
                 </div>
 
-                <div class="flex items-start space-x-2">
-                    <input type="checkbox" id="terms" required class="w-4 h-4 mt-1 rounded border-[hsl(var(--border))] text-[hsl(var(--primary))] focus:ring-[hsl(var(--ring))]">
-                    <label for="terms" class="text-sm text-[hsl(var(--muted-foreground))] cursor-pointer leading-relaxed">
-                        Acepto los 
-                        <a href="#" class="text-[hsl(var(--primary))] hover:underline">Términos y Condiciones</a> 
-                        y la 
-                        <a href="#" class="text-[hsl(var(--primary))] hover:underline">Política de Privacidad</a>.
-                    </label>
+                <!-- Terms and Conditions Checkbox -->
+                <div class="space-y-3">
+                    <div class="flex items-start space-x-2">
+                        <input type="checkbox" id="terms_accepted" name="terms_accepted" value="1" 
+                               {{ old('terms_accepted') ? 'checked' : '' }}
+                               class="w-4 h-4 mt-1 rounded border-[hsl(var(--border))] text-[hsl(var(--primary))] focus:ring-[hsl(var(--ring))] bg-[#1a1f26]">
+                        <label for="terms_accepted" class="text-sm text-[hsl(var(--muted-foreground))] cursor-pointer leading-relaxed">
+                            He leído y acepto los 
+                            <a href="{{ route('legal.terms') }}" target="_blank" class="text-[hsl(var(--primary))] hover:underline font-medium">Términos y Condiciones</a>.
+                        </label>
+                    </div>
+                    @error('terms_accepted')
+                        <p class="text-red-500 text-xs">{{ $message }}</p>
+                    @enderror
+
+                    <div class="flex items-start space-x-2">
+                        <input type="checkbox" id="privacy_accepted" name="privacy_accepted" value="1"
+                               {{ old('privacy_accepted') ? 'checked' : '' }}
+                               class="w-4 h-4 mt-1 rounded border-[hsl(var(--border))] text-[hsl(var(--primary))] focus:ring-[hsl(var(--ring))] bg-[#1a1f26]">
+                        <label for="privacy_accepted" class="text-sm text-[hsl(var(--muted-foreground))] cursor-pointer leading-relaxed">
+                            He leído y acepto la 
+                            <a href="{{ route('legal.privacy') }}" target="_blank" class="text-[hsl(var(--primary))] hover:underline font-medium">Política de Privacidad</a>.
+                        </label>
+                    </div>
+                    @error('privacy_accepted')
+                        <p class="text-red-500 text-xs">{{ $message }}</p>
+                    @enderror
                 </div>
+
+                <!-- reCAPTCHA Hidden Input -->
+                <input type="hidden" id="g-recaptcha-response" name="g-recaptcha-response">
 
                 <button type="submit" class="w-full bg-[hsl(var(--primary))] hover:opacity-90 text-[#0a0f14] font-medium py-3 rounded-lg transition-opacity">
                     Crear Cuenta
                 </button>
             </form>
+
+            @recaptcha
+        </div>
+    </div>
+</div>
 
             <!-- Footer -->
             <div class="space-y-3 text-center text-xs text-[hsl(var(--muted-foreground))]">

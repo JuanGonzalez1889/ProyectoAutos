@@ -6,15 +6,43 @@
     <meta name="csrf-token" content="<?php echo e(csrf_token()); ?>">
     <title><?php echo e($tenant->name ?? 'Agencia de Autos'); ?></title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <?php
+        $font = $settings->font_family ?? '';
+        $googleFonts = [
+            'Roboto, sans-serif' => 'Roboto',
+            'Open Sans, sans-serif' => 'Open+Sans',
+            'Montserrat, sans-serif' => 'Montserrat',
+            'Lato, sans-serif' => 'Lato',
+            'Poppins, sans-serif' => 'Poppins',
+            'Inter, sans-serif' => 'Inter',
+            'Nunito, sans-serif' => 'Nunito',
+            'Oswald, sans-serif' => 'Oswald',
+            'Raleway, sans-serif' => 'Raleway',
+            'Merriweather, serif' => 'Merriweather',
+            'Playfair Display, serif' => 'Playfair+Display',
+            'Muli, sans-serif' => 'Muli',
+            'Quicksand, sans-serif' => 'Quicksand',
+            'Source Sans Pro, sans-serif' => 'Source+Sans+Pro',
+            'Work Sans, sans-serif' => 'Work+Sans',
+            'PT Sans, sans-serif' => 'PT+Sans',
+            'Ubuntu, sans-serif' => 'Ubuntu',
+            'Fira Sans, sans-serif' => 'Fira+Sans',
+        ];
+        $fontUrl = isset($googleFonts[$font]) ? 'https://fonts.googleapis.com/css?family=' . $googleFonts[$font] . ':400,700&display=swap' : null;
+    ?>
+    <?php if($fontUrl): ?>
+        <link href="<?php echo e($fontUrl); ?>" rel="stylesheet">
+    <?php endif; ?>
     <style>
         :root {
             --primary-color: <?php echo e($settings && $settings->primary_color ? $settings->primary_color : '#00d084'); ?>;
             --secondary-color: <?php echo e($settings && $settings->secondary_color ? $settings->secondary_color : '#0a0f14'); ?>;
             --tertiary-color: <?php echo e($settings && $settings->tertiary_color ? $settings->tertiary_color : '#ffaa00'); ?>;
         }
+        body { font-family: <?php echo e($settings->font_family ?? 'inherit'); ?>; }
     </style>
 </head>
-<body class="bg-white">
+<body class="bg-white" style="zoom: 1.25;">
     <?php ($template = 'clasico'); ?>
     <!-- Header Clásico -->
     <header style="background-color: var(--secondary-color);" class="text-white sticky top-0 z-50">
@@ -45,14 +73,16 @@
                 </div>
                 <div class="flex items-center gap-6">
                     <div class="hidden md:flex gap-6">
-                        <a href="#inicio" class="text-white hover:opacity-80 transition font-medium">Inicio</a>
-                        <a href="#vehiculos" class="text-white hover:opacity-80 transition font-medium">Vehículos</a>
-                        <a href="#nosotros" class="text-white hover:opacity-80 transition font-medium">Nosotros</a>
-                        <a href="#contacto" class="text-white hover:opacity-80 transition font-medium">Contacto</a>
+                        <a href="#inicio" class="font-medium" style="color: <?php echo e($settings->navbar_links_color ?? 'var(--navbar-text-color, #fff)'); ?>">Inicio</a>
+                        <a href="<?php echo e(route('public.vehiculos')); ?>" class="font-medium" style="color: <?php echo e($settings->navbar_links_color ?? 'var(--navbar-text-color, #fff)'); ?>">Vehículos</a>
+                        <a href="#nosotros" class="font-medium" style="color: <?php echo e($settings->navbar_links_color ?? 'var(--navbar-text-color, #fff)'); ?>">Nosotros</a>
+                        <a href="#contacto" class="font-medium" style="color: <?php echo e($settings->navbar_links_color ?? 'var(--navbar-text-color, #fff)'); ?>">Contacto</a>
                     </div>
-                    <a href="<?php echo e(route('login')); ?>" class="border-2 border-white px-6 py-2 rounded hover:bg-white hover:text-gray-900 transition">
-                        Ingresar
-                    </a>
+                    <?php if(auth()->guard()->check()): ?>
+                        <a href="<?php echo e(route('admin.dashboard')); ?>" class="border-2 border-white px-6 py-2 rounded hover:bg-white hover:text-gray-900 transition">
+                            Panel Admin
+                        </a>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>
@@ -91,23 +121,12 @@
     </div>
 
     <!-- Inicio -->
-    <div id="inicio" class="max-w-6xl mx-auto px-6 py-8">
-        <?php if(isset($editMode) && $editMode): ?>
-            <div class="editable-section relative">
-                <p class="text-lg" style="color: <?php echo e($settings->home_description_color ?? '#fff'); ?>"><?php echo e($settings->home_description ?? 'Bienvenido a nuestra agencia'); ?></p>
-                <div class="edit-btn" onclick="editText('home_description', 'Editar Descripción de Inicio')">
-                    <i class="fa fa-pencil"></i>
-                </div>
-            </div>
-        <?php else: ?>
-            <p class="text-lg text-gray-200"><?php echo e($settings->home_description ?? 'Bienvenido a nuestra agencia'); ?></p>
-        <?php endif; ?>
-    </div>
+    
 
     <!-- Sección de Vehículos -->
     <?php if($settings->show_vehicles && $vehicles->count() > 0): ?>
         <div id="vehiculos" class="max-w-6xl mx-auto px-6 py-16 border-b" style="border-color: rgba(255,255,255,0.1);">
-            <h2 class="text-4xl font-bold mb-12 text-center" style="color: var(--primary-color);">Nuestros Vehículos</h2>
+            <h2 class="text-4xl font-bold mb-12 text-center auto-contrast-title">Nuestros Vehículos</h2>
             
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
                 <?php $__currentLoopData = $vehicles; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $vehicle): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
@@ -134,7 +153,35 @@
     <!-- Nosotros Section -->
     <div class="max-w-6xl mx-auto px-6 py-16 border-b" style="border-color: rgba(255,255,255,0.1);">
         <div class="flex items-center justify-between mb-8">
-            <h2 class="text-4xl font-bold" style="color: var(--primary-color);">Sobre Nosotros</h2>
+            <h2 class="text-4xl font-bold auto-contrast-title" style="color: var(--primary-color);">Sobre Nosotros</h2>
+                <script>
+                // Contraste automático para títulos principales y de sección
+                function getContrastYIQ(hexcolor) {
+                    hexcolor = hexcolor.replace('#', '');
+                    if(hexcolor.length === 3) hexcolor = hexcolor.split('').map(x=>x+x).join('');
+                    var r = parseInt(hexcolor.substr(0,2),16);
+                    var g = parseInt(hexcolor.substr(2,2),16);
+                    var b = parseInt(hexcolor.substr(4,2),16);
+                    var yiq = ((r*299)+(g*587)+(b*114))/1000;
+                    return (yiq >= 180) ? '#222' : '#fff';
+                }
+                function applyTitleContrast() {
+                    let bg = getComputedStyle(document.body).backgroundColor;
+                    let hex = window.getComputedStyle(document.body).getPropertyValue('--secondary-color') || '#fff';
+                    if(hex.startsWith('#')) {
+                        // ok
+                    } else if(bg) {
+                        // fallback: rgb to hex
+                        let rgb = bg.match(/\d+/g);
+                        if(rgb) hex = '#' + rgb.map(x=>(+x).toString(16).padStart(2,'0')).join('');
+                    }
+                    document.querySelectorAll('.auto-contrast-title').forEach(el=>{
+                        el.style.color = getContrastYIQ(hex.trim());
+                    });
+                }
+                document.addEventListener('DOMContentLoaded', applyTitleContrast);
+                window.addEventListener('settings:updated', applyTitleContrast);
+                </script>
             <?php if(isset($editMode) && $editMode): ?>
                 <button onclick="editText('nosotros_description','Texto de Nosotros')" class="bg-blue-600 text-white text-xs px-3 py-1 rounded">Editar texto</button>
             <?php endif; ?>
@@ -202,45 +249,45 @@
 
     <!-- Sección de Contacto -->
     <?php if($settings->show_contact_form): ?>
-        <div class="py-16 px-6" style="background: linear-gradient(135deg, rgba(<?php echo e($settings && $settings->primary_color ? $settings->primary_color : '#00d084'); ?>, 0.05), transparent);">
-            <div class="max-w-6xl mx-auto" style="background-color: var(--secondary-color);" class="py-12 px-8 rounded">
+        <div class="py-16 px-6" style="background: linear-gradient(135deg, rgba(0,0,0,0.03), transparent);">
+            <div class="max-w-4xl mx-auto bg-white/80 rounded-2xl shadow-2xl py-12 px-8 border border-gray-200" style="backdrop-filter: blur(4px);">
                 <div class="flex justify-between items-center mb-8">
-                    <h2 class="text-3xl font-bold text-white">Contáctenos</h2>
+                    <h2 class="text-3xl font-bold text-gray-900">Contáctenos</h2>
                     <?php if(isset($editMode) && $editMode): ?>
-                        <button onclick="editContact()" class="bg-blue-600 text-white text-xs px-3 py-1 rounded">Editar contacto</button>
+                        <button onclick="editContact()" class="bg-blue-600 text-white text-xs px-3 py-1 rounded shadow">Editar contacto</button>
                     <?php endif; ?>
                 </div>
                 <div class="grid md:grid-cols-3 gap-8 mb-12">
                     <?php if($settings->phone): ?>
                         <div>
-                            <h3 class="font-bold text-white mb-2">Teléfono</h3>
-                            <a href="tel:<?php echo e($settings->phone); ?>" class="text-gray-300 hover:text-white transition"><?php echo e($settings->phone); ?></a>
+                            <h3 class="font-bold text-gray-700 mb-2">Teléfono</h3>
+                            <a href="tel:<?php echo e($settings->phone); ?>" class="text-gray-500 hover:text-blue-700 transition"><?php echo e($settings->phone); ?></a>
                         </div>
                     <?php endif; ?>
                     <?php if($settings->email): ?>
                         <div>
-                            <h3 class="font-bold text-white mb-2">Email</h3>
-                            <a href="mailto:<?php echo e($settings->email); ?>" class="text-gray-300 hover:text-white transition"><?php echo e($settings->email); ?></a>
+                            <h3 class="font-bold text-gray-700 mb-2">Email</h3>
+                            <a href="mailto:<?php echo e($settings->email); ?>" class="text-gray-500 hover:text-blue-700 transition"><?php echo e($settings->email); ?></a>
                         </div>
                     <?php endif; ?>
                     <?php if($settings->whatsapp): ?>
                         <div>
-                            <h3 class="font-bold text-white mb-2">WhatsApp</h3>
-                            <a href="https://wa.me/<?php echo e(preg_replace('/[^0-9]/', '', $settings->whatsapp)); ?>" target="_blank" class="text-gray-300 hover:text-white transition"><?php echo e($settings->whatsapp); ?></a>
+                            <h3 class="font-bold text-gray-700 mb-2">WhatsApp</h3>
+                            <a href="https://wa.me/<?php echo e(preg_replace('/[^0-9]/', '', $settings->whatsapp)); ?>" target="_blank" class="text-gray-500 hover:text-blue-700 transition"><?php echo e($settings->whatsapp); ?></a>
                         </div>
                     <?php endif; ?>
                 </div>
-                <hr class="border-gray-700 mb-8">
-                <form action="<?php echo e(route('public.contact')); ?>" method="POST" class="max-w-2xl">
+                <hr class="border-gray-200 mb-8">
+                <form action="<?php echo e(\App\Helpers\RouteHelper::publicContactRoute()); ?>" method="POST" class="max-w-2xl mx-auto">
                     <?php echo csrf_field(); ?>
                     <div class="grid md:grid-cols-2 gap-4 mb-4">
-                        <input type="text" name="name" placeholder="Nombre Completo" required class="px-4 py-2 rounded bg-gray-700 text-white placeholder-gray-400 border border-gray-600">
-                        <input type="email" name="email" placeholder="Correo Electrónico" required class="px-4 py-2 rounded bg-gray-700 text-white placeholder-gray-400 border border-gray-600">
+                        <input type="text" name="name" placeholder="Nombre Completo" required class="px-4 py-3 rounded-lg bg-white/90 text-gray-900 placeholder-gray-400 border border-gray-300 shadow-sm focus:ring-2 focus:ring-blue-200">
+                        <input type="email" name="email" placeholder="Correo Electrónico" required class="px-4 py-3 rounded-lg bg-white/90 text-gray-900 placeholder-gray-400 border border-gray-300 shadow-sm focus:ring-2 focus:ring-blue-200">
                     </div>
-                    <input type="tel" name="phone" placeholder="Teléfono" required class="w-full px-4 py-2 rounded bg-gray-700 text-white placeholder-gray-400 mb-4 border border-gray-600">
-                    <textarea name="message" placeholder="Mensaje" rows="5" required class="w-full px-4 py-2 rounded bg-gray-700 text-white placeholder-gray-400 mb-4 border border-gray-600"></textarea>
+                    <input type="tel" name="phone" placeholder="Teléfono" required class="w-full px-4 py-3 rounded-lg bg-white/90 text-gray-900 placeholder-gray-400 mb-4 border border-gray-300 shadow-sm focus:ring-2 focus:ring-blue-200">
+                    <textarea name="message" placeholder="Mensaje" rows="5" required class="w-full px-4 py-3 rounded-lg bg-white/90 text-gray-900 placeholder-gray-400 mb-4 border border-gray-300 shadow-sm focus:ring-2 focus:ring-blue-200"></textarea>
                     <input type="hidden" name="vehicle_id" id="vehicle_id">
-                    <button type="submit" class="px-8 py-3 rounded text-white font-bold transition hover:opacity-90" style="background: linear-gradient(135deg, var(--primary-color), var(--tertiary-color));">
+                    <button type="submit" class="px-8 py-3 rounded-lg text-white font-bold transition hover:opacity-90 shadow-lg" style="background: linear-gradient(135deg, var(--primary-color), var(--tertiary-color));">
                         Enviar Consulta
                     </button>
                 </form>

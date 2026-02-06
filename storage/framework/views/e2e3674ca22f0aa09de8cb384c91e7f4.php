@@ -7,10 +7,12 @@
     .template-card {
         transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         cursor: pointer;
+        transform: scale(0.82);
+        transform-origin: top center;
     }
     
     .template-card:hover {
-        transform: translateY(-16px) scale(1.05);
+        transform: translateY(-10px) scale(0.85);
         box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
     }
     
@@ -25,8 +27,8 @@
 
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
     <div class="mb-8">
-        <h1 class="text-3xl font-bold text-gray-900">Elige tu Plantilla de Landing</h1>
-        <p class="text-gray-600 mt-2">Selecciona el diseño que mejor se adapte a tu agencia. Podrás personalizarlo después.</p>
+        <h1 class="text-3xl font-bold text-white">Elige tu Plantilla de Landing</h1>
+        <p class="text-slate-400 mt-2">Selecciona el diseño que mejor se adapte a tu agencia. Podrás personalizarlo después.</p>
     </div>
 
     <!-- Grid de Plantillas -->

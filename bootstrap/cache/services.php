@@ -30,9 +30,13 @@
     26 => 'Carbon\\Laravel\\ServiceProvider',
     27 => 'NunoMaduro\\Collision\\Adapters\\Laravel\\CollisionServiceProvider',
     28 => 'Termwind\\Laravel\\TermwindServiceProvider',
-    29 => 'Spatie\\Permission\\PermissionServiceProvider',
-    30 => 'Stancl\\Tenancy\\TenancyServiceProvider',
-    31 => 'App\\Providers\\AppServiceProvider',
+    29 => 'Spatie\\Backup\\BackupServiceProvider',
+    30 => 'Spatie\\Permission\\PermissionServiceProvider',
+    31 => 'Spatie\\SignalAwareCommand\\SignalAwareCommandServiceProvider',
+    32 => 'Spatie\\Sitemap\\SitemapServiceProvider',
+    33 => 'Stancl\\Tenancy\\TenancyServiceProvider',
+    34 => 'App\\Providers\\AppServiceProvider',
+    35 => 'App\\Providers\\RouteServiceProvider',
   ),
   'eager' => 
   array (
@@ -50,9 +54,13 @@
     11 => 'Carbon\\Laravel\\ServiceProvider',
     12 => 'NunoMaduro\\Collision\\Adapters\\Laravel\\CollisionServiceProvider',
     13 => 'Termwind\\Laravel\\TermwindServiceProvider',
-    14 => 'Spatie\\Permission\\PermissionServiceProvider',
-    15 => 'Stancl\\Tenancy\\TenancyServiceProvider',
-    16 => 'App\\Providers\\AppServiceProvider',
+    14 => 'Spatie\\Backup\\BackupServiceProvider',
+    15 => 'Spatie\\Permission\\PermissionServiceProvider',
+    16 => 'Spatie\\SignalAwareCommand\\SignalAwareCommandServiceProvider',
+    17 => 'Spatie\\Sitemap\\SitemapServiceProvider',
+    18 => 'Stancl\\Tenancy\\TenancyServiceProvider',
+    19 => 'App\\Providers\\AppServiceProvider',
+    20 => 'App\\Providers\\RouteServiceProvider',
   ),
   'deferred' => 
   array (

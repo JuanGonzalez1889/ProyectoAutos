@@ -32,10 +32,15 @@
                 @endif
                 <h1 class="text-xl font-bold text-gray-900">{{ $tenant->name }}</h1>
             </div>
-            
-            <a href="{{ route('login') }}" class="px-4 py-2 rounded-lg font-medium transition" style="background-color: {{ $settings && $settings->primary_color ? $settings->primary_color : '#00d084' }}; color: white;">
-                Panel Admin
-            </a>
+            <div class="flex gap-6 items-center">
+                <a href="#inicio" class="transition" style="color: {{ $settings->navbar_links_color ?? 'var(--navbar-text-color, #222)' }}">Inicio</a>
+                <a href="{{ route('public.vehiculos') }}" class="transition" style="color: {{ $settings->navbar_links_color ?? 'var(--navbar-text-color, #222)' }}">Vehículos</a>
+                <a href="#nosotros" class="transition" style="color: {{ $settings->navbar_links_color ?? 'var(--navbar-text-color, #222)' }}">Nosotros</a>
+                <a href="#contacto" class="transition" style="color: {{ $settings->navbar_links_color ?? 'var(--navbar-text-color, #222)' }}">Contacto</a>
+                <a href="{{ route('login') }}" class="px-4 py-2 rounded-lg font-medium transition" style="background-color: {{ $settings && $settings->primary_color ? $settings->primary_color : '#00d084' }}; color: white;">
+                    Panel Admin
+                </a>
+            </div>
         </div>
     </nav>
 
@@ -48,7 +53,7 @@
         <div class="absolute inset-0" style="background: linear-gradient(135deg, {{ $settings && $settings->primary_color ? $settings->primary_color : '#00d084' }}dd, {{ $settings && $settings->secondary_color ? $settings->secondary_color : '#0a0f14' }}dd)"></div>
         
         <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex flex-col justify-center">
-            <h2 class="text-5xl font-bold mb-4">{{ $tenant->name }}</h2>
+            <h2 class="text-5xl font-bold mb-4 auto-contrast-title">{{ $tenant->name }}</h2>
             <p class="text-xl text-gray-100 max-w-2xl">
                 {{ $settings->home_description ?? 'Descubre nuestro catálogo de vehículos de calidad con las mejores opciones del mercado.' }}
             </p>
@@ -59,7 +64,7 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         @if($settings->show_vehicles && $vehicles->count() > 0)
             <div class="mb-12">
-                <h3 class="text-3xl font-bold text-gray-900 mb-2">Nuestros Vehículos</h3>
+                <h3 class="text-3xl font-bold mb-2 auto-contrast-title">Nuestros Vehículos</h3>
                 <p class="text-gray-600">Tenemos {{ $vehicles->count() }} vehículos disponibles</p>
             </div>
 
@@ -130,7 +135,35 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <!-- Información -->
                     <div>
-                        <h3 class="text-3xl font-bold text-white mb-6">Contacta con Nosotros</h3>
+                        <h3 class="text-3xl font-bold mb-6 auto-contrast-title">Contacta con Nosotros</h3>
+                            <script>
+                            // Contraste automático para títulos principales y de sección
+                            function getContrastYIQ(hexcolor) {
+                                hexcolor = hexcolor.replace('#', '');
+                                if(hexcolor.length === 3) hexcolor = hexcolor.split('').map(x=>x+x).join('');
+                                var r = parseInt(hexcolor.substr(0,2),16);
+                                var g = parseInt(hexcolor.substr(2,2),16);
+                                var b = parseInt(hexcolor.substr(4,2),16);
+                                var yiq = ((r*299)+(g*587)+(b*114))/1000;
+                                return (yiq >= 180) ? '#222' : '#fff';
+                            }
+                            function applyTitleContrast() {
+                                let bg = getComputedStyle(document.body).backgroundColor;
+                                let hex = window.getComputedStyle(document.body).getPropertyValue('--secondary-color') || '#fff';
+                                if(hex.startsWith('#')) {
+                                    // ok
+                                } else if(bg) {
+                                    // fallback: rgb to hex
+                                    let rgb = bg.match(/\d+/g);
+                                    if(rgb) hex = '#' + rgb.map(x=>(+x).toString(16).padStart(2,'0')).join('');
+                                }
+                                document.querySelectorAll('.auto-contrast-title').forEach(el=>{
+                                    el.style.color = getContrastYIQ(hex.trim());
+                                });
+                            }
+                            document.addEventListener('DOMContentLoaded', applyTitleContrast);
+                            window.addEventListener('settings:updated', applyTitleContrast);
+                            </script>
                         <p class="text-gray-200 mb-6">{{ $settings->contact_message ?? 'Estamos disponibles para responder todas tus preguntas.' }}</p>
 
                         <div class="space-y-4">
@@ -180,7 +213,7 @@
                     </div>
 
                     <!-- Formulario -->
-                    <form action="{{ route('public.contact') }}" method="POST" class="space-y-4">
+                    <form action="{{ \App\Helpers\RouteHelper::publicContactRoute() }}" method="POST" class="space-y-4">
                         @csrf
                         <div>
                             <label class="block text-sm font-semibold text-white mb-2">Nombre</label>

@@ -90,4 +90,12 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Agencia::class, 'agencia_id');
     }
+
+    /**
+     * Relación con tenant
+     */
+    public function tenant()
+    {
+        return $this->belongsTo(Tenant::class, 'tenant_id');
+    }
 }

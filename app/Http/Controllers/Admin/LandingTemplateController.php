@@ -81,7 +81,17 @@ class LandingTemplateController extends Controller
             ['template' => $template]
         );
 
-        return view('admin.landing-template.edit', compact('tenant', 'settings', 'template'));
+        $primaryDomain = $tenant->domains()->orderBy('created_at')->first();
+        
+        if ($primaryDomain) {
+            $protocol = app()->environment('local') ? 'http://' : 'https://';
+            $port = app()->environment('local') ? ':8000' : '';
+            $previewUrl = $protocol . $primaryDomain->domain . $port;
+        } else {
+            $previewUrl = route('public.landing.preview', ['tenantId' => $tenant->id]);
+        }
+
+        return view('admin.landing-template.edit', compact('tenant', 'settings', 'template', 'previewUrl', 'primaryDomain'));
     }
 
     /**

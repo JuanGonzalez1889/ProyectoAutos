@@ -41,6 +41,16 @@ class EventController extends Controller
         return view('events.index', compact('allEvents', 'eventsByDate', 'stats'));
     }
 
+    public function create()
+    {
+        return view('events.create');
+    }
+
+    public function edit(Event $event)
+    {
+        return view('events.edit', compact('event'));
+    }
+
     public function store(Request $request)
     {
         /** @var \App\Models\User $user */
@@ -101,7 +111,22 @@ class EventController extends Controller
             $query->where('agencia_id', $user->agencia_id);
         }
         
-        $events = $query->get()->map(function ($event) {
+        $allEvents = $query->orderBy('start_time', 'asc')->get();
+        
+        // Calcular estadísticas
+        $today = now()->startOfDay();
+        $stats = [
+            'total' => $allEvents->count(),
+            'today' => $allEvents->filter(fn($event) => $event->start_time->startOfDay()->eq($today))->count(),
+            'upcoming' => $allEvents->filter(fn($event) => $event->start_time->startOfDay()->greaterThan($today) && $event->start_time->startOfDay()->lessThanOrEqualTo($today->addDays(7)))->count(),
+        ];
+        
+        // Agrupar eventos por fecha
+        $eventsByDate = $allEvents->groupBy(function($event) {
+            return $event->start_time->format('Y-m-d');
+        })->sortKeys();
+        
+        $events = $allEvents->map(function ($event) {
             /** @var Event $event */
             return [
                 'id' => $event->id,
@@ -113,7 +138,7 @@ class EventController extends Controller
             ];
         });
         
-        return view('events.calendar', compact('events'));
+        return view('events.calendar', compact('events', 'stats', 'allEvents', 'eventsByDate'));
     }
 
     private function getColorByType($type)

@@ -7,8 +7,11 @@ use App\Models\User;
 use App\Models\Task;
 use App\Models\Event;
 use App\Models\Vehicle;
+use App\Models\Lead;
+use App\Models\Invoice;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class DashboardController extends Controller
 {
@@ -51,6 +54,79 @@ class DashboardController extends Controller
                 $agencia = $user->fresh()->agencia;
             }
             
+            // Calcular métricas reales
+            $tenant = $user->tenant; // Obtener el tenant del usuario
+            $needsDomain = !$tenant || !$tenant->domains()->exists();
+            $needsAgencyName = !$agencia->nombre || $agencia->nombre === 'Agencia de ' . $user->name;
+            $needsUserName = !$user->name || $user->name === $user->email;
+            $showOnboarding = $needsDomain || $needsAgencyName || $needsUserName;
+            $suggestedDomain = Str::slug($agencia->nombre ?: $user->name, '-');
+            $onboarding = [
+                'show' => $showOnboarding,
+                'domain_suffix' => '.misaas.com',
+                'suggested_domain' => $suggestedDomain ?: 'miagencia',
+                'prefill_name' => $user->name,
+                'prefill_agencia' => $agencia->nombre,
+            ];
+            
+            if (!$tenant) {
+                // Si no tiene tenant, no hay datos para mostrar
+                $stats = [
+                    'total_users' => $agencia->users()->count(),
+                    'total_agencieros' => $agencia->users()->role('AGENCIERO')->count(),
+                    'total_colaboradores' => $agencia->users()->role('COLABORADOR')->count(),
+                    'active_users' => $agencia->users()->active()->count(),
+                    'inactive_users' => $agencia->users()->where('is_active', false)->count(),
+                    'agencia' => $agencia,
+                    'monthly_revenue' => 0,
+                    'units_sold' => 0,
+                    'active_inventory' => 0,
+                    'pending_events' => 0,
+                    'active_leads' => 0,
+                    'total_vehicles' => 0,
+                    'total_invoices' => 0,
+                    'top_vehicles' => [],
+                ];
+                
+                return view('agenciero.dashboard', compact('stats', 'onboarding'));
+            }
+            
+            $vehicles = Vehicle::where('agencia_id', $agencia->id)->get();
+            $invoices = Invoice::where('tenant_id', $tenant->id)->get();
+            $leads = Lead::where('agencia_id', $agencia->id)->get();
+            $events = Event::where('agencia_id', $agencia->id)->get();
+            
+            // Ingresos mensuales (últimos 30 días)
+            $monthlyRevenue = $invoices
+                ->filter(fn($inv) => $inv->created_at->diffInDays(now()) <= 30)
+                ->sum('total');
+            
+            // Unidades vendidas (invoices con estado pagado)
+            $unitsSold = $invoices->where('status', 'paid')->count();
+            
+            // Inventario activo
+            $activeInventory = $vehicles->where('status', 'available')->count();
+            
+            // Citas/eventos pendientes
+            $pendingEvents = $events->where('status', '!=', 'completed')->count();
+            
+            // Leads activos
+            $activeLeads = $leads->where('status', 'active')->count();
+            
+            // Vehículos más consultados
+            $topVehicles = $vehicles->sortByDesc('views')->take(3);
+            
+            // Eventos de hoy
+            $today = now()->toDateString();
+            $todayEvents = $events->filter(function($event) use ($today) {
+                return $event->start_time->toDateString() == $today;
+            })->sortBy('start_time');
+            
+            // Próximos eventos (próximos 7 días)
+            $upcomingEvents = $events->filter(function($event) {
+                return $event->start_time > now() && $event->start_time < now()->addDays(7);
+            })->sortBy('start_time')->take(3);
+            
             $stats = [
                 'total_users' => $agencia->users()->count(),
                 'total_agencieros' => $agencia->users()->role('AGENCIERO')->count(),
@@ -58,9 +134,19 @@ class DashboardController extends Controller
                 'active_users' => $agencia->users()->active()->count(),
                 'inactive_users' => $agencia->users()->where('is_active', false)->count(),
                 'agencia' => $agencia,
+                'monthly_revenue' => $monthlyRevenue,
+                'units_sold' => $unitsSold,
+                'active_inventory' => $activeInventory,
+                'pending_events' => $pendingEvents,
+                'active_leads' => $activeLeads,
+                'total_vehicles' => $vehicles->count(),
+                'total_invoices' => $invoices->count(),
+                'top_vehicles' => $topVehicles,
+                'today_events' => $todayEvents,
+                'upcoming_events' => $upcomingEvents,
             ];
             
-            return view('agenciero.dashboard', compact('stats'));
+            return view('agenciero.dashboard', compact('stats', 'onboarding'));
         }
         
         // Si es COLABORADOR, mostrar vista con datos reales
