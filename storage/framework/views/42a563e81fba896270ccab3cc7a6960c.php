@@ -42,7 +42,9 @@ unset($__defined_vars); ?>
 
 <nav class="fixed top-0 left-0 right-0 z-50 glass">
         <!-- Hamburguesa -->
-        <button id="menuBtn" class="md:hidden flex items-center justify-center w-10 h-10 rounded bg-slate-900 hover:bg-slate-800 transition absolute right-4 top-4 z-50">
+        <button id="menuBtn" class="md:hidden flex items-center justify-center w-10 h-10 rounded bg-slate-900 hover:bg-slate-800 transition absolute right-4 top-4 z-50" style="
+    margin-top: -0.2rem;
+">
             <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
             </svg>

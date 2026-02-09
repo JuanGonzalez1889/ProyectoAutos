@@ -163,7 +163,7 @@
                                     <div class="h-6 w-32 bg-white/10 rounded mb-2"></div>
                                     <div class="h-4 w-48 bg-white/5 rounded"></div>
                                 </div>
-                                <div class="h-10 w-32 bg-blue-500/20 rounded-lg"></div>
+                                <div class="h-10 w-32 bg-blue-500/20 rounded-lg" style="width: 4rem"></div>
                             </div>
                             <!-- Stats Cards -->
                             <div class="grid grid-cols-3 gap-3">

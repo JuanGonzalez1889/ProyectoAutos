@@ -2895,3 +2895,18 @@ ValidateSubscription: Usuario no autenticado
 IdentifyTenant START - Path: /.well-known/appspecific/com.chrome.devtools.json
 IdentifyTenant: Procesando normalmente
 ValidateSubscription: Usuario no autenticado
+IdentifyTenant START - Path: /
+IdentifyTenant: Procesando normalmente
+ValidateSubscription: Usuario no autenticado
+IdentifyTenant START - Path: /.well-known/appspecific/com.chrome.devtools.json
+IdentifyTenant: Procesando normalmente
+ValidateSubscription: Usuario no autenticado
+IdentifyTenant START - Path: /favicon.ico
+IdentifyTenant: Procesando normalmente
+ValidateSubscription: Usuario no autenticado
+IdentifyTenant START - Path: /
+IdentifyTenant: Procesando normalmente
+ValidateSubscription: Usuario no autenticado
+IdentifyTenant START - Path: /.well-known/appspecific/com.chrome.devtools.json
+IdentifyTenant: Procesando normalmente
+ValidateSubscription: Usuario no autenticado
