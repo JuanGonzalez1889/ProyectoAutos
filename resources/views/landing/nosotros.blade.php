@@ -8,6 +8,7 @@
 <!-- Sobre Nosotros Section -->
 <section id="nosotros" class="py-24 px-4">
     <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+       
         <!-- Texto -->
         <div>
             <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs font-semibold uppercase tracking-wider text-blue-400 mb-4">
@@ -23,12 +24,12 @@
                     En AutoWeb Pro, entendemos que la industria automotriz está evolucionando más rápido que nunca. Nuestra misión es cerrar la brecha entre la venta tradicional de vehículos y la demanda moderna de experiencias digitales fluidas.
                 </p>
                 <p>
-                    Desarrollamos tecnología SaaS de vanguardia que permite a los concesionarios optimizar inventarios, automatizar el seguimiento de clientes potenciales y cerrar ventas desde cualquier lugar del mundo. No somos solo software; somos el motor de tu transformación digital.
+                    Desarrollamos tecnología SaaS de vanguardia que permite a los concesionarios optimizar inventarios, automatizar el seguimiento de clientes potenciales y cerrar ventas desde cualquier lugar del mundo. No somos solo software; somos el motor de tu transformación digital
                 </p>
             </div>
-            <div class="pt-6 flex flex-wrap gap-8">
+            {{-- <div class="pt-6 flex flex-wrap gap-8">
                 <div>
-                    <span class="block text-3xl font-bold text-blue-500">500+</span>
+                    <span class="block text-3xl font-bold text-blue-500">100+</span>
                     <span class="text-sm text-slate-400">Concesionarias</span>
                 </div>
                 <div>
@@ -39,26 +40,14 @@
                     <span class="block text-3xl font-bold text-blue-500">24/7</span>
                     <span class="text-sm text-slate-400">Soporte dedicado</span>
                 </div>
-            </div>
+            </div> --}}
         </div>
 
         <!-- Visual -->
-        <div class="relative">
-            <div class="absolute -inset-1 rounded-3xl bg-gradient-to-r from-blue-500/30 to-indigo-500/30 blur opacity-40"></div>
-            <div class="relative aspect-video rounded-3xl bg-slate-900/50 backdrop-blur-xl border border-blue-500/20 overflow-hidden">
-                <div class="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(59,130,246,0.15),transparent_60%)]"></div>
-                <div class="absolute inset-0 flex items-end">
-                    <div class="w-full p-6 bg-gradient-to-t from-black/80 via-black/40 to-transparent">
-                        <div class="flex items-center gap-3">
-                            <div class="h-12 w-12 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center border border-white/20">
-                                <svg class="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 2a1 1 0 00-1 1v3m0 0h3m-3 0H9m-5 9a8 8 0 1116 0 8 8 0 01-16 0zm8 3a3 3 0 100-6 3 3 0 000 6z"></path>
-                                </svg>
-                            </div>
-                            <div>
-                                <p class="text-white font-medium">Análisis en tiempo real</p>
-                                <p class="text-white/60 text-sm">Dashboard inteligente</p>
-                            </div>
+         <!-- Imagen ilustrativa -->
+        <div class="hidden lg:block">
+            <img src="/storage/nosotros.png" alt="Sobre Nosotros AutoWeb Pro" class="rounded-2xl shadow-2xl w-full h-auto object-cover" />
+        </div>
                         </div>
                     </div>
                 </div>
@@ -71,9 +60,9 @@
 <section id="contacto" class="py-24 px-4">
     <div class="max-w-7xl mx-auto">
         <div class="text-center mb-12">
-            <h2 class="text-3xl md:text-5xl font-bold text-white">Hablemos de tu próximo proyecto.</h2>
+            <h2 class="text-3xl md:text-5xl font-bold text-white">¿Necesitas una web diferente?</h2>
             <p class="text-slate-400 max-w-2xl mx-auto mt-3">
-                Contanos tu idea o desafío y te ayudamos a transformarlo en una solución tecnológica real para tu agencia.
+                Contanos tu idea o desafío y te ayudamos a transformarlo en una solución tecnológica real para tu negocio en tiempo récord.
             </p>
         </div>
 
@@ -101,7 +90,7 @@
                         </div>
                         <div>
                             <p class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">WhatsApp</p>
-                            <a href="#" class="text-slate-200 hover:text-blue-400 hover:drop-shadow-[0_0_12px_rgba(59,130,246,0.6)] transition-colors font-medium">Consultar directo</a>
+                            <a href="https://wa.me/5493413365206" class="text-slate-200 hover:text-blue-400 hover:drop-shadow-[0_0_12px_rgba(59,130,246,0.6)] transition-colors font-medium">Consultar directo</a>
                         </div>
                     </div>
                 </div>

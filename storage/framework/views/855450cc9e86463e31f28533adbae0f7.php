@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es" style="font-size: 125%;">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -55,10 +55,8 @@
 <?php unset($__componentOriginalea2dce4014fb9bd77432d0a2cf5dc69b); ?>
 <?php endif; ?>
 </head>
-<body class="bg-gray-50" style="font-size: 125%;">
-    <div class="min-h-screen">
-        <?php echo $__env->yieldContent('content'); ?>
-    </div>
+<body class="bg-[hsl(var(--background))] text-[hsl(var(--foreground))] lg:overflow-hidden">
+    <?php echo $__env->yieldContent('content'); ?>
 </body>
 </html>
 <?php /**PATH C:\Users\Juan Gonzalez\Desktop\JuanMauro\ProyectoAutos\resources\views/layouts/guest.blade.php ENDPATH**/ ?>

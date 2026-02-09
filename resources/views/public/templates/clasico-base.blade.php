@@ -45,7 +45,7 @@
         body { font-family: {{ $settings->font_family ?? 'inherit' }}; }
     </style>
 </head>
-<body style="background-color: var(--secondary-color); zoom: 1.2;" class="text-white">
+<body style="background-color: var(--secondary-color);" class="text-white">
     @php($template = 'clasico')
 
     <!-- Header Clásico (idéntico a la home) -->
@@ -76,7 +76,7 @@
         })();
     </script>
     <header style="background-color: var(--secondary-color);" class="sticky top-0 z-50">
-        <div class="max-w-6xl mx-auto px-6 py-4" style="zoom: 1.2;">
+        <div class="max-w-6xl mx-auto px-6 py-4">
             <div class="flex justify-between items-center">
                 <div class="flex items-center gap-4">
                     @if($settings && $settings->logo_url)

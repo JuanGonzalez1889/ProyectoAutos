@@ -62,11 +62,7 @@
                 <!-- Satélites - Top Left (Mercado Libre) -->
                 <div class="absolute top-8 left-8 group-hover:animate-bounce" style="animation-delay: 0s;">
                     <div class="w-20 h-20 bg-slate-950 border border-slate-800 rounded-full flex items-center justify-center hover:border-blue-500/50 transition-all">
-                        <svg viewBox="0 0 100 100" class="w-10 h-10">
-                            <circle cx="50" cy="50" r="48" fill="#1e293b" stroke="#3b82f6" stroke-width="2"/>
-                            <path d="M30 55c5-5 15-5 20 0l10 10c5 5 15 5 20 0" stroke="#FFE600" stroke-width="4" fill="none" stroke-linecap="round"/>
-                            <path d="M30 45c5-5 15-5 20 0l10 10c5 5 15 5 20 0" stroke="#FFE600" stroke-width="4" fill="none" stroke-linecap="round"/>
-                        </svg>
+                        <img src="/storage/ml.png" alt="Mercado Libre" class="w-10 h-10 object-contain" />
                     </div>
                     <p class="text-xs text-gray-400 text-center mt-2">Mercado Libre</p>
                 </div>
@@ -181,7 +177,7 @@
 
 <footer class="border-t border-white/10 py-6 px-4">
     <div class="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
-        <p class="text-xs text-gray-500">© 2024 AutoWeb Pro. Todos los derechos reservados.</p>
+        <p class="text-xs text-gray-500">© 2026 AutoWeb Pro. Todos los derechos reservados.</p>
         <div class="flex items-center gap-6 text-xs text-gray-400">
             <a href="#" class="hover:text-white">Privacidad</a>
             <a href="#" class="hover:text-white">Términos</a>

@@ -47,8 +47,10 @@ Route::get('/nosotros', [LandingController::class, 'nosotros'])->name('landing.n
 Route::get('/proximamente', [LandingController::class, 'proximamente'])->name('landing.proximamente');
 
 // Páginas legales
-Route::view('/terminos', 'legal.terms')->name('legal.terms');
-Route::view('/privacidad', 'legal.privacy')->name('legal.privacy');
+Route::view('/legal/terminos', 'legal.terminos')->name('legal.terminos');
+Route::view('/legal/privacidad', 'legal.privacidad')->name('legal.privacidad');
+Route::view('/legal/cookies', 'legal.cookies')->name('legal.cookies');
+Route::view('/legal/seguridad', 'legal.seguridad')->name('legal.seguridad');
 Route::get('/precios', [LandingController::class, 'precios'])->name('landing.precios');
 Route::post('/newsletter', [LandingController::class, 'submitNewsletter'])->name('landing.newsletter');
 

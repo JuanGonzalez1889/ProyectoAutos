@@ -83,11 +83,11 @@
     </div>
 
     <!-- Grid de vehículos -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
         @forelse($vehicles as $vehicle)
-        <div class="card p-0 overflow-hidden group">
+        <div class="card p-0 overflow-hidden group max-w-xs">
             <!-- Imagen -->
-            <div class="relative h-48 bg-gradient-to-br from-gray-700 to-gray-900 overflow-hidden">
+            <div class="relative bg-gradient-to-br from-gray-700 to-gray-900 overflow-hidden" style="height: 140px;">
                 <img src="{{ $vehicle->main_image }}" 
                      alt="{{ $vehicle->title }}" 
                      class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300">
@@ -119,25 +119,25 @@
             </div>
 
             <!-- Contenido -->
-            <div class="p-4">
-                <h3 class="font-semibold text-white mb-1 truncate">{{ $vehicle->title }}</h3>
-                <p class="text-xs text-[hsl(var(--muted-foreground))] mb-3">
+            <div class="p-3">
+                <h3 class="font-semibold text-sm text-white mb-0.5 truncate">{{ $vehicle->title }}</h3>
+                <p class="text-[11px] text-[hsl(var(--muted-foreground))] mb-2">
                     {{ $vehicle->year }} • {{ number_format($vehicle->kilometers) }} km • {{ $vehicle->fuel_type }}
                 </p>
                 
-                <div class="flex items-center justify-between mb-4">
+                <div class="flex items-center justify-between mb-3">
                     <div>
                         @if($vehicle->price_original && $vehicle->price_original > $vehicle->price)
-                            <p class="text-xs text-[hsl(var(--muted-foreground))] line-through">${{ number_format($vehicle->price_original) }}</p>
+                            <p class="text-[10px] text-[hsl(var(--muted-foreground))] line-through">${{ number_format($vehicle->price_original) }}</p>
                         @endif
-                        <p class="text-xl font-bold text-[hsl(var(--primary))]">${{ number_format($vehicle->price) }}</p>
+                        <p class="text-lg font-bold text-[hsl(var(--primary))]">${{ number_format($vehicle->price) }}</p>
                     </div>
                 </div>
 
                 <!-- Acciones -->
-                <div class="flex gap-2 pt-3 border-t border-[hsl(var(--border))]">
+                <div class="flex gap-2 pt-2 border-t border-[hsl(var(--border))]">
                     <a href="{{ route('admin.vehicles.edit', $vehicle) }}" 
-                       class="flex-1 h-9 px-3 bg-blue-500/20 hover:bg-blue-500/30 text-blue-500 rounded-lg text-sm font-medium transition-colors flex items-center justify-center gap-1">
+                       class="flex-1 h-8 px-2 bg-blue-500/20 hover:bg-blue-500/30 text-blue-500 rounded-md text-xs font-medium transition-colors flex items-center justify-center gap-1">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
                         </svg>
@@ -148,7 +148,7 @@
                         @csrf
                         @method('DELETE')
                         <button type="submit" 
-                                class="w-full h-9 px-3 bg-red-500/20 hover:bg-red-500/30 text-red-500 rounded-lg text-sm font-medium transition-colors flex items-center justify-center gap-1">
+                                class="w-full h-8 px-2 bg-red-500/20 hover:bg-red-500/30 text-red-500 rounded-md text-xs font-medium transition-colors flex items-center justify-center gap-1">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
                             </svg>

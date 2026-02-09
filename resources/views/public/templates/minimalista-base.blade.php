@@ -45,7 +45,7 @@
         body { font-family: {{ $settings->font_family ?? 'inherit' }}; }
     </style>
 </head>
-<body style="background-color: var(--secondary-color); zoom: 1.2;" class="text-white">
+<body style="background-color: var(--secondary-color);" class="text-white">
     @php($template = 'minimalista')
     <!-- Navbar Minimalista -->
     <style>
@@ -74,7 +74,7 @@
             root.style.setProperty('--navbar-text-color', getContrastYIQ(bg));
         })();
     </script>
-    <nav class="bg-gray-800 border-b border-gray-700 sticky top-0 z-50" style="zoom: 1.2;">
+    <nav class="bg-gray-800 border-b border-gray-700 sticky top-0 z-50">
         <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
             <div class="flex items-center gap-3">
                 @if(isset($editMode) && $editMode)

@@ -32,7 +32,7 @@
     </div>
 
     <!-- Grid de Plantillas -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
         <!-- Plantilla Moderno -->
         <div class="template-card bg-[hsl(var(--card))] rounded-lg overflow-hidden shadow border border-[hsl(var(--border))]">
             <div class="relative bg-gradient-to-br from-purple-600 to-pink-500 h-48 overflow-hidden">
@@ -148,6 +148,122 @@
                 </div>
             </div>
         </div>
+
+        <!-- Plantilla Elegante -->
+        <div class="template-card bg-[hsl(var(--card))] rounded-lg overflow-hidden shadow border border-[hsl(var(--border))]">
+            <div class="relative h-48 overflow-hidden" style="background: linear-gradient(135deg, #0a0a0a, #1a1a1a);">
+                <img src="https://images.unsplash.com/photo-1563720223185-11003d516935?w=400&h=300&fit=crop" alt="Elegante" class="w-full h-full object-cover opacity-40">
+                <div class="absolute inset-0 flex items-center justify-center text-white">
+                    <div class="text-center">
+                        <div class="text-3xl font-bold mb-1" style="font-family: 'Georgia', serif; color: #c9a96e;">Elegante</div>
+                        <div class="text-xs tracking-[0.3em] uppercase" style="color: #c9a96e;">Luxury</div>
+                    </div>
+                </div>
+            </div>
+            <div class="p-4">
+                <h3 class="text-base font-bold mb-2 text-[hsl(var(--foreground))]">Elegante</h3>
+                <p class="text-[hsl(var(--muted-foreground))] mb-3 text-xs line-clamp-2">Estilo oscuro premium con acentos dorados. Para agencias high-end y vehículos de lujo.</p>
+                <div class="flex gap-2">
+                    <button onclick="previewTemplate('elegante')" class="flex-1 px-3 py-2 border border-[hsl(var(--border))] text-[hsl(var(--foreground))] rounded text-xs font-semibold hover:bg-[hsl(var(--secondary))] transition">
+                        Preview
+                    </button>
+                    <form action="{{ route('admin.landing-template.store') }}" method="POST" class="flex-1">
+                        @csrf
+                        <input type="hidden" name="template" value="elegante">
+                        <button type="submit" class="w-full px-3 py-2 text-white rounded text-xs font-semibold hover:opacity-90 transition" style="background: linear-gradient(135deg, #c9a96e, #d4af37);">
+                            Usar
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Plantilla Corporativo -->
+        <div class="template-card bg-[hsl(var(--card))] rounded-lg overflow-hidden shadow border border-[hsl(var(--border))]">
+            <div class="relative h-48 overflow-hidden" style="background: linear-gradient(135deg, #1e3a5f, #0f172a);">
+                <img src="https://images.unsplash.com/photo-1560958089-b8a1929cea89?w=400&h=300&fit=crop" alt="Corporativo" class="w-full h-full object-cover opacity-25">
+                <div class="absolute inset-0 flex items-center justify-center text-white">
+                    <div class="text-center">
+                        <div class="text-3xl font-semibold mb-1">Corporativo</div>
+                        <div class="text-xs tracking-wider">Empresarial</div>
+                    </div>
+                </div>
+            </div>
+            <div class="p-4">
+                <h3 class="text-base font-bold mb-2 text-[hsl(var(--foreground))]">Corporativo</h3>
+                <p class="text-[hsl(var(--muted-foreground))] mb-3 text-xs line-clamp-2">Diseño corporativo formal con tonos azul marino. Transmite confianza y profesionalismo.</p>
+                <div class="flex gap-2">
+                    <button onclick="previewTemplate('corporativo')" class="flex-1 px-3 py-2 border border-[hsl(var(--border))] text-[hsl(var(--foreground))] rounded text-xs font-semibold hover:bg-[hsl(var(--secondary))] transition">
+                        Preview
+                    </button>
+                    <form action="{{ route('admin.landing-template.store') }}" method="POST" class="flex-1">
+                        @csrf
+                        <input type="hidden" name="template" value="corporativo">
+                        <button type="submit" class="w-full px-3 py-2 bg-[#1e3a5f] text-white rounded text-xs font-semibold hover:bg-[#16304f] transition">
+                            Usar
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Plantilla Tecnológico -->
+        <div class="template-card bg-[hsl(var(--card))] rounded-lg overflow-hidden shadow border border-[hsl(var(--border))]">
+            <div class="relative h-48 overflow-hidden" style="background: linear-gradient(135deg, #0B1120, #1a2332);">
+                <img src="https://images.unsplash.com/photo-1550355291-bbee04a92027?w=400&h=300&fit=crop" alt="Tecnológico" class="w-full h-full object-cover opacity-35">
+                <div class="absolute inset-0 flex items-center justify-center text-white">
+                    <div class="text-center">
+                        <div class="text-3xl font-extrabold mb-1" style="background: linear-gradient(135deg, #2563eb, #60a5fa); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Tech</div>
+                        <div class="text-xs tracking-wider text-blue-400">NEXT-GEN</div>
+                    </div>
+                </div>
+            </div>
+            <div class="p-4">
+                <h3 class="text-base font-bold mb-2 text-[hsl(var(--foreground))]">Tecnológico</h3>
+                <p class="text-[hsl(var(--muted-foreground))] mb-3 text-xs line-clamp-2">Estilo SaaS moderno con hero split, barra de búsqueda, cards con badges y sección CTA.</p>
+                <div class="flex gap-2">
+                    <button onclick="previewTemplate('tecnologico')" class="flex-1 px-3 py-2 border border-[hsl(var(--border))] text-[hsl(var(--foreground))] rounded text-xs font-semibold hover:bg-[hsl(var(--secondary))] transition">
+                        Preview
+                    </button>
+                    <form action="{{ route('admin.landing-template.store') }}" method="POST" class="flex-1">
+                        @csrf
+                        <input type="hidden" name="template" value="tecnologico">
+                        <button type="submit" class="w-full px-3 py-2 bg-[#2563eb] text-white rounded text-xs font-semibold hover:bg-[#1d4ed8] transition">
+                            Usar
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Plantilla Innovador -->
+        <div class="template-card bg-[hsl(var(--card))] rounded-lg overflow-hidden shadow border border-[hsl(var(--border))]">
+            <div class="relative h-48 overflow-hidden" style="background: linear-gradient(135deg, #fafbff, #e0e7ff);">
+                <img src="https://images.unsplash.com/photo-1550355291-bbee04a92027?w=400&h=300&fit=crop" alt="Innovador" class="w-full h-full object-cover opacity-30">
+                <div class="absolute inset-0 flex items-center justify-center">
+                    <div class="text-center">
+                        <div class="text-3xl font-extrabold mb-1" style="background: linear-gradient(135deg, #2563eb, #7c3aed); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Innovador</div>
+                        <div class="text-xs tracking-wider text-blue-500">LIGHT MODE</div>
+                    </div>
+                </div>
+            </div>
+            <div class="p-4">
+                <h3 class="text-base font-bold mb-2 text-[hsl(var(--foreground))]">Innovador</h3>
+                <p class="text-[hsl(var(--muted-foreground))] mb-3 text-xs line-clamp-2">Diseño claro estilo SaaS con widget configurador, banner showcase, features y CTA oscuro.</p>
+                <div class="flex gap-2">
+                    <button onclick="previewTemplate('innovador')" class="flex-1 px-3 py-2 border border-[hsl(var(--border))] text-[hsl(var(--foreground))] rounded text-xs font-semibold hover:bg-[hsl(var(--secondary))] transition">
+                        Preview
+                    </button>
+                    <form action="{{ route('admin.landing-template.store') }}" method="POST" class="flex-1">
+                        @csrf
+                        <input type="hidden" name="template" value="innovador">
+                        <button type="submit" class="w-full px-3 py-2 text-white rounded text-xs font-semibold hover:opacity-90 transition" style="background: linear-gradient(135deg, #2563eb, #7c3aed);">
+                            Usar
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- Info sobre cambios futuros -->
@@ -174,7 +290,11 @@ function previewTemplate(template) {
         'moderno': 'Moderno',
         'minimalista': 'Minimalista',
         'clasico': 'Clásico',
-        'deportivo': 'Deportivo'
+        'deportivo': 'Deportivo',
+        'elegante': 'Elegante',
+        'corporativo': 'Corporativo',
+        'tecnologico': 'Tecnológico',
+        'innovador': 'Innovador'
     };
     
     document.getElementById('templateName').textContent = names[template];

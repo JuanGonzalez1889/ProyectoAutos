@@ -3,7 +3,7 @@
 <?php $__env->startSection('title', 'Iniciar Sesión'); ?>
 
 <?php $__env->startSection('content'); ?>
-<div class="min-h-screen flex">
+<div class="h-[100svh] flex overflow-hidden lg:scale-[0.88] lg:origin-top-left lg:w-[113.636%] lg:h-[113.636%]">
     <!-- Left side - Car image -->
     <div class="hidden lg:flex lg:w-1/2 relative bg-[#0a0f14]">
         <img src="https://images.unsplash.com/photo-1583121274602-3e2820c69888?w=1200&h=1200&fit=crop" 
@@ -45,7 +45,7 @@
 
             <!-- Tabs -->
             <div class="flex border-b border-[hsl(var(--border))]">
-                <button class="flex-1 pb-3 text-sm font-medium text-[hsl(var(--primary))] border-b-2 border-[hsl(var(--primary))]">
+                <button class="flex-1 pb-2 text-sm font-medium text-[hsl(var(--primary))] border-b-2 border-[hsl(var(--primary))]">
                     Iniciar Sesión
                 </button>
                 <!-- Registrarse solo accesible via invitación, no se muestra aquí -->

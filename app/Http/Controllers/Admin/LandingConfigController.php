@@ -66,7 +66,7 @@ class LandingConfigController extends Controller
                 'show_vehicles' => 'nullable|boolean',
                 'logo_url' => 'nullable|string|max:255',
                 'banner_url' => 'nullable|string|max:255',
-                'template' => 'nullable|in:moderno,minimalista,clasico,deportivo',
+                'template' => 'nullable|in:moderno,minimalista,clasico,deportivo,elegante,corporativo,tecnologico,innovador',
                 'agency_name' => 'nullable|string|max:255',
                 'navbar_agency_name' => 'nullable|string|max:255',
                 'navbar_agency_name_color' => ['nullable', 'string', 'regex:/^#?([0-9A-Fa-f]{3}|[0-9A-Fa-f]{6})$/'],

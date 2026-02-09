@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es" style="font-size: 140%;">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -252,7 +252,7 @@
         </aside>
 
         <!-- Main Content -->
-        <div class="ml-64 flex-1" style="zoom: 1.15;">
+        <div class="ml-64 flex-1">
             <!-- Top Bar -->
             <header class="bg-[hsl(var(--card))] border-b border-[hsl(var(--border))] h-16 flex items-center justify-between px-8 sticky top-0 z-40">
                 <h2 class="text-xl font-semibold text-[hsl(var(--foreground))]">@yield('page-title', 'Dashboard')</h2>

@@ -42,10 +42,10 @@
         body { font-family: {{ $settings->font_family ?? 'inherit' }}; }
     </style>
 </head>
-<body class="bg-white" style="zoom: 1.2;">
+<body class="bg-white">
     @php($template = 'clasico')
     <!-- Header Clásico -->
-    <header style="background-color: var(--secondary-color); zoom: 1.2;" class="text-white sticky top-0 z-50">
+    <header style="background-color: var(--secondary-color);" class="text-white sticky top-0 z-50">
         <div class="max-w-6xl mx-auto px-6 py-4">
             <div class="flex justify-between items-center">
                 <div class="flex items-center gap-4">

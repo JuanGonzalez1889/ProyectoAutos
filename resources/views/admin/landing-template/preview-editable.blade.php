@@ -40,7 +40,7 @@
         }
     </style>
 </head>
-<body class="bg-gray-50" style="zoom: 1.25;">
+<body class="bg-gray-50">
     @include("public.templates.{$template}", [
         'settings' => $settings,
         'tenant' => $tenant,

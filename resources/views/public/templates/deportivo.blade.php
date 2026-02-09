@@ -104,7 +104,7 @@
         @endif
     </style>
 </head>
-<body style="background-color: var(--secondary-color); zoom: 1.2;" class="text-white">
+<body style="background-color: var(--secondary-color);" class="text-white">
     @if(isset($editMode) && $editMode)
     <script>
         // Eliminar declaración duplicada de currentField para evitar errores JS
@@ -384,7 +384,7 @@
     @endif
     
     <!-- Navbar Deportivo -->
-    <nav class="sticky top-0 z-50 backdrop-blur-lg border-b" style="border-color: var(--primary-color); zoom: 1.2;">
+    <nav class="sticky top-0 z-50 backdrop-blur-lg border-b" style="border-color: var(--primary-color);">
         <div class="max-w-7xl mx-auto px-6 py-3 flex justify-between items-center">
             <div class="flex items-center gap-3">
                 @if(isset($editMode) && $editMode)

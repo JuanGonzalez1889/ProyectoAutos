@@ -3,11 +3,31 @@
 @section('title', 'Registrar Nueva Agencia - ProyectoAutos SaaS')
 
 @section('content')
-<div class="min-h-screen bg-gradient-to-br from-[hsl(var(--background))] to-[hsl(var(--secondary))] flex items-center justify-center p-4">
+<style>
+    .lamborghini-bg {
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 100vw;
+        height: 100vh;
+        z-index: 0;
+        background: url('/storage/lambo.jpg') no-repeat center center;
+        background-size: cover;
+        filter: blur(8px) brightness(0.7);
+        opacity: 0.85;
+    }
+    .register-container {
+        position: relative;
+        z-index: 1;
+    }
+</style>
+<div class="lamborghini-bg"></div>
+<div class="register-container">
+<div class="min-h-screen flex items-center justify-center p-4">
     <div class="w-full max-w-2xl">
         <!-- Logo/Header -->
         <div class="text-center mb-8">
-            <h1 class="text-4xl font-bold text-[hsl(var(--foreground))] mb-2">ProyectoAutos SaaS</h1>
+            <h1 class="text-4xl font-bold text-[hsl(var(--foreground))] mb-2">Auto Web Pro</h1>
             <p class="text-[hsl(var(--muted-foreground))]">Registra tu agencia y comienza tu prueba gratuita</p>
         </div>
 
@@ -247,3 +267,4 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 </div>
 @endsection
+ </div>

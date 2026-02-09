@@ -1,0 +1,3 @@
+# Copia la imagen del Lamborghini aquí para usarla como fondo en el registro.
+# Por ejemplo, puedes guardar la imagen como 'lamborghini.jpg'.
+# Ubicación recomendada: storage/lamborghini.jpg

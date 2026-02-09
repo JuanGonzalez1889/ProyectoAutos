@@ -18,55 +18,53 @@
 <body class="bg-black text-white m-0 p-0">
     <!-- Barra Superior Flotante -->
     <div class="fixed top-0 left-0 right-0 z-40 bg-slate-900 border-b border-slate-700 shadow-2xl">
-        <div class="h-24 px-8 flex items-center justify-between">
+        <div class="h-14 px-4 flex items-center justify-between">
             <!-- Izquierda: Logo y título -->
-            <div class="flex items-center gap-6">
-                                <!-- Eliminado: ahora el color de links navbar está junto a los otros colores principales -->
-                                <!-- Eliminado: ahora el color de links navbar está junto a los otros colores principales -->
-                <a href="{{ route('admin.landing-template.select') }}" class="flex items-center gap-2 hover:opacity-70 transition">
-                    <i class="fas fa-arrow-left text-white text-xl"></i>
-                    <span class="text-base font-medium text-gray-400">Volver</span>
+            <div class="flex items-center gap-3">
+                <a href="{{ route('admin.landing-template.select') }}" class="flex items-center gap-1.5 hover:opacity-70 transition">
+                    <i class="fas fa-arrow-left text-white text-sm"></i>
+                    <span class="text-xs font-medium text-gray-400">Volver</span>
                 </a>
-                <div class="w-px h-8 bg-slate-700"></div>
+                <div class="w-px h-6 bg-slate-700"></div>
                 <div>
-                    <h2 class="text-white font-bold text-xl">Editor Visual</h2>
-                    <p class="text-sm text-gray-400">{{ ucfirst($template) }} — Clickea los elementos para editar</p>
+                    <h2 class="text-white font-bold text-sm leading-tight">Editor Visual</h2>
+                    <p class="text-[10px] text-gray-400">{{ ucfirst($template) }} — Clickea los elementos para editar</p>
                 </div>
             </div>
 
             <!-- Centro: Selectores de Color -->
-            <div class="flex items-center gap-6">
+            <div class="flex items-center gap-3">
                 <div>
-                    <label class="text-sm text-gray-400 block mb-2 font-medium">🎨 Color Primario</label>
-                    <div class="flex gap-2 items-center">
-                        <input type="color" id="primaryColor" value="{{ $settings->primary_color ?? '#8b5cf6' }}" class="h-11 w-16 rounded cursor-pointer border border-slate-700">
-                        <input type="text" id="primaryColorText" value="{{ $settings->primary_color ?? '#8b5cf6' }}" class="w-28 px-2 h-11 bg-slate-800 border border-slate-700 rounded text-sm font-mono text-white" readonly>
+                    <label class="text-[10px] text-gray-400 block mb-0.5 font-medium">🎨 Color Primario</label>
+                    <div class="flex gap-1 items-center">
+                        <input type="color" id="primaryColor" value="{{ $settings->primary_color ?? '#8b5cf6' }}" class="h-7 w-10 rounded cursor-pointer border border-slate-700">
+                        <input type="text" id="primaryColorText" value="{{ $settings->primary_color ?? '#8b5cf6' }}" class="w-20 px-1.5 h-7 bg-slate-800 border border-slate-700 rounded text-xs font-mono text-white" readonly>
                     </div>
                 </div>
                 <div>
-                    <label class="text-sm text-gray-400 block mb-2 font-medium">🎨 Color Secundario</label>
-                    <div class="flex gap-2 items-center">
-                        <input type="color" id="secondaryColor" value="{{ $settings->secondary_color ?? '#1e293b' }}" class="h-11 w-16 rounded cursor-pointer border border-slate-700">
-                        <input type="text" id="secondaryColorText" value="{{ $settings->secondary_color ?? '#1e293b' }}" class="w-28 px-2 h-11 bg-slate-800 border border-slate-700 rounded text-sm font-mono text-white" readonly>
+                    <label class="text-[10px] text-gray-400 block mb-0.5 font-medium">🎨 Color Secundario</label>
+                    <div class="flex gap-1 items-center">
+                        <input type="color" id="secondaryColor" value="{{ $settings->secondary_color ?? '#1e293b' }}" class="h-7 w-10 rounded cursor-pointer border border-slate-700">
+                        <input type="text" id="secondaryColorText" value="{{ $settings->secondary_color ?? '#1e293b' }}" class="w-20 px-1.5 h-7 bg-slate-800 border border-slate-700 rounded text-xs font-mono text-white" readonly>
                     </div>
                 </div>
                 <div>
-                    <label class="text-sm text-gray-400 block mb-2 font-medium">🎨 Color Terciario</label>
-                    <div class="flex gap-2 items-center">
-                        <input type="color" id="tertiaryColor" value="{{ $settings->tertiary_color ?? '#ffaa00' }}" class="h-11 w-16 rounded cursor-pointer border border-slate-700">
-                        <input type="text" id="tertiaryColorText" value="{{ $settings->tertiary_color ?? '#ffaa00' }}" class="w-28 px-2 h-11 bg-slate-800 border border-slate-700 rounded text-sm font-mono text-white" readonly>
+                    <label class="text-[10px] text-gray-400 block mb-0.5 font-medium">🎨 Color Terciario</label>
+                    <div class="flex gap-1 items-center">
+                        <input type="color" id="tertiaryColor" value="{{ $settings->tertiary_color ?? '#ffaa00' }}" class="h-7 w-10 rounded cursor-pointer border border-slate-700">
+                        <input type="text" id="tertiaryColorText" value="{{ $settings->tertiary_color ?? '#ffaa00' }}" class="w-20 px-1.5 h-7 bg-slate-800 border border-slate-700 rounded text-xs font-mono text-white" readonly>
                     </div>
                 </div>
                 <div>
-                    <label class="text-sm text-gray-400 block mb-2 font-medium">🔗 Color Links Navbar</label>
-                    <div class="flex gap-2 items-center">
-                        <input type="color" id="navbarLinksColor" value="{{ $settings->navbar_links_color ?? '#ffffff' }}" class="h-11 w-16 rounded cursor-pointer border border-slate-700">
-                        <input type="text" id="navbarLinksColorText" value="{{ $settings->navbar_links_color ?? '#ffffff' }}" class="w-28 px-2 h-11 bg-slate-800 border border-slate-700 rounded text-sm font-mono text-white" readonly>
+                    <label class="text-[10px] text-gray-400 block mb-0.5 font-medium">🔗 Color Links Navbar</label>
+                    <div class="flex gap-1 items-center">
+                        <input type="color" id="navbarLinksColor" value="{{ $settings->navbar_links_color ?? '#ffffff' }}" class="h-7 w-10 rounded cursor-pointer border border-slate-700">
+                        <input type="text" id="navbarLinksColorText" value="{{ $settings->navbar_links_color ?? '#ffffff' }}" class="w-20 px-1.5 h-7 bg-slate-800 border border-slate-700 rounded text-xs font-mono text-white" readonly>
                     </div>
                 </div>
                 <div>
-                    <label class="text-sm text-gray-400 block mb-2 font-medium">🔤 Fuente Global</label>
-                    <select id="fontFamilySelect" class="h-11 w-56 bg-slate-800 border border-slate-700 rounded text-sm text-white px-2">
+                    <label class="text-[10px] text-gray-400 block mb-0.5 font-medium">🔤 Fuente Global</label>
+                    <select id="fontFamilySelect" class="h-7 w-40 bg-slate-800 border border-slate-700 rounded text-xs text-white px-1.5">
                         <option value="" {{ empty($settings->font_family) ? 'selected' : '' }}>(Por defecto)</option>
                         <option value="Roboto, sans-serif" {{ $settings->font_family === 'Roboto, sans-serif' ? 'selected' : '' }}>Roboto</option>
                         <option value="Open Sans, sans-serif" {{ $settings->font_family === 'Open Sans, sans-serif' ? 'selected' : '' }}>Open Sans</option>
@@ -98,13 +96,13 @@
             </div>
 
             <!-- Derecha: Botones de acción -->
-            <div class="flex items-center gap-3">
-                <button onclick="publishLanding()" class="px-6 py-3 bg-green-600 hover:bg-green-700 text-white rounded-lg text-base font-semibold transition flex items-center gap-2 shadow-lg" id="publishBtn">
-                    <i class="fas fa-rocket"></i>
+            <div class="flex items-center gap-2">
+                <button onclick="publishLanding()" class="px-4 py-1.5 bg-green-600 hover:bg-green-700 text-white rounded-md text-xs font-semibold transition flex items-center gap-1.5 shadow-lg" id="publishBtn">
+                    <i class="fas fa-rocket text-[10px]"></i>
                     Publicar
                 </button>
-                <a href="{{ $previewUrl }}" target="_blank" class="px-6 py-3 bg-slate-600 hover:bg-slate-700 text-white rounded-lg text-base font-semibold transition flex items-center gap-2 shadow-lg" @if($primaryDomain) title="Abrirá {{ $primaryDomain->domain }}. En local, agregá {{ $primaryDomain->domain }} -> 127.0.0.1 en hosts." @endif>
-                    <i class="fas fa-external-link-alt"></i>
+                <a href="{{ $previewUrl }}" target="_blank" class="px-4 py-1.5 bg-slate-600 hover:bg-slate-700 text-white rounded-md text-xs font-semibold transition flex items-center gap-1.5 shadow-lg" @if($primaryDomain) title="Abrirá {{ $primaryDomain->domain }}. En local, agregá {{ $primaryDomain->domain }} -> 127.0.0.1 en hosts." @endif>
+                    <i class="fas fa-external-link-alt text-[10px]"></i>
                     Previsualizar
                 </a>
             </div>
@@ -112,7 +110,7 @@
     </div>
 
     <!-- Contenedor principal (debajo de la barra) -->
-    <div class="h-screen w-screen overflow-hidden" style="padding-top: 120px;">
+    <div class="h-screen w-screen overflow-hidden" style="padding-top: 56px;">
         <iframe src="{{ route('landing.preview', $template) }}?edit=true" class="w-full h-full border-none" title="Vista previa editable de la landing page" id="editorFrame"></iframe>
     </div>
 

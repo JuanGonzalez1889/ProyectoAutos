@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es" style="font-size: 140%;">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,9 +17,7 @@
     {{-- Google Analytics 4 --}}
     <x-analytics />
 </head>
-<body class="bg-gray-50" style="zoom: 1.05;">
-    <div class="min-h-screen">
-        @yield('content')
-    </div>
+<body class="bg-[hsl(var(--background))] text-[hsl(var(--foreground))] lg:overflow-hidden">
+    @yield('content')
 </body>
 </html>

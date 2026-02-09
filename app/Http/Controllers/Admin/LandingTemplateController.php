@@ -38,7 +38,7 @@ class LandingTemplateController extends Controller
         }
 
         $validated = $request->validate([
-            'template' => 'required|in:moderno,minimalista,clasico,deportivo',
+            'template' => 'required|in:moderno,minimalista,clasico,deportivo,elegante,corporativo,tecnologico,innovador',
         ]);
 
         // Crear o actualizar settings
@@ -70,7 +70,7 @@ class LandingTemplateController extends Controller
         }
 
         // Validar template
-        $validTemplates = ['moderno', 'minimalista', 'clasico', 'deportivo'];
+        $validTemplates = ['moderno', 'minimalista', 'clasico', 'deportivo', 'elegante', 'corporativo', 'tecnologico', 'innovador'];
         if (!in_array($template, $validTemplates)) {
             abort(404);
         }
@@ -107,7 +107,7 @@ class LandingTemplateController extends Controller
         }
 
         // Validar template
-        $validTemplates = ['moderno', 'minimalista', 'clasico', 'deportivo'];
+        $validTemplates = ['moderno', 'minimalista', 'clasico', 'deportivo', 'elegante', 'corporativo', 'tecnologico', 'innovador'];
         if (!in_array($template, $validTemplates)) {
             abort(404);
         }
@@ -121,6 +121,10 @@ class LandingTemplateController extends Controller
             'minimalista' => ['primary_color' => '#10b981', 'secondary_color' => '#1f2937'], // Verde y gris oscuro
             'clasico' => ['primary_color' => '#3b82f6', 'secondary_color' => '#1e3a8a'], // Azul y azul oscuro
             'deportivo' => ['primary_color' => '#ef4444', 'secondary_color' => '#0f172a'], // Rojo y casi negro
+            'elegante' => ['primary_color' => '#c9a96e', 'secondary_color' => '#0a0a0a'], // Dorado y negro
+            'corporativo' => ['primary_color' => '#1e3a5f', 'secondary_color' => '#f8fafc'], // Azul marino y blanco
+            'tecnologico' => ['primary_color' => '#2563eb', 'secondary_color' => '#0B1120'], // Azul tech y navy oscuro
+            'innovador' => ['primary_color' => '#2563eb', 'secondary_color' => '#fafbff'], // Azul y blanco lavanda
         ];
 
         // Obtener settings reales del tenant
