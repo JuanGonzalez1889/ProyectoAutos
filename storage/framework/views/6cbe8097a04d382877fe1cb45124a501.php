@@ -20,6 +20,12 @@
         position: relative;
         z-index: 1;
     }
+    @media (max-width: 600px) {
+        .domain-ext-mobile {
+            font-size: 8px !important;
+            line-height: 1 !important;
+        }
+    }
 </style>
 <div class="lamborghini-bg"></div>
 <div class="register-container">
@@ -28,7 +34,7 @@
         <!-- Logo/Header -->
         <div class="text-center mb-8">
             <h1 class="text-4xl font-bold text-[hsl(var(--foreground))] mb-2">Auto Web Pro</h1>
-            <p class="text-[hsl(var(--muted-foreground))]">Registra tu agencia y comienza tu prueba gratuita</p>
+            <p class="text-[hsl(var(--muted-foreground))]">Registra tu agencia y comienza hoy mismo</p>
         </div>
 
         <!-- Tarjeta de Registro -->
@@ -170,7 +176,7 @@ unset($__errorArgs, $__bag); ?>
                                    class="flex-1 px-4 py-2.5 bg-[hsl(var(--background))] border border-[hsl(var(--border))] rounded-lg text-[hsl(var(--foreground))] focus:outline-none focus:ring-2 focus:ring-[hsl(var(--primary))] focus:border-transparent"
                                    placeholder="miagencia"
                                    oninput="validateDomainInput(this.value)">
-                            <span class="text-[hsl(var(--muted-foreground))] font-medium">.misaas.com</span>
+                            <span class="text-[hsl(var(--muted-foreground))] font-medium domain-ext-mobile">.misaas.com</span>
                             <span id="domainStatus" class="text-2xl w-6 h-6 flex items-center justify-center"></span>
                         </div>
                         <p class="mt-1 text-xs text-[hsl(var(--muted-foreground))]">
@@ -237,12 +243,7 @@ unset($__errorArgs, $__bag); ?>
                 </div>
 
                 <!-- Aviso de Términos -->
-                <div class="bg-blue-500/10 border border-blue-500/20 rounded-lg p-3">
-                    <p class="text-sm text-[hsl(var(--foreground))]">
-                        <span class="font-medium">Prueba Gratuita:</span> 
-                        Obtén 30 días de acceso completo sin necesidad de tarjeta de crédito.
-                    </p>
-                </div>
+                
 
                 <!-- Botones -->
                 <div class="flex gap-3 pt-4">

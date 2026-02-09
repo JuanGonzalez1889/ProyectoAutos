@@ -136,7 +136,7 @@
                                     <div class="h-6 w-32 bg-white/10 rounded mb-2"></div>
                                     <div class="h-4 w-48 bg-white/5 rounded"></div>
                                 </div>
-                                <div class="h-10 w-32 bg-blue-500/20 rounded-lg" style="width: 4rem"></div>
+                                <div class="h-10 w-32 bg-blue-500/20 rounded-lg"></div>
                             </div>
                             <!-- Stats Cards -->
                             <div class="grid grid-cols-3 gap-3">
@@ -832,7 +832,7 @@
                 </div>
                 <div class="p-6" style="min-height:260px;display:flex;align-items:center;justify-content:center;">
                     <div style="width:100%;max-width:520px;min-width:320px;min-height:220px;position:relative;border:2px dashed #3b82f6; border-radius:12px; background:rgba(30,41,59,0.7);padding:12px;">
-                        <canvas id="ventasChart" width="480" height="180" style="display:block;"></canvas>
+                        <canvas id="ventasChart" width="480" height="180" style="display:block;width:100%;max-width:480px;"></canvas>
                     </div>
                     <div class="mt-6 h-px bg-slate-800"></div>
                     <script src="/js/chart.min.js"></script>
