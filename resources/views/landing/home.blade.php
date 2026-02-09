@@ -136,7 +136,7 @@
                                     <div class="h-6 w-32 bg-white/10 rounded mb-2"></div>
                                     <div class="h-4 w-48 bg-white/5 rounded"></div>
                                 </div>
-                                <div class="h-10 w-32 bg-blue-500/20 rounded-lg"></div>
+                                <div class="h-10 w-32 bg-blue-500/20 rounded-lg" style="width: 0.75rem"></div>
                             </div>
                             <!-- Stats Cards -->
                             <div class="grid grid-cols-3 gap-3">
@@ -149,7 +149,7 @@
                                     <div class="h-6 w-12 bg-white/20 rounded"></div>
                                 </div>
                                 <div class="bg-yellow-500/10 border border-yellow-500/20 rounded-lg p-3">
-                                    <div class="h-3 w-16 bg-yellow-500/30 rounded mb-2"></div>
+                                    <div class="h-3 w-16 bg-yellow-500/30 rounded mb-2" style="width: 3rem"></div>
                                     <div class="h-6 w-12 bg-white/20 rounded"></div>
                                 </div>
                             </div>
