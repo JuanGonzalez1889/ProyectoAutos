@@ -23,21 +23,21 @@ class RoleAndPermissionSeeder extends Seeder
             'users.create',
             'users.edit',
             'users.delete',
-            
+
             // Roles
             'roles.view',
             'roles.assign',
-            
+
             // Dashboard
             'dashboard.access',
             'dashboard.stats',
-            
+
             // Agencieros
             'agencieros.view',
             'agencieros.create',
             'agencieros.edit',
             'agencieros.delete',
-            
+
             // Colaboradores
             'colaboradores.view',
             'colaboradores.create',
@@ -46,17 +46,17 @@ class RoleAndPermissionSeeder extends Seeder
         ];
 
         foreach ($permissions as $permission) {
-            Permission::create(['name' => $permission]);
+            Permission::create(['name' => $permission, 'guard_name' => 'web']);
         }
 
         // Crear roles y asignar permisos
 
         // Rol ADMIN - Tiene todos los permisos
-        $adminRole = Role::create(['name' => 'ADMIN']);
+        $adminRole = Role::create(['name' => 'ADMIN', 'guard_name' => 'web']);
         $adminRole->givePermissionTo(Permission::all());
 
         // Rol AGENCIERO - Puede gestionar colaboradores
-        $agencieroRole = Role::create(['name' => 'AGENCIERO']);
+        $agencieroRole = Role::create(['name' => 'AGENCIERO', 'guard_name' => 'web']);
         $agencieroRole->givePermissionTo([
             'dashboard.access',
             'dashboard.stats',
@@ -67,7 +67,7 @@ class RoleAndPermissionSeeder extends Seeder
         ]);
 
         // Rol COLABORADOR - Permisos limitados
-        $colaboradorRole = Role::create(['name' => 'COLABORADOR']);
+        $colaboradorRole = Role::create(['name' => 'COLABORADOR', 'guard_name' => 'web']);
         $colaboradorRole->givePermissionTo([
             'dashboard.access',
         ]);
