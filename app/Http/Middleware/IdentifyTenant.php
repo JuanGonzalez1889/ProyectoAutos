@@ -35,42 +35,41 @@ class IdentifyTenant
         
         // Dominios centrales (sin tenant)
         $centralDomains = config('tenancy.central_domains', []);
+        $mainDomain = 'autowebpro.com.ar';
         
-        // Si es un dominio central, permitir acceso sin tenant
-        if (in_array($host, $centralDomains)) {
+        // Si es un dominio central o el dominio principal, permitir acceso completo
+        if (in_array($host, $centralDomains) || $host === $mainDomain) {
             return $next($request);
         }
 
-        // Buscar el tenant por dominio
+        // SUBDOMINIOS: solo rutas públicas permitidas
         $domain = Domain::where('domain', $host)->first();
-
         if (!$domain) {
             // Si es localhost o IP, permitir para desarrollo
             if ($host === 'localhost' || $host === '127.0.0.1') {
                 return $next($request);
             }
-            
             abort(404, 'Agencia no encontrada');
         }
-
-        // Obtener el tenant
         $tenant = Tenant::find($domain->tenant_id);
-
         if (!$tenant || !$tenant->is_active) {
             abort(403, 'Esta agencia no está activa');
         }
-
-        // Guardar el tenant en la aplicación
         app()->instance('tenant', $tenant);
 
-        // Si el usuario está autenticado, verificar que pertenezca a este tenant
-        if (Auth::check()) {
-            if (Auth::user()->tenant_id !== $tenant->id) {
-                Auth::logout();
-                abort(403, 'No tienes acceso a esta agencia');
+        // Solo permitir rutas públicas en subdominios
+        $publicPaths = ['/','/agencia','/agencia-preview','/contacto','/vehiculos','/newsletter','/precios','/nosotros','/proximamente'];
+        $isPublic = false;
+        foreach ($publicPaths as $p) {
+            if (str_starts_with($path, $p)) {
+                $isPublic = true;
+                break;
             }
         }
-
-        return $next($request);
+        if ($isPublic) {
+            return $next($request);
+        }
+        // Si no es ruta pública, bloquear acceso
+        abort(403, 'Solo rutas públicas permitidas en subdominios');
     }
 }

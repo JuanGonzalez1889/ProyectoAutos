@@ -3222,3 +3222,31 @@ ValidateSubscription: Usuario no autenticado
 IdentifyTenant START - Path: /.well-known/appspecific/com.chrome.devtools.json
 IdentifyTenant: Procesando normalmente
 ValidateSubscription: Usuario no autenticado
+IdentifyTenant START - Path: /register
+IdentifyTenant: Ruta exacta excluida
+ValidateSubscription: Ruta excluida: register
+IdentifyTenant START - Path: /admin/dashboard
+IdentifyTenant: Procesando normalmente
+IdentifyTenant START - Path: /admin/vehicles
+IdentifyTenant: Procesando normalmente
+IdentifyTenant START - Path: /register
+IdentifyTenant: Ruta exacta excluida
+ValidateSubscription: Ruta excluida: register
+IdentifyTenant START - Path: /admin/dashboard
+IdentifyTenant: Procesando normalmente
+IdentifyTenant START - Path: /admin/vehicles
+IdentifyTenant: Procesando normalmente
+IdentifyTenant START - Path: /register
+IdentifyTenant: Ruta exacta excluida
+ValidateSubscription: Ruta excluida: register
+IdentifyTenant START - Path: /admin/dashboard
+IdentifyTenant: Procesando normalmente
+IdentifyTenant START - Path: /admin/vehicles
+IdentifyTenant: Procesando normalmente
+IdentifyTenant START - Path: /register
+IdentifyTenant: Ruta exacta excluida
+ValidateSubscription: Ruta excluida: register
+IdentifyTenant START - Path: /admin/dashboard
+IdentifyTenant: Procesando normalmente
+IdentifyTenant START - Path: /admin/vehicles
+IdentifyTenant: Procesando normalmente

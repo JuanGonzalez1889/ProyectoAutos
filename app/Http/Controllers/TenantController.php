@@ -40,7 +40,7 @@ class TenantController extends Controller
             DB::beginTransaction();
 
             // Construir dominio completo
-            $fullDomain = $validated['domain'] . '.misaas.com';
+            $fullDomain = $validated['domain'] . '.autowebpro.com.ar';
 
             // 1. Crear el Tenant
             $tenant = Tenant::create([
@@ -78,8 +78,8 @@ class TenantController extends Controller
                 'is_active' => true,
             ]);
 
-            // 5. Asignar rol de AGENCIERO usando Spatie Permission
-            $admin->assignRole('AGENCIERO');
+            // 5. Asignar rol de ADMIN usando Spatie Permission
+            $admin->assignRole('ADMIN');
 
             DB::commit();
 

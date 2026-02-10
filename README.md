@@ -117,25 +117,28 @@ La aplicación estará disponible en: `http://localhost:8000`
 
 ### Primer Registro
 
-1. Ve a `/register` o haz clic en "Registrarse"
+1. Ve a `/tenants/register` o haz clic en "Registrar Agencia"
 2. El **primer usuario** que se registre será asignado automáticamente como **ADMIN**
 3. Los siguientes usuarios se registrarán como **AGENCIERO** por defecto
 
 ### Login
 
+- **IMPORTANTE:** El login y acceso al panel deben hacerse desde el subdominio generado, por ejemplo:
+  - `https://miagencia.autowebpro.com.ar/login`
+  - `https://miagencia.autowebpro.com.ar/admin/dashboard`
 - **Email y contraseña**: Usa las credenciales que creaste
 - **Google OAuth**: Haz clic en "Continuar con Google"
 
 ### Crear Usuarios desde el Panel Admin
 
-1. Inicia sesión como ADMIN
+1. Inicia sesión como ADMIN (en tu subdominio)
 2. Ve a "Usuarios" → "Crear Usuario"
 3. Completa el formulario:
-   - Nombre completo
-   - Email
-   - Contraseña
-   - Selecciona el rol (ADMIN, AGENCIERO, COLABORADOR)
-   - Estado (activo/inactivo)
+  - Nombre completo
+  - Email
+  - Contraseña
+  - Selecciona el rol (ADMIN, AGENCIERO, COLABORADOR)
+  - Estado (activo/inactivo)
 4. Haz clic en "Crear Usuario"
 
 ### Gestionar Usuarios
