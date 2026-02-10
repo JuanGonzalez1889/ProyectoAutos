@@ -20,25 +20,23 @@ class AgenciaController extends Controller
     {
         /** @var \App\Models\User $user */
         $user = Auth::user();
-        
+
         if (!$user->isAgenciero()) {
             abort(403, 'Solo los agencieros pueden acceder a esta sección');
         }
 
         $agencia = $user->agencia;
-        
+
         if (!$agencia) {
-            // Si el agenciero no tiene agencia, crear una
             $agencia = Agencia::create([
                 'nombre' => 'Agencia de ' . $user->name,
                 'ubicacion' => '',
                 'telefono' => '',
             ]);
-            
+
             $user->update(['agencia_id' => $agencia->id]);
         }
 
-        // Si el agenciero no tiene tenant, crearlo y asociarlo a la agencia
         if (!$user->tenant_id) {
             $tenant = Tenant::create([
                 'id' => (string) Str::uuid(),
@@ -53,12 +51,10 @@ class AgenciaController extends Controller
 
             $user->update(['tenant_id' => $tenant->id]);
 
-            // Asociar la agencia al tenant recién creado
             if (!$agencia->tenant_id) {
                 $agencia->update(['tenant_id' => $tenant->id]);
             }
         } elseif (!$agencia->tenant_id) {
-            // Si el usuario ya tiene tenant pero la agencia no, vincularla
             $agencia->update(['tenant_id' => $user->tenant_id]);
         }
 
@@ -72,18 +68,18 @@ class AgenciaController extends Controller
     {
         /** @var \App\Models\User $user */
         $user = Auth::user();
-        
+
         if (!$user->isAgenciero()) {
             abort(403, 'Solo los agencieros pueden actualizar agencias');
         }
 
         $agencia = $user->agencia;
-        
+
         if (!$agencia) {
             return redirect()->back()->with('error', 'No tienes una agencia asignada');
         }
 
-        $validated = $this->validate($request, [
+        $validated = $request->validate([
             'nombre' => 'required|string|max:255',
             'ubicacion' => 'nullable|string|max:255',
             'telefono' => 'nullable|string|max:50',
@@ -117,7 +113,8 @@ class AgenciaController extends Controller
                 'max:255',
                 'regex:/^[a-z0-9]+(?:-[a-z0-9]+)*$/',
                 function ($attribute, $value, $fail) use ($currentTenant) {
-                    $fullDomain = strtolower(trim($value)) . '.autowebpro.com.ar';
+                    // MODIFICADO: Uso de config central_domain
+                    $fullDomain = strtolower(trim($value)) . '.' . config('app.central_domain');
                     $query = Domain::where('domain', $fullDomain);
                     if ($currentTenant) {
                         $query->where('tenant_id', '!=', $currentTenant->id);
@@ -133,8 +130,6 @@ class AgenciaController extends Controller
 
         try {
             DB::transaction(function () use ($validated, $user) {
-                \Log::info('Onboarding: Iniciando para usuario', ['user_id' => $user->id, 'email' => $user->email]);
-                
                 $agencia = $user->agencia;
 
                 if (!$agencia) {
@@ -143,23 +138,12 @@ class AgenciaController extends Controller
                         'ubicacion' => '',
                         'telefono' => '',
                     ]);
-
                     $user->update(['agencia_id' => $agencia->id]);
                     $user->refresh();
                     $agencia = $user->agencia;
-                    \Log::info('Onboarding: Agencia creada', ['agencia_id' => $agencia->id, 'nombre' => $agencia->nombre]);
                 } else {
                     $agencia->update(['nombre' => $validated['agencia_name']]);
                     $agencia->refresh();
-                    
-                    // Verificar que se guardó
-                    $dbCheck = Agencia::find($agencia->id);
-                    \Log::info('Onboarding: Agencia actualizada', [
-                        'agencia_id' => $agencia->id, 
-                        'nombre_objeto' => $agencia->nombre,
-                        'nombre_bd' => $dbCheck->nombre,
-                        'valor_enviado' => $validated['agencia_name']
-                    ]);
                 }
 
                 $tenant = $user->tenant;
@@ -175,15 +159,12 @@ class AgenciaController extends Controller
                         'is_active' => true,
                         'trial_ends_at' => now()->addDays(30),
                     ]);
-
                     $user->update(['tenant_id' => $tenant->id]);
-                    \Log::info('Onboarding: Tenant creado', ['tenant_id' => $tenant->id]);
                 } else {
                     $tenant->update([
                         'name' => $validated['agencia_name'],
                         'email' => $user->email,
                     ]);
-                    \Log::info('Onboarding: Tenant actualizado', ['tenant_id' => $tenant->id]);
                 }
 
                 if (!$agencia->tenant_id) {
@@ -191,9 +172,9 @@ class AgenciaController extends Controller
                     $agencia->save();
                 }
 
-                $fullDomain = strtolower(trim($validated['domain'])) . '.misaas.com';
+                // MODIFICADO: Uso de config central_domain
+                $fullDomain = strtolower(trim($validated['domain'])) . '.' . config('app.central_domain');
 
-                // Mantener solo el dominio elegido por el usuario
                 Domain::where('tenant_id', $tenant->id)
                     ->where('domain', '!=', $fullDomain)
                     ->delete();
@@ -207,27 +188,20 @@ class AgenciaController extends Controller
                         'domain' => $fullDomain,
                         'tenant_id' => $tenant->id,
                     ]);
-                    \Log::info('Onboarding: Dominio creado', ['domain' => $fullDomain]);
-                } else {
-                    \Log::info('Onboarding: Dominio ya existe', ['domain' => $fullDomain]);
                 }
 
                 $user->update(['name' => $validated['full_name']]);
                 $user->refresh();
-                \Log::info('Onboarding: Usuario actualizado', ['user_id' => $user->id, 'name' => $user->name]);
             });
 
-            // Forzar recarga del usuario para limpiar cache de relaciones
             $user->load(['tenant', 'agencia']);
-            
-            \Log::info('Onboarding: Completado exitosamente', ['user_id' => $user->id]);
 
             return redirect()->route('admin.dashboard')
                 ->with('success', '¡Listo! Tu agencia quedó configurada.');
         } catch (\Exception $e) {
-            \Log::error('Onboarding: Error', ['error' => $e->getMessage(), 'trace' => $e->getTraceAsString()]);
+            \Log::error('Onboarding: Error', ['error' => $e->getMessage()]);
             return redirect()->back()
-                ->withErrors(['error' => 'Hubo un error al guardar. Por favor intentá de nuevo.'])
+                ->withErrors(['error' => 'Hubo un error al guardar.'])
                 ->withInput();
         }
     }
@@ -239,13 +213,13 @@ class AgenciaController extends Controller
     {
         /** @var \App\Models\User $user */
         $user = Auth::user();
-        
+
         if (!$user->isAgenciero()) {
             abort(403, 'Solo los agencieros pueden acceder a esta sección');
         }
 
         $tenant = $user->tenant;
-        
+
         if (!$tenant) {
             return redirect()->route('admin.agencia.show')
                 ->with('error', 'Debes configurar tu agencia primero');
@@ -261,18 +235,17 @@ class AgenciaController extends Controller
     {
         /** @var \App\Models\User $user */
         $user = Auth::user();
-        
+
         if (!$user->isAgenciero()) {
             abort(403, 'Solo los agencieros pueden actualizar la configuración');
         }
 
         $tenant = $user->tenant;
-        
+
         if (!$tenant) {
             return redirect()->back()->with('error', 'Debes configurar tu agencia primero');
         }
 
-        // Validar datos
         $validated = $request->validate([
             'business_hours' => 'nullable|array',
             'social_media' => 'nullable|array',
@@ -294,7 +267,6 @@ class AgenciaController extends Controller
             'response_time_hours' => 'nullable|integer|min:1|max:168',
         ]);
 
-        // Procesar business_hours para solo guardar valores no vacíos
         if (isset($validated['business_hours'])) {
             $processedHours = [];
             foreach ($validated['business_hours'] as $day => $hours) {
@@ -311,12 +283,10 @@ class AgenciaController extends Controller
             $validated['business_hours'] = $processedHours;
         }
 
-        // Procesar social_media para solo guardar URLs no vacías
         if (isset($validated['social_media'])) {
             $validated['social_media'] = array_filter($validated['social_media']);
         }
 
-        // Procesar payment_methods
         if (isset($validated['payment_methods'])) {
             $processedMethods = [];
             foreach ($validated['payment_methods'] as $method => $value) {
@@ -325,7 +295,6 @@ class AgenciaController extends Controller
             $validated['payment_methods'] = $processedMethods ?: null;
         }
 
-        // Actualizar el tenant
         $tenant->update($validated);
 
         return redirect()->back()->with('success', '✓ Configuración guardada correctamente');
@@ -337,33 +306,28 @@ class AgenciaController extends Controller
     public function checkDomainAvailability(Request $request)
     {
         $domain = $request->query('domain');
-        
+
         if (!$domain) {
             return response()->json(['available' => false, 'message' => 'Dominio requerido']);
         }
 
-        // Validar que el dominio no tenga caracteres inválidos
         if (!preg_match('/^[a-z0-9]([a-z0-9-]*[a-z0-9])?$/', $domain)) {
             return response()->json(['available' => false, 'message' => 'Dominio con formato inválido']);
         }
 
-        // Construir el dominio completo como se guarda en la BD
-        $fullDomain = strtolower(trim($domain)) . '.misaas.com';
+        // MODIFICADO: Uso de config central_domain
+        $fullDomain = strtolower(trim($domain)) . '.' . config('app.central_domain');
 
-        // Verificar si el dominio existe en la base de datos
         $existingDomain = Domain::where('domain', $fullDomain)->first();
 
         if ($existingDomain) {
-            // Si el dominio existe y pertenece al usuario actual, está disponible (es el existente)
             $currentUserTenantId = auth()->user()->tenant_id;
             if ($currentUserTenantId && $existingDomain->tenant_id === $currentUserTenantId) {
                 return response()->json(['available' => true, 'message' => 'Este es tu dominio actual']);
             }
-            // Si existe pero es de otro tenant, no está disponible
             return response()->json(['available' => false, 'message' => 'Este dominio ya está en uso']);
         }
 
-        // Si no existe, está disponible
         return response()->json(['available' => true, 'message' => 'Dominio disponible']);
     }
 }
