@@ -117,7 +117,7 @@ class AgenciaController extends Controller
                 'max:255',
                 'regex:/^[a-z0-9]+(?:-[a-z0-9]+)*$/',
                 function ($attribute, $value, $fail) use ($currentTenant) {
-                    $fullDomain = strtolower(trim($value)) . '.misaas.com';
+                    $fullDomain = strtolower(trim($value)) . '.autowebpro.com.ar';
                     $query = Domain::where('domain', $fullDomain);
                     if ($currentTenant) {
                         $query->where('tenant_id', '!=', $currentTenant->id);

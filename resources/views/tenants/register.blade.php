@@ -148,11 +148,11 @@
                                    class="flex-1 px-4 py-2.5 bg-[hsl(var(--background))] border border-[hsl(var(--border))] rounded-lg text-[hsl(var(--foreground))] focus:outline-none focus:ring-2 focus:ring-[hsl(var(--primary))] focus:border-transparent"
                                    placeholder="miagencia"
                                    oninput="validateDomainInput(this.value)">
-                            <span class="text-[hsl(var(--muted-foreground))] font-medium domain-ext-mobile">.misaas.com</span>
+                            <span class="text-[hsl(var(--muted-foreground))] font-medium domain-ext-mobile">.autowebpro.com.ar</span>
                             <span id="domainStatus" class="text-2xl w-6 h-6 flex items-center justify-center"></span>
                         </div>
                         <p class="mt-1 text-xs text-[hsl(var(--muted-foreground))]">
-                            Ej: Si pones "miagencia", tu URL será miagencia.misaas.com
+                            Ej: Si pones "miagencia", tu URL será miagencia.autowebpro.com.ar
                         </p>
                         <p id="domainMessage" class="mt-2 text-sm text-gray-400"></p>
                         @error('domain')

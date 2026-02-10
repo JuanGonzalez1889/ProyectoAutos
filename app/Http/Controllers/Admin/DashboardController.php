@@ -63,7 +63,7 @@ class DashboardController extends Controller
             $suggestedDomain = Str::slug($agencia->nombre ?: $user->name, '-');
             $onboarding = [
                 'show' => $showOnboarding,
-                'domain_suffix' => '.misaas.com',
+                'domain_suffix' => '.autowebpro.com.ar',
                 'suggested_domain' => $suggestedDomain ?: 'miagencia',
                 'prefill_name' => $user->name,
                 'prefill_agencia' => $agencia->nombre,

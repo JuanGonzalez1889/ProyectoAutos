@@ -93,13 +93,13 @@
                             <div class="domain-check-loader" id="domain-loader" style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%);"></div>
                         </div>
                         <span class="h-12 px-4 flex items-center bg-[hsl(var(--muted))] border border-[hsl(var(--border))] rounded-r-lg text-sm text-[hsl(var(--muted-foreground))] whitespace-nowrap font-medium">
-                            {{ $onboarding['domain_suffix'] ?? '.misaas.com' }}
+                            {{ $onboarding['domain_suffix'] ?? '.autowebpro.com.ar' }}
                         </span>
                     </div>
                     <div id="domain-status" class="text-xs mt-2 flex items-center gap-2">
                         <span id="domain-status-text" class="text-[hsl(var(--muted-foreground))]">Escribe un dominio para verificar disponibilidad</span>
                     </div>
-                    <p class="text-xs text-[hsl(var(--muted-foreground))] mt-2">Ej: si escribes "miagencia", tu URL será miagencia.misaas.com</p>
+                    <p class="text-xs text-[hsl(var(--muted-foreground))] mt-2">Ej: si escribes "miagencia", tu URL será miagencia.autowebpro.com.ar</p>
                 </div>
 
                 <!-- Botón de guardar -->
