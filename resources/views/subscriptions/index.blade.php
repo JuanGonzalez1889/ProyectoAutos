@@ -43,11 +43,11 @@
         <!-- Plans Comparison -->
         <div id="plans" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
             <!-- Free Plan -->
-            <div class="bg-[hsl(var(--card))] border-2 border-[hsl(var(--border))] rounded-lg p-6 relative">
+            <div class="bg-[hsl(var(--card))] border-2 border-[hsl(var(--border))] rounded-lg p-6 relative flex flex-col h-full">
                 <div class="mb-6">
-                    <h3 class="text-xl font-bold text-[hsl(var(--foreground))] mb-2">Plan Gratuito</h3>
-                    <p class="text-3xl font-bold text-[hsl(var(--primary))] mb-1">$0</p>
-                    <p class="text-sm text-[hsl(var(--muted-foreground))]">30 días de prueba</p>
+                    <h3 class="text-xl font-bold text-[hsl(var(--foreground))] mb-2">Plan Básico</h3>
+                    <p class="text-3xl font-bold text-[hsl(var(--primary))] mb-1">$50.000</p>
+                    <p class="text-sm text-[hsl(var(--muted-foreground))]">Por mes</p>
                 </div>
 
                 <ul class="space-y-3 mb-6">
@@ -55,92 +55,57 @@
                         <svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
                         </svg>
-                        Hasta 5 vehículos
+                        Sitio web básico
                     </li>
                     <li class="flex items-center gap-2 text-[hsl(var(--foreground))]">
                         <svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
                         </svg>
-                        1 usuario
+                        15 autos publicados máximo
                     </li>
                     <li class="flex items-center gap-2 text-[hsl(var(--foreground))]">
                         <svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
                         </svg>
-                        1 GB de almacenamiento
+                        Soporte por whatsapp
                     </li>
-                    <li class="flex items-center gap-2 text-[hsl(var(--muted-foreground))]">
-                        <svg class="w-4 h-4 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                    <li class="flex items-center gap-2 text-[hsl(var(--foreground))]">
+                        <svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
                         </svg>
-                        <span class="line-through">Landing personalizada</span>
+                        Certificado SSL incluido
                     </li>
+                    <li class="flex items-center gap-2 text-[hsl(var(--foreground))]">
+                        <svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                        </svg>
+                        1 consulta mensual de Marketing
+                    </li>
+                    
                 </ul>
 
-                @if($currentPlan['plan'] === 'free')
-                    <button disabled class="w-full py-2 bg-gray-400 text-white rounded-lg font-semibold cursor-not-allowed">
-                        Plan Actual
-                    </button>
-                @else
-                    <button disabled class="w-full py-2 bg-gray-400 text-white rounded-lg font-semibold cursor-not-allowed">
-                        Tu plan actual es superior
-                    </button>
-                @endif
+                <div class="mt-auto">
+                    @if($currentPlan['plan'] === 'free')
+                        <button disabled class="w-full py-2 bg-gray-400 text-white rounded-lg font-semibold cursor-not-allowed">
+                            Plan Actual
+                        </button>
+                    @else
+                        <button disabled class="w-full py-2 bg-gray-400 text-white rounded-lg font-semibold cursor-not-allowed">
+                            Tu plan actual es superior
+                        </button>
+                    @endif
+                </div>
             </div>
 
-            <!-- Starter Plan -->
-            <div class="bg-[hsl(var(--card))] border-2 border-[hsl(var(--primary))] rounded-lg p-6 relative shadow-lg">
+            <!-- Profesional Plan -->
+            <div class="bg-[hsl(var(--card))] border-2 border-[hsl(var(--primary))] rounded-lg p-6 relative shadow-lg flex flex-col h-full">
                 <div class="absolute top-0 right-0 bg-[hsl(var(--primary))] text-white px-3 py-1 rounded-bl-lg text-xs font-semibold">
                     RECOMENDADO
                 </div>
                 <div class="mb-6">
-                    <h3 class="text-xl font-bold text-[hsl(var(--foreground))] mb-2">Plan Iniciador</h3>
-                    <p class="text-3xl font-bold text-[hsl(var(--primary))] mb-1">$29.99</p>
-                    <p class="text-sm text-[hsl(var(--muted-foreground))]">por mes, facturación anual</p>
-                </div>
-
-                <ul class="space-y-3 mb-6">
-                    <li class="flex items-center gap-2 text-[hsl(var(--foreground))]">
-                        <svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
-                        </svg>
-                        Hasta 50 vehículos
-                    </li>
-                    <li class="flex items-center gap-2 text-[hsl(var(--foreground))]">
-                        <svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
-                        </svg>
-                        Hasta 3 usuarios
-                    </li>
-                    <li class="flex items-center gap-2 text-[hsl(var(--foreground))]">
-                        <svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
-                        </svg>
-                        10 GB de almacenamiento
-                    </li>
-                    <li class="flex items-center gap-2 text-[hsl(var(--foreground))]">
-                        <svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
-                        </svg>
-                        Landing personalizada
-                    </li>
-                </ul>
-
-                <form action="{{ route('subscriptions.checkout') }}" method="POST">
-                    @csrf
-                    <input type="hidden" name="plan" value="starter">
-                    <button type="submit" class="w-full py-2 bg-[hsl(var(--primary))] hover:opacity-90 text-white rounded-lg font-semibold transition">
-                        Iniciar ahora
-                    </button>
-                </form>
-            </div>
-
-            <!-- Professional Plan -->
-            <div class="bg-[hsl(var(--card))] border-2 border-[hsl(var(--border))] rounded-lg p-6">
-                <div class="mb-6">
                     <h3 class="text-xl font-bold text-[hsl(var(--foreground))] mb-2">Plan Profesional</h3>
-                    <p class="text-3xl font-bold text-[hsl(var(--primary))] mb-1">$79.99</p>
-                    <p class="text-sm text-[hsl(var(--muted-foreground))]">por mes, facturación anual</p>
+                    <p class="text-3xl font-bold text-[hsl(var(--primary))] mb-1">$150.000</p>
+                    <p class="text-sm text-[hsl(var(--muted-foreground))]">Por mes</p>
                 </div>
 
                 <ul class="space-y-3 mb-6">
@@ -148,43 +113,63 @@
                         <svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
                         </svg>
-                        Hasta 500 vehículos
+                        Sitio web básico
                     </li>
                     <li class="flex items-center gap-2 text-[hsl(var(--foreground))]">
                         <svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
                         </svg>
-                        Hasta 10 usuarios
+                        30 autos publicados máximo
                     </li>
                     <li class="flex items-center gap-2 text-[hsl(var(--foreground))]">
                         <svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
                         </svg>
-                        100 GB de almacenamiento
+                        Integración CRM básica
                     </li>
                     <li class="flex items-center gap-2 text-[hsl(var(--foreground))]">
                         <svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
                         </svg>
-                        Dominio personalizado
+                        Herramientas SEO avanzadas
+                    </li>
+                    <li class="flex items-center gap-2 text-[hsl(var(--foreground))]">
+                        <svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                        </svg>
+                        Soporte básico por whatsapp
+                    </li>
+                    <li class="flex items-center gap-2 text-[hsl(var(--foreground))]">
+                        <svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                        </svg>
+                       Certificado SSL incluido
+                    </li>
+                    <li class="flex items-center gap-2 text-[hsl(var(--foreground))]">
+                        <svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                        </svg>
+                       2 consultas mensuales de Marketing
                     </li>
                 </ul>
 
-                <form action="{{ route('subscriptions.checkout') }}" method="POST">
-                    @csrf
-                    <input type="hidden" name="plan" value="professional">
-                    <button type="submit" class="w-full py-2 bg-[hsl(var(--secondary))] hover:opacity-90 text-[hsl(var(--foreground))] rounded-lg font-semibold transition border border-[hsl(var(--border))]">
-                        Actualizar a Profesional
-                    </button>
-                </form>
+                <div class="mt-auto">
+                    <form action="{{ route('subscriptions.checkout') }}" method="POST">
+                        @csrf
+                        <input type="hidden" name="plan" value="professional">
+                        <button type="submit" class="w-full py-2 bg-[#009ee3] hover:opacity-90 text-white rounded-lg font-semibold transition border-2 border-[#009ee3] shadow-lg">
+                            Pagar con Mercado Pago
+                        </button>
+                    </form>
+                </div>
             </div>
 
-            <!-- Enterprise Plan -->
-            <div class="bg-[hsl(var(--card))] border-2 border-[hsl(var(--border))] rounded-lg p-6">
+            <!-- Premium Plan -->
+            <div class="bg-[hsl(var(--card))] border-2 border-[hsl(var(--border))] rounded-lg p-6 flex flex-col h-full">
                 <div class="mb-6">
-                    <h3 class="text-xl font-bold text-[hsl(var(--foreground))] mb-2">Plan Empresarial</h3>
-                    <p class="text-3xl font-bold text-[hsl(var(--primary))] mb-1">$249.99</p>
-                    <p class="text-sm text-[hsl(var(--muted-foreground))]">por mes, facturación anual</p>
+                    <h3 class="text-xl font-bold text-[hsl(var(--foreground))] mb-2">Plan Premium</h3>
+                    <p class="text-3xl font-bold text-[hsl(var(--primary))] mb-1">$300.000</p>
+                    <p class="text-sm text-[hsl(var(--muted-foreground))]">Por mes</p>
                 </div>
 
                 <ul class="space-y-3 mb-6">
@@ -192,32 +177,129 @@
                         <svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
                         </svg>
-                        Vehículos ilimitados
+                       Sitio web básico o personalizado
                     </li>
                     <li class="flex items-center gap-2 text-[hsl(var(--foreground))]">
                         <svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
                         </svg>
-                        Usuarios ilimitados
+                        Publicación ilimitada de autos
                     </li>
                     <li class="flex items-center gap-2 text-[hsl(var(--foreground))]">
                         <svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
                         </svg>
-                        Almacenamiento ilimitado
+                       Soporte 24/7 por whatsapp
                     </li>
                     <li class="flex items-center gap-2 text-[hsl(var(--foreground))]">
                         <svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
                         </svg>
-                        Soporte 24/7 + API
+                        CRM para gestionar clientes
+                    </li>
+                    <li class="flex items-center gap-2 text-[hsl(var(--foreground))]">
+                        <svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                        </svg>
+                        Analítica avanzada para optimizar tu negocio
+                    </li>
+                    <li class="flex items-center gap-2 text-[hsl(var(--foreground))]">
+                        <svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                        </svg>
+                        Certificado SSL incluido
+                    </li>
+                    <li class="flex items-center gap-2 text-[hsl(var(--foreground))]">
+                        <svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                        </svg>
+                        Gestión de marketing completa incluido
                     </li>
                 </ul>
 
-                <button onclick="alert('Contacta a ventas@proyectoautos.com para plan empresarial')" class="w-full py-2 bg-[hsl(var(--secondary))] hover:opacity-90 text-[hsl(var(--foreground))] rounded-lg font-semibold transition border border-[hsl(var(--border))]">
-                    Contactar Ventas
-                </button>
+                <div class="mt-auto">
+                    <form action="{{ route('subscriptions.checkout') }}" method="POST">
+                        @csrf
+                        <input type="hidden" name="plan" value="premium">
+                        <button type="submit" class="w-full py-2 bg-[#009ee3] hover:opacity-90 text-white rounded-lg font-semibold transition border-2 border-[#009ee3] shadow-lg">
+                            Pagar con Mercado Pago
+                        </button>
+                    </form>
+                </div>
             </div>
+
+
+            <!-- Premium + Plan -->
+            <div class="bg-[hsl(var(--card))] border-2 border-[hsl(var(--border))] rounded-lg p-6 flex flex-col h-full">
+                <div class="mb-6">
+                    <h3 class="text-xl font-bold text-[hsl(var(--foreground))] mb-2">Plan Premium +</h3>
+                    <p class="text-3xl font-bold text-[hsl(var(--primary))] mb-1">$500.000</p>
+                    <p class="text-sm text-[hsl(var(--muted-foreground))]">Por mes</p>
+                </div>
+
+                <ul class="space-y-3 mb-6">
+                    <li class="flex items-center gap-2 text-[hsl(var(--foreground))]">
+                        <svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                        </svg>
+                       Sitio web básico o personalizado
+                    </li>
+                    <li class="flex items-center gap-2 text-[hsl(var(--foreground))]">
+                        <svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                        </svg>
+                        Publicación ilimitada de autos
+                    </li>
+                    <li class="flex items-center gap-2 text-[hsl(var(--foreground))]">
+                        <svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                        </svg>
+                       Soporte 24/7 por whatsapp
+                    </li>
+                    <li class="flex items-center gap-2 text-[hsl(var(--foreground))]">
+                        <svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                        </svg>
+                        CRM para gestionar clientes
+                    </li>
+                    <li class="flex items-center gap-2 text-[hsl(var(--foreground))]">
+                        <svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                        </svg>
+                        Analítica avanzada para optimizar tu negocio
+                    </li>
+                    <li class="flex items-center gap-2 text-[hsl(var(--foreground))]">
+                        <svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                        </svg>
+                        Certificado SSL incluido
+                    </li>
+                    <li class="flex items-center gap-2 text-[hsl(var(--foreground))]">
+                        <svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                        </svg>
+                        Gestión de marketing completa incluido
+                    </li>
+                    <li class="flex items-center gap-2 text-[hsl(var(--foreground))]">
+                        <svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                        </svg>
+                        Manejo de Redes Sociales completa incluido
+                    </li>
+                </ul>
+
+                <div class="mt-auto">
+                    <form action="{{ route('subscriptions.checkout') }}" method="POST">
+                        @csrf
+                        <input type="hidden" name="plan" value="premium +">
+                        <button type="submit" class="w-full py-2 bg-[#009ee3] hover:opacity-90 text-white rounded-lg font-semibold transition border-2 border-[#009ee3] shadow-lg">
+                            Pagar con Mercado Pago
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+                     
         </div>
 
         <!-- FAQ -->
@@ -230,15 +312,15 @@
                 </div>
                 <div>
                     <h4 class="font-semibold text-[hsl(var(--foreground))] mb-2">¿Hay período de prueba?</h4>
-                    <p class="text-[hsl(var(--muted-foreground))] text-sm">Sí, 30 días gratuitos para explorar todas las funcionalidades del plan profesional.</p>
+                    <p class="text-[hsl(var(--muted-foreground))] text-sm">No tenemos períodos de prueba.</p>
                 </div>
                 <div>
                     <h4 class="font-semibold text-[hsl(var(--foreground))] mb-2">¿Qué métodos de pago aceptan?</h4>
-                    <p class="text-[hsl(var(--muted-foreground))] text-sm">Aceptamos Stripe (Visa, Mastercard, Amex) y MercadoPago (tarjetas y transferencias).</p>
+                    <p class="text-[hsl(var(--muted-foreground))] text-sm">Realizamos los cobros a través de MercadoPago (tarjetas, transferencias, débito, efectivo).</p>
                 </div>
                 <div>
                     <h4 class="font-semibold text-[hsl(var(--foreground))] mb-2">¿Hay contrato a largo plazo?</h4>
-                    <p class="text-[hsl(var(--muted-foreground))] text-sm">No, puedes cancelar tu suscripción en cualquier momento sin penalidades.</p>
+                    <p class="text-[hsl(var(--muted-foreground))] text-sm">Sí, debes cumplir un mínimo de 1 año para poder cancelar, ya que es lo que dura el contrato del dominio.</p>
                 </div>
             </div>
         </div>

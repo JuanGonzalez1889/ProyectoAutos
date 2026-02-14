@@ -9,6 +9,27 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Subscription extends Model
 {
+    /**
+     * Get days remaining in trial period
+     */
+    public function trialDaysRemaining(): int
+    {
+        if (!$this->onTrial() || !$this->trial_ends_at) {
+            return 0;
+        }
+        return now()->diffInDays($this->trial_ends_at, false);
+    }
+    
+    use HasFactory;
+
+    /**
+     * Compatibilidad: método isOnTrial para Tenant
+     */
+    public function isOnTrial(): bool
+    {
+        return $this->onTrial();
+    }
+
     use HasFactory;
 
     protected $fillable = [
@@ -118,6 +139,12 @@ class Subscription extends Model
                 'price_usd' => 29,
                 'price_ars' => 29000,
                 'features' => ['10 vehículos', 'Plantilla básica', 'Soporte email'],
+            ],
+            'professional' => [
+                'name' => 'Plan Profesional',
+                'price_usd' => 150,
+                'price_ars' => 150000,
+                'features' => ['30 autos publicados máximo', 'Integración CRM básica', 'Herramientas SEO avanzadas', 'Soporte básico', 'Certificado SSL incluido', '2 consultas mensuales de Marketing'],
             ],
             'premium' => [
                 'name' => 'Plan Premium',

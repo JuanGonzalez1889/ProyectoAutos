@@ -88,10 +88,7 @@ class AuthController extends Controller
             ->withProperties(['action' => 'accepted_invitation', 'tenant_id' => $invitation->tenant_id])
             ->log('Usuario ' . $user->name . ' aceptó invitación a agencia');
 
-        return redirect('/login')->with('success', 'Cuenta creada exitosamente. ¡Bienvenido! Inicia sesión para comenzar.');
-
         Auth::login($user);
-
         // Redirigir al dashboard (el tenant se inicializa automáticamente desde el usuario autenticado)
         return redirect()->route('admin.dashboard');
     }

@@ -198,7 +198,7 @@ class Tenant extends BaseTenant implements TenantWithDatabase
     {
         return $this->subscriptions()
             ->where('status', 'active')
-            ->latest()
+            ->orderByDesc('current_period_start')
             ->first();
     }
 
@@ -244,7 +244,7 @@ class Tenant extends BaseTenant implements TenantWithDatabase
 
         return [
             'plan' => $subscription->plan,
-            'name' => $subscription->getPlanConfig($subscription->plan)['name'] ?? 'Desconocido',
+            'name' => method_exists($subscription, 'getPlanDetails') ? $subscription->getPlanDetails()['name'] ?? 'Desconocido' : 'Desconocido',
             'is_trial' => $subscription->isOnTrial(),
             'days_remaining' => $subscription->trialDaysRemaining(),
             'expires_at' => $subscription->trial_ends_at ?? $subscription->renews_at,

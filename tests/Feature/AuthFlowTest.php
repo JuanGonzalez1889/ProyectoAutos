@@ -16,37 +16,33 @@ class AuthFlowTest extends TestCase
      */
     public function test_registration_login_and_dashboard_access(): void
     {
-        // Create roles required by AuthController
+        // Crear roles requeridos
         Role::create(['name' => 'ADMIN', 'guard_name' => 'web']);
         Role::create(['name' => 'AGENCIERO', 'guard_name' => 'web']);
         Role::create(['name' => 'COLABORADOR', 'guard_name' => 'web']);
 
-        // Register
-        $registerResponse = $this->post(route('register'), [
-            'name' => 'Juan Tester',
-            'email' => 'juan.tester@example.com',
+        // Registro de agencia (flujo real)
+        $registerResponse = $this->post(route('tenants.register'), [
+            'admin_name' => 'Juan Tester',
+            'admin_email' => 'juan.tester@example.com',
             'password' => 'Password123!',
             'password_confirmation' => 'Password123!',
-            'agency_name' => 'Agencia de Prueba',
+            'agencia_name' => 'Agencia de Prueba',
+            'domain' => 'agencia-prueba',
             'terms_accepted' => true,
             'privacy_accepted' => true,
             'g-recaptcha-response' => 'test-token',
         ]);
-
-        $registerResponse->assertRedirect(route('admin.dashboard'));
-
-        // Logout
-        $this->post(route('logout'));
+        $registerResponse->assertRedirect(route('login'));
 
         // Login
         $loginResponse = $this->post(route('login'), [
             'email' => 'juan.tester@example.com',
             'password' => 'Password123!',
         ]);
-
         $loginResponse->assertRedirect(route('admin.dashboard'));
 
-        // Access dashboard
+        // Acceso al dashboard
         $dashboardResponse = $this->get(route('admin.dashboard'));
         $dashboardResponse->assertStatus(200);
     }

@@ -110,6 +110,20 @@ class UserController extends Controller
             $userData['agencia_id'] = $currentUser->agencia_id;
         }
 
+        // Validar que no se pueda crear colaborador sin agencia o en agencia sin agenciero
+        if ($request->role === 'COLABORADOR') {
+            if (empty($userData['agencia_id'])) {
+                return redirect()->back()
+                    ->withInput()
+                    ->with('error', 'No se puede crear un colaborador sin agencia.');
+            }
+            $agencia = \App\Models\Agencia::find($userData['agencia_id']);
+            if ($agencia && $agencia->agencieros()->count() === 0) {
+                return redirect()->back()
+                    ->withInput()
+                    ->with('error', 'No se puede crear un colaborador en una agencia sin agenciero.');
+            }
+        }
         $user = User::create($userData);
         $user->assignRole($request->role);
 

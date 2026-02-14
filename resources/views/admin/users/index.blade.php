@@ -1,3 +1,4 @@
+{{-- El bloque de impersonate debe ir dentro del ciclo de usuarios, no al inicio del archivo --}}
 @extends('layouts.admin')
 
 @section('title', 'Usuarios')
@@ -210,24 +211,44 @@
                         </td>
                         <td class="py-4">
                             <div class="flex justify-end">
-                                <div class="relative" x-data="{ open: false }">
-                                    <button @click="open = !open" @click.away="open = false"
-                                            class="p-2 hover:bg-[hsl(var(--muted))] rounded-lg transition-colors">
+                                <div class="relative acciones-dropdown-container">
+                                    <button type="button" class="p-2 hover:bg-[hsl(var(--muted))] rounded-lg transition-colors acciones-dropdown-btn">
                                         <svg class="w-5 h-5 text-[hsl(var(--muted-foreground))]" fill="currentColor" viewBox="0 0 24 24">
                                             <path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/>
                                         </svg>
                                     </button>
-                                    
-                                    <div x-show="open" 
-                                         x-transition:enter="transition ease-out duration-100"
-                                         x-transition:enter-start="transform opacity-0 scale-95"
-                                         x-transition:enter-end="transform opacity-100 scale-100"
-                                         x-transition:leave="transition ease-in duration-75"
-                                         x-transition:leave-start="transform opacity-100 scale-100"
-                                         x-transition:leave-end="transform opacity-0 scale-95"
-                                         class="absolute right-0 mt-2 w-48 bg-[hsl(var(--card))] border border-[hsl(var(--border))] rounded-lg shadow-lg z-50"
-                                         style="display: none;">
+                                    <div class="absolute right-0 mt-2 w-48 bg-[hsl(var(--card))] border border-[hsl(var(--border))] rounded-lg shadow-lg z-50 acciones-dropdown-menu" style="display: none;">
+                                        @push('scripts')
+                                        <script>
+                                        document.addEventListener('DOMContentLoaded', function() {
+                                            document.querySelectorAll('.acciones-dropdown-btn').forEach(function(btn) {
+                                                btn.addEventListener('click', function(e) {
+                                                    e.stopPropagation();
+                                                    // Cierra otros menús abiertos
+                                                    document.querySelectorAll('.acciones-dropdown-menu').forEach(function(menu) {
+                                                        if (menu !== btn.nextElementSibling) menu.style.display = 'none';
+                                                    });
+                                                    let menu = btn.nextElementSibling;
+                                                    menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';
+                                                });
+                                            });
+                                            document.addEventListener('click', function() {
+                                                document.querySelectorAll('.acciones-dropdown-menu').forEach(function(menu) {
+                                                    menu.style.display = 'none';
+                                                });
+                                            });
+                                        });
+                                        </script>
+                                        @endpush
                                         <div class="py-1">
+                                                                @if(auth()->user()->hasRole('ADMIN') && auth()->user()->id !== $user->id)
+                                                                <a href="{{ route('impersonate.start', $user->id) }}" class="flex items-center gap-2 px-4 py-2 text-sm text-indigo-500 hover:bg-[hsl(var(--muted))] transition-colors">
+                                                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V4a2 2 0 10-4 0v1.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+                                                                    </svg>
+                                                                    Impersonar
+                                                                </a>
+                                                                @endif
                                             @can('users.edit')
                                             <a href="{{ route('admin.users.edit', $user) }}" 
                                                class="flex items-center gap-2 px-4 py-2 text-sm text-[hsl(var(--foreground))] hover:bg-[hsl(var(--muted))] transition-colors">
@@ -316,3 +337,28 @@
     </div>
 </div>
 @endsection
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    function initDropdowns() {
+        document.querySelectorAll('.acciones-dropdown-btn').forEach(function(btn) {
+            btn.onclick = function(e) {
+                e.stopPropagation();
+                document.querySelectorAll('.acciones-dropdown-menu').forEach(function(menu) {
+                    if (menu !== btn.nextElementSibling) menu.style.display = 'none';
+                });
+                let menu = btn.nextElementSibling;
+                menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';
+            };
+        });
+        document.addEventListener('click', function() {
+            document.querySelectorAll('.acciones-dropdown-menu').forEach(function(menu) {
+                menu.style.display = 'none';
+            });
+        });
+    }
+    initDropdowns();
+    // Si usas AJAX/LIVEWIRE/INERTIA, llama initDropdowns() tras cada actualización de la tabla
+});
+</script>

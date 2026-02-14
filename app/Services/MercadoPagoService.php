@@ -18,46 +18,103 @@ class MercadoPagoService
         $token = config('services.mercadopago.access_token');
         if ($token) {
             MercadoPagoConfig::setAccessToken($token);
+            // Línea eliminada: setRuntimeEnvironment no existe en dx-php
         }
     }
 
     /**
      * Create a preference for subscription
      */
-    public function createPreference(Tenant $tenant, string $plan, string $successUrl, string $failureUrl, string $pendingUrl): string
+    /**
+     * Crear preferencia simple para Checkout Pro (solo suscripción manual, email test)
+     */
+    public function createPreference($plan, $price, $userEmail)
     {
-        $planDetails = $this->getPlanDetails($plan);
-
-        $client = new PreferenceClient();
-
-        $preference = $client->create([
-            'items' => [
-                [
-                    'title' => $planDetails['name'],
-                    'description' => implode(', ', $planDetails['features']),
-                    'quantity' => 1,
-                    'unit_price' => (float) $planDetails['price'],
-                    'currency_id' => 'ARS',
-                ],
-            ],
-            'payer' => [
-                'name' => $tenant->name,
-                'email' => $tenant->email,
-            ],
-            'back_urls' => [
-                'success' => $successUrl,
-                'failure' => $failureUrl,
-                'pending' => $pendingUrl,
-            ],
-            'auto_return' => 'approved',
-            'external_reference' => json_encode([
-                'tenant_id' => $tenant->id,
-                'plan' => $plan,
-            ]),
-            'notification_url' => route('webhooks.mercadopago'),
+        // Log de entrada
+        Log::info('MP_DEBUG_CREATE_PREF', [
+            'access_token' => config('services.mercadopago.access_token'),
+            'plan' => $plan,
+            'price' => $price,
+            'user_email' => $userEmail,
         ]);
-
-        return $preference->init_point ?? $preference->sandbox_init_point;
+        try {
+            $client = new \MercadoPago\Client\Preference\PreferenceClient();
+            $payload = [
+                "items" => [
+                    [
+                        "id" => "PLAN-" . time(),
+                        "title" => "Suscripcion " . $plan,
+                        "description" => "Suscripcion mensual al plan " . $plan,
+                        "quantity" => 1,
+                        "unit_price" => (float) $price,
+                        "currency_id" => "ARS",
+                    ]
+                ],
+                "payer" => [
+                    "email" => $userEmail,
+                ],
+                "back_urls" => [
+                    "success" => config('app.url') . '/subscriptions/success',
+                    "failure" => config('app.url') . '/subscriptions/failure',
+                ],
+                "notification_url" => config('app.url') . '/webhooks/mercadopago',
+                "external_reference" => json_encode([
+                    'tenant_id' => auth()->user()->tenant_id ?? null,
+                    'plan' => $plan
+                ]),
+                "auto_return" => "approved",
+            ];
+            Log::info('MP_DEBUG_PAYLOAD', $payload);
+            $preference = $client->create($payload);
+            Log::info('MP_DEBUG_PREF_RESPONSE', [
+                'preference' => $preference,
+                'init_point' => $preference->init_point ?? null,
+                'sandbox_init_point' => $preference->sandbox_init_point ?? null,
+                'status' => $preference->status ?? null,
+                'error' => $preference->error ?? null,
+                'message' => $preference->message ?? null,
+                'details' => $preference->details ?? null,
+            ]);
+            if (isset($preference->status) && $preference->status !== 'active') {
+                Log::warning('MP_DEBUG_PREF_STATUS', [
+                    'status' => $preference->status,
+                    'error' => $preference->error ?? null,
+                    'message' => $preference->message ?? null,
+                    'details' => $preference->details ?? null,
+                ]);
+            }
+            // Preferimos el init_point real
+            if (isset($preference->init_point)) {
+                return [
+                    'init_point' => $preference->init_point,
+                    'sandbox_init_point' => $preference->sandbox_init_point ?? null,
+                ];
+            } else {
+                Log::error('MP_DEBUG_NO_INIT_POINT', [
+                    'preference' => $preference
+                ]);
+                return null;
+            }
+        } catch (\Exception $e) {
+            Log::error('MP_DEBUG_EXCEPTION', [
+                'message' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+                'exception_class' => get_class($e),
+            ]);
+            try {
+                if (method_exists($e, 'getApiResponse')) {
+                    Log::error('MP_DEBUG_API_RESPONSE', [
+                        'api_response' => json_encode($e->getApiResponse()->getContent())
+                    ]);
+                }
+            } catch (\Throwable $t) {
+                Log::error('MP_DEBUG_API_RESPONSE_FAIL', [
+                    'message' => $t->getMessage(),
+                    'trace' => $t->getTraceAsString(),
+                ]);
+            }
+            return null;
+        }
     }
 
     /**
@@ -194,50 +251,73 @@ class MercadoPagoService
      */
     private function handleApprovedPayment($payment, Tenant $tenant, string $plan): void
     {
+        Log::info('MP_DEBUG_WEBHOOK_APPROVED_START', [
+            'payment_id' => $payment->id,
+            'tenant_id' => $tenant->id,
+            'plan' => $plan,
+            'payment_status' => $payment->status,
+            'transaction_amount' => $payment->transaction_amount,
+        ]);
+
         $planDetails = $this->getPlanDetails($plan);
 
-        // Create or update subscription
-        $subscription = Subscription::updateOrCreate(
-            [
+        try {
+            $subscription = Subscription::updateOrCreate(
+                [
+                    'tenant_id' => $tenant->id,
+                    'mercadopago_id' => $payment->id,
+                ],
+                [
+                    'mercadopago_status' => $payment->status,
+                    'plan' => $plan,
+                    'payment_method' => 'mercadopago',
+                    'status' => 'active',
+                    'amount' => $planDetails['price'],
+                    'currency' => 'ARS',
+                    'current_period_start' => now(),
+                    'current_period_end' => now()->addMonth(),
+                ]
+            );
+            Log::info('MP_DEBUG_WEBHOOK_SUBSCRIPTION', [
+                'subscription_id' => $subscription->id ?? null,
                 'tenant_id' => $tenant->id,
                 'mercadopago_id' => $payment->id,
-            ],
-            [
-                'mercadopago_status' => $payment->status,
-                'plan' => $plan,
-                'payment_method' => 'mercadopago',
-                'status' => 'active',
-                'amount' => $planDetails['price'],
+            ]);
+
+            $invoice = Invoice::create([
+                'tenant_id' => $tenant->id,
+                'subscription_id' => $subscription->id,
+                'invoice_number' => Invoice::generateInvoiceNumber(),
+                'mercadopago_invoice_id' => $payment->id,
+                'amount' => $payment->transaction_amount,
                 'currency' => 'ARS',
-                'current_period_start' => now(),
-                'current_period_end' => now()->addMonth(),
-            ]
-        );
+                'total' => $payment->transaction_amount,
+                'status' => 'paid',
+                'payment_method' => 'mercadopago',
+                'paid_at' => now(),
+            ]);
+            Log::info('MP_DEBUG_WEBHOOK_INVOICE', [
+                'invoice_id' => $invoice->id ?? null,
+                'tenant_id' => $tenant->id,
+                'subscription_id' => $subscription->id,
+            ]);
 
-        // Create invoice
-        Invoice::create([
-            'tenant_id' => $tenant->id,
-            'subscription_id' => $subscription->id,
-            'invoice_number' => Invoice::generateInvoiceNumber(),
-            'mercadopago_invoice_id' => $payment->id,
-            'amount' => $payment->transaction_amount,
-            'currency' => 'ARS',
-            'total' => $payment->transaction_amount,
-            'status' => 'paid',
-            'payment_method' => 'mercadopago',
-            'paid_at' => now(),
-        ]);
-
-        // Update tenant
-        $tenant->update([
-            'plan' => $plan,
-            'subscription_ends_at' => now()->addMonth(),
-        ]);
-
-        Log::info('MercadoPago subscription created successfully', [
-            'tenant_id' => $tenant->id,
-            'plan' => $plan,
-        ]);
+            $tenant->update([
+                'plan' => $plan,
+                'subscription_ends_at' => now()->addMonth(),
+            ]);
+            Log::info('MP_DEBUG_WEBHOOK_TENANT_UPDATED', [
+                'tenant_id' => $tenant->id,
+                'plan' => $plan,
+                'subscription_ends_at' => $tenant->subscription_ends_at,
+            ]);
+        } catch (\Exception $e) {
+            Log::error('MP_DEBUG_WEBHOOK_ERROR', [
+                'error' => $e->getMessage(),
+                'payment_id' => $payment->id,
+                'tenant_id' => $tenant->id,
+            ]);
+        }
     }
 
     /**

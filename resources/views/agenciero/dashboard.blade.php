@@ -323,7 +323,7 @@
         <!-- Columna derecha (1/3) -->
         <div class="space-y-6">
             <!-- Auto destacado (más visto) -->
-            @if($stats['top_vehicles']->count() > 0)
+            @if(count($stats['top_vehicles']) > 0)
                 @php $vehicle = $stats['top_vehicles']->first(); @endphp
                 <div class="card p-0 overflow-hidden relative">
                     <div class="relative h-40 bg-gradient-to-br from-gray-700 to-gray-900">

@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Tenant;
-use App\Services\StripeService;
 use App\Services\MercadoPagoService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -11,9 +10,16 @@ use Illuminate\Support\Facades\Auth;
 class SubscriptionController extends Controller
 {
     public function __construct(
-        private StripeService $stripeService,
         private MercadoPagoService $mercadoPagoService
     ) {}
+
+    /**
+     * Handle failed subscription (MercadoPago)
+     */
+    public function failure()
+    {
+        return view('subscriptions.failure');
+    }
 
     /**
      * Show available plans
@@ -21,6 +27,10 @@ class SubscriptionController extends Controller
     public function index()
     {
         $user = Auth::user();
+        if (!$user || !isset($user->tenant_id)) {
+            // Manejo de error: usuario no autenticado o sin tenant_id
+            return response()->json(['error' => 'Usuario no autenticado o sin tenant_id'], 401);
+        }
         $tenant = Tenant::find($user->tenant_id);
 
         $currentSubscription = $tenant?->activeSubscription();
@@ -56,21 +66,36 @@ class SubscriptionController extends Controller
                     'status' => 'active',
                     'started_at' => now(),
                     'trial_ends_at' => now()->addDays(30),
-                    'billing_cycle_days' => 30,
                 ]
             );
-            return redirect()->route('subscriptions.index')->with('success', 'Plan actualizado');
+            return redirect()->route('subscriptions.index')->with('success', 'Plan actualizado a Gratuito');
         }
 
-        // Para otros planes, usar Stripe
-        if (!$this->stripeService->isConfigured()) {
-            return back()->with('error', 'Sistema de pagos no está configurado. Por favor, contacta al administrador.');
+        // Lógica de precios por plan
+        $planPrices = [
+            'starter' => 1000,
+            'professional' => 2500,
+            'enterprise' => 5000,
+        ];
+        $planName = ucfirst($validated['plan']);
+        $price = $planPrices[$validated['plan']] ?? 0;
+
+        // Crear preferencia MercadoPago
+        $preference = $this->mercadoPagoService->createPreference(
+            $planName,
+            $price,
+            $user->email
+        );
+
+        if (isset($preference['init_point'])) {
+            // Redirigir al checkout de MercadoPago en modo sandbox
+            if (isset($preference['sandbox_init_point'])) {
+                return redirect($preference['sandbox_init_point']);
+            }
+            return redirect($preference['init_point']);
+        } else {
+            return redirect()->back()->with('error', 'No se pudo iniciar el pago.');
         }
-
-        $successUrl = route('subscriptions.success', ['plan' => $validated['plan']]) . '?session_id={CHECKOUT_SESSION_ID}';
-        $cancelUrl = route('subscriptions.index');
-
-        return $this->stripeService->createCheckoutSession($tenant, $validated['plan'], $successUrl, $cancelUrl);
     }
 
     /**
@@ -111,11 +136,7 @@ class SubscriptionController extends Controller
             return redirect()->back()->with('error', 'No tienes una suscripción activa');
         }
 
-        if ($subscription->payment_method === 'stripe') {
-            $this->stripeService->cancelSubscription($subscription);
-        } else {
-            $subscription->cancel();
-        }
+        $subscription->cancel();
 
         return redirect()->route('subscriptions.index')
             ->with('success', 'Suscripción cancelada correctamente');

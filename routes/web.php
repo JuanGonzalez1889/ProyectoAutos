@@ -1,5 +1,29 @@
 
 <?php
+// Impersonate manual (solo para admin)
+Route::middleware(['auth', 'role:ADMIN'])->group(function () {
+    Route::get('/impersonate/{user}', function ($userId) {
+        $user = \App\Models\User::findOrFail($userId);
+        if (auth()->id() !== $user->id) {
+            session(['impersonate_original_id' => auth()->id()]);
+            auth()->login($user);
+        }
+        return redirect('/admin/users');
+    })->name('impersonate.start');
+});
+
+// Salir de impersonate (visible para cualquier usuario logueado)
+Route::middleware(['auth'])->get('/impersonate/leave', function () {
+    if (session()->has('impersonate_original_id')) {
+        $originalId = session('impersonate_original_id');
+        $original = \App\Models\User::find($originalId);
+        if ($original) {
+            auth()->login($original);
+        }
+        session()->forget('impersonate_original_id');
+    }
+    return redirect('/');
+})->name('impersonate.leave');
 
 use App\Http\Controllers\Admin\AgenciaController;
 use App\Http\Controllers\Admin\DashboardController;
@@ -20,6 +44,7 @@ use App\Http\Controllers\SubscriptionController;
 use App\Http\Controllers\WebhookController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\InvoiceController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,20 +52,20 @@ use Illuminate\Support\Facades\Route;
 |--------------------------------------------------------------------------
 */
 
-// Ruta raíz - detecta si es un dominio de tenant
+// Ruta raíz - permite cualquier dominio en desarrollo
 Route::get('/', function (Request $request) {
-    $host = $request->getHost();
-    $domain = str_replace('www.', '', $host);
-    
-    // Si no es localhost/127.0.0.1, intentar buscar como dominio de tenant
-    if (!in_array($domain, ['localhost', '127.0.0.1', env('APP_DOMAIN', 'proyectoautos.local')])) {
-        $domainRecord = \App\Models\Domain::where('domain', $domain)->first();
-        if ($domainRecord && $domainRecord->tenant) {
-            return (new PublicLandingController())->show($request);
+    if (app()->environment('production')) {
+        $host = $request->getHost();
+        $domain = str_replace('www.', '', $host);
+        // Lógica original solo en producción
+        if (!in_array($domain, ['localhost', '127.0.0.1', env('APP_DOMAIN', 'proyectoautos.local')])) {
+            $domainRecord = \App\Models\Domain::where('domain', $domain)->first();
+            if ($domainRecord && $domainRecord->tenant) {
+                return (new PublicLandingController())->show($request);
+            }
         }
     }
-    
-    // Si no es tenant, mostrar landing institucional
+    // En desarrollo, siempre mostrar landing institucional
     return (new LandingController())->home();
 })->name('landing.home');
 Route::get('/nosotros', [LandingController::class, 'nosotros'])->name('landing.nosotros');
@@ -92,25 +117,47 @@ Route::get('/auth/google/callback', [GoogleAuthController::class, 'handleGoogleC
 // API pública para validación
 Route::get('/api/validate-domain', [TenantController::class, 'validateDomain'])->name('api.validate-domain');
 
-// Webhooks (sin autenticación, validadas por signature)
+// Webhooks públicos (sin autenticación, validadas por signature)
 Route::post('/webhooks/stripe', [WebhookController::class, 'stripe'])->name('webhooks.stripe');
-Route::post('/webhooks/mercadopago', [WebhookController::class, 'mercadopago'])->name('webhooks.mercadopago');
+Route::post('/webhooks/mercadopago', [WebhookController::class, 'mercadopago'])
+    ->name('webhooks.mercadopago');
 
-// RutaSuscripciones y Pagos
+// Consolidación de Suscripciones y MercadoPago bajo auth
+Route::middleware('auth')->group(function () {
+    // Ruta para descargar PDF de factura
+    Route::get('/invoices/{id}/download', [InvoiceController::class, 'download'])->name('invoices.download');
+    // Suscripciones
     Route::prefix('subscriptions')->name('subscriptions.')->group(function () {
         Route::get('/', [SubscriptionController::class, 'index'])->name('index');
         Route::post('/checkout', [SubscriptionController::class, 'checkout'])->name('checkout');
-        Route::get('/success', [SubscriptionController::class, 'success'])->name('success');
         Route::get('/cancel', [SubscriptionController::class, 'cancel'])->name('cancel');
         Route::get('/pending', [SubscriptionController::class, 'pending'])->name('pending');
         Route::delete('/cancel-subscription', [SubscriptionController::class, 'destroy'])->name('destroy');
         Route::get('/billing', [SubscriptionController::class, 'billing'])->name('billing');
     });
-    
-    // s protegidas
-Route::middleware('auth')->group(function () {
+// Ruta pública para éxito de compra
+Route::get('/subscriptions/success', [SubscriptionController::class, 'success'])->name('subscriptions.success');
+Route::get('/subscriptions/failure', [SubscriptionController::class, 'failure'])->name('subscriptions.failure');
+    // MercadoPago
+    Route::get('/mercadopago', [\App\Http\Controllers\MercadoPagoController::class, 'checkout'])->name('mercadopago');
+    Route::post('/mercadopago/checkout', [\App\Http\Controllers\MercadoPagoController::class, 'checkout'])->name('mercadopago.checkout');
+    // Logout
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout.get');
+    // Panel de administración y otras rutas protegidas...
+    Route::prefix('admin')->name('admin.')->group(function () {
+        // ...existing code...
+    });
+});
+    
+    // Rutas protegidas
+    // Hacer pública la vista de pago MercadoPago
+    Route::get('/mercadopago', [\App\Http\Controllers\MercadoPagoController::class, 'checkout'])->name('mercadopago');
+    // Solo el POST requiere autenticación
+    Route::middleware('auth')->group(function () {
+        Route::post('/mercadopago/checkout', [\App\Http\Controllers\MercadoPagoController::class, 'checkout'])->name('mercadopago.checkout');
+        Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+        Route::get('/logout', [AuthController::class, 'logout'])->name('logout.get');
     
     // Panel de administración
     Route::prefix('admin')->name('admin.')->group(function () {
@@ -127,8 +174,8 @@ Route::middleware('auth')->group(function () {
         Route::patch('/agencia/advanced-settings', [AgenciaController::class, 'updateAdvancedSettings'])
             ->name('agencia.advanced-settings.update');
         
-        // Gestión de usuarios - Solo para usuarios con permisos
-        Route::middleware('permission:users.view')->group(function () {
+        // Gestión de usuarios - Solo para usuarios con permisos o admin impersonando
+        Route::middleware('impersonate_admin:users.view')->group(function () {
             Route::resource('users', UserController::class);
             Route::patch('users/{user}/toggle-status', [UserController::class, 'toggleStatus'])
                 ->name('users.toggle-status')

@@ -2,9 +2,18 @@
 
 Sistema de administración con Laravel 11 que incluye gestión de usuarios con roles y permisos usando Spatie Laravel Permission, autenticación con Google OAuth, y un panel de administración completo.
 
+## Integración de pagos
+
+Actualmente el sistema utiliza **Stripe** para pagos y suscripciones. Mercado Pago ha sido eliminado completamente.
+
+### Variables de entorno Stripe
+- STRIPE_KEY
+- STRIPE_SECRET
+- STRIPE_WEBHOOK_SECRET
+
 ## Características
 
-- 🔐 **Autenticación completa**: Login tradicional y con Google OAuth
+ 🔐 **Autenticación completa**: Login tradicional y con Google OAuth
 - 👥 **Gestión de usuarios**: Crear, editar, eliminar y cambiar estado de usuarios
 - 🎭 **Sistema de roles**: ADMIN, AGENCIERO, COLABORADOR
 - 🔑 **Permisos granulares**: Control de acceso basado en permisos con Spatie

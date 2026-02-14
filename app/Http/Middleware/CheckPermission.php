@@ -23,11 +23,13 @@ class CheckPermission
         // Check if user has the required permission
         if (!auth()->user()->hasPermissionTo($permission)) {
             // Log failed permission attempt
+            $tenantId = auth()->user()?->tenant_id ?? session('impersonate_original_tenant_id') ?? null;
             ActivityLog::logActivity([
                 'action' => 'unauthorized_access',
                 'module' => explode('.', $permission)[0] ?? 'system',
                 'description' => "Intento de acceso sin permiso: {$permission}",
                 'status' => 'failed',
+                'tenant_id' => $tenantId,
             ]);
 
             abort(403, "No tienes permiso para: {$permission}");

@@ -13,14 +13,5 @@ if (file_exists($maintenance = __DIR__.'/../storage/framework/maintenance.php'))
 require __DIR__.'/../vendor/autoload.php';
 
 // Bootstrap Laravel and handle the request...
-try {
-    (require_once __DIR__.'/../bootstrap/app.php')
-        ->handleRequest(Request::capture());
-} catch (\Exception $e) {
-    // Error handler básico
-    http_response_code(500);
-    echo '<h1>Error 500</h1>';
-    echo '<p>El servidor está intentando iniciar. Por favor recarga la página en unos segundos.</p>';
-    echo '<p>Error: ' . htmlspecialchars($e->getMessage()) . '</p>';
-    echo '<pre>' . htmlspecialchars($e->getTraceAsString()) . '</pre>';
-}
+(require_once __DIR__.'/../bootstrap/app.php')
+    ->handleRequest(Request::capture());

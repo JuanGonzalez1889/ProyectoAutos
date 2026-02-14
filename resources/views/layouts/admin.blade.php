@@ -6,8 +6,6 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title', 'Dashboard') - {{ config('app.name') }}</title>
     
-    <!-- Alpine.js -->
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
@@ -18,9 +16,7 @@
             <!-- Logo -->
             <div class="mb-8">
                 <div class="flex items-center gap-2 mb-2">
-                    <div class="w-8 h-8 bg-[hsl(var(--primary))] rounded flex items-center justify-center">
-                        <span class="text-white font-bold text-sm">A</span>
-                    </div>
+                    <img src="{{ asset('storage/logo.png') }}" class="w-8 h-8 rounded" alt="Logo">
                     <span class="text-[hsl(var(--foreground))] font-semibold text-lg">{{ config('app.name') }}</span>
                 </div>
                 <p class="text-xs text-[hsl(var(--muted-foreground))]">
@@ -67,7 +63,7 @@
 
                 @if(auth()->user()->isColaborador())
                 <!-- Menú para Colaborador -->
-                <a href="{{ route('tasks.index') }}" 
+                <a href="{{ route('admin.tasks.index') }}"
                    class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors {{ request()->routeIs('admin.tasks.*') ? 'bg-[hsl(var(--primary))] text-white' : 'text-[hsl(var(--muted-foreground))] hover:bg-[hsl(var(--secondary))] hover:text-[hsl(var(--foreground))]' }}">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
@@ -237,6 +233,15 @@
             </div>
             @endif
 
+            <!-- Impersonate Leave (solo si está impersonando) -->
+            @if(auth()->check() && session('impersonate_original_id'))
+                <a href="{{ route('impersonate.leave') }}" class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm bg-yellow-500 text-white font-bold mb-2 hover:bg-yellow-600 transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 11-6 0v-1m6 0H9" />
+                    </svg>
+                    Salir de impersonate
+                </a>
+            @endif
             <!-- Logout -->
             <div class="pt-4 border-t border-[hsl(var(--border))]">
                 <form method="POST" action="{{ route('logout') }}">

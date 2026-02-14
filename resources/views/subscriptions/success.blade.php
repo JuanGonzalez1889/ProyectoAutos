@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.public')
 
 @section('title', 'Pago Exitoso')
 @section('page-title', 'Pago Exitoso')
