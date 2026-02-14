@@ -338,26 +338,31 @@ class MercadoPagoService
     /**
      * Get plan details
      */
-    private function getPlanDetails(string $plan): array
+    public function getPlanDetails(string $plan): array
     {
         $plans = [
-            'basic' => [
+            'basico' => [
                 'name' => 'Plan Básico',
-                'price' => 29000, // ARS
-                'features' => ['10 vehículos', 'Plantilla básica', 'Soporte email'],
+                'price' => 50000,
+                'features' => ['Sitio web básico', '15 autos máx', 'Soporte WhatsApp'],
+            ],
+            'profesional' => [
+                'name' => 'Plan Profesional',
+                'price' => 150000,
+                'features' => ['Integración CRM básica', '30 autos máx', 'Herramientas SEO'],
             ],
             'premium' => [
                 'name' => 'Plan Premium',
-                'price' => 79000,
-                'features' => ['50 vehículos', '4 plantillas', 'Soporte prioritario', 'Analytics'],
+                'price' => 300000,
+                'features' => ['Publicación ilimitada', 'Soporte 24/7', 'Analítica avanzada'],
             ],
-            'enterprise' => [
-                'name' => 'Plan Enterprise',
-                'price' => 199000,
-                'features' => ['Vehículos ilimitados', 'Plantillas custom', 'Soporte 24/7', 'API access'],
+            'premium_plus' => [
+                'name' => 'Plan Premium +',
+                'price' => 500000,
+                'features' => ['Manejo de Redes Sociales', 'Gestión de marketing completa'],
             ],
         ];
 
-        return $plans[$plan] ?? $plans['basic'];
+        return $plans[strtolower($plan)] ?? $plans['basico'];
     }
 }

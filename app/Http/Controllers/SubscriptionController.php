@@ -47,8 +47,9 @@ class SubscriptionController extends Controller
      */
     public function checkout(Request $request)
     {
+        // 1. Validamos con tus 4 planes reales
         $validated = $request->validate([
-            'plan' => 'required|in:free,starter,professional,enterprise',
+            'plan' => 'required|in:basico,profesional,premium,premium_plus',
         ]);
 
         $user = Auth::user();
@@ -58,29 +59,12 @@ class SubscriptionController extends Controller
             return redirect()->back()->with('error', 'No tienes un tenant asociado');
         }
 
-        // Si es plan free, solo actualizar
-        if ($validated['plan'] === 'free') {
-            $tenant->subscriptions()->updateOrCreate(
-                ['plan' => 'free'],
-                [
-                    'status' => 'active',
-                    'started_at' => now(),
-                    'trial_ends_at' => now()->addDays(30),
-                ]
-            );
-            return redirect()->route('subscriptions.index')->with('success', 'Plan actualizado a Gratuito');
-        }
+        // 2. Obtenemos los detalles directamente del Service para no repetir precios
+        $planDetails = $this->mercadoPagoService->getPlanDetails($validated['plan']);
+        $price = $planDetails['price'];
+        $planName = $planDetails['name'];
 
-        // Lógica de precios por plan
-        $planPrices = [
-            'starter' => 1000,
-            'professional' => 2500,
-            'enterprise' => 5000,
-        ];
-        $planName = ucfirst($validated['plan']);
-        $price = $planPrices[$validated['plan']] ?? 0;
-
-        // Crear preferencia MercadoPago
+        // 3. Crear preferencia MercadoPago
         $preference = $this->mercadoPagoService->createPreference(
             $planName,
             $price,
@@ -88,16 +72,15 @@ class SubscriptionController extends Controller
         );
 
         if (isset($preference['init_point'])) {
-            // Redirigir al checkout de MercadoPago en modo sandbox
-            if (isset($preference['sandbox_init_point'])) {
-                return redirect($preference['sandbox_init_point']);
+            // Recordá que config('app.env') en tu .env dice 'local', así que esto te mandará a sandbox en tu PC
+            if (config('app.env') === 'local' && isset($preference['sandbox_init_point'])) {
+                return redirect()->to($preference['sandbox_init_point']);
             }
-            return redirect($preference['init_point']);
-        } else {
-            return redirect()->back()->with('error', 'No se pudo iniciar el pago.');
+            return redirect()->to($preference['init_point']);
         }
-    }
 
+        return redirect()->back()->with('error', 'No se pudo iniciar el pago.');
+    }
     /**
      * Handle successful subscription
      */
