@@ -87,11 +87,7 @@
                 <div class="mt-auto">
                     @if($currentPlan['plan'] === 'basico')
                         <button disabled class="w-full py-2 bg-gray-400 text-white rounded-lg font-semibold cursor-not-allowed">
-                            Plan Actual
-                        </button>
-                    @else
-                        <button disabled class="w-full py-2 bg-gray-400 text-white rounded-lg font-semibold cursor-not-allowed">
-                            Tu plan actual es superior
+                            PLAN ACTUAL
                         </button>
                     @endif
                 </div>
@@ -154,13 +150,19 @@
                 </ul>
 
                 <div class="mt-auto">
-                    <form action="{{ route('subscriptions.checkout') }}" method="POST">
-                        @csrf
-                        <input type="hidden" name="plan" value="profesional">
-                        <button type="submit" class="w-full py-2 bg-[#009ee3] hover:opacity-90 text-white rounded-lg font-semibold transition border-2 border-[#009ee3] shadow-lg">
-                            Pagar con Mercado Pago
+                    @if($currentPlan['plan'] === 'profesional')
+                        <button disabled class="w-full py-2 bg-gray-400 text-white rounded-lg font-semibold cursor-not-allowed">
+                            PLAN ACTUAL
                         </button>
-                    </form>
+                    @else
+                        <form action="{{ route('subscriptions.checkout') }}" method="POST">
+                            @csrf
+                            <input type="hidden" name="plan" value="profesional">
+                            <button type="submit" class="w-full py-2 bg-[#009ee3] hover:opacity-90 text-white rounded-lg font-semibold transition border-2 border-[#009ee3] shadow-lg">
+                                Pagar con Mercado Pago
+                            </button>
+                        </form>
+                    @endif
                 </div>
             </div>
 
@@ -218,13 +220,19 @@
                 </ul>
 
                 <div class="mt-auto">
-                    <form action="{{ route('subscriptions.checkout') }}" method="POST">
-                        @csrf
-                        <input type="hidden" name="plan" value="premium">
-                        <button type="submit" class="w-full py-2 bg-[#009ee3] hover:opacity-90 text-white rounded-lg font-semibold transition border-2 border-[#009ee3] shadow-lg">
-                            Pagar con Mercado Pago
+                    @if($currentPlan['plan'] === 'premium')
+                        <button disabled class="w-full py-2 bg-gray-400 text-white rounded-lg font-semibold cursor-not-allowed">
+                            PLAN ACTUAL
                         </button>
-                    </form>
+                    @else
+                        <form action="{{ route('subscriptions.checkout') }}" method="POST">
+                            @csrf
+                            <input type="hidden" name="plan" value="premium">
+                            <button type="submit" class="w-full py-2 bg-[#009ee3] hover:opacity-90 text-white rounded-lg font-semibold transition border-2 border-[#009ee3] shadow-lg">
+                                Pagar con Mercado Pago
+                            </button>
+                        </form>
+                    @endif
                 </div>
             </div>
 
@@ -289,13 +297,19 @@
                 </ul>
 
                 <div class="mt-auto">
-                    <form action="{{ route('subscriptions.checkout') }}" method="POST">
-                        @csrf
-                        <input type="hidden" name="plan" value="premium_plus">
-                        <button type="submit" class="w-full py-2 bg-[#009ee3] hover:opacity-90 text-white rounded-lg font-semibold transition border-2 border-[#009ee3] shadow-lg">
-                            Pagar con Mercado Pago
+                    @if($currentPlan['plan'] === 'premium_plus')
+                        <button disabled class="w-full py-2 bg-gray-400 text-white rounded-lg font-semibold cursor-not-allowed">
+                            PLAN ACTUAL
                         </button>
-                    </form>
+                    @else
+                        <form action="{{ route('subscriptions.checkout') }}" method="POST">
+                            @csrf
+                            <input type="hidden" name="plan" value="premium_plus">
+                            <button type="submit" class="w-full py-2 bg-[#009ee3] hover:opacity-90 text-white rounded-lg font-semibold transition border-2 border-[#009ee3] shadow-lg">
+                                Pagar con Mercado Pago
+                            </button>
+                        </form>
+                    @endif
                 </div>
             </div>
 
