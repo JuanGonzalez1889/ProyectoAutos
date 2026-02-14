@@ -30,6 +30,7 @@ class MercadoPagoService
      */
     public function createPreference($plan, $price, $userEmail)
     {
+        dd(config('services.mercadopago.access_token'));
         // Log de entrada
         Log::info('MP_DEBUG_CREATE_PREF', [
             'access_token' => config('services.mercadopago.access_token'),
