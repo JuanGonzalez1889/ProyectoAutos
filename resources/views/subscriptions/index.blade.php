@@ -85,7 +85,7 @@
                 </ul>
 
                 <div class="mt-auto">
-                    @if($currentPlan['plan'] === 'free')
+                    @if($currentPlan['plan'] === 'basico')
                         <button disabled class="w-full py-2 bg-gray-400 text-white rounded-lg font-semibold cursor-not-allowed">
                             Plan Actual
                         </button>
@@ -156,7 +156,7 @@
                 <div class="mt-auto">
                     <form action="{{ route('subscriptions.checkout') }}" method="POST">
                         @csrf
-                        <input type="hidden" name="plan" value="professional">
+                        <input type="hidden" name="plan" value="profesional">
                         <button type="submit" class="w-full py-2 bg-[#009ee3] hover:opacity-90 text-white rounded-lg font-semibold transition border-2 border-[#009ee3] shadow-lg">
                             Pagar con Mercado Pago
                         </button>
@@ -291,7 +291,7 @@
                 <div class="mt-auto">
                     <form action="{{ route('subscriptions.checkout') }}" method="POST">
                         @csrf
-                        <input type="hidden" name="plan" value="premium +">
+                        <input type="hidden" name="plan" value="premium_plus">
                         <button type="submit" class="w-full py-2 bg-[#009ee3] hover:opacity-90 text-white rounded-lg font-semibold transition border-2 border-[#009ee3] shadow-lg">
                             Pagar con Mercado Pago
                         </button>
