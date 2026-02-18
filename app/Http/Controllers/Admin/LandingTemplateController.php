@@ -113,7 +113,7 @@ class LandingTemplateController extends Controller
         }
 
         // Detectar si está en modo edición (se llama desde el iframe del editor)
-        $editMode = request()->get('edit', true); // Por defecto en modo edición para el iframe
+        $editMode = true; // Siempre modo edición en entorno admin
 
         // Colores predefinidos para cada plantilla
         $templateColors = [
@@ -135,12 +135,30 @@ class LandingTemplateController extends Controller
             $settings = $dbSettings;
         } else {
             $settings = (object)[
+                'agency_name' => 'Agencia de Autos',
+                'agency_name_color' => '#fff',
                 'template' => $template,
                 'primary_color' => $templateColors[$template]['primary_color'],
                 'secondary_color' => $templateColors[$template]['secondary_color'],
+                'tertiary_color' => '#ffaa00',
                 'logo_url' => null,
-                'banner_url' => 'https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=1200&h=600&fit=crop',
+                'navbar_agency_name' => 'Agencia de Autos',
+                'navbar_agency_name_color' => '#fff',
+                'navbar_links_color' => '#fff',
+                'hero_title' => 'Título principal del sitio',
+                'hero_title_color' => '#fff',
                 'home_description' => 'AGENCIA DE AUTOS USADOS Y 0KM... FINANCIACION HASTA EL 70% DEL VALOR DEL VEHICULO. LOS MEJORES AUTOS DE LA CIUDAD 100% VERIFICADOS',
+                'home_description_color' => '#fff',
+                'banner_url' => 'https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=1200&h=600&fit=crop',
+                'nosotros_description' => 'Cuéntale a tus usuarios sobre tu agencia, experiencia y servicios.',
+                'nosotros_description_color' => '#222',
+                'nosotros_url' => 'https://images.unsplash.com/photo-1487730116645-74489c95b41b?w=900&h=600&fit=crop',
+                'stat1' => '150+',
+                'stat1_label' => 'Autos Vendidos',
+                'stat2' => '98%',
+                'stat2_label' => 'Clientes Satisfechos',
+                'stat3' => '24h',
+                'stat3_label' => 'Atención al Cliente',
                 'contact_message' => '¿Listo para encontrar tu próximo vehículo? Contáctanos y te ayudaremos a encontrar la mejor opción.',
                 'phone' => '+54 9 11 1234-5678',
                 'email' => 'contacto@ejemplo.com',

@@ -49,7 +49,7 @@ class SubscriptionController extends Controller
     {
         // 1. Validamos con tus 4 planes reales
         $validated = $request->validate([
-            'plan' => 'required|in:basico,profesional,premium,premium_plus',
+            'plan' => 'required|in:basico,profesional,premium,premium_plus,test100',
         ]);
 
         $user = Auth::user();

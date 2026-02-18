@@ -1,5 +1,5 @@
-@php /* Reutilizable en plantillas en modo edición */ @endphp
-@if(isset($editMode) && $editMode)
+<?php /* Reutilizable en plantillas en modo edición */ ?>
+<?php if(isset($editMode) && $editMode): ?>
 <!-- Eliminado FontAwesome, ahora solo SVG -->
 <script>
 let currentField = null;
@@ -34,12 +34,12 @@ function saveText(){
   fd.append('_method','PATCH');
   fd.append(currentField, value);
   fd.append(currentField + '_color', color);
-  fd.append('template','{{ $template ?? "moderno" }}');
+  fd.append('template','<?php echo e($template ?? "moderno"); ?>');
   const fields=['home_description','nosotros_description','nosotros_url','contact_message','phone','email','whatsapp','logo_url','banner_url','primary_color','secondary_color','facebook_url','instagram_url','linkedin_url','agency_name','navbar_agency_name','hero_title','hero_title_color'];
   fields.forEach(f=>{ if(f!==currentField && f!==(currentField+'_color')){ fd.append(f, getFieldValue(f)); } });
-  fd.append('show_vehicles','{{ $settings->show_vehicles ?? 1 }}');
-  fd.append('show_contact_form','{{ $settings->show_contact_form ?? 1 }}');
-  fetch('{{ route("admin.landing-config.update") }}',{method:'POST', headers:{'X-Requested-With':'XMLHttpRequest','Accept':'application/json'}, body:fd})
+  fd.append('show_vehicles','<?php echo e($settings->show_vehicles ?? 1); ?>');
+  fd.append('show_contact_form','<?php echo e($settings->show_contact_form ?? 1); ?>');
+  fetch('<?php echo e(route("admin.landing-config.update")); ?>',{method:'POST', headers:{'X-Requested-With':'XMLHttpRequest','Accept':'application/json'}, body:fd})
     .then(r=>r.json()).then(d=>{ if(d.success){ location.reload(); } else { alert('Error al guardar'); } })
     .catch(e=>{ console.error(e); alert('Error al guardar'); });
   closeTextModal();
@@ -71,7 +71,7 @@ async function saveImage(){
     formData.append('field', currentField);
     formData.append('_token', document.querySelector('meta[name="csrf-token"]').content);
     try{
-      const resp = await fetch('{{ route("admin.landing-config.upload-image") }}',{method:'POST', body:formData});
+      const resp = await fetch('<?php echo e(route("admin.landing-config.upload-image")); ?>',{method:'POST', body:formData});
       const data = await resp.json();
       if(data.success){
         updateField(currentField, data.url);
@@ -107,11 +107,11 @@ function saveContact(){
   fd.append('_token', document.querySelector('meta[name="csrf-token"]').content);
   fd.append('_method','PATCH');
   fd.append('phone', phone); fd.append('email', email); fd.append('whatsapp', whatsapp);
-  fd.append('template','{{ $template ?? "moderno" }}');
+  fd.append('template','<?php echo e($template ?? "moderno"); ?>');
   ;['home_description','nosotros_description','nosotros_url','contact_message','logo_url','banner_url','primary_color','secondary_color','facebook_url','instagram_url','linkedin_url','agency_name','navbar_agency_name'].forEach(f=>fd.append(f,getFieldValue(f)));
-  fd.append('show_vehicles','{{ $settings->show_vehicles ?? 1 }}');
-  fd.append('show_contact_form','{{ $settings->show_contact_form ?? 1 }}');
-  fetch('{{ route("admin.landing-config.update") }}',{method:'POST', headers:{'X-Requested-With':'XMLHttpRequest','Accept':'application/json'}, body:fd})
+  fd.append('show_vehicles','<?php echo e($settings->show_vehicles ?? 1); ?>');
+  fd.append('show_contact_form','<?php echo e($settings->show_contact_form ?? 1); ?>');
+  fetch('<?php echo e(route("admin.landing-config.update")); ?>',{method:'POST', headers:{'X-Requested-With':'XMLHttpRequest','Accept':'application/json'}, body:fd})
   .then(r=>r.json()).then(d=>{ if(d.success){ closeContactModal(); location.reload(); } else { alert('Error al guardar: '+(d.message||'Error desconocido')); } })
   .catch(e=>{ console.error(e); alert('Error al guardar'); });
 }
@@ -130,42 +130,42 @@ function saveStats(){
   fd.append('stat1', document.getElementById('modalStat1').value||'150+');
   fd.append('stat2', document.getElementById('modalStat2').value||'98%');
   fd.append('stat3', document.getElementById('modalStat3').value||'24h');
-  fd.append('template','{{ $template ?? "moderno" }}');
+  fd.append('template','<?php echo e($template ?? "moderno"); ?>');
   ;['home_description','nosotros_description','nosotros_url','contact_message','phone','email','whatsapp','logo_url','banner_url','primary_color','secondary_color','facebook_url','instagram_url','linkedin_url','agency_name','navbar_agency_name'].forEach(f=>fd.append(f,getFieldValue(f)));
-  fd.append('show_vehicles','{{ $settings->show_vehicles ?? 1 }}');
-  fd.append('show_contact_form','{{ $settings->show_contact_form ?? 1 }}');
-  fetch('{{ route("admin.landing-config.update") }}',{method:'POST', headers:{'X-Requested-With':'XMLHttpRequest','Accept':'application/json'}, body:fd})
+  fd.append('show_vehicles','<?php echo e($settings->show_vehicles ?? 1); ?>');
+  fd.append('show_contact_form','<?php echo e($settings->show_contact_form ?? 1); ?>');
+  fetch('<?php echo e(route("admin.landing-config.update")); ?>',{method:'POST', headers:{'X-Requested-With':'XMLHttpRequest','Accept':'application/json'}, body:fd})
   .then(r=>r.json()).then(d=>{ if(d.success){ closeStatsModal(); location.reload(); } else { alert('Error al guardar'); } })
   .catch(e=>{ console.error(e); alert('Error al guardar'); });
 }
 
 function getFieldValue(field){
   const values = {
-    home_description: @json($settings->home_description ?? ''),
-    home_description_color: @json($settings->home_description_color ?? '#fff'),
-    nosotros_description: @json($settings->nosotros_description ?? ''),
-    nosotros_description_color: @json($settings->nosotros_description_color ?? '#222'),
-    hero_title: @json($settings->hero_title ?? 'Título principal del sitio'),
-    hero_title_color: @json($settings->hero_title_color ?? '#fff'),
-    agency_name: @json($settings->agency_name ?? $tenant->name ?? ''),
-    agency_name_color: @json($settings->agency_name_color ?? '#fff'),
-    navbar_agency_name: @json($settings->navbar_agency_name ?? $tenant->name ?? ''),
-    navbar_agency_name_color: @json($settings->navbar_agency_name_color ?? '#fff'),
-    nosotros_url: @json($settings->nosotros_url ?? ''),
-    contact_message: @json($settings->contact_message ?? ''),
-    phone: @json($settings->phone ?? ''),
-    email: @json($settings->email ?? ''),
-    whatsapp: @json($settings->whatsapp ?? ''),
-    facebook_url: @json($settings->facebook_url ?? ''),
-    instagram_url: @json($settings->instagram_url ?? ''),
-    linkedin_url: @json($settings->linkedin_url ?? ''),
-    logo_url: @json($settings->logo_url ?? ''),
-    banner_url: @json($settings->banner_url ?? ''),
-    primary_color: @json($settings->primary_color ?? '#8b5cf6'),
-    secondary_color: @json($settings->secondary_color ?? '#1e293b'),
-    stat1: @json($settings->stat1 ?? '150+'),
-    stat2: @json($settings->stat2 ?? '98%'),
-    stat3: @json($settings->stat3 ?? '24h')
+    home_description: <?php echo json_encode($settings->home_description ?? '', 15, 512) ?>,
+    home_description_color: <?php echo json_encode($settings->home_description_color ?? '#fff', 15, 512) ?>,
+    nosotros_description: <?php echo json_encode($settings->nosotros_description ?? '', 15, 512) ?>,
+    nosotros_description_color: <?php echo json_encode($settings->nosotros_description_color ?? '#222', 15, 512) ?>,
+    hero_title: <?php echo json_encode($settings->hero_title ?? 'Título principal del sitio', 15, 512) ?>,
+    hero_title_color: <?php echo json_encode($settings->hero_title_color ?? '#fff', 15, 512) ?>,
+    agency_name: <?php echo json_encode($settings->agency_name ?? $tenant->name ?? '', 15, 512) ?>,
+    agency_name_color: <?php echo json_encode($settings->agency_name_color ?? '#fff', 15, 512) ?>,
+    navbar_agency_name: <?php echo json_encode($settings->navbar_agency_name ?? $tenant->name ?? '', 15, 512) ?>,
+    navbar_agency_name_color: <?php echo json_encode($settings->navbar_agency_name_color ?? '#fff', 15, 512) ?>,
+    nosotros_url: <?php echo json_encode($settings->nosotros_url ?? '', 15, 512) ?>,
+    contact_message: <?php echo json_encode($settings->contact_message ?? '', 15, 512) ?>,
+    phone: <?php echo json_encode($settings->phone ?? '', 15, 512) ?>,
+    email: <?php echo json_encode($settings->email ?? '', 15, 512) ?>,
+    whatsapp: <?php echo json_encode($settings->whatsapp ?? '', 15, 512) ?>,
+    facebook_url: <?php echo json_encode($settings->facebook_url ?? '', 15, 512) ?>,
+    instagram_url: <?php echo json_encode($settings->instagram_url ?? '', 15, 512) ?>,
+    linkedin_url: <?php echo json_encode($settings->linkedin_url ?? '', 15, 512) ?>,
+    logo_url: <?php echo json_encode($settings->logo_url ?? '', 15, 512) ?>,
+    banner_url: <?php echo json_encode($settings->banner_url ?? '', 15, 512) ?>,
+    primary_color: <?php echo json_encode($settings->primary_color ?? '#8b5cf6', 15, 512) ?>,
+    secondary_color: <?php echo json_encode($settings->secondary_color ?? '#1e293b', 15, 512) ?>,
+    stat1: <?php echo json_encode($settings->stat1 ?? '150+', 15, 512) ?>,
+    stat2: <?php echo json_encode($settings->stat2 ?? '98%', 15, 512) ?>,
+    stat3: <?php echo json_encode($settings->stat3 ?? '24h', 15, 512) ?>
   };
   return values[field] || '';
 }
@@ -175,12 +175,12 @@ function updateField(field, value){
   fd.append('_token', document.querySelector('meta[name="csrf-token"]').content);
   fd.append('_method','PATCH');
   fd.append(field, value);
-  fd.append('template','{{ $template ?? "moderno" }}');
+  fd.append('template','<?php echo e($template ?? "moderno"); ?>');
   const fields=['home_description','nosotros_description','nosotros_url','contact_message','phone','email','whatsapp','logo_url','banner_url','primary_color','secondary_color','facebook_url','instagram_url','linkedin_url','agency_name','navbar_agency_name'];
   fields.forEach(f=>{ if(f!==field){ fd.append(f, getFieldValue(f)); } });
-  fd.append('show_vehicles','{{ $settings->show_vehicles ?? 1 }}');
-  fd.append('show_contact_form','{{ $settings->show_contact_form ?? 1 }}');
-  fetch('{{ route("admin.landing-config.update") }}',{method:'POST', headers:{'X-Requested-With':'XMLHttpRequest','Accept':'application/json'}, body:fd})
+  fd.append('show_vehicles','<?php echo e($settings->show_vehicles ?? 1); ?>');
+  fd.append('show_contact_form','<?php echo e($settings->show_contact_form ?? 1); ?>');
+  fetch('<?php echo e(route("admin.landing-config.update")); ?>',{method:'POST', headers:{'X-Requested-With':'XMLHttpRequest','Accept':'application/json'}, body:fd})
   .then(r=>r.json()).then(d=>{ if(d.success){ location.reload(); } else { alert('Error al guardar'); } })
   .catch(e=>{ console.error(e); alert('Error al guardar'); });
 }
@@ -211,7 +211,7 @@ function updateField(field, value){
   </div>
 </div>
 
-@if(isset($editMode) && $editMode)
+<?php if(isset($editMode) && $editMode): ?>
 <script>
 window.addEventListener('DOMContentLoaded', function() {
   if (typeof editText === 'function') {
@@ -239,7 +239,7 @@ window.addEventListener('DOMContentLoaded', function() {
   }
 });
 </script>
-@endif
+<?php endif; ?>
   </script>
 
 <div id="imageModal" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center z-[99999] p-4">
@@ -292,4 +292,5 @@ window.addEventListener('DOMContentLoaded', function() {
     </div>
   </div>
 </div>
-@endif
+<?php endif; ?>
+<?php /**PATH C:\Proyectos\ProyectoAutos\resources\views/public/templates/partials/editor-scripts.blade.php ENDPATH**/ ?>

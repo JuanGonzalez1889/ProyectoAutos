@@ -43,6 +43,21 @@
             --tertiary-color: {{ $settings && $settings->tertiary_color ? $settings->tertiary_color : '#ffaa00' }};
         }
         body { font-family: {{ $settings->font_family ?? 'inherit' }}; }
+        .edit-btn {
+            display: inline-flex !important;
+            align-items: center;
+            justify-content: center;
+            background: var(--primary-color) !important;
+            color: #fff !important;
+            border-radius: 50%;
+            font-size: 18px !important;
+            padding: 4px !important;
+            margin-left: 6px;
+            cursor: pointer;
+            z-index: 9999 !important;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            border: none;
+        }
     </style>
 </head>
 <body style="background-color: var(--secondary-color);" class="text-white">
@@ -79,10 +94,21 @@
         <div class="max-w-6xl mx-auto px-6 py-4">
             <div class="flex justify-between items-center">
                 <div class="flex items-center gap-4">
-                    @if($settings && $settings->logo_url)
-                        <img src="{{ $settings->logo_url }}" alt="{{ $tenant->name }}" class="h-10 object-contain">
-                    @endif
-                    <h1 class="text-2xl font-bold navbar-auto">{{ $tenant->name }}</h1>
+                            <div class="editable-section inline-block relative">
+                                @if($settings && $settings->logo_url)
+                                    <img src="{{ $settings->logo_url }}" alt="{{ $tenant->name }}" class="h-10 object-contain">
+                                @endif
+                                <div class="edit-btn" onclick="editImage('logo_url')">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="18" height="18" fill="currentColor" style="vertical-align:middle"><path d="M12.146 2.146a1 1 0 0 1 1.414 0l.294.294a1 1 0 0 1 0 1.414l-8.5 8.5a1 1 0 0 1-.293.207l-2.5 1.25a.5.5 0 0 1-.66-.66l1.25-2.5a1 1 0 0 1 .207-.293l8.5-8.5zm1.414-1.414a2 2 0 0 0-2.828 0l-8.5 8.5a2 2 0 0 0-.414.586l-1.25 2.5A1.5 1.5 0 0 0 2.5 14.5l2.5-1.25a2 2 0 0 0 .586-.414l8.5-8.5a2 2 0 0 0 0-2.828l-.294-.294z"/></svg>
+                                </div>
+                            </div>
+                            <h1 class="text-2xl font-bold navbar-auto">{{ $tenant->name }}</h1>
+                            <div class="editable-section inline-block relative ml-2">
+                                <span class="font-semibold" style="color: {{ $settings->navbar_agency_name_color ?? '#fff' }}">{{ $settings->navbar_agency_name }}</span>
+                                <div class="edit-btn" onclick="editText('navbar_agency_name', 'Editar Nombre de Agencia (Navbar)')">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="18" height="18" fill="currentColor" style="vertical-align:middle"><path d="M12.146 2.146a1 1 0 0 1 1.414 0l.294.294a1 1 0 0 1 0 1.414l-8.5 8.5a1 1 0 0 1-.293.207l-2.5 1.25a.5.5 0 0 1-.66-.66l1.25-2.5a1 1 0 0 1 .207-.293l8.5-8.5zm1.414-1.414a2 2 0 0 0-2.828 0l-8.5 8.5a2 2 0 0 0-.414.586l-1.25 2.5A1.5 1.5 0 0 0 2.5 14.5l2.5-1.25a2 2 0 0 0 .586-.414l8.5-8.5a2 2 0 0 0 0-2.828l-.294-.294z"/></svg>
+                                </div>
+                            </div>
                 </div>
                 <div class="flex items-center gap-6">
                     <div class="hidden md:flex gap-6">

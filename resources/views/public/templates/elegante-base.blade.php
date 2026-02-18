@@ -60,7 +60,20 @@
                 @else
                     <div class="h-10 w-10 rounded-sm border border-[var(--primary-color)]" style="background: linear-gradient(135deg, var(--primary-color), var(--tertiary-color));"></div>
                 @endif
-                <span class="font-display text-xl font-bold tracking-wider uppercase" style="color: var(--primary-color);">{{ $tenant->name }}</span>
+                    <div class="editable-section inline-block relative">
+                        @if($settings && $settings->logo_url)
+                            <img src="{{ $settings->logo_url }}" alt="{{ $tenant->name }}" class="h-10 object-contain">
+                        @else
+                            <div class="h-10 w-10 flex items-center justify-center" style="border: 1px solid var(--primary-color);">
+                                <span class="font-display text-xl" style="color: var(--primary-color);">{{ substr($tenant->name, 0, 1) }}</span>
+                            </div>
+                        @endif
+                            <div class="edit-btn" onclick="editImage('logo_url')"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="18" height="18" fill="currentColor" style="vertical-align:middle"><path d="M12.146 2.146a1 1 0 0 1 1.414 0l.294.294a1 1 0 0 1 0 1.414l-8.5 8.5a1 1 0 0 1-.293.207l-2.5 1.25a.5.5 0 0 1-.66-.66l1.25-2.5a1 1 0 0 1 .207-.293l8.5-8.5zm1.414-1.414a2 2 0 0 0-2.828 0l-8.5 8.5a2 2 0 0 0-.414.586l-1.25 2.5A1.5 1.5 0 0 0 2.5 14.5l2.5-1.25a2 2 0 0 0 .586-.414l8.5-8.5a2 2 0 0 0 0-2.828l-.294-.294z"/></svg></div>
+                    </div>
+                    <div class="editable-section inline-block relative ml-2">
+                        <span class="font-display text-lg font-bold" style="color: var(--primary-color);">{{ $tenant->name }}</span>
+                            <button type="button" class="edit-btn" style="position:static; display:flex; margin-left:4px; background:var(--primary-color); color:#fff; width:24px; height:24px; border-radius:50%; align-items:center; justify-content:center; cursor:pointer; z-index:50; border:none; font-size:10px;" onclick="editText('agency_name','Editar Nombre')"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="18" height="18" fill="currentColor" style="vertical-align:middle"><path d="M12.146 2.146a1 1 0 0 1 1.414 0l.294.294a1 1 0 0 1 0 1.414l-8.5 8.5a1 1 0 0 1-.293.207l-2.5 1.25a.5.5 0 0 1-.66-.66l1.25-2.5a1 1 0 0 1 .207-.293l8.5-8.5zm1.414-1.414a2 2 0 0 0-2.828 0l-8.5 8.5a2 2 0 0 0-.414.586l-1.25 2.5A1.5 1.5 0 0 0 2.5 14.5l2.5-1.25a2 2 0 0 0 .586-.414l8.5-8.5a2 2 0 0 0 0-2.828l-.294-.294z"/></svg></button>
+                    </div>
             </div>
             <div class="flex items-center gap-8">
                 <div class="hidden md:flex gap-8">

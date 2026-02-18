@@ -10,6 +10,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="bg-[hsl(var(--background))]">
+    @include('components.plan-overlay')
     <div class="min-h-screen flex">
         <!-- Sidebar -->
         <aside class="fixed left-0 top-0 h-full w-64 bg-[hsl(var(--card))] border-r border-[hsl(var(--border))] p-6 flex flex-col z-50">

@@ -62,15 +62,18 @@
                 @endif
                 <span class="text-lg font-bold text-gray-900">{{ $tenant->name }}</span>
             </div>
-            <div class="flex items-center gap-8">
-                <div class="hidden md:flex gap-7">
-                    <a href="#inicio" class="text-sm font-medium text-gray-500 hover:text-gray-900 transition" style="color: {{ $settings->navbar_links_color ?? '#6b7280' }}">Inventario</a>
-                    <a href="{{ route('public.vehiculos') }}" class="text-sm font-medium text-gray-500 hover:text-gray-900 transition" style="color: {{ $settings->navbar_links_color ?? '#6b7280' }}">Vehículos</a>
-                    <a href="#nosotros" class="text-sm font-medium text-gray-500 hover:text-gray-900 transition" style="color: {{ $settings->navbar_links_color ?? '#6b7280' }}">Nosotros</a>
-                    <a href="#contacto" class="text-sm font-medium text-gray-500 hover:text-gray-900 transition" style="color: {{ $settings->navbar_links_color ?? '#6b7280' }}">Contacto</a>
+            <div class="flex items-center gap-2.5">
+                <div class="editable-section inline-block relative">
+                    @if($settings && $settings->logo_url)
+                        <img src="{{ $settings->logo_url }}" alt="{{ $tenant->name }}" class="h-9 object-contain">
+                    @else
+                        <div class="h-9 w-9 rounded-xl flex items-center justify-center" style="background: var(--primary-color);">
+                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                        </div>
+                    @endif
+                    <div class="edit-btn" onclick="editImage('logo_url')"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="18" height="18" fill="currentColor" style="vertical-align:middle"><path d="M12.146 2.146a1 1 0 0 1 1.414 0l.294.294a1 1 0 0 1 0 1.414l-8.5 8.5a1 1 0 0 1-.293.207l-2.5 1.25a.5.5 0 0 1-.66-.66l1.25-2.5a1 1 0 0 1 .207-.293l8.5-8.5zm1.414-1.414a2 2 0 0 0-2.828 0l-8.5 8.5a2 2 0 0 0-.414.586l-1.25 2.5A1.5 1.5 0 0 0 2.5 14.5l2.5-1.25a2 2 0 0 0 .586-.414l8.5-8.5a2 2 0 0 0 0-2.828l-.294-.294z"/></svg></div>
                 </div>
-                @auth
-                    <a href="{{ route('admin.dashboard') }}" class="px-5 py-2 text-sm font-semibold text-white rounded-xl transition hover:opacity-90" style="background: var(--primary-color);">
+            </div>
                         Panel Admin
                     </a>
                 @endauth

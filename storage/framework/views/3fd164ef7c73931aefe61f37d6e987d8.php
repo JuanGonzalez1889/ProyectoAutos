@@ -10,15 +10,14 @@
     <?php echo app('Illuminate\Foundation\Vite')(['resources/css/app.css', 'resources/js/app.js']); ?>
 </head>
 <body class="bg-[hsl(var(--background))]">
+    <?php echo $__env->make('components.plan-overlay', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
     <div class="min-h-screen flex">
         <!-- Sidebar -->
         <aside class="fixed left-0 top-0 h-full w-64 bg-[hsl(var(--card))] border-r border-[hsl(var(--border))] p-6 flex flex-col z-50">
             <!-- Logo -->
             <div class="mb-8">
                 <div class="flex items-center gap-2 mb-2">
-                    <div class="w-8 h-8 bg-[hsl(var(--primary))] rounded flex items-center justify-center">
-                        <span class="text-white font-bold text-sm">A</span>
-                    </div>
+                    <img src="<?php echo e(asset('storage/logo.png')); ?>" class="w-8 h-8 rounded" alt="Logo">
                     <span class="text-[hsl(var(--foreground))] font-semibold text-lg"><?php echo e(config('app.name')); ?></span>
                 </div>
                 <p class="text-xs text-[hsl(var(--muted-foreground))]">

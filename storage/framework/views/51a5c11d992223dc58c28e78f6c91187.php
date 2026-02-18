@@ -1,8 +1,8 @@
-@extends('layouts.admin')
 
-@section('title', 'Planes y Suscripción')
 
-@section('content')
+<?php $__env->startSection('title', 'Planes y Suscripción'); ?>
+
+<?php $__env->startSection('content'); ?>
 <div class="min-h-screen bg-gradient-to-br from-[hsl(var(--background))] to-[hsl(var(--secondary))]">
     <div class="max-w-7xl mx-auto px-4 py-12">
         <!-- Header -->
@@ -12,30 +12,30 @@
         </div>
 
         <!-- Current Plan Info -->
-        @php
+        <?php
             $currentPlan = auth()->user()->tenant->getPlanInfo();
-        @endphp
+        ?>
         <div class="bg-[hsl(var(--card))] border border-[hsl(var(--border))] rounded-lg p-6 mb-12 shadow-lg">
             <div class="flex items-center justify-between">
                 <div>
                     <h3 class="text-lg font-semibold text-[hsl(var(--foreground))]">Plan Actual</h3>
-                    <p class="text-2xl font-bold text-[hsl(var(--primary))] mt-2">{{ $currentPlan['name'] }}</p>
-                    @if($currentPlan['is_trial'])
+                    <p class="text-2xl font-bold text-[hsl(var(--primary))] mt-2"><?php echo e($currentPlan['name']); ?></p>
+                    <?php if($currentPlan['is_trial']): ?>
                         <p class="text-sm text-yellow-500 mt-2">
-                            📅 Prueba Gratuita: <strong>{{ $currentPlan['days_remaining'] }} días restantes</strong>
+                            📅 Prueba Gratuita: <strong><?php echo e($currentPlan['days_remaining']); ?> días restantes</strong>
                         </p>
-                    @endif
+                    <?php endif; ?>
                 </div>
                 <div class="text-right">
-                    @if($currentPlan['plan'] === 'free')
+                    <?php if($currentPlan['plan'] === 'free'): ?>
                         <a href="#plans" class="px-6 py-2 bg-[hsl(var(--primary))] hover:opacity-90 text-white rounded-lg font-semibold">
                             Actualizar Plan
                         </a>
-                    @else
-                        <a href="{{ route('subscriptions.billing') }}" class="px-6 py-2 bg-[hsl(var(--secondary))] hover:opacity-90 text-[hsl(var(--foreground))] rounded-lg font-semibold">
+                    <?php else: ?>
+                        <a href="<?php echo e(route('subscriptions.billing')); ?>" class="px-6 py-2 bg-[hsl(var(--secondary))] hover:opacity-90 text-[hsl(var(--foreground))] rounded-lg font-semibold">
                             Gestionar Suscripción
                         </a>
-                    @endif
+                    <?php endif; ?>
                 </div>
             </div>
         </div>
@@ -85,11 +85,11 @@
                 </ul>
 
                 <div class="mt-auto">
-                    @if($currentPlan['plan'] === 'basico')
+                    <?php if($currentPlan['plan'] === 'basico'): ?>
                         <button disabled class="w-full py-2 bg-gray-400 text-white rounded-lg font-semibold cursor-not-allowed">
                             PLAN ACTUAL
                         </button>
-                    @endif
+                    <?php endif; ?>
                 </div>
             </div>
 
@@ -150,19 +150,19 @@
                 </ul>
 
                 <div class="mt-auto">
-                    @if($currentPlan['plan'] === 'profesional')
+                    <?php if($currentPlan['plan'] === 'profesional'): ?>
                         <button disabled class="w-full py-2 bg-gray-400 text-white rounded-lg font-semibold cursor-not-allowed">
                             PLAN ACTUAL
                         </button>
-                    @else
-                        <form action="{{ route('subscriptions.checkout') }}" method="POST">
-                            @csrf
+                    <?php else: ?>
+                        <form action="<?php echo e(route('subscriptions.checkout')); ?>" method="POST">
+                            <?php echo csrf_field(); ?>
                             <input type="hidden" name="plan" value="profesional">
                             <button type="submit" class="w-full py-2 bg-[#009ee3] hover:opacity-90 text-white rounded-lg font-semibold transition border-2 border-[#009ee3] shadow-lg">
                                 Pagar con Mercado Pago
                             </button>
                         </form>
-                    @endif
+                    <?php endif; ?>
                 </div>
             </div>
 
@@ -220,19 +220,19 @@
                 </ul>
 
                 <div class="mt-auto">
-                    @if($currentPlan['plan'] === 'premium')
+                    <?php if($currentPlan['plan'] === 'premium'): ?>
                         <button disabled class="w-full py-2 bg-gray-400 text-white rounded-lg font-semibold cursor-not-allowed">
                             PLAN ACTUAL
                         </button>
-                    @else
-                        <form action="{{ route('subscriptions.checkout') }}" method="POST">
-                            @csrf
+                    <?php else: ?>
+                        <form action="<?php echo e(route('subscriptions.checkout')); ?>" method="POST">
+                            <?php echo csrf_field(); ?>
                             <input type="hidden" name="plan" value="premium">
                             <button type="submit" class="w-full py-2 bg-[#009ee3] hover:opacity-90 text-white rounded-lg font-semibold transition border-2 border-[#009ee3] shadow-lg">
                                 Pagar con Mercado Pago
                             </button>
                         </form>
-                    @endif
+                    <?php endif; ?>
                 </div>
             </div>
 
@@ -297,19 +297,19 @@
                 </ul>
 
                 <div class="mt-auto">
-                    @if($currentPlan['plan'] === 'premium_plus')
+                    <?php if($currentPlan['plan'] === 'premium_plus'): ?>
                         <button disabled class="w-full py-2 bg-gray-400 text-white rounded-lg font-semibold cursor-not-allowed">
                             PLAN ACTUAL
                         </button>
-                    @else
-                        <form action="{{ route('subscriptions.checkout') }}" method="POST">
-                            @csrf
+                    <?php else: ?>
+                        <form action="<?php echo e(route('subscriptions.checkout')); ?>" method="POST">
+                            <?php echo csrf_field(); ?>
                             <input type="hidden" name="plan" value="premium_plus">
                             <button type="submit" class="w-full py-2 bg-[#009ee3] hover:opacity-90 text-white rounded-lg font-semibold transition border-2 border-[#009ee3] shadow-lg">
                                 Pagar con Mercado Pago
                             </button>
                         </form>
-                    @endif
+                    <?php endif; ?>
                 </div>
             </div>
 
@@ -318,8 +318,8 @@
 
         <!-- Plan Test $100 -->
         <div class="flex justify-center mb-12">
-            <form action="{{ route('subscriptions.checkout') }}" method="POST" class="inline-block">
-                @csrf
+            <form action="<?php echo e(route('subscriptions.checkout')); ?>" method="POST" class="inline-block">
+                <?php echo csrf_field(); ?>
                 <input type="hidden" name="plan" value="test100">
                 <button type="submit" class="px-6 py-3 bg-green-600 hover:bg-green-700 text-white rounded-lg font-bold text-lg shadow">
                     Plan de $100 (prueba MercadoPago)
@@ -350,4 +350,6 @@
         </div>
     </div>
 </div>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.admin', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\Proyectos\ProyectoAutos\resources\views/subscriptions/index.blade.php ENDPATH**/ ?>

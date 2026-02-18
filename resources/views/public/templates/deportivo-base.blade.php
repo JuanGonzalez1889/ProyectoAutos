@@ -78,11 +78,21 @@
     <nav class="sticky top-0 z-50 backdrop-blur-lg border-b" style="border-color: var(--primary-color);">
         <div class="max-w-7xl mx-auto px-6 py-3 flex justify-between items-center">
             <div class="flex items-center gap-3">
-                @if($settings && $settings->logo_url)
-                    <img src="{{ $settings->logo_url }}" alt="{{ $tenant->name }}" class="h-10 object-contain">
-                @else
-                    <div class="w-10 h-10 rounded-full" style="background: linear-gradient(135deg, var(--primary-color), white);"></div>
-                @endif
+                <div class="editable-section inline-block relative">
+                    @if($settings && $settings->logo_url)
+                        <img src="{{ $settings->logo_url }}" alt="{{ $tenant->name }}" class="h-8 object-contain">
+                    @endif
+                    <div class="edit-btn" onclick="editImage('logo_url')">
+                        <i class="fa fa-pencil"></i>
+                    </div>
+                </div>
+                <div class="editable-section inline-block relative ml-2">
+                    <span class="font-semibold" style="color: {{ $settings->navbar_agency_name_color ?? '#fff' }}">{{ $settings->navbar_agency_name }}</span>
+                    <div class="edit-btn" onclick="editText('navbar_agency_name', 'Editar Nombre de Agencia (Navbar)')">
+                        <i class="fa fa-pencil"></i>
+                    </div>
+                </div>
+            </div>
                 <span class="font-black text-xl tracking-wider navbar-auto">{{ $tenant->name }}</span>
             </div>
             <div class="flex items-center gap-6">

@@ -361,6 +361,11 @@ class MercadoPagoService
                 'price' => 500000,
                 'features' => ['Manejo de Redes Sociales', 'Gestión de marketing completa'],
             ],
+            'test100' => [
+                'name' => 'Plan Test $100',
+                'price' => 100,
+                'features' => ['Prueba real de pago', 'Soporte limitado'],
+            ],
         ];
 
         return $plans[strtolower($plan)] ?? $plans['basico'];

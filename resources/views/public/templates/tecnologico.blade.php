@@ -145,13 +145,15 @@
                         <button type="button" class="edit-btn" style="position:static; display:flex; margin-left:4px; background:var(--primary-color); color:#fff; width:24px; height:24px; border-radius:50%; align-items:center; justify-content:center; cursor:pointer; z-index:50; border:none; font-size:10px;" onclick="editText('agency_name','Editar Nombre')"><i class="fa fa-pencil"></i></button>
                     </div>
                 @else
-                    @if($settings && $settings->logo_url)
-                        <img src="{{ $settings->logo_url }}" alt="{{ $tenant->name }}" class="h-9 object-contain">
-                    @else
-                        <div class="h-9 w-9 rounded-xl flex items-center justify-center" style="background: var(--primary-color);">
-                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-                        </div>
-                    @endif
+                    <div class="inline-block relative">
+                        @if($settings && $settings->logo_url)
+                            <img src="{{ $settings->logo_url }}" alt="{{ $tenant->name }}" class="h-9 object-contain">
+                        @else
+                            <div class="h-9 w-9 rounded-xl flex items-center justify-center" style="background: var(--primary-color);">
+                                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                            </div>
+                        @endif
+                    </div>
                     <span class="text-lg font-bold text-white">{{ $tenant->name }}</span>
                 @endif
             </div>
@@ -179,10 +181,20 @@
                     <span class="w-1.5 h-1.5 rounded-full" style="background: var(--primary-color);"></span>
                     PLATAFORMA NEXT-GEN
                 </div>
-                <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight mb-6">
-                    <span class="text-white">Eleva la Presencia </span>
-                    <span class="gradient-text italic">Digital de tu Concesionario</span>
-                </h1>
+                @if(isset($editMode) && $editMode)
+                    <div class="editable-section mb-6">
+                        <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight">
+                            <span class="text-white">Eleva la Presencia </span>
+                            <span class="gradient-text italic">Digital de tu Concesionario</span>
+                        </h1>
+                        <div class="edit-btn" onclick="editText('hero_title','Editar Título del Hero')"><i class="fa fa-pencil"></i></div>
+                    </div>
+                @else
+                    <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight mb-6">
+                        <span class="text-white">Eleva la Presencia </span>
+                        <span class="gradient-text italic">Digital de tu Concesionario</span>
+                    </h1>
+                @endif
                 @if(isset($editMode) && $editMode)
                     <div class="editable-section mb-8">
                         <p class="text-lg text-white/60 leading-relaxed max-w-lg" style="color: {{ $settings->home_description_color ?? 'rgba(255,255,255,0.6)' }}">{{ $settings->home_description ?? 'Gestión inteligente de inventario y CRM especializado para el sector de automóviles. La herramienta definitiva para vendedores de élite.' }}</p>
