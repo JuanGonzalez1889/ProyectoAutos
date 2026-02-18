@@ -130,9 +130,7 @@
                 <a href="{{ route('public.vehiculos') }}" class="text-xs tracking-[0.25em] uppercase font-light transition hover:opacity-60" style="color: {{ $settings->navbar_links_color ?? 'rgba(255,255,255,0.5)' }}">Colección</a>
                 <a href="#nosotros" class="text-xs tracking-[0.25em] uppercase font-light transition hover:opacity-60" style="color: {{ $settings->navbar_links_color ?? 'rgba(255,255,255,0.5)' }}">Nosotros</a>
                 <a href="#contacto" class="text-xs tracking-[0.25em] uppercase font-light transition hover:opacity-60" style="color: {{ $settings->navbar_links_color ?? 'rgba(255,255,255,0.5)' }}">Contacto</a>
-                @auth
-                    <a href="{{ route('admin.dashboard') }}" class="text-xs tracking-[0.2em] uppercase px-4 py-1.5 border transition" style="color: var(--primary-color); border-color: rgba(201,169,110,0.3);">Panel</a>
-                @endauth
+               
             </div>
         </div>
     </nav>

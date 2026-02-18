@@ -264,8 +264,8 @@
                     <p class="text-xs text-[hsl(var(--muted-foreground))]">Últimos 6 meses</p>
                 </div>
                 <div class="text-right">
-                    <p class="text-2xl font-bold text-[hsl(var(--primary))]">$845k</p>
-                    <span class="text-[10px] px-1.5 py-0.5 bg-[hsl(var(--primary))]/20 text-[hsl(var(--primary))] rounded mt-1 inline-block">+18%</span>
+                    <p class="text-2xl font-bold text-[hsl(var(--primary))]">${{ number_format($stats['sales_performance'], 0) }}</p>
+                    <span class="text-[10px] px-1.5 py-0.5 bg-[hsl(var(--primary))]/20 text-[hsl(var(--primary))] rounded mt-1 inline-block">+0%</span>
                 </div>
             </div>
 

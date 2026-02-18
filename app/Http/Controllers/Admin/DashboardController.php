@@ -25,6 +25,26 @@ class DashboardController extends Controller
         
         // Si es ADMIN, mostrar estadísticas globales
         if ($user->isAdmin()) {
+            // Métricas globales
+            $vehicles = Vehicle::all();
+            $invoices = Invoice::all();
+            $leads = Lead::all();
+            $events = Event::all();
+
+            $monthlyRevenue = $invoices
+                ->filter(fn($inv) => $inv->status === 'paid' && $inv->created_at->diffInDays(now()) <= 30)
+                ->sum('total');
+
+            $salesPerformance = $invoices
+                ->filter(fn($inv) => $inv->created_at->diffInMonths(now()) < 6 && $inv->status === 'paid')
+                ->sum('total');
+
+            // Unidades vendidas: vehículos con status 'sold'
+            $unitsSold = $vehicles->where('status', 'sold')->count();
+            $activeInventory = $vehicles->where('status', 'available')->count();
+            $pendingEvents = $events->where('status', '!=', 'completed')->count();
+            $activeLeads = $leads->where('status', 'active')->count();
+
             $stats = [
                 'total_users' => User::count(),
                 'total_admins' => User::role('ADMIN')->count(),
@@ -33,8 +53,16 @@ class DashboardController extends Controller
                 'active_users' => User::active()->count(),
                 'inactive_users' => User::where('is_active', false)->count(),
                 'recent_users' => User::with(['roles', 'agencia'])->latest()->take(5)->get(),
+                'monthly_revenue' => $monthlyRevenue,
+                'sales_performance' => $salesPerformance,
+                'units_sold' => $unitsSold,
+                'active_inventory' => $activeInventory,
+                'pending_events' => $pendingEvents,
+                'active_leads' => $activeLeads,
+                'total_vehicles' => $vehicles->count(),
+                'total_invoices' => $invoices->count(),
             ];
-            
+
             return view('admin.dashboard', compact('stats'));
         }
         
@@ -98,11 +126,17 @@ class DashboardController extends Controller
             
             // Ingresos mensuales (últimos 30 días)
             $monthlyRevenue = $invoices
-                ->filter(fn($inv) => $inv->created_at->diffInDays(now()) <= 30)
+                ->filter(fn($inv) => $inv->status === 'paid' && $inv->created_at->diffInDays(now()) <= 30)
                 ->sum('total');
+
+            // Rendimiento de ventas (últimos 6 meses)
+            // Rendimiento de ventas: suma de precios de vehículos vendidos en los últimos 6 meses
+            $salesPerformance = $vehicles
+                ->filter(fn($veh) => $veh->status === 'sold' && $veh->updated_at->diffInMonths(now()) < 6)
+                ->sum('price');
             
-            // Unidades vendidas (invoices con estado pagado)
-            $unitsSold = $invoices->where('status', 'paid')->count();
+            // Unidades vendidas: vehículos con status 'sold'
+            $unitsSold = $vehicles->where('status', 'sold')->count();
             
             // Inventario activo
             $activeInventory = $vehicles->where('status', 'available')->count();
@@ -135,6 +169,7 @@ class DashboardController extends Controller
                 'inactive_users' => $agencia->users()->where('is_active', false)->count(),
                 'agencia' => $agencia,
                 'monthly_revenue' => $monthlyRevenue,
+                'sales_performance' => $salesPerformance,
                 'units_sold' => $unitsSold,
                 'active_inventory' => $activeInventory,
                 'pending_events' => $pendingEvents,

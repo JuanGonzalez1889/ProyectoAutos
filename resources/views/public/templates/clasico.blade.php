@@ -61,7 +61,7 @@
     @php($template = 'clasico')
     <!-- Header Clásico -->
     <header style="background-color: var(--secondary-color);" class="text-white sticky top-0 z-50">
-        <div class="max-w-6xl mx-auto px-6 py-4">
+        <div class="max-w-6xl mx-auto px-6 py-4 relative">
             <div class="flex justify-between items-center">
                 <div class="flex items-center gap-4">
                     @if(isset($editMode) && $editMode)
@@ -96,22 +96,75 @@
                         <h1 class="text-2xl font-bold">{{ $tenant->name }}</h1>
                     @endif
                 </div>
-                <div class="flex items-center gap-6">
-                    <div class="hidden md:flex gap-6">
+                <!-- Botón hamburguesa solo en mobile -->
+                <div class="md:hidden ml-4">
+                    <div id="hamburger-btn" class="hamburger" onclick="toggleMenu()">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </div>
+                <!-- Menú normal en desktop -->
+                <div class="hidden md:flex items-center gap-6">
+                    <a href="#inicio" class="font-medium" style="color: {{ $settings->navbar_links_color ?? 'var(--navbar-text-color, #fff)' }}">Inicio</a>
+                    <a href="{{ route('public.vehiculos') }}" class="font-medium" style="color: {{ $settings->navbar_links_color ?? 'var(--navbar-text-color, #fff)' }}">Vehículos</a>
+                    <a href="#nosotros" class="font-medium" style="color: {{ $settings->navbar_links_color ?? 'var(--navbar-text-color, #fff)' }}">Nosotros</a>
+                    <a href="#contacto" class="font-medium" style="color: {{ $settings->navbar_links_color ?? 'var(--navbar-text-color, #fff)' }}">Contacto</a>
+                </div>
+                <!-- Menú hamburguesa en mobile -->
+                <div id="mobile-menu" class="mobile-menu md:hidden">
+                    <div class="flex flex-col gap-4 p-4">
                         <a href="#inicio" class="font-medium" style="color: {{ $settings->navbar_links_color ?? 'var(--navbar-text-color, #fff)' }}">Inicio</a>
                         <a href="{{ route('public.vehiculos') }}" class="font-medium" style="color: {{ $settings->navbar_links_color ?? 'var(--navbar-text-color, #fff)' }}">Vehículos</a>
                         <a href="#nosotros" class="font-medium" style="color: {{ $settings->navbar_links_color ?? 'var(--navbar-text-color, #fff)' }}">Nosotros</a>
                         <a href="#contacto" class="font-medium" style="color: {{ $settings->navbar_links_color ?? 'var(--navbar-text-color, #fff)' }}">Contacto</a>
                     </div>
-                    @auth
-                        <a href="{{ route('admin.dashboard') }}" class="border-2 border-white px-6 py-2 rounded hover:bg-white hover:text-gray-900 transition">
-                            Panel Admin
-                        </a>
-                    @endauth
                 </div>
             </div>
         </div>
     </header>
+    <style>
+        .hamburger {
+            display: block;
+            width: 32px;
+            height: 32px;
+            cursor: pointer;
+        }
+        .hamburger span {
+            display: block;
+            height: 4px;
+            margin: 6px 0;
+            background: var(--navbar-text-color, #fff);
+            border-radius: 2px;
+            transition: 0.3s;
+        }
+        .mobile-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            background: var(--secondary-color);
+            z-index: 100;
+        }
+        .mobile-menu.open {
+            display: block;
+        }
+    </style>
+    <script>
+        function toggleMenu() {
+            var menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('open');
+        }
+        document.addEventListener('click', function(e) {
+            var menu = document.getElementById('mobile-menu');
+            var hamburger = document.getElementById('hamburger-btn');
+            if (!menu || !hamburger) return;
+            if (!menu.contains(e.target) && !hamburger.contains(e.target)) {
+                menu.classList.remove('open');
+            }
+        });
+    </script>
 
     <!-- Banner Clásico -->
     <div class="relative w-full h-64 md:h-80 lg:h-96 flex items-center justify-center bg-gray-200 overflow-hidden">

@@ -98,11 +98,7 @@
                     <a href="#nosotros" class="navbar-link-auto hover:opacity-80 transition font-medium" style="color: {{ $settings->navbar_links_color ?? 'var(--navbar-text-color, #fff)' }}">Nosotros</a>
                     <a href="#contacto" class="navbar-link-auto hover:opacity-80 transition font-medium" style="color: {{ $settings->navbar_links_color ?? 'var(--navbar-text-color, #fff)' }}">Contacto</a>
                 </div>
-                @auth
-                    <a href="{{ route('admin.dashboard') }}" class="px-4 py-2 rounded-lg font-medium text-white transition hover:opacity-80" style="background-color: var(--primary-color);">
-                        Panel Admin
-                    </a>
-                @endauth
+                
             </div>
         </div>
     </nav>

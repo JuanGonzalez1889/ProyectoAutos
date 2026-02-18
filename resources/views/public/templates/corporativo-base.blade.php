@@ -65,7 +65,7 @@
 
     <!-- Navbar Corporativo -->
     <nav class="sticky top-0 z-50 bg-white shadow-sm border-b border-gray-100">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between relative">
             <div class="flex items-center gap-3">
                 @if($settings && $settings->logo_url)
                     <img src="{{ $settings->logo_url }}" alt="{{ $tenant->name }}" class="h-10 object-contain">
@@ -74,21 +74,73 @@
                 @endif
                 <span class="text-xl font-bold" style="color: var(--primary-color);">{{ $tenant->name }}</span>
             </div>
-            <div class="flex items-center gap-8">
-                <div class="hidden md:flex gap-6">
+            <!-- Botón hamburguesa solo en mobile -->
+            <div class="md:hidden ml-4">
+                <div id="hamburger-btn" class="hamburger" onclick="toggleMenu()">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+            <!-- Menú normal en desktop -->
+            <div class="hidden md:flex items-center gap-8">
+                <a href="#inicio" class="text-sm font-medium text-gray-600 hover:text-gray-900 transition" style="color: {{ $settings->navbar_links_color ?? '#4b5563' }}">Inicio</a>
+                <a href="{{ route('public.vehiculos') }}" class="text-sm font-medium text-gray-600 hover:text-gray-900 transition" style="color: {{ $settings->navbar_links_color ?? '#4b5563' }}">Vehículos</a>
+                <a href="#nosotros" class="text-sm font-medium text-gray-600 hover:text-gray-900 transition" style="color: {{ $settings->navbar_links_color ?? '#4b5563' }}">Empresa</a>
+                <a href="#contacto" class="text-sm font-medium text-gray-600 hover:text-gray-900 transition" style="color: {{ $settings->navbar_links_color ?? '#4b5563' }}">Contacto</a>
+            </div>
+            <!-- Menú hamburguesa en mobile -->
+            <div id="mobile-menu" class="mobile-menu md:hidden">
+                <div class="flex flex-col gap-4 p-4 bg-white border-t border-gray-200">
                     <a href="#inicio" class="text-sm font-medium text-gray-600 hover:text-gray-900 transition" style="color: {{ $settings->navbar_links_color ?? '#4b5563' }}">Inicio</a>
                     <a href="{{ route('public.vehiculos') }}" class="text-sm font-medium text-gray-600 hover:text-gray-900 transition" style="color: {{ $settings->navbar_links_color ?? '#4b5563' }}">Vehículos</a>
                     <a href="#nosotros" class="text-sm font-medium text-gray-600 hover:text-gray-900 transition" style="color: {{ $settings->navbar_links_color ?? '#4b5563' }}">Empresa</a>
                     <a href="#contacto" class="text-sm font-medium text-gray-600 hover:text-gray-900 transition" style="color: {{ $settings->navbar_links_color ?? '#4b5563' }}">Contacto</a>
                 </div>
-                @auth
-                    <a href="{{ route('admin.dashboard') }}" class="px-5 py-2.5 rounded-lg text-sm font-medium text-white transition" style="background: var(--primary-color);">
-                        Panel Admin
-                    </a>
-                @endauth
             </div>
         </div>
     </nav>
+    <style>
+        .hamburger {
+            display: block;
+            width: 32px;
+            height: 32px;
+            cursor: pointer;
+        }
+        .hamburger span {
+            display: block;
+            height: 4px;
+            margin: 6px 0;
+            background: var(--primary-color);
+            border-radius: 2px;
+            transition: 0.3s;
+        }
+        .mobile-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            z-index: 100;
+        }
+        .mobile-menu.open {
+            display: block;
+        }
+    </style>
+    <script>
+        function toggleMenu() {
+            var menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('open');
+        }
+        document.addEventListener('click', function(e) {
+            var menu = document.getElementById('mobile-menu');
+            var hamburger = document.getElementById('hamburger-btn');
+            if (!menu || !hamburger) return;
+            if (!menu.contains(e.target) && !hamburger.contains(e.target)) {
+                menu.classList.remove('open');
+            }
+        });
+    </script>
 
     @yield('content')
 

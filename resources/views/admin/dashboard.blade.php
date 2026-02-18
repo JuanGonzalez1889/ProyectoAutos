@@ -39,7 +39,7 @@
                 <span class="text-[10px] px-1.5 py-0.5 bg-green-500/20 text-green-600 rounded">+22%</span>
             </div>
             <p class="text-xs text-[hsl(var(--muted-foreground))] mb-1">Total Agencias</p>
-            <p class="text-2xl font-bold text-white">24</p>
+            <p class="text-2xl font-bold text-white">{{ number_format($stats['total_agencias'] ?? 0) }}</p>
         </div>
 
         <!-- Usuarios Activos -->
@@ -53,7 +53,7 @@
                 <span class="text-[10px] px-1.5 py-0.5 bg-purple-500/20 text-purple-600 rounded">+16%</span>
             </div>
             <p class="text-xs text-[hsl(var(--muted-foreground))] mb-1">Usuarios Activos</p>
-            <p class="text-2xl font-bold text-white">{{ number_format($stats['active_users']) }}</p>
+            <p class="text-2xl font-bold text-white">{{ number_format($stats['units_sold'] ?? 0) }}</p>
         </div>
 
         <!-- Ingresos Mes -->
@@ -67,7 +67,7 @@
                 <span class="text-[10px] px-1.5 py-0.5 bg-yellow-500/20 text-yellow-600 rounded">+9%</span>
             </div>
             <p class="text-xs text-[hsl(var(--muted-foreground))] mb-1">Ingresos Mes</p>
-            <p class="text-2xl font-bold text-white">$450k</p>
+            <p class="text-2xl font-bold text-white">${{ number_format($stats['monthly_revenue'] ?? 0) }}</p>
         </div>
 
         <!-- Pendientes -->
@@ -86,7 +86,7 @@
                 </span>
             </div>
             <p class="text-xs text-[hsl(var(--muted-foreground))] mb-1">Pendientes</p>
-            <p class="text-2xl font-bold text-white">12</p>
+            <p class="text-2xl font-bold text-white">{{ number_format($stats['pending_events'] ?? 0) }}</p>
         </div>
     </div>
 
@@ -296,7 +296,7 @@
                         </svg>
                         <!-- Texto central -->
                         <div class="absolute inset-0 flex items-center justify-center">
-                            <span class="text-3xl font-bold text-white">76%</span>
+                            <span class="text-3xl font-bold text-white">${{ number_format($stats['sales_performance'] ?? 0) }}</span>
                         </div>
                     </div>
                 </div>

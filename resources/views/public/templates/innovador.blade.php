@@ -160,9 +160,7 @@
                 <a href="#vehiculos" class="text-sm font-medium transition hover:text-gray-900" style="color: {{ $settings->navbar_links_color ?? '#6b7280' }}">Inventario</a>
                 <a href="#nosotros" class="text-sm font-medium transition hover:text-gray-900" style="color: {{ $settings->navbar_links_color ?? '#6b7280' }}">Nosotros</a>
                 <a href="#contacto" class="text-sm font-medium transition hover:text-gray-900" style="color: {{ $settings->navbar_links_color ?? '#6b7280' }}">Contacto</a>
-                @auth
-                    <a href="{{ route('admin.dashboard') }}" class="text-sm font-medium text-gray-400 hover:text-gray-700 transition">Panel</a>
-                @endauth
+               
             </div>
             <a href="#contacto" class="px-5 py-2.5 text-sm font-semibold text-white rounded-xl transition hover:opacity-90 hover:shadow-lg" style="background: var(--primary-color);">
                 Solicitar Demo

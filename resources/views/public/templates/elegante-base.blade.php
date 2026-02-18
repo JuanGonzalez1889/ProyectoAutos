@@ -6,6 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="/storage/icono.png">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ $tenant->name ?? 'Agencia de Autos' }}</title>
     <script src="https://cdn.tailwindcss.com"></script>
@@ -82,11 +83,7 @@
                     <a href="#nosotros" class="text-sm tracking-widest uppercase font-light transition hover:opacity-70" style="color: {{ $settings->navbar_links_color ?? 'rgba(255,255,255,0.7)' }}">Nosotros</a>
                     <a href="#contacto" class="text-sm tracking-widest uppercase font-light transition hover:opacity-70" style="color: {{ $settings->navbar_links_color ?? 'rgba(255,255,255,0.7)' }}">Contacto</a>
                 </div>
-                @auth
-                    <a href="{{ route('admin.dashboard') }}" class="px-5 py-2 text-sm tracking-widest uppercase font-medium transition border" style="color: var(--primary-color); border-color: var(--primary-color);">
-                        Panel
-                    </a>
-                @endauth
+              
             </div>
         </div>
     </nav>

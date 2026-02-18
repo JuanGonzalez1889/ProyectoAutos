@@ -161,9 +161,7 @@
                 <a href="#inicio" class="text-sm font-medium transition hover:text-white" style="color: {{ $settings->navbar_links_color ?? 'rgba(255,255,255,0.6)' }}">Inventario</a>
                 <a href="#nosotros" class="text-sm font-medium transition hover:text-white" style="color: {{ $settings->navbar_links_color ?? 'rgba(255,255,255,0.6)' }}">Nosotros</a>
                 <a href="#contacto" class="text-sm font-medium transition hover:text-white" style="color: {{ $settings->navbar_links_color ?? 'rgba(255,255,255,0.6)' }}">Contacto</a>
-                @auth
-                    <a href="{{ route('admin.dashboard') }}" class="text-sm font-medium text-white/60 hover:text-white transition">Panel</a>
-                @endauth
+              
             </div>
             <a href="#contacto" class="px-5 py-2.5 text-sm font-semibold text-white rounded-xl transition hover:opacity-90" style="background: var(--primary-color);">
                 Solicitar Demo

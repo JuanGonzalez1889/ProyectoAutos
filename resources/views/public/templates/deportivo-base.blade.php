@@ -48,11 +48,37 @@
 <body style="background-color: var(--secondary-color);" class="text-white">
     @php($template = 'deportivo')
 
-    <!-- Navbar Deportivo (idéntico a la home) -->
+    <!-- Navbar Deportivo con menú hamburguesa -->
     <style>
         .navbar-auto { color: var(--navbar-text-color, #fff); }
         .navbar-link-auto { color: var(--navbar-text-color, #fff); font-weight: bold; }
         .navbar-link-auto:hover { opacity: 0.8; }
+        .hamburger {
+            display: block;
+            width: 32px;
+            height: 32px;
+            cursor: pointer;
+        }
+        .hamburger span {
+            display: block;
+            height: 4px;
+            margin: 6px 0;
+            background: var(--navbar-text-color, #fff);
+            border-radius: 2px;
+            transition: 0.3s;
+        }
+        .mobile-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            background: var(--secondary-color);
+            z-index: 100;
+        }
+        .mobile-menu.open {
+            display: block;
+        }
     </style>
     <script>
         (function() {
@@ -74,9 +100,21 @@
             }
             root.style.setProperty('--navbar-text-color', getContrastYIQ(bg));
         })();
+        function toggleMenu() {
+            var menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('open');
+        }
+        document.addEventListener('click', function(e) {
+            var menu = document.getElementById('mobile-menu');
+            var hamburger = document.getElementById('hamburger-btn');
+            if (!menu || !hamburger) return;
+            if (!menu.contains(e.target) && !hamburger.contains(e.target)) {
+                menu.classList.remove('open');
+            }
+        });
     </script>
     <nav class="sticky top-0 z-50 backdrop-blur-lg border-b" style="border-color: var(--primary-color);">
-        <div class="max-w-7xl mx-auto px-6 py-3 flex justify-between items-center">
+        <div class="max-w-7xl mx-auto px-6 py-3 flex justify-between items-center relative">
             <div class="flex items-center gap-3">
                 <div class="editable-section inline-block relative">
                     @if($settings && $settings->logo_url)
@@ -93,18 +131,36 @@
                     </div>
                 </div>
             </div>
-                <span class="font-black text-xl tracking-wider navbar-auto">{{ $tenant->name }}</span>
+            <span class="font-black text-xl tracking-wider navbar-auto">{{ $tenant->name }}</span>
+            <!-- Botón hamburguesa solo en mobile -->
+            <div class="md:hidden ml-4">
+                <div id="hamburger-btn" class="hamburger" onclick="toggleMenu()">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
             </div>
-            <div class="flex items-center gap-6">
-                <div class="hidden md:flex gap-6">
+            <!-- Menú normal en desktop -->
+            <div class="hidden md:flex items-center gap-6">
+                <a href="#inicio" class="navbar-link-auto transition" style="color: {{ $settings->navbar_links_color ?? 'var(--navbar-text-color, #fff)' }}">INICIO</a>
+                <a href="{{ route('public.vehiculos') }}" class="navbar-link-auto transition" style="color: {{ $settings->navbar_links_color ?? 'var(--navbar-text-color, #fff)' }}">VEHÍCULOS</a>
+                <a href="#nosotros" class="navbar-link-auto transition" style="color: {{ $settings->navbar_links_color ?? 'var(--navbar-text-color, #fff)' }}">NOSOTROS</a>
+                <a href="#contacto" class="navbar-link-auto transition" style="color: {{ $settings->navbar_links_color ?? 'var(--navbar-text-color, #fff)' }}">CONTACTO</a>
+                <a href="{{ route('login') }}" class="px-6 py-2 rounded-full font-bold transition hover:scale-105" style="background-color: var(--primary-color); color: var(--secondary-color);">
+                    ACCESO
+                </a>
+            </div>
+            <!-- Menú hamburguesa en mobile -->
+            <div id="mobile-menu" class="mobile-menu md:hidden">
+                <div class="flex flex-col gap-4 p-4">
                     <a href="#inicio" class="navbar-link-auto transition" style="color: {{ $settings->navbar_links_color ?? 'var(--navbar-text-color, #fff)' }}">INICIO</a>
                     <a href="{{ route('public.vehiculos') }}" class="navbar-link-auto transition" style="color: {{ $settings->navbar_links_color ?? 'var(--navbar-text-color, #fff)' }}">VEHÍCULOS</a>
                     <a href="#nosotros" class="navbar-link-auto transition" style="color: {{ $settings->navbar_links_color ?? 'var(--navbar-text-color, #fff)' }}">NOSOTROS</a>
                     <a href="#contacto" class="navbar-link-auto transition" style="color: {{ $settings->navbar_links_color ?? 'var(--navbar-text-color, #fff)' }}">CONTACTO</a>
+                    <a href="{{ route('login') }}" class="px-6 py-2 rounded-full font-bold transition hover:scale-105" style="background-color: var(--primary-color); color: var(--secondary-color);">
+                        ACCESO
+                    </a>
                 </div>
-                <a href="{{ route('login') }}" class="px-6 py-2 rounded-full font-bold transition hover:scale-105" style="background-color: var(--primary-color); color: var(--secondary-color);">
-                    ACCESO
-                </a>
             </div>
         </div>
     </nav>

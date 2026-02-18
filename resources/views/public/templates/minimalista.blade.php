@@ -93,11 +93,7 @@
                     <a href="#nosotros" class="text-sm" style="color: {{ $settings->navbar_links_color ?? 'var(--navbar-text-color, #fff)' }}">Nosotros</a>
                     <a href="#contacto" class="text-sm" style="color: {{ $settings->navbar_links_color ?? 'var(--navbar-text-color, #fff)' }}">Contacto</a>
                 </div>
-                @auth
-                    <a href="{{ route('admin.dashboard') }}" class="text-sm font-medium text-white py-2 px-4 rounded" style="background-color: var(--primary-color);">
-                        Admin
-                    </a>
-                @endauth
+              
             </div>
         </div>
     </nav>
