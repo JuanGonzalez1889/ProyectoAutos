@@ -77,14 +77,29 @@
                     </div>
             </div>
             <div class="flex items-center gap-8">
+                <!-- Menú Desktop -->
                 <div class="hidden md:flex gap-8">
                     <a href="#inicio" class="text-sm tracking-widest uppercase font-light transition hover:opacity-70" style="color: {{ $settings->navbar_links_color ?? 'rgba(255,255,255,0.7)' }}">Inicio</a>
                     <a href="{{ route('public.vehiculos') }}" class="text-sm tracking-widest uppercase font-light transition hover:opacity-70" style="color: {{ $settings->navbar_links_color ?? 'rgba(255,255,255,0.7)' }}">Colección</a>
                     <a href="#nosotros" class="text-sm tracking-widest uppercase font-light transition hover:opacity-70" style="color: {{ $settings->navbar_links_color ?? 'rgba(255,255,255,0.7)' }}">Nosotros</a>
                     <a href="#contacto" class="text-sm tracking-widest uppercase font-light transition hover:opacity-70" style="color: {{ $settings->navbar_links_color ?? 'rgba(255,255,255,0.7)' }}">Contacto</a>
                 </div>
-              
+                <!-- Botón Hamburguesa Mobile -->
+                <button id="menu-toggle" class="md:hidden flex flex-col justify-center items-center w-10 h-10 focus:outline-none ml-2" aria-label="Abrir menú">
+                    <span class="block w-6 h-0.5 bg-[var(--primary-color)] mb-1 transition-all"></span>
+                    <span class="block w-6 h-0.5 bg-[var(--primary-color)] mb-1 transition-all"></span>
+                    <span class="block w-6 h-0.5 bg-[var(--primary-color)] transition-all"></span>
+                </button>
             </div>
+        </div>
+        <!-- Menú Mobile -->
+        <div id="mobile-menu" class="md:hidden fixed inset-0 bg-black bg-opacity-95 z-50 flex flex-col items-center justify-center space-y-8 text-lg font-semibold transition-all duration-300 opacity-0 pointer-events-none">
+            <button id="menu-close" class="absolute top-6 right-6 text-[var(--primary-color)] text-3xl focus:outline-none" aria-label="Cerrar menú">&times;</button>
+            <a href="#inicio" class="navbar-link-auto" style="color: {{ $settings->navbar_links_color ?? 'rgba(255,255,255,0.7)' }}">Inicio</a>
+            <a href="{{ route('public.vehiculos') }}" class="navbar-link-auto" style="color: {{ $settings->navbar_links_color ?? 'rgba(255,255,255,0.7)' }}">Colección</a>
+            <a href="#nosotros" class="navbar-link-auto" style="color: {{ $settings->navbar_links_color ?? 'rgba(255,255,255,0.7)' }}">Nosotros</a>
+            <a href="#contacto" class="navbar-link-auto" style="color: {{ $settings->navbar_links_color ?? 'rgba(255,255,255,0.7)' }}">Contacto</a>
+        </div>
         </div>
     </nav>
 
@@ -94,6 +109,38 @@
     <footer class="py-10 text-center text-gray-500 text-sm border-t" style="background: rgba(0,0,0,0.6); border-color: rgba(201,169,110,0.15);">
         © {{ date('Y') }} {{ $tenant->name }}
     </footer>
+    <script>
+        // Menú hamburguesa responsive
+        document.addEventListener('DOMContentLoaded', function() {
+            var menuToggle = document.getElementById('menu-toggle');
+            var mobileMenu = document.getElementById('mobile-menu');
+            var menuClose = document.getElementById('menu-close');
+            function openMenu() {
+                mobileMenu.classList.remove('opacity-0', 'pointer-events-none');
+                mobileMenu.classList.add('opacity-100');
+                document.body.style.overflow = 'hidden';
+            }
+            function closeMenu() {
+                mobileMenu.classList.add('opacity-0', 'pointer-events-none');
+                mobileMenu.classList.remove('opacity-100');
+                document.body.style.overflow = '';
+            }
+            if(menuToggle && mobileMenu) {
+                menuToggle.addEventListener('click', openMenu);
+            }
+            if(menuClose && mobileMenu) {
+                menuClose.addEventListener('click', closeMenu);
+            }
+            // Cerrar menú al hacer click fuera
+            mobileMenu && mobileMenu.addEventListener('click', function(e) {
+                if(e.target === mobileMenu) closeMenu();
+            });
+            // Cerrar menú con ESC
+            document.addEventListener('keydown', function(e) {
+                if(e.key === 'Escape') closeMenu();
+            });
+        });
+    </script>
     @if(isset($editMode) && $editMode)
         @include('public.templates.partials.editor-scripts')
     @endif

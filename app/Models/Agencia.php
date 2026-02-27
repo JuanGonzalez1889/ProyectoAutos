@@ -13,6 +13,7 @@ class Agencia extends Model
         'nombre',
         'ubicacion',
         'telefono',
+        'plan_id',
     ];
 
     /**
@@ -37,5 +38,13 @@ class Agencia extends Model
     public function colaboradores()
     {
         return $this->users()->role('COLABORADOR');
+    }
+
+    /**
+     * Vehículos de esta agencia
+     */
+    public function vehicles()
+    {
+        return $this->hasMany(Vehicle::class, 'agencia_id');
     }
 }

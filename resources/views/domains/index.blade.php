@@ -11,14 +11,16 @@
             <h3 class="text-xl font-semibold text-white mb-1">Mis Dominios</h3>
             <p class="text-sm text-[hsl(var(--muted-foreground))]">Administra los dominios de tu agencia</p>
         </div>
-        
-        <a href="{{ route('admin.domains.create') }}" 
-           class="h-10 px-5 bg-[hsl(var(--primary))] hover:opacity-90 text-[#0a0f14] rounded-lg text-sm font-medium transition-opacity flex items-center gap-2">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
-            </svg>
-            Registrar Dominio
-        </a>
+
+        <div class="flex flex-col gap-2 items-end">
+            <a href="{{ route('admin.domains.create') }}" 
+               class="h-10 px-5 bg-[hsl(var(--primary))] hover:opacity-90 text-[#0a0f14] rounded-lg text-sm font-medium transition-opacity flex items-center gap-2">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                </svg>
+                Registrar Dominio
+            </a>
+        </div>
     </div>
 
     <!-- Messages -->
@@ -122,5 +124,21 @@
             </a>
         </div>
     @endif
+
 </div>
+
+<!-- Sección: Dominio personalizado por WhatsApp -->
+<div class="mt-10 flex justify-center">
+    <div class="bg-[hsl(var(--muted))] border border-[hsl(var(--border))] rounded-lg p-6 flex flex-col items-center w-full max-w-xl">
+        <span class="text-base text-white font-semibold mb-2">¿Ya tenes un dominio o necesitas uno personalizado?</span>
+        <p class="text-sm text-[hsl(var(--muted-foreground))] mb-4 text-center">Comunicate con nosotros por WhatsApp y nuestro equipo te ayudará a gestionarlo.</p>
+        <a href="https://wa.me/5493413365206?text=quiero%20un%20dominio%20personalizado" target="_blank" rel="noopener" class="inline-flex items-center gap-2 px-5 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg text-sm font-semibold transition">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.031-.967-.273-.099-.472-.148-.67.15-.197.297-.767.967-.94 1.164-.173.198-.347.223-.644.075-.297-.149-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.5-.669-.51-.173-.008-.372-.01-.571-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.099 3.2 5.077 4.363.71.306 1.263.489 1.694.626.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+            </svg>
+            Contactar por WhatsApp
+        </a>
+    </div>
+</div>
+
 @endsection

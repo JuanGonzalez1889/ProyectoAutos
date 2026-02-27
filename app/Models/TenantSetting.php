@@ -23,6 +23,7 @@ class TenantSetting extends Model
         'nosotros_description_color',
         'hero_title',
         'hero_title_color',
+        'hero_image',
         'font_family',
         'agency_name_color',
         'navbar_agency_name',

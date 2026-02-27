@@ -188,70 +188,99 @@
                 <input type="text" placeholder="Buscar vehículo, cliente..." 
                        class="w-60 h-9 pl-10 pr-4 bg-[hsl(var(--card))] border border-[hsl(var(--border))] rounded-lg text-sm focus:outline-none focus:border-[hsl(var(--primary))]">
             </div>
-            <button class="h-9 px-4 bg-[hsl(var(--primary))] hover:opacity-90 text-[#0a0f14] rounded-lg text-sm font-medium transition-opacity">
-                + Nueva Venta
-            </button>
+            
         </div>
     </div>
 
     <!-- Cards de métricas -->
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <!-- Ingresos Mensuales -->
-        <div class="p-5 bg-gradient-to-br from-green-500/10 to-green-600/10 border border-green-500/20 rounded-lg">
-            <div class="flex items-start justify-between mb-2">
-                <div class="p-2 bg-green-500/20 rounded-lg">
-                    <svg class="h-4 w-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                    </svg>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div class="flex flex-col gap-4 h-full">
+            <!-- Leads Pendientes -->
+            <div class="p-5 bg-gradient-to-br from-yellow-400/10 to-yellow-600/10 border border-yellow-500/20 rounded-lg h-full flex-1">
+                <div class="flex items-start justify-between mb-2">
+                    <div class="p-2 bg-yellow-500/20 rounded-lg">
+                        <svg class="h-4 w-4 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 17v-1a4 4 0 00-3-3.87V7a1 1 0 10-2 0v5.13A4 4 0 008 16v1m8 0a4 4 0 01-8 0m8 0H8" />
+                        </svg>
+                    </div>
+                    <span class="text-[10px] px-1.5 py-0.5 bg-yellow-500/20 text-yellow-600 rounded"><?php if($stats['pending_leads'] > 0): ?>+<?php endif; ?><?php echo e($stats['pending_leads']); ?></span>
                 </div>
-                <span class="text-[10px] px-1.5 py-0.5 bg-green-500/20 text-green-600 rounded">+0%</span>
+                <p class="text-xs text-[hsl(var(--muted-foreground))] mb-1">Leads Pendientes</p>
+                <p class="text-2xl font-bold text-white"><?php echo e($stats['pending_leads']); ?></p>
+                
             </div>
-            <p class="text-xs text-[hsl(var(--muted-foreground))] mb-1">Ingresos Mensuales</p>
-            <p class="text-2xl font-bold text-white">$<?php echo e(number_format($stats['monthly_revenue'], 0)); ?></p>
+            <!-- Unidades Vendidas -->
+            <div class="p-5 bg-gradient-to-br from-blue-500/10 to-blue-600/10 border border-blue-500/20 rounded-lg h-full flex-1">
+                <div class="flex items-start justify-between mb-2">
+                    <div class="p-2 bg-blue-500/20 rounded-lg">
+                        <svg class="h-4 w-4 text-blue-500" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"></path>
+                            <circle cx="7" cy="17" r="2"></circle>
+                            <circle cx="17" cy="17" r="2"></circle>
+                        </svg>
+                    </div>
+                    <span class="text-[10px] px-1.5 py-0.5 bg-blue-500/20 text-blue-600 rounded"><?php echo e($stats['units_sold'] > 0 ? '+' : ''); ?>0%</span>
+                </div>
+                <p class="text-xs text-[hsl(var(--muted-foreground))] mb-1">Unidades Vendidas</p>
+                <p class="text-2xl font-bold text-white"><?php echo e($stats['units_sold']); ?></p>
+            </div>
         </div>
-
-        <!-- Unidades Vendidas -->
-        <div class="p-5 bg-gradient-to-br from-blue-500/10 to-blue-600/10 border border-blue-500/20 rounded-lg">
-            <div class="flex items-start justify-between mb-2">
-                <div class="p-2 bg-blue-500/20 rounded-lg">
-                    <svg class="h-4 w-4 text-blue-500" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"></path>
-                        <circle cx="7" cy="17" r="2"></circle>
-                        <circle cx="17" cy="17" r="2"></circle>
-                    </svg>
+        <div class="flex flex-col gap-4 h-full">
+            <!-- Ingresos Mensuales -->
+            <div class="p-5 bg-gradient-to-br from-green-500/10 to-green-600/10 border border-green-500/20 rounded-lg h-full flex-1">
+                <div class="flex items-start justify-between mb-2">
+                    <div class="p-2 bg-green-500/20 rounded-lg">
+                        <svg class="h-4 w-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </div>
+                    <form id="monthRevenueForm" method="GET" action="" class="inline">
+                        <select name="month" id="monthRevenueSelect" class="bg-green-900 text-white border border-green-400 rounded px-2 py-1 text-xs appearance-none" style="outline:none;background-color:#064e3b">
+                            <?php for($i = 0; $i < 12; $i++): ?>
+                                <?php
+                                    $month = now()->copy()->subMonths($i);
+                                    $value = $month->format('Y-m');
+                                    $label = ucfirst($month->isoFormat('MMMM YYYY'));
+                                ?>
+                                <option value="<?php echo e($value); ?>" <?php echo e(request('month', now()->format('Y-m')) == $value ? 'selected' : ''); ?> style="background-color:#064e3b;color:white;"><?php echo e($label); ?></option>
+                            <?php endfor; ?>
+                        </select>
+                    </form>
                 </div>
-                <span class="text-[10px] px-1.5 py-0.5 bg-blue-500/20 text-blue-600 rounded"><?php echo e($stats['units_sold'] > 0 ? '+' : ''); ?>0%</span>
+                <p class="text-xs text-[hsl(var(--muted-foreground))] mb-1">Ingresos Mensuales</p>
+                <p class="text-2xl font-bold text-white">
+                    $<?php echo e(number_format($stats['monthly_revenue'], 0, ',', '.')); ?>
+
+                </p>
             </div>
-            <p class="text-xs text-[hsl(var(--muted-foreground))] mb-1">Unidades Vendidas</p>
-            <p class="text-2xl font-bold text-white"><?php echo e($stats['units_sold']); ?></p>
+            <!-- Inventario Activo -->
+            <div class="p-5 bg-gradient-to-br from-orange-500/10 to-orange-600/10 border border-orange-500/20 rounded-lg h-full flex-1">
+                <div class="flex items-start justify-between mb-2">
+                    <div class="p-2 bg-orange-500/20 rounded-lg">
+                        <svg class="h-4 w-4 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
+                        </svg>
+                    </div>
+                    <span class="text-[10px] px-1.5 py-0.5 bg-orange-500/20 text-orange-600 rounded"><?php echo e($stats['active_inventory'] > 0 ? '+' : ''); ?>0%</span>
+                </div>
+                <p class="text-xs text-[hsl(var(--muted-foreground))] mb-1">Inventario Activo</p>
+                <p class="text-2xl font-bold text-white"><?php echo e($stats['active_inventory']); ?>/<?php echo e($stats['total_vehicles']); ?></p>
+            </div>
         </div>
-
-        <!-- Inventario Activo -->
-        <div class="p-5 bg-gradient-to-br from-orange-500/10 to-orange-600/10 border border-orange-500/20 rounded-lg">
-            <div class="flex items-start justify-between mb-2">
-                <div class="p-2 bg-orange-500/20 rounded-lg">
-                    <svg class="h-4 w-4 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
-                    </svg>
+        <div class="flex flex-col gap-4 h-full">
+            <!-- Citas Pendientes -->
+            <div class="p-5 bg-gradient-to-br from-purple-500/10 to-purple-600/10 border border-purple-500/20 rounded-lg h-full flex-1">
+                <div class="flex items-start justify-between mb-2">
+                    <div class="p-2 bg-purple-500/20 rounded-lg">
+                        <svg class="h-4 w-4 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                        </svg>
+                    </div>
+                    <span class="text-[10px] px-1.5 py-0.5 bg-purple-500/20 text-purple-600 rounded"><?php echo e($stats['pending_events'] > 0 ? '+' : ''); ?>0%</span>
                 </div>
-                <span class="text-[10px] px-1.5 py-0.5 bg-orange-500/20 text-orange-600 rounded"><?php echo e($stats['active_inventory'] > 0 ? '+' : ''); ?>0%</span>
+                <p class="text-xs text-[hsl(var(--muted-foreground))] mb-1">Tareas</p>
+                <p class="text-2xl font-bold text-white"><?php echo e($stats['pending_events']); ?></p>
             </div>
-            <p class="text-xs text-[hsl(var(--muted-foreground))] mb-1">Inventario Activo</p>
-            <p class="text-2xl font-bold text-white"><?php echo e($stats['active_inventory']); ?>/<?php echo e($stats['total_vehicles']); ?></p>
-        </div>
-
-        <!-- Citas Pendientes -->
-        <div class="p-5 bg-gradient-to-br from-purple-500/10 to-purple-600/10 border border-purple-500/20 rounded-lg">
-            <div class="flex items-start justify-between mb-2">
-                <div class="p-2 bg-purple-500/20 rounded-lg">
-                    <svg class="h-4 w-4 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-                    </svg>
-                </div>
-                <span class="text-[10px] px-1.5 py-0.5 bg-purple-500/20 text-purple-600 rounded"><?php echo e($stats['pending_events'] > 0 ? '+' : ''); ?>0%</span>
-            </div>
-            <p class="text-xs text-[hsl(var(--muted-foreground))] mb-1">Citas Pendientes</p>
-            <p class="text-2xl font-bold text-white"><?php echo e($stats['pending_events']); ?></p>
         </div>
     </div>
 
@@ -277,27 +306,27 @@
                     $months = [];
                     $monthLabels = [];
                     $monthValues = [];
-                    
+                    $maxValue = 1;
                     for ($i = 5; $i >= 0; $i--) {
                         $date = now()->subMonths($i);
-                        $start = $date->startOfMonth();
-                        $end = $date->endOfMonth();
-                        
                         $monthLabels[] = strtoupper($date->locale('es')->format('M'));
-                        
-                        // Contar invoices de ese mes
-                        $count = collect($stats['agencia']->invoices ?? [])->filter(function($inv) use ($start, $end) {
-                            return $inv->created_at >= $start && $inv->created_at <= $end;
-                        })->count();
-                        
-                        $monthValues[] = max($count, 1) * 15; // Altura mínima de 15%
+                        // Sumar sold_price de vehículos vendidos ese mes
+                        $value = ($stats['agencia']->vehicles ?? collect())
+                            ->filter(function($veh) use ($date) {
+                                $updated = \Carbon\Carbon::parse($veh->updated_at);
+                                return $veh->status === 'sold' && $veh->sold_price && $updated->format('Y-m') === $date->format('Y-m');
+                            })
+                            ->sum('sold_price');
+                        $monthValues[] = $value;
+                        if ($value > $maxValue) $maxValue = $value;
                     }
                 ?>
-                
+
                 <?php $__empty_1 = true; $__currentLoopData = $monthValues; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
                     <div class="flex-1 bg-[hsl(var(--primary))]/50 rounded-t transition-all hover:bg-[hsl(var(--primary))]" 
-                         style="height: <?php echo e(min($value, 90)); ?>%"
-                         title="Mes: <?php echo e($monthLabels[$loop->index]); ?>"></div>
+                         style="height: <?php echo e($maxValue > 0 ? max(10, ($value / $maxValue) * 90) : 10); ?>%"
+                         title="Ingresos: $<?php echo e(number_format($value, 0, ',', '.')); ?>">
+                    </div>
                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
                     <div class="flex-1 bg-[hsl(var(--primary))]/20 rounded-t" style="height: 40%"></div>
                     <div class="flex-1 bg-[hsl(var(--primary))]/30 rounded-t" style="height: 55%"></div>
@@ -307,6 +336,8 @@
                     <div class="flex-1 bg-[hsl(var(--primary))] rounded-t" style="height: 90%"></div>
                 <?php endif; ?>
             </div>
+            <!-- DEBUG: Mostrar vehículos vendidos últimos 6 meses -->
+            <!-- DEBUG: Mostrar valores de cada mes y el máximo -->
             <div class="flex justify-around mt-4 text-xs text-[hsl(var(--muted-foreground))]">
                 <?php $__empty_1 = true; $__currentLoopData = $monthLabels; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $label): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
                     <span><?php echo e($label); ?></span>
@@ -392,7 +423,7 @@
                 </div>
 
                 <div class="space-y-3">
-                    <?php $__empty_1 = true; $__currentLoopData = $stats['upcoming_events'] ?? []; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $event): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
+                    <?php $__empty_1 = true; $__currentLoopData = $stats['today_events'] ?? []; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $event): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
                         <div class="flex gap-3">
                             <div class="flex flex-col items-center">
                                 <div class="w-8 h-8 rounded-lg bg-green-500/20 flex items-center justify-center">
@@ -405,12 +436,12 @@
                                 <?php endif; ?>
                             </div>
                             <div class="flex-1 pb-3">
-                                <p class="text-xs <?php echo e($loop->first ? 'text-green-500' : 'text-blue-500'); ?> mb-0.5">
-                                    <?php echo e($event->start_time->format('h:i A')); ?>
+                                <p class="text-xs text-green-500 mb-0.5">
+                                    <?php echo e($event->start_time->format('d/m/Y H:i')); ?>
 
                                 </p>
-                                <p class="text-sm font-medium text-white"><?php echo e($event->titulo); ?></p>
-                                <p class="text-xs text-[hsl(var(--muted-foreground))]"><?php echo e($event->descripcion ?? 'Sin descripción'); ?></p>
+                                <p class="text-sm font-medium text-white"><?php echo e($event->title); ?></p>
+                                <p class="text-xs text-[hsl(var(--muted-foreground))]"><?php echo e($event->description ?? 'Sin descripción'); ?></p>
                             </div>
                         </div>
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
@@ -455,5 +486,16 @@
     </div>
 </div>
 <?php $__env->stopSection(); ?>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var select = document.getElementById('monthRevenueSelect');
+    if(select) {
+        select.addEventListener('change', function() {
+            document.getElementById('monthRevenueForm').submit();
+        });
+    }
+});
+</script>
 
 <?php echo $__env->make('layouts.admin', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\Proyectos\ProyectoAutos\resources\views/agenciero/dashboard.blade.php ENDPATH**/ ?>

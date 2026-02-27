@@ -55,9 +55,19 @@
                 </div>
                 <div>
                     <p class="text-xs text-[hsl(var(--muted-foreground))] mb-1">Próxima Renovación</p>
-                    <p class="text-lg font-bold text-white">{{ $subscription->current_period_end->format('d/m/Y') }}</p>
+                    <p class="text-lg font-bold text-white">
+                        @if($subscription->current_period_end)
+                            {{ $subscription->current_period_end->format('d/m/Y') }}
+                        @else
+                            <span class="text-warning">Sin fecha de renovación</span>
+                        @endif
+                    </p>
                     <p class="text-xs text-[hsl(var(--muted-foreground))]">
-                        ({{ $subscription->current_period_end->diffForHumans() }})
+                        @if($subscription->current_period_end)
+                            ({{ $subscription->current_period_end->diffForHumans() }})
+                        @else
+                            <span class="text-warning">Sin fecha</span>
+                        @endif
                     </p>
                 </div>
             </div>

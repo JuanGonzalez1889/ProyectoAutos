@@ -264,6 +264,25 @@
                 </div>
             </div>
         </div>
+
+        <!-- Card Web Personalizada -->
+        <div class="template-card bg-gradient-to-br from-fuchsia-600 to-indigo-600 rounded-lg overflow-hidden shadow border border-[hsl(var(--border))] flex flex-col justify-between">
+            <div class="relative h-48 flex items-center justify-center" style="background: linear-gradient(135deg, #f3e8ff, #e0e7ff);">
+                <div class="text-center w-full">
+                    <div class="text-2xl md:text-3xl font-extrabold mb-2 text-indigo-900" style="letter-spacing: 0.01em;">Quiero una web personalizada</div>
+                    <div class="text-xs md:text-sm text-indigo-700">¿Necesitas algo único para tu agencia?</div>
+                </div>
+            </div>
+            <div class="p-4 flex flex-col flex-1 justify-between">
+                <h3 class="text-base font-bold mb-2 text-[hsl(var(--foreground))]">Web a Medida</h3>
+                <p class="text-[hsl(var(--muted-foreground))] mb-3 text-xs line-clamp-2">Solicita una cotización para un desarrollo web completamente personalizado según tus necesidades.</p>
+                <div class="flex gap-2 mt-auto">
+                    <a href="mailto:ventas@tusitio.com?subject=Solicitud%20de%20cotizaci%C3%B3n%20web%20personalizada" class="flex-1 px-3 py-2 bg-gradient-to-r from-fuchsia-600 to-indigo-600 text-white rounded text-xs font-semibold text-center hover:opacity-90 transition" style="display: block;">
+                        Solicitar cotización
+                    </a>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- Info sobre cambios futuros -->

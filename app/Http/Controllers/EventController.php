@@ -43,7 +43,8 @@ class EventController extends Controller
 
     public function create()
     {
-        return view('events.create');
+        $return = request('return');
+        return view('events.create', compact('return'));
     }
 
     public function edit(Event $event)
@@ -61,7 +62,7 @@ class EventController extends Controller
             'description' => 'nullable|string',
             'type' => 'required|in:meeting,delivery,test_drive,service,other',
             'start_time' => 'required|date',
-            'end_time' => 'required|date|after:start_time',
+            // 'end_time' eliminado
             'location' => 'nullable|string',
             'client_name' => 'nullable|string',
             'client_phone' => 'nullable|string',
@@ -69,9 +70,21 @@ class EventController extends Controller
         
         $validated['user_id'] = $user->id;
         $validated['agencia_id'] = $user->agencia_id;
-        
+
+        // Forzar timezone y formato correcto para evitar desfase
+        if (isset($validated['start_time'])) {
+            $validated['start_time'] = \Carbon\Carbon::parse($validated['start_time'], config('app.timezone', 'America/Argentina/Buenos_Aires'))
+                ->timezone(config('app.timezone', 'America/Argentina/Buenos_Aires'))
+                ->toDateTimeString();
+        }
+
         Event::create($validated);
-        
+
+        // Redireccionar según parámetro explícito
+        $return = $request->input('return');
+        if ($return === 'tasks') {
+            return redirect()->route('admin.tasks.list')->with('success', 'Tarea creada exitosamente');
+        }
         return redirect()->route('admin.events.index')->with('success', 'Evento creado exitosamente');
     }
 
@@ -148,6 +161,7 @@ class EventController extends Controller
             'delivery' => '#10b981',      // green
             'test_drive' => '#f59e0b',    // orange
             'service' => '#8b5cf6',       // purple
+            'other' => '#6b7280',         // gray
             default => '#6b7280',         // gray
         };
     }

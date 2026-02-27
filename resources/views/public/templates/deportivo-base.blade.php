@@ -165,6 +165,23 @@
         </div>
     </nav>
 
+    <!-- Card Personalización -->
+    <div class="flex justify-center items-center my-12">
+        <div class="bg-gray-800 rounded-lg shadow-lg overflow-hidden flex flex-col justify-between w-[370px] mx-auto">
+            <div class="p-6 flex flex-col items-center justify-center h-64">
+                <div class="mb-4">
+                    <svg width="64" height="64" fill="none" stroke="currentColor" viewBox="0 0 24 24" class="text-yellow-400 mx-auto">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                    </svg>
+                </div>
+                <h2 class="text-2xl font-bold text-white mb-2 text-center">QUIERO PERSONALIZAR MI WEB</h2>
+                <p class="text-gray-400 text-center text-sm mb-4">¿Buscás algo único? Podemos crear una web a medida para tu agencia, con funcionalidades y diseño exclusivo.</p>
+            </div>
+            <div class="px-6 pb-6 flex justify-center">
+                <a href="mailto:info@tuagencia.com" class="bg-yellow-400 text-gray-900 font-semibold px-6 py-2 rounded transition hover:bg-yellow-300 shadow">Contactar</a>
+            </div>
+        </div>
+    </div>
     @yield('content')
 
     <!-- Footer -->

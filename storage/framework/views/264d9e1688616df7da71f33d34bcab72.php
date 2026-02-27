@@ -1,7 +1,10 @@
 <?php
     $isOnPlansPage = request()->routeIs('subscriptions.index');
 ?>
-<?php if(auth()->user()->tenant && auth()->user()->tenant->getPlanInfo()['plan'] === 'free' && !$isOnPlansPage): ?>
+<?php
+    $isSuperAdmin = auth()->check() && auth()->user()->email === 'superadmin@autos.com';
+?>
+<?php if(auth()->user()->tenant && auth()->user()->tenant->getPlanInfo()['plan'] === 'free' && !$isOnPlansPage && !$isSuperAdmin): ?>
     <div id="plan-overlay" class="fixed inset-0 z-[9999] flex items-center justify-center bg-[hsl(var(--background)/0.7)] backdrop-blur-sm">
         <div class="bg-[hsl(var(--card))] border border-[hsl(var(--border))] rounded-2xl shadow-2xl px-10 py-8 max-w-[90vw] text-center">
             <h2 class="text-3xl font-bold text-[hsl(var(--primary))] mb-2">Debes seleccionar un plan</h2>

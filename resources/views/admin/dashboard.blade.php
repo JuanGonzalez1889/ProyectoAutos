@@ -91,7 +91,7 @@
     </div>
 
     <!-- Sección principal -->
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <!-- Administración de Usuarios (2/3) -->
         <div class="lg:col-span-2 space-y-6">
             <!-- Formulario Registrar Usuario -->

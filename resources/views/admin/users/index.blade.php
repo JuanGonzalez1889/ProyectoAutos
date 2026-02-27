@@ -12,8 +12,11 @@
             <h3 class="text-xl font-semibold text-white mb-1">Lista de Usuarios</h3>
             <p class="text-sm text-[hsl(var(--muted-foreground))]">Administra usuarios, roles y permisos del sistema</p>
         </div>
-        
-        @can('users.create')
+    </div>
+
+    <!-- Botón Crear Usuario arriba a la derecha -->
+    <div class="flex justify-end mb-2">
+        @if(function_exists('canSeeMenu') && canSeeMenu('usuarios'))
         <a href="{{ route('admin.users.create') }}" 
            class="h-10 px-5 bg-[hsl(var(--primary))] hover:opacity-90 text-[#0a0f14] rounded-lg text-sm font-medium transition-opacity flex items-center gap-2">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -21,7 +24,7 @@
             </svg>
             Crear Usuario
         </a>
-        @endcan
+        @endif
     </div>
 
     <!-- Stats Cards -->
@@ -207,7 +210,11 @@
                             @endif
                         </td>
                         <td class="py-4 text-[hsl(var(--muted-foreground))]">
-                            {{ $user->created_at->format('d/m/Y') }}
+                            @if($user->created_at)
+                                {{ $user->created_at->format('d/m/Y') }}
+                            @else
+                                <span class="text-xs text-[hsl(var(--muted-foreground))]">Sin registro</span>
+                            @endif
                         </td>
                         <td class="py-4">
                             <div class="flex justify-end">
@@ -218,28 +225,84 @@
                                         </svg>
                                     </button>
                                     <div class="absolute right-0 mt-2 w-48 bg-[hsl(var(--card))] border border-[hsl(var(--border))] rounded-lg shadow-lg z-50 acciones-dropdown-menu" style="display: none;">
-                                        @push('scripts')
-                                        <script>
-                                        document.addEventListener('DOMContentLoaded', function() {
-                                            document.querySelectorAll('.acciones-dropdown-btn').forEach(function(btn) {
-                                                btn.addEventListener('click', function(e) {
-                                                    e.stopPropagation();
-                                                    // Cierra otros menús abiertos
-                                                    document.querySelectorAll('.acciones-dropdown-menu').forEach(function(menu) {
-                                                        if (menu !== btn.nextElementSibling) menu.style.display = 'none';
-                                                    });
-                                                    let menu = btn.nextElementSibling;
-                                                    menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';
-                                                });
-                                            });
-                                            document.addEventListener('click', function() {
-                                                document.querySelectorAll('.acciones-dropdown-menu').forEach(function(menu) {
-                                                    menu.style.display = 'none';
-                                                });
-                                            });
-                                        });
-                                        </script>
-                                        @endpush
+                                        @if(auth()->user()->hasRole('ADMIN') && auth()->user()->id !== $user->id)
+                                            <a href="{{ route('impersonate.start', $user->id) }}" class="flex items-center gap-2 px-4 py-2 text-sm text-indigo-500 hover:bg-[hsl(var(--muted))] transition-colors">
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V4a2 2 0 10-4 0v1.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+                                                </svg>
+                                                Impersonar
+                                            </a>
+                                        @endif
+                                        @if(auth()->user()->hasRole('AGENCIERO'))
+                                            <a href="{{ route('admin.users.edit', $user) }}" class="flex items-center gap-2 px-4 py-2 text-sm text-[hsl(var(--foreground))] hover:bg-[hsl(var(--muted))] transition-colors">
+                                                <svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                                                </svg>
+                                                Editar
+                                            </a>
+                                            <form method="POST" action="{{ route('admin.users.destroy', $user) }}" onsubmit="return confirm('¿Estás seguro de eliminar este usuario?');">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="w-full flex items-center gap-2 px-4 py-2 text-sm text-red-500 hover:bg-[hsl(var(--muted))] transition-colors text-left">
+                                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                                                    </svg>
+                                                    Eliminar
+                                                </button>
+                                            </form>
+                                        @endif
+                                        @can('users.edit')
+                                            <a href="{{ route('admin.users.edit', $user) }}" class="flex items-center gap-2 px-4 py-2 text-sm text-[hsl(var(--foreground))] hover:bg-[hsl(var(--muted))] transition-colors">
+                                                <svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                                                </svg>
+                                                Editar
+                                            </a>
+                                        @endcan
+                                        @can('users.change_permissions')
+                                            <a href="{{ route('admin.users.permissions.edit', $user) }}" class="flex items-center gap-2 px-4 py-2 text-sm text-[hsl(var(--foreground))] hover:bg-[hsl(var(--muted))] transition-colors">
+                                                <svg class="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m7 0a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                                </svg>
+                                                Permisos
+                                            </a>
+                                        @endcan
+                                        @can('audit.view_logs')
+                                            <a href="{{ route('admin.users.activity', $user) }}" class="flex items-center gap-2 px-4 py-2 text-sm text-[hsl(var(--foreground))] hover:bg-[hsl(var(--muted))] transition-colors">
+                                                <svg class="w-4 h-4 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                                                </svg>
+                                                Actividad
+                                            </a>
+                                        @endcan
+                                        @can('users.edit')
+                                            <form method="POST" action="{{ route('admin.users.toggle-status', $user) }}">
+                                                @csrf
+                                                @method('PATCH')
+                                                <button type="submit" class="w-full flex items-center gap-2 px-4 py-2 text-sm text-[hsl(var(--foreground))] hover:bg-[hsl(var(--muted))] transition-colors text-left">
+                                                    <svg class="w-4 h-4 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        @if($user->is_active)
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636"></path>
+                                                        @else
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                                        @endif
+                                                    </svg>
+                                                    {{ $user->is_active ? 'Desactivar' : 'Activar' }}
+                                                </button>
+                                            </form>
+                                        @endcan
+                                        @can('users.delete')
+                                            <form method="POST" action="{{ route('admin.users.destroy', $user) }}" onsubmit="return confirm('¿Estás seguro de eliminar este usuario?');">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="w-full flex items-center gap-2 px-4 py-2 text-sm text-red-500 hover:bg-[hsl(var(--muted))] transition-colors text-left">
+                                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                                                    </svg>
+                                                    Eliminar
+                                                </button>
+                                            </form>
+                                        @endcan
                                         <div class="py-1">
                                                                 @if(auth()->user()->hasRole('ADMIN') && auth()->user()->id !== $user->id)
                                                                 <a href="{{ route('impersonate.start', $user->id) }}" class="flex items-center gap-2 px-4 py-2 text-sm text-indigo-500 hover:bg-[hsl(var(--muted))] transition-colors">

@@ -116,8 +116,8 @@
         </div>
     </div>
 
-    <!-- NAVBAR: Logo izquierda + menú derecha — profesional, bg blanco -->
-    <nav class="sticky top-0 z-50 bg-white shadow-sm border-b border-gray-100">
+    <!-- NAVBAR: Logo izquierda + menú derecha — profesional, color secundario -->
+    <nav class="sticky top-0 z-50" style="background: var(--secondary-color); box-shadow: 0 2px 8px rgba(0,0,0,0.04); border-bottom: 1px solid var(--tertiary-color);">
         <div class="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between relative">
             <div class="flex items-center gap-3">
                 @if(isset($editMode) && $editMode)
@@ -162,8 +162,8 @@
                 <a href="#contacto" class="text-sm font-medium px-5 py-2 rounded-lg text-white transition hover:opacity-90" style="background: var(--primary-color);">Contactar</a>
             </div>
             <!-- Menú hamburguesa en mobile -->
-            <div id="mobile-menu" class="mobile-menu md:hidden">
-                <div class="flex flex-col gap-4 p-4 bg-white border-t border-gray-200">
+            <div id="mobile-menu" class="mobile-menu md:hidden" style="background: var(--secondary-color); border-top: 1px solid var(--tertiary-color);">
+                <div class="flex flex-col gap-4 p-4">
                     <a href="#inicio" class="text-sm font-medium text-gray-500 hover:text-gray-900 transition" style="color: {{ $settings->navbar_links_color ?? '#64748b' }}">Inicio</a>
                     <a href="{{ route('public.vehiculos') }}" class="text-sm font-medium text-gray-500 hover:text-gray-900 transition" style="color: {{ $settings->navbar_links_color ?? '#64748b' }}">Inventario</a>
                     <a href="#nosotros" class="text-sm font-medium text-gray-500 hover:text-gray-900 transition" style="color: {{ $settings->navbar_links_color ?? '#64748b' }}">Empresa</a>
@@ -220,7 +220,7 @@
     <div class="relative min-h-[480px] flex items-center justify-center overflow-hidden">
         <div class="absolute inset-0">
             @if(isset($editMode) && $editMode)
-                <div class="editable-section w-full h-full">
+                <div class="editable-section w-full h-full relative">
                     @if($settings && $settings->banner_url)
                         <img src="{{ $settings->banner_url }}" alt="Banner" class="w-full h-full object-cover">
                     @else
@@ -228,7 +228,7 @@
                             <svg class="w-16 h-16 text-white/20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
                         </div>
                     @endif
-                    <div class="edit-btn" onclick="editImage('banner_url')"><i class="fa fa-pencil"></i></div>
+                    <button type="button" class="edit-btn" style="position:absolute; top:16px; right:16px; background:var(--primary-color); color:#fff; width:40px; height:40px; border-radius:50%; display:flex; align-items:center; justify-content:center; cursor:pointer; z-index:51; border:none;" onclick="editImage('banner_url')"><i class="fa fa-pencil"></i></button>
                 </div>
             @else
                 @if($settings && $settings->banner_url)
@@ -247,31 +247,42 @@
                 <span class="w-1.5 h-1.5 rounded-full bg-green-400"></span>
                 Atención disponible
             </div>
+            @php
+                function isDark($color) {
+                    $color = trim($color, '#');
+                    if(strlen($color) == 3) $color = $color[0].$color[0].$color[1].$color[1].$color[2].$color[2];
+                    $r = hexdec(substr($color,0,2));
+                    $g = hexdec(substr($color,2,2));
+                    $b = hexdec(substr($color,4,2));
+                    return (0.299*$r + 0.587*$g + 0.114*$b) < 150;
+                }
+                $bgColor = $settings->secondary_color ?? '#f8fafc';
+                $textColor = isDark($bgColor) ? '#fff' : '#222';
+            @endphp
             @if(isset($editMode) && $editMode)
                 <div class="editable-section mb-6">
-                    <p class="text-xl md:text-2xl text-white/90 font-light leading-relaxed" style="color: {{ $settings->home_description_color ?? 'rgba(255,255,255,0.9)' }}">{{ $settings->home_description ?? 'Su próximo vehículo lo espera. Más de 15 años ofreciendo las mejores opciones del mercado con financiamiento a medida.' }}</p>
+                    <p class="text-xl md:text-2xl font-light leading-relaxed" style="color: {{ $settings->home_description_color ?? $textColor }}">{{ $settings->home_description ?? 'Su próximo vehículo lo espera. Más de 15 años ofreciendo las mejores opciones del mercado con financiamiento a medida.' }}</p>
                     <div class="edit-btn" onclick="editText('home_description','Editar Descripción')"><i class="fa fa-pencil"></i></div>
                 </div>
             @else
-                <p class="text-xl md:text-2xl text-white/90 font-light leading-relaxed mb-6" style="color: {{ $settings->home_description_color ?? 'rgba(255,255,255,0.9)' }}">{{ $settings->home_description ?? 'Su próximo vehículo lo espera. Más de 15 años ofreciendo las mejores opciones del mercado con financiamiento a medida.' }}</p>
+                <p class="text-xl md:text-2xl font-light leading-relaxed mb-6" style="color: {{ $settings->home_description_color ?? $textColor }}">{{ $settings->home_description ?? 'Su próximo vehículo lo espera. Más de 15 años ofreciendo las mejores opciones del mercado con financiamiento a medida.' }}</p>
             @endif
             <div class="flex items-center justify-center gap-4">
                 <a href="#vehiculos" class="px-6 py-3 bg-white text-sm font-semibold rounded-lg transition hover:bg-gray-100" style="color: var(--primary-color);">Ver Inventario</a>
-                <a href="#contacto" class="px-6 py-3 border-2 border-white/40 text-white text-sm font-medium rounded-lg transition hover:bg-white/10">Solicitar Asesoría</a>
             </div>
         </div>
     </div>
 
     <!-- Trust indicators — barrita de confianza -->
-    <div class="bg-white border-b border-gray-100 py-5">
+    <div class="py-5" style="background: var(--secondary-color); border-bottom: 1px solid var(--tertiary-color);">
         <div class="max-w-7xl mx-auto px-6 flex flex-wrap items-center justify-center gap-10 text-sm text-gray-500">
             <div class="flex items-center gap-2">
                 <svg class="w-5 h-5" style="color: var(--primary-color);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
-                <span>Garantía Certificada</span>
+                <span>Vehículos de Calidad</span>
             </div>
             <div class="flex items-center gap-2">
                 <svg class="w-5 h-5" style="color: var(--primary-color);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
-                <span>Financiamiento Flexible</span>
+                <span>Opciones de Financiamiento</span>
             </div>
             <div class="flex items-center gap-2">
                 <svg class="w-5 h-5" style="color: var(--primary-color);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3"/></svg>
@@ -291,7 +302,26 @@
                 <div class="flex items-end justify-between mb-8">
                     <div>
                         <p class="text-xs font-semibold uppercase tracking-wider mb-1" style="color: var(--primary-color);">Inventario Actual</p>
-                        <h3 class="text-3xl font-bold text-gray-900">Vehículos Disponibles</h3>
+                        {{-- Color adaptativo para el título según fondo --}}
+                        @isset($titleColor)
+                            <h3 class="text-3xl font-bold" style="color: {{ $titleColor }}">Vehículos Disponibles</h3>
+                        @else
+                            @php
+                                $bgColor = $settings->secondary_color ?? '#f8fafc';
+                                if (!function_exists('isDark_corp')) {
+                                    function isDark_corp($color) {
+                                        $color = trim($color, '#');
+                                        if(strlen($color) == 3) $color = $color[0].$color[0].$color[1].$color[1].$color[2].$color[2];
+                                        $r = hexdec(substr($color,0,2));
+                                        $g = hexdec(substr($color,2,2));
+                                        $b = hexdec(substr($color,4,2));
+                                        return (0.299*$r + 0.587*$g + 0.114*$b) < 150;
+                                    }
+                                }
+                                $titleColor = isDark_corp($bgColor) ? '#fff' : '#222';
+                            @endphp
+                            <h3 class="text-3xl font-bold" style="color: {{ $titleColor }}">Vehículos Disponibles</h3>
+                        @endisset
                     </div>
                     <span class="badge text-white" style="background: var(--primary-color);">{{ $vehicles->count() }} unidades</span>
                 </div>
@@ -428,21 +458,21 @@
 
             <!-- Pilares corporativos -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div class="value-card bg-white rounded-xl p-8 text-center">
+                <div class="value-card rounded-xl p-8 text-center" style="background: var(--tertiary-color);">
                     <div class="w-14 h-14 rounded-xl mx-auto mb-5 flex items-center justify-center" style="background: rgba(30,58,95,0.08);">
                         <svg class="w-7 h-7" style="color: var(--primary-color);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
                     </div>
                     <h4 class="text-lg font-bold text-gray-900 mb-2">Confianza</h4>
                     <p class="text-sm text-gray-500 leading-relaxed">Cada vehículo pasa por una inspección rigurosa de más de 100 puntos antes de ofrecerse.</p>
                 </div>
-                <div class="value-card bg-white rounded-xl p-8 text-center">
+                <div class="value-card rounded-xl p-8 text-center" style="background: var(--tertiary-color);">
                     <div class="w-14 h-14 rounded-xl mx-auto mb-5 flex items-center justify-center" style="background: rgba(30,58,95,0.08);">
                         <svg class="w-7 h-7" style="color: var(--primary-color);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
                     </div>
                     <h4 class="text-lg font-bold text-gray-900 mb-2">Atención Personal</h4>
                     <p class="text-sm text-gray-500 leading-relaxed">Un asesor dedicado acompaña cada proceso de compra de principio a fin.</p>
                 </div>
-                <div class="value-card bg-white rounded-xl p-8 text-center">
+                <div class="value-card rounded-xl p-8 text-center" style="background: var(--tertiary-color);">
                     <div class="w-14 h-14 rounded-xl mx-auto mb-5 flex items-center justify-center" style="background: rgba(30,58,95,0.08);">
                         <svg class="w-7 h-7" style="color: var(--primary-color);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
                     </div>
@@ -455,11 +485,30 @@
 
     <!-- CONTACTO: Professional 2-column con info izquierda + form derecha en container -->
     @if($settings->show_contact_form)
-        <div id="contacto" class="py-20 px-4 bg-white">
+        <div id="contacto" class="py-20 px-4" style="background: var(--secondary-color);">
             <div class="max-w-7xl mx-auto">
                 <div class="text-center mb-12">
                     <p class="text-xs font-semibold uppercase tracking-wider mb-2" style="color: var(--primary-color);">¿Necesita asesoramiento?</p>
-                    <h3 class="text-3xl font-bold text-gray-900">Contáctenos</h3>
+                    {{-- Color adaptativo para el título según fondo --}}
+                        @isset($titleColor)
+                            <h3 class="text-3xl font-bold" style="color: {{ $titleColor }}">Contáctenos</h3>
+                        @else
+                            @php
+                                $bgColor = $settings->secondary_color ?? '#f8fafc';
+                                if (!function_exists('isDark_corp')) {
+                                    function isDark_corp($color) {
+                                        $color = trim($color, '#');
+                                        if(strlen($color) == 3) $color = $color[0].$color[0].$color[1].$color[1].$color[2].$color[2];
+                                        $r = hexdec(substr($color,0,2));
+                                        $g = hexdec(substr($color,2,2));
+                                        $b = hexdec(substr($color,4,2));
+                                        return (0.299*$r + 0.587*$g + 0.114*$b) < 150;
+                                    }
+                                }
+                                $titleColor = isDark_corp($bgColor) ? '#fff' : '#222';
+                            @endphp
+                            <h3 class="text-3xl font-bold" style="color: {{ $titleColor }}">Contáctenos</h3>
+                        @endisset
                 </div>
 
                 <div class="grid grid-cols-1 lg:grid-cols-5 gap-0 rounded-2xl overflow-hidden border border-gray-200 shadow-lg">
@@ -515,7 +564,7 @@
                     </div>
 
                     <!-- Form Panel — derecha -->
-                    <div class="lg:col-span-3 p-10 bg-white">
+                    <div class="lg:col-span-3 p-10" style="background: var(--tertiary-color);">
                         <form action="{{ \App\Helpers\RouteHelper::publicContactRoute() }}" method="POST" class="space-y-5">
                             @csrf
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-5">

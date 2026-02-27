@@ -186,11 +186,11 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                     <label class="block text-sm font-medium mb-2">Estado</label>
-                    <select name="status" required
+                    <select name="status" id="status-select" required
                             class="w-full h-10 px-3 bg-[hsl(var(--background))] border border-[hsl(var(--border))] rounded-lg text-sm focus:outline-none focus:border-[hsl(var(--primary))]">
-                        <option value="draft" {{ old('status', 'draft') === 'draft' ? 'selected' : '' }}>Borrador</option>
-                        <option value="published" {{ old('status') === 'published' ? 'selected' : '' }}>Publicado</option>
-                        <option value="sold" {{ old('status') === 'sold' ? 'selected' : '' }}>Vendido</option>
+                        <option value="draft" {{ old('status', 'published') === 'draft' ? 'selected' : '' }}>Borrador</option>
+                        <option value="published" {{ old('status', 'published') === 'published' ? 'selected' : '' }}>Publicado</option>
+                        <option value="sold" {{ old('status', 'published') === 'sold' ? 'selected' : '' }}>Vendido</option>
                     </select>
                 </div>
 

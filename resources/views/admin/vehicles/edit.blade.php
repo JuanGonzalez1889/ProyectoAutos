@@ -172,21 +172,20 @@
             </div>
         </div>
 
-        <!-- Estado -->
+        <!-- Estado y Precio de Venta Real -->
         <div class="card">
             <h4 class="text-lg font-semibold mb-4">Estado y Publicación</h4>
-            
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                     <label class="block text-sm font-medium mb-2">Estado</label>
-                    <select name="status" required
-                            class="w-full h-10 px-3 bg-[hsl(var(--background))] border border-[hsl(var(--border))] rounded-lg text-sm focus:outline-none focus:border-[hsl(var(--primary))]">
+                    <select name="status" id="status-select" required
+                            class="w-full h-10 px-3 bg-[hsl(var(--background))] border border-[hsl(var(--border))] rounded-lg text-sm focus:outline-none focus:border-[hsl(var(--primary))]"
+                            onchange="document.getElementById('sold-price-field').style.display = this.value === 'sold' ? 'block' : 'none';">
                         <option value="draft" {{ old('status', $vehicle->status) === 'draft' ? 'selected' : '' }}>Borrador</option>
                         <option value="published" {{ old('status', $vehicle->status) === 'published' ? 'selected' : '' }}>Publicado</option>
                         <option value="sold" {{ old('status', $vehicle->status) === 'sold' ? 'selected' : '' }}>Vendido</option>
                     </select>
                 </div>
-
                 <div>
                     <label class="flex items-center gap-2 cursor-pointer">
                         <input type="checkbox" name="featured" value="1" {{ old('featured', $vehicle->featured) ? 'checked' : '' }}
@@ -195,7 +194,25 @@
                     </label>
                 </div>
             </div>
+            <div id="sold-price-field" style="display: {{ old('status', $vehicle->status) === 'sold' ? 'block' : 'none' }};" class="mt-4">
+                <label class="block text-sm font-medium mb-2">Precio de Venta Real</label>
+                <input type="number" name="sold_price" min="0" step="1000" value="{{ old('sold_price', $vehicle->sold_price) }}"
+                       class="w-full h-10 px-3 bg-[hsl(var(--background))] border border-[hsl(var(--border))] rounded-lg text-sm focus:outline-none focus:border-[hsl(var(--primary))]"
+                       placeholder="$50.000.000">
+                <p class="text-xs text-[hsl(var(--muted-foreground))] mt-1">Obligatorio si el estado es "Vendido".</p>
+            </div>
         </div>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                var statusSelect = document.getElementById('status-select');
+                var soldPriceField = document.getElementById('sold-price-field');
+                if (statusSelect) {
+                    statusSelect.addEventListener('change', function () {
+                        soldPriceField.style.display = this.value === 'sold' ? 'block' : 'none';
+                    });
+                }
+            });
+        </script>
 
         <!-- Botones -->
         <div class="flex justify-end gap-3">

@@ -3,11 +3,35 @@
 namespace App\Http\Controllers;
 
 use App\Models\Task;
+use App\Models\Event;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class TaskController extends Controller
-{
+class TaskController extends Controller {
+        // Actualizar estado de un evento
+        public function updateEventStatus(Request $request, Event $event)
+        {
+            $validated = $request->validate([
+                'status' => 'required|in:pendiente,completado,cancelado',
+            ]);
+            $event->status = $validated['status'];
+            $event->save();
+            return response()->json(['success' => true]);
+        }
+    // ...existing code...
+    // ...existing code...
+    // Lista de tareas (eventos)
+    public function list()
+    {
+        $user = auth()->user();
+        $query = \App\Models\Event::orderBy('start_time', 'desc');
+        // Solo superadmin puede ver todas las tareas
+        if ($user->email !== 'superadmin@autos.com') {
+            $query->where('agencia_id', $user->agencia_id);
+        }
+        $tasks = $query->get();
+        return view('tasks.list', compact('tasks'));
+    }
     public function index()
     {
         /** @var \App\Models\User $user */
@@ -57,7 +81,7 @@ class TaskController extends Controller
         
         Task::create($validated);
         
-        return redirect()->route('admin.tasks.index')->with('success', 'Tarea creada exitosamente');
+        return redirect()->route('admin.tasks.list')->with('success', 'Tarea creada exitosamente');
     }
 
     public function update(Request $request, Task $task)
@@ -72,7 +96,7 @@ class TaskController extends Controller
         
         $task->update($validated);
         
-        return redirect()->route('admin.tasks.index')->with('success', 'Tarea actualizada exitosamente');
+        return redirect()->route('admin.tasks.list')->with('success', 'Tarea actualizada exitosamente');
     }
 
     public function updateStatus(Request $request, Task $task)
@@ -90,6 +114,6 @@ class TaskController extends Controller
     {
         $task->delete();
         
-        return redirect()->route('admin.tasks.index')->with('success', 'Tarea eliminada exitosamente');
+        return redirect()->route('admin.tasks.list')->with('success', 'Tarea eliminada exitosamente');
     }
 }

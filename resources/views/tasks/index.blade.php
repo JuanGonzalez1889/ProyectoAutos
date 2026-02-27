@@ -44,22 +44,8 @@
                     </svg>
                 </div>
                 <div>
-                    <p class="text-xs text-[hsl(var(--muted-foreground))]">Por Hacer</p>
-                    <p class="text-2xl font-bold text-white">{{ $stats['todo'] }}</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="p-4 bg-gradient-to-br from-yellow-500/10 to-yellow-600/10 border border-yellow-500/20 rounded-lg">
-            <div class="flex items-center gap-3">
-                <div class="p-2 bg-yellow-500/20 rounded-lg">
-                    <svg class="w-5 h-5 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-                    </svg>
-                </div>
-                <div>
-                    <p class="text-xs text-[hsl(var(--muted-foreground))]">En Proceso</p>
-                    <p class="text-2xl font-bold text-white">{{ $stats['in_progress'] }}</p>
+                    <p class="text-xs text-[hsl(var(--muted-foreground))]">Pendiente</p>
+                    <p class="text-2xl font-bold text-white">{{ $stats['pendiente'] }}</p>
                 </div>
             </div>
         </div>
@@ -72,8 +58,8 @@
                     </svg>
                 </div>
                 <div>
-                    <p class="text-xs text-[hsl(var(--muted-foreground))]">Completadas</p>
-                    <p class="text-2xl font-bold text-white">{{ $stats['done'] }}</p>
+                    <p class="text-xs text-[hsl(var(--muted-foreground))]">Completo</p>
+                    <p class="text-2xl font-bold text-white">{{ $stats['completo'] }}</p>
                 </div>
             </div>
         </div>
@@ -86,8 +72,8 @@
                     </svg>
                 </div>
                 <div>
-                    <p class="text-xs text-[hsl(var(--muted-foreground))]">Alta Prioridad</p>
-                    <p class="text-2xl font-bold text-white">{{ $stats['high_priority'] }}</p>
+                    <p class="text-xs text-[hsl(var(--muted-foreground))]">Cancelado</p>
+                    <p class="text-2xl font-bold text-white">{{ $stats['cancelado'] }}</p>
                 </div>
             </div>
         </div>
@@ -95,21 +81,29 @@
 
     <!-- Kanban Board -->
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6" x-data="kanban()">
-        <!-- Por Hacer -->
+        <!-- Pendiente -->
         <div class="space-y-4">
             <div class="flex items-center justify-between p-4 bg-[hsl(var(--card))] border border-[hsl(var(--border))] rounded-lg">
                 <div class="flex items-center gap-2">
                     <div class="w-3 h-3 rounded-full bg-gray-500"></div>
-                    <h3 class="font-semibold text-white">Por Hacer</h3>
-                    <span class="px-2 py-0.5 text-xs font-medium rounded bg-gray-500/20 text-gray-500">{{ count($tasks['todo']) }}</span>
+                    <h3 class="font-semibold text-white">Pendiente</h3>
+                    <span class="px-2 py-0.5 text-xs font-medium rounded bg-gray-500/20 text-gray-500">{{ count($tasks['pendiente']) }}</span>
                 </div>
             </div>
 
             <div class="space-y-3 min-h-[400px]">
-                @forelse($tasks['todo'] as $task)
+                @forelse($tasks['pendiente'] as $task)
                 <div class="card hover:border-[hsl(var(--primary))]/50 transition-colors cursor-move" 
                      draggable="true"
                      data-task-id="{{ $task->id }}">
+                    <div class="mb-2">
+                        <label class="text-xs text-[hsl(var(--muted-foreground))]">Estado:</label>
+                        <select class="estado-select bg-gray-800 text-white rounded px-2 py-1 text-xs" data-task-id="{{ $task->id }}">
+                            <option value="pendiente" @if($task->status==="pendiente") selected @endif>Pendiente</option>
+                            <option value="completado" @if($task->status==="completado") selected @endif>Completado</option>
+                            <option value="cancelado" @if($task->status==="cancelado") selected @endif>Cancelado</option>
+                        </select>
+                    </div>
                     <div class="flex items-start justify-between mb-2">
                         <h4 class="font-semibold text-white text-sm">{{ $task->title }}</h4>
                         <div class="relative" x-data="{ open: false }">
@@ -164,21 +158,29 @@
             </div>
         </div>
 
-        <!-- En Proceso -->
+        <!-- Cancelado -->
         <div class="space-y-4">
             <div class="flex items-center justify-between p-4 bg-[hsl(var(--card))] border border-[hsl(var(--border))] rounded-lg">
                 <div class="flex items-center gap-2">
-                    <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
-                    <h3 class="font-semibold text-white">En Proceso</h3>
-                    <span class="px-2 py-0.5 text-xs font-medium rounded bg-yellow-500/20 text-yellow-500">{{ count($tasks['in_progress']) }}</span>
+                    <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                    <h3 class="font-semibold text-white">Cancelado</h3>
+                    <span class="px-2 py-0.5 text-xs font-medium rounded bg-red-500/20 text-red-500">{{ count($tasks['cancelado']) }}</span>
                 </div>
             </div>
 
             <div class="space-y-3 min-h-[400px]">
-                @forelse($tasks['in_progress'] as $task)
+                @forelse($tasks['cancelado'] as $task)
                 <div class="card hover:border-[hsl(var(--primary))]/50 transition-colors cursor-move" 
                      draggable="true"
                      data-task-id="{{ $task->id }}">
+                    <div class="mb-2">
+                        <label class="text-xs text-[hsl(var(--muted-foreground))]">Estado:</label>
+                        <select class="estado-select bg-gray-800 text-white rounded px-2 py-1 text-xs" data-task-id="{{ $task->id }}">
+                            <option value="pendiente" @if($task->status==="pendiente") selected @endif>Pendiente</option>
+                            <option value="completado" @if($task->status==="completado") selected @endif>Completado</option>
+                            <option value="cancelado" @if($task->status==="cancelado") selected @endif>Cancelado</option>
+                        </select>
+                    </div>
                     <div class="flex items-start justify-between mb-2">
                         <h4 class="font-semibold text-white text-sm">{{ $task->title }}</h4>
                         <div class="relative" x-data="{ open: false }">
@@ -233,21 +235,29 @@
             </div>
         </div>
 
-        <!-- Completadas -->
+        <!-- Completo -->
         <div class="space-y-4">
             <div class="flex items-center justify-between p-4 bg-[hsl(var(--card))] border border-[hsl(var(--border))] rounded-lg">
                 <div class="flex items-center gap-2">
                     <div class="w-3 h-3 rounded-full bg-green-500"></div>
-                    <h3 class="font-semibold text-white">Completadas</h3>
-                    <span class="px-2 py-0.5 text-xs font-medium rounded bg-green-500/20 text-green-500">{{ count($tasks['done']) }}</span>
+                    <h3 class="font-semibold text-white">Completo</h3>
+                    <span class="px-2 py-0.5 text-xs font-medium rounded bg-green-500/20 text-green-500">{{ count($tasks['completo']) }}</span>
                 </div>
             </div>
 
             <div class="space-y-3 min-h-[400px]">
-                @forelse($tasks['done'] as $task)
+                @forelse($tasks['completo'] as $task)
                 <div class="card opacity-75 hover:opacity-100 hover:border-[hsl(var(--primary))]/50 transition-all cursor-move" 
                      draggable="true"
                      data-task-id="{{ $task->id }}">
+                    <div class="mb-2">
+                        <label class="text-xs text-[hsl(var(--muted-foreground))]">Estado:</label>
+                        <select class="estado-select bg-gray-800 text-white rounded px-2 py-1 text-xs" data-task-id="{{ $task->id }}">
+                            <option value="pendiente" @if($task->status==="pendiente") selected @endif>Pendiente</option>
+                            <option value="completado" @if($task->status==="completado") selected @endif>Completado</option>
+                            <option value="cancelado" @if($task->status==="cancelado") selected @endif>Cancelado</option>
+                        </select>
+                    </div>
                     <div class="flex items-start justify-between mb-2">
                         <h4 class="font-semibold text-white text-sm line-through">{{ $task->title }}</h4>
                         <div class="relative" x-data="{ open: false }">
@@ -358,63 +368,39 @@
 function kanban() {
     return {
         draggedTask: null,
-        
         init() {
             this.setupDragAndDrop();
+            this.setupEstadoSelect();
         },
-        
         setupDragAndDrop() {
-            document.addEventListener('dragstart', (e) => {
-                if (e.target.hasAttribute('data-task-id')) {
-                    this.draggedTask = e.target.getAttribute('data-task-id');
-                    e.target.style.opacity = '0.5';
-                }
-            });
-            
-            document.addEventListener('dragend', (e) => {
-                if (e.target.hasAttribute('data-task-id')) {
-                    e.target.style.opacity = '1';
-                }
-            });
-            
-            // Permitir drop en las columnas
-            const columns = document.querySelectorAll('.space-y-3');
-            columns.forEach((column, index) => {
-                column.addEventListener('dragover', (e) => {
-                    e.preventDefault();
-                });
-                
-                column.addEventListener('drop', async (e) => {
-                    e.preventDefault();
-                    
-                    if (!this.draggedTask) return;
-                    
-                    const statuses = ['todo', 'in_progress', 'done'];
-                    const newStatus = statuses[index];
-                    
+            // ...existing code...
+        },
+        setupEstadoSelect() {
+            document.querySelectorAll('.estado-select').forEach(select => {
+                select.addEventListener('change', async function() {
+                    const taskId = this.getAttribute('data-task-id');
+                    const estado = this.value;
                     try {
-                        const response = await fetch(`/tasks/${this.draggedTask}/status`, {
+                        const response = await fetch(`/admin/tasks/${taskId}/status`, {
                             method: 'PATCH',
                             headers: {
                                 'Content-Type': 'application/json',
                                 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
                             },
-                            body: JSON.stringify({ status: newStatus })
+                            body: JSON.stringify({ status: estado })
                         });
-                        
                         if (response.ok) {
+                            // Opcional: recargar o mostrar notificación
                             window.location.reload();
                         }
                     } catch (error) {
-                        console.error('Error updating task:', error);
+                        alert('Error al actualizar el estado');
                     }
                 });
             });
         },
-        
         editTask(taskId) {
-            // Implementar edición
-            console.log('Edit task:', taskId);
+            // ...existing code...
         }
     }
 }

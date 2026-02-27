@@ -19,6 +19,7 @@ class Vehicle extends Model
         'year',
         'price',
         'price_original',
+        'sold_price',
         'description',
         'fuel_type',
         'transmission',
@@ -42,6 +43,7 @@ class Vehicle extends Model
         'featured' => 'boolean',
         'price' => 'decimal:2',
         'price_original' => 'decimal:2',
+        'sold_price' => 'decimal:2',
     ];
 
     public function user(): BelongsTo

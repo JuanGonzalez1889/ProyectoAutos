@@ -36,19 +36,19 @@ class Task extends Model
         return $this->belongsTo(Agencia::class);
     }
 
-    public function scopeTodo($query)
+    public function scopePendiente($query)
     {
-        return $query->where('status', 'todo');
+        return $query->where('status', 'pendiente');
     }
 
-    public function scopeInProgress($query)
+    public function scopeCompleto($query)
     {
-        return $query->where('status', 'in_progress');
+        return $query->where('status', 'completo');
     }
 
-    public function scopeDone($query)
+    public function scopeCancelado($query)
     {
-        return $query->where('status', 'done');
+        return $query->where('status', 'cancelado');
     }
 
     public function scopeHighPriority($query)

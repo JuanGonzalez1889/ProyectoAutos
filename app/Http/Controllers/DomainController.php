@@ -30,21 +30,22 @@ class DomainController extends Controller
      */
     public function index()
     {
+        $user = Auth::user();
         $tenant = $this->getTenant();
-        
-        if (!$tenant) {
+        $domains = collect();
+        if ($user->isAdmin()) {
+            $domains = Domain::with('tenant')->get();
+        } elseif ($tenant) {
+            $domains = $tenant->domains()->with('tenant')->get();
+        } else {
             abort(403, 'No tienes una agencia asociada');
         }
-        
-        $domains = $tenant->domains()->with('tenant')->get();
-        
         // Add validation status to each domain
         $domains = $domains->map(function ($domain) {
             $domain->validation_status = DomainValidationService::validateFormat($domain->domain);
             $domain->dns_records = DomainValidationService::checkDnsRecords($domain->domain);
             return $domain;
         });
-        
         return view('domains.index', compact('domains', 'tenant'));
     }
 

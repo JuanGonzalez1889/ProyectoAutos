@@ -163,9 +163,7 @@
                     <a href="{{ route('public.vehiculos') }}" class="navbar-link-auto transition font-medium" style="color: {{ $settings->navbar_links_color ?? 'var(--navbar-text-color, #fff)' }}">Vehículos</a>
                     <a href="#nosotros" class="navbar-link-auto transition font-medium" style="color: {{ $settings->navbar_links_color ?? 'var(--navbar-text-color, #fff)' }}">Nosotros</a>
                     <a href="#contacto" class="navbar-link-auto transition font-medium" style="color: {{ $settings->navbar_links_color ?? 'var(--navbar-text-color, #fff)' }}">Contacto</a>
-                    <a href="{{ route('login') }}" class="border-2 border-white px-6 py-2 rounded hover:bg-white hover:text-gray-900 transition">
-                        Ingresar
-                    </a>
+                   
                 </div>
                 <!-- Menú hamburguesa en mobile -->
                 <div id="mobile-menu" class="mobile-menu md:hidden">
@@ -174,9 +172,7 @@
                         <a href="{{ route('public.vehiculos') }}" class="navbar-link-auto transition font-medium" style="color: {{ $settings->navbar_links_color ?? 'var(--navbar-text-color, #fff)' }}">Vehículos</a>
                         <a href="#nosotros" class="navbar-link-auto transition font-medium" style="color: {{ $settings->navbar_links_color ?? 'var(--navbar-text-color, #fff)' }}">Nosotros</a>
                         <a href="#contacto" class="navbar-link-auto transition font-medium" style="color: {{ $settings->navbar_links_color ?? 'var(--navbar-text-color, #fff)' }}">Contacto</a>
-                        <a href="{{ route('login') }}" class="border-2 border-white px-6 py-2 rounded hover:bg-white hover:text-gray-900 transition">
-                            Ingresar
-                        </a>
+                        
                     </div>
                 </div>
             </div>

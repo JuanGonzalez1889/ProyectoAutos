@@ -19,6 +19,20 @@
         </a>
     </div>
 
+    <!-- Recordatorio de Seguimiento -->
+    @if(isset($pendingFollowUps) && $pendingFollowUps->count())
+        <div class="mb-4 p-4 bg-yellow-100 border-l-4 border-yellow-500 text-yellow-800 rounded">
+            <strong>¡Tienes {{ $pendingFollowUps->count() }} lead(s) con seguimiento pendiente en los próximos 5 días!</strong>
+            <ul class="mt-2 text-sm">
+                @foreach($pendingFollowUps->take(3) as $lead)
+                    <li>• <strong>{{ $lead->name }}</strong> @if($lead->next_follow_up) <span class="text-xs">({{ $lead->next_follow_up->format('d/m/Y H:i') }})</span>@endif</li>
+                @endforeach
+                @if($pendingFollowUps->count() > 3)
+                    <li class="text-xs text-gray-600">y {{ $pendingFollowUps->count() - 3 }} más...</li>
+                @endif
+            </ul>
+        </div>
+    @endif
     <!-- Stats Cards -->
     <div class="grid grid-cols-2 md:grid-cols-5 gap-3 mb-6">
         <div class="bg-[hsl(var(--card))] border border-[hsl(var(--border))] rounded-lg p-3">
@@ -49,7 +63,9 @@
 
     <!-- Tabla de Leads -->
     <div class="bg-[hsl(var(--card))] border border-[hsl(var(--border))] rounded-lg overflow-hidden">
-        <div class="overflow-x-auto">
+        <div class="overflow-x-auto" style="
+    height: 50vh;
+">
             <table class="w-full">
                 <thead class="bg-[hsl(var(--muted))] border-b border-[hsl(var(--border))]">
                     <tr>
@@ -130,6 +146,54 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
                                     </svg>
                                 </a>
+                                <!-- Botón cambiar estado -->
+                                <div class="relative group">
+                                    <button onclick="toggleStatusMenu(event, {{ $lead->id }})" class="p-1.5 hover:bg-emerald-500/20 rounded transition-colors" title="Cambiar estado">
+                                        <svg class="w-4 h-4 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <circle cx="12" cy="12" r="10" stroke-width="2"/>
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h8M12 8v8"/>
+                                        </svg>
+                                    </button>
+                                    <div id="status-menu-{{ $lead->id }}" class="hidden absolute right-0 z-10 mt-2 w-32 bg-white border border-gray-200 rounded shadow-lg">
+                                        @foreach(['new'=>'Nuevo','contacted'=>'Contactado','interested'=>'Interesado','negotiating'=>'Negociando','won'=>'Ganado','lost'=>'Perdido'] as $key=>$label)
+                                            <button onclick="updateLeadStatus({{ $lead->id }}, '{{ $key }}')" class="block w-full text-left px-4 py-2 text-sm hover:bg-emerald-100 text-gray-800">{{ $label }}</button>
+                                        @endforeach
+                                    </div>
+                                </div>
+                                @push('scripts')
+                                <script>
+                                function toggleStatusMenu(e, id) {
+                                    e.preventDefault();
+                                    document.querySelectorAll('[id^=\'status-menu-\']').forEach(el => el.classList.add('hidden'));
+                                    document.getElementById('status-menu-' + id).classList.toggle('hidden');
+                                    document.addEventListener('click', function handler(ev) {
+                                        if (!ev.target.closest('#status-menu-' + id) && !ev.target.closest('[onclick^=toggleStatusMenu]')) {
+                                            document.getElementById('status-menu-' + id).classList.add('hidden');
+                                            document.removeEventListener('click', handler);
+                                        }
+                                    });
+                                }
+
+                                function updateLeadStatus(leadId, status) {
+                                    fetch(`/admin/leads/${leadId}/status`, {
+                                        method: 'PATCH',
+                                        headers: {
+                                            'Content-Type': 'application/json',
+                                            'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').content
+                                        },
+                                        body: JSON.stringify({ status })
+                                    })
+                                    .then(r => r.json())
+                                    .then(data => {
+                                        if (data.success) {
+                                            location.reload();
+                                        } else {
+                                            alert('Error al actualizar el estado');
+                                        }
+                                    });
+                                }
+                                </script>
+                                @endpush
                                 <form action="{{ route('admin.leads.destroy', $lead) }}" method="POST" class="inline">
                                     @csrf
                                     @method('DELETE')

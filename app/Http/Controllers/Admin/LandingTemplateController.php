@@ -11,6 +11,43 @@ use Illuminate\Http\Request;
 class LandingTemplateController extends Controller
 {
     /**
+     * Actualizar hero (título e imagen)
+     */
+    public function updateHero(Request $request, $tenantId)
+    {
+        $user = Auth::user();
+        $tenant = Tenant::where('id', $tenantId)->first();
+        if (!$tenant) {
+            return redirect()->back()->with('error', 'No tienes un tenant asociado');
+        }
+        $settings = TenantSetting::where('tenant_id', $tenant->id)->first();
+        if (!$settings) {
+            $settings = TenantSetting::create(['tenant_id' => $tenant->id]);
+        }
+        $validated = $request->validate([
+            'hero_title' => 'nullable|string|max:120',
+            'hero_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120',
+            'home_title' => 'nullable|string|max:120',
+            'banner_url' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120',
+        ]);
+        if ($request->hasFile('hero_image')) {
+            $path = $request->file('hero_image')->store('landing-images', 'public');
+            $settings->hero_image = asset('storage/' . $path);
+        }
+        if ($request->hasFile('banner_url')) {
+            $path = $request->file('banner_url')->store('landing-images', 'public');
+            $settings->banner_url = asset('storage/' . $path);
+        }
+        if (isset($validated['hero_title'])) {
+            $settings->hero_title = $validated['hero_title'];
+        }
+        if (isset($validated['home_title'])) {
+            $settings->home_title = $validated['home_title'];
+        }
+        $settings->save();
+        return redirect()->back()->with('success', 'Hero actualizado correctamente');
+    }
+    /**
      * Mostrar selector de plantillas
      */
     public function select()

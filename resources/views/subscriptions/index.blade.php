@@ -13,33 +13,109 @@
 
         <!-- Current Plan Info -->
         @php
-            $currentPlan = auth()->user()->tenant->getPlanInfo();
+            $subscription = null;
+            $currentPlanName = 'SIN PLAN CONTRATADO';
+            $currentPlan = ['plan' => ''];
+            $allSubscriptions = collect();
+            $allInvoices = collect();
+            if(auth()->user()->email === 'superadmin@autos.com') {
+                // Superadmin: ver todas las suscripciones y facturas
+                $allSubscriptions = App\Models\Subscription::with('tenant')->orderByDesc('created_at')->get();
+                $allInvoices = App\Models\Invoice::with(['tenant', 'subscription'])->orderByDesc('created_at')->get();
+            } else {
+                // Usar suscripción activa (tenant_id correcto)
+                $subs = App\Models\Subscription::where('tenant_id', auth()->user()->tenant_id)
+                    ->where('status', 'active')
+                    ->orderByDesc('created_at')
+                    ->first();
+                if($subs) {
+                    $planes = App\Models\Plan::all();
+                    $plan = $planes->first(function($p) use ($subs) {
+                        return $p->slug === $subs->plan || $p->id == $subs->plan || $p->nombre === $subs->plan;
+                    });
+                    $currentPlanName = $plan ? $plan->nombre : $subs->plan;
+                    $currentPlan = ['plan' => $plan ? $plan->slug : $subs->plan];
+                }
+            }
         @endphp
-        <div class="bg-[hsl(var(--card))] border border-[hsl(var(--border))] rounded-lg p-6 mb-12 shadow-lg">
-            <div class="flex items-center justify-between">
-                <div>
-                    <h3 class="text-lg font-semibold text-[hsl(var(--foreground))]">Plan Actual</h3>
-                    <p class="text-2xl font-bold text-[hsl(var(--primary))] mt-2">{{ $currentPlan['name'] }}</p>
-                    @if($currentPlan['is_trial'])
-                        <p class="text-sm text-yellow-500 mt-2">
-                            📅 Prueba Gratuita: <strong>{{ $currentPlan['days_remaining'] }} días restantes</strong>
-                        </p>
-                    @endif
-                </div>
-                <div class="text-right">
-                    @if($currentPlan['plan'] === 'free')
-                        <a href="#plans" class="px-6 py-2 bg-[hsl(var(--primary))] hover:opacity-90 text-white rounded-lg font-semibold">
-                            Actualizar Plan
-                        </a>
-                    @else
-                        <a href="{{ route('subscriptions.billing') }}" class="px-6 py-2 bg-[hsl(var(--secondary))] hover:opacity-90 text-[hsl(var(--foreground))] rounded-lg font-semibold">
-                            Gestionar Suscripción
-                        </a>
-                    @endif
-                </div>
+        @if(auth()->user()->email === 'superadmin@autos.com')
+        <div class="mb-12">
+            <h2 class="text-2xl font-bold mb-4">Todas las Suscripciones</h2>
+            <div class="overflow-x-auto">
+                <table class="min-w-full bg-white text-gray-900 rounded shadow text-xs">
+                    <thead>
+                        <tr>
+                            <th class="px-2 py-1">ID</th>
+                            <th class="px-2 py-1">Tenant</th>
+                            <th class="px-2 py-1">Plan</th>
+                            <th class="px-2 py-1">Estado</th>
+                            <th class="px-2 py-1">Inicio</th>
+                            <th class="px-2 py-1">Fin</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($allSubscriptions as $sub)
+                        <tr>
+                            <td class="border px-2 py-1">{{ $sub->id }}</td>
+                            <td class="border px-2 py-1">{{ $sub->tenant->name ?? '-' }}</td>
+                            <td class="border px-2 py-1">{{ $sub->plan }}</td>
+                            <td class="border px-2 py-1">{{ $sub->status }}</td>
+                            <td class="border px-2 py-1">{{ $sub->current_period_start ? $sub->current_period_start->format('Y-m-d') : '-' }}</td>
+                            <td class="border px-2 py-1">{{ $sub->current_period_end ? $sub->current_period_end->format('Y-m-d') : '-' }}</td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
             </div>
         </div>
-
+        <div class="mb-12">
+            <h2 class="text-2xl font-bold mb-4">Todas las Facturas</h2>
+            <div class="overflow-x-auto">
+                <table class="min-w-full bg-white text-gray-900 rounded shadow text-xs">
+                    <thead>
+                        <tr>
+                            <th class="px-2 py-1">ID</th>
+                            <th class="px-2 py-1">Tenant</th>
+                            <th class="px-2 py-1">Suscripción</th>
+                            <th class="px-2 py-1">Total</th>
+                            <th class="px-2 py-1">Estado</th>
+                            <th class="px-2 py-1">Pagada</th>
+                            <th class="px-2 py-1">Vencimiento</th>
+                            <th class="px-2 py-1">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($allInvoices as $inv)
+                        <tr>
+                            <td class="border px-2 py-1">{{ $inv->id }}</td>
+                            <td class="border px-2 py-1">{{ $inv->tenant->name ?? '-' }}</td>
+                            <td class="border px-2 py-1">{{ $inv->subscription_id }}</td>
+                            <td class="border px-2 py-1">${{ number_format($inv->total, 2) }}</td>
+                            <td class="border px-2 py-1">{{ $inv->status }}</td>
+                            <td class="border px-2 py-1">{{ $inv->paid_at ? $inv->paid_at->format('Y-m-d') : '-' }}</td>
+                            <td class="border px-2 py-1">{{ $inv->due_date ? $inv->due_date->format('Y-m-d') : '-' }}</td>
+                            <td class="border px-2 py-1 text-center">
+                                <a href="{{ route('invoices.download', $inv->id) }}" class="text-xs text-blue-600 hover:underline" target="_blank">PDF</a>
+                            </td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        @endif
+        {{-- Mostrar bloque de Plan Actual con botón Gestionar Suscripción --}}
+        @if(auth()->user()->email !== 'superadmin@autos.com')
+            <div class="mb-10">
+                <div class="flex flex-col md:flex-row items-center justify-between bg-[#181f2a] border border-[#2c374a] rounded-xl px-8 py-6 mb-6">
+                    <div>
+                        <div class="text-lg text-white font-semibold mb-1">Plan Actual</div>
+                        <div class="text-3xl font-extrabold text-[#3fffc2]">{{ $currentPlanName }}</div>
+                    </div>
+                    <a href="{{ route('subscriptions.billing') }}" class="mt-4 md:mt-0 px-8 py-3 bg-[#3fffc2] hover:bg-[#2be6a7] text-[#23272f] font-semibold rounded-lg text-lg transition">Gestionar Suscripción</a>
+                </div>
+            </div>
+        @endif
         <!-- Plans Comparison -->
         <div id="plans" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
             <!-- Free Plan -->
@@ -85,10 +161,18 @@
                 </ul>
 
                 <div class="mt-auto">
-                    @if($currentPlan['plan'] === 'basico')
+                    @if(($currentPlan['plan'] ?? null) === 'basico')
                         <button disabled class="w-full py-2 bg-gray-400 text-white rounded-lg font-semibold cursor-not-allowed">
                             PLAN ACTUAL
                         </button>
+                    @else
+                        <form action="{{ route('subscriptions.checkout') }}" method="POST">
+                            @csrf
+                            <input type="hidden" name="plan" value="basico">
+                            <button type="submit" class="w-full py-2 bg-[#009ee3] hover:opacity-90 text-white rounded-lg font-semibold transition border-2 border-[#009ee3] shadow-lg">
+                                Pagar con Mercado Pago
+                            </button>
+                        </form>
                     @endif
                 </div>
             </div>
@@ -150,7 +234,7 @@
                 </ul>
 
                 <div class="mt-auto">
-                    @if($currentPlan['plan'] === 'profesional')
+                    @if(($currentPlan['plan'] ?? null) === 'profesional')
                         <button disabled class="w-full py-2 bg-gray-400 text-white rounded-lg font-semibold cursor-not-allowed">
                             PLAN ACTUAL
                         </button>
@@ -220,7 +304,7 @@
                 </ul>
 
                 <div class="mt-auto">
-                    @if($currentPlan['plan'] === 'premium')
+                    @if(($currentPlan['plan'] ?? null) === 'premium')
                         <button disabled class="w-full py-2 bg-gray-400 text-white rounded-lg font-semibold cursor-not-allowed">
                             PLAN ACTUAL
                         </button>
@@ -297,7 +381,7 @@
                 </ul>
 
                 <div class="mt-auto">
-                    @if($currentPlan['plan'] === 'premium_plus')
+                    @if(($currentPlan['plan'] ?? null) === 'premium_plus')
                         <button disabled class="w-full py-2 bg-gray-400 text-white rounded-lg font-semibold cursor-not-allowed">
                             PLAN ACTUAL
                         </button>

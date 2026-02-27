@@ -135,26 +135,45 @@
                 </div>
 
                 <!-- Acciones -->
-                <div class="flex gap-2 pt-2 border-t border-[hsl(var(--border))]">
-                    <a href="{{ route('admin.vehicles.edit', $vehicle) }}" 
-                       class="flex-1 h-8 px-2 bg-blue-500/20 hover:bg-blue-500/30 text-blue-500 rounded-md text-xs font-medium transition-colors flex items-center justify-center gap-1">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
-                        </svg>
-                        Editar
-                    </a>
-                    <form action="{{ route('admin.vehicles.destroy', $vehicle) }}" method="POST" class="flex-1"
-                          onsubmit="return confirm('¿Estás seguro de eliminar este vehículo?');">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" 
-                                class="w-full h-8 px-2 bg-red-500/20 hover:bg-red-500/30 text-red-500 rounded-md text-xs font-medium transition-colors flex items-center justify-center gap-1">
+                <div class="pt-2 border-t border-[hsl(var(--border))]">
+                    <div class="flex gap-2 w-full mb-2">
+                        <a href="{{ route('admin.vehicles.edit', $vehicle) }}" 
+                           class="flex-1 h-8 px-2 bg-blue-500/20 hover:bg-blue-500/30 text-blue-500 rounded-md text-xs font-medium transition-colors flex items-center justify-center gap-1">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
                             </svg>
-                            Eliminar
+                            Editar
+                        </a>
+                        <form action="{{ route('admin.vehicles.destroy', $vehicle) }}" method="POST" class="flex-1"
+                              onsubmit="return confirm('¿Estás seguro de eliminar este vehículo?');">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" 
+                                    class="w-full h-8 px-2 bg-red-500/20 hover:bg-red-500/30 text-red-500 rounded-md text-xs font-medium transition-colors flex items-center justify-center gap-1">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                                </svg>
+                                Eliminar
+                            </button>
+                        </form>
+                    </div>
+                    @if($vehicle->status === 'sold')
+                        <button type="button" class="w-full h-9 mt-2 px-2 bg-gray-400 text-white rounded-md text-xs font-medium flex items-center justify-center gap-2 cursor-not-allowed opacity-60" disabled>
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            </svg>
+                            Marcar como vendido
                         </button>
-                    </form>
+                    @else
+                        <button type="button"
+                            class="w-full h-9 mt-2 px-2 bg-green-600 hover:bg-green-700 text-white rounded-md text-xs font-medium transition-colors flex items-center justify-center gap-2"
+                            data-mark-sold-btn data-vehicle-id="{{ $vehicle->id }}">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            </svg>
+                            Marcar como vendido
+                        </button>
+                    @endif
                 </div>
             </div>
         </div>
@@ -183,3 +202,61 @@
     @endif
 </div>
 @endsection
+
+
+<!-- Modal HTML puro -->
+<div id="soldPriceModal" style="display:none; position:fixed; z-index:9999; left:0; top:0; width:100vw; height:100vh; background:rgba(0,0,0,0.6); align-items:center; justify-content:center;">
+    <div style="background:#000427; border-radius:10px; box-shadow:0 8px 32px #0003; padding:2rem; max-width:350px; width:90vw; margin:auto;">
+        <h2 style="font-size:1.3rem; font-weight:bold; margin-bottom:1rem; color:#ffffff;">Registrar valor de venta</h2>
+        <form id="soldPriceForm">
+            <label style="font-size:0.95rem; font-weight:500; color:#ffffff; margin-bottom:0.5rem; display:block;">¿A qué valor se vendió el vehículo?</label>
+            <input type="text" min="0" step="1000" id="soldPriceInput" required style="width:100%; height:2.5rem; padding:0 1rem; border:1px solid #ccc; border-radius:6px; margin-bottom:1rem; font-size:1rem;" oninput="this.value = this.value.replace(/\D/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, '.');">
+            <div style="display:flex; justify-content:flex-end; gap:0.5rem;">
+                <button type="button" id="cancelSoldPriceBtn" style="padding:0.5rem 1.2rem; border-radius:5px; background:#eee; color:#333; border:none;">Cancelar</button>
+                <button type="submit" style="padding:0.5rem 1.2rem; border-radius:5px; background:rgb(22 163 74 / var(--tw-bg-opacity, 1)); color:white; border:none;">Guardar</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    let currentVehicleId = null;
+    document.querySelectorAll('[data-mark-sold-btn]').forEach(btn => {
+        btn.addEventListener('click', function() {
+            currentVehicleId = this.getAttribute('data-vehicle-id');
+            document.getElementById('soldPriceModal').style.display = 'flex';
+            document.getElementById('soldPriceInput').value = '';
+            document.getElementById('soldPriceInput').focus();
+        });
+    });
+    document.getElementById('cancelSoldPriceBtn').onclick = function() {
+        document.getElementById('soldPriceModal').style.display = 'none';
+    };
+    document.getElementById('soldPriceForm').onsubmit = async function(e) {
+        e.preventDefault();
+        const soldPrice = document.getElementById('soldPriceInput').value;
+        if (!soldPrice || !currentVehicleId) return;
+        try {
+            const resp = await fetch(`/admin/vehicles/${currentVehicleId}/mark-as-sold`, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').getAttribute('content'),
+                    'Accept': 'application/json',
+                },
+                body: JSON.stringify({ sold_price: soldPrice })
+            });
+            if (resp.ok) {
+                window.location.reload();
+            } else {
+                const data = await resp.json();
+                alert(data.message || 'Error al guardar el precio de venta.');
+            }
+        } catch (err) {
+            alert('Error de red o servidor.');
+        }
+        document.getElementById('soldPriceModal').style.display = 'none';
+    };
+});
+</script>

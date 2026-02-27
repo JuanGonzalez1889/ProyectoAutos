@@ -1,4 +1,3 @@
-
 <?php
 // Impersonate manual (solo para admin)
 Route::middleware(['auth', 'role:ADMIN'])->group(function () {
@@ -175,22 +174,17 @@ Route::get('/subscriptions/failure', [SubscriptionController::class, 'failure'])
             ->name('agencia.advanced-settings.update');
         
         // Gestión de usuarios - Solo para usuarios con permisos o admin impersonando
-        Route::middleware('impersonate_admin:users.view')->group(function () {
+        Route::middleware('check_permission:usuarios')->group(function () {
             Route::resource('users', UserController::class);
             Route::patch('users/{user}/toggle-status', [UserController::class, 'toggleStatus'])
-                ->name('users.toggle-status')
-                ->middleware('permission:users.edit');
-            
+                ->name('users.toggle-status');
             // User Permissions Management
             Route::get('users/{user}/permissions', [UserPermissionController::class, 'edit'])
-                ->name('users.permissions.edit')
-                ->middleware('permission:users.change_permissions');
+                ->name('users.permissions.edit');
             Route::patch('users/{user}/permissions', [UserPermissionController::class, 'update'])
-                ->name('users.permissions.update')
-                ->middleware('permission:users.change_permissions');
+                ->name('users.permissions.update');
             Route::get('users/{user}/activity', [UserPermissionController::class, 'activityLog'])
-                ->name('users.activity')
-                ->middleware('permission:audit.view_logs');
+                ->name('users.activity');
         });
 
         // Gestión de Invitaciones - Solo para usuarios con permisos
@@ -211,12 +205,14 @@ Route::get('/subscriptions/failure', [SubscriptionController::class, 'failure'])
         
         // Gestión de vehículos - Todos los usuarios autenticados
         Route::resource('vehicles', VehicleController::class);
+        // Endpoint AJAX para marcar como vendido
+        Route::patch('vehicles/{vehicle}/mark-as-sold', [VehicleController::class, 'markAsSold'])->name('vehicles.markAsSold');
         
         // Gestión de tareas - Todos los usuarios autenticados
-        Route::get('/tasks', [\App\Http\Controllers\TaskController::class, 'index'])->name('tasks.index');
+        Route::get('/tasks', [\App\Http\Controllers\TaskController::class, 'list'])->name('tasks.list');
         Route::post('/tasks', [\App\Http\Controllers\TaskController::class, 'store'])->name('tasks.store');
         Route::patch('/tasks/{task}', [\App\Http\Controllers\TaskController::class, 'update'])->name('tasks.update');
-        Route::patch('/tasks/{task}/status', [\App\Http\Controllers\TaskController::class, 'updateStatus'])->name('tasks.updateStatus');
+        Route::patch('/tasks/{event}/status', [\App\Http\Controllers\TaskController::class, 'updateEventStatus'])->name('tasks.updateEventStatus');
         Route::delete('/tasks/{task}', [\App\Http\Controllers\TaskController::class, 'destroy'])->name('tasks.destroy');
         
         // Gestión de eventos/calendario - Todos los usuarios autenticados
@@ -230,12 +226,12 @@ Route::get('/subscriptions/failure', [SubscriptionController::class, 'failure'])
         
         // Gestión de leads - Todos los usuarios autenticados
         Route::get('/leads', [LeadController::class, 'index'])->name('leads.index');
-        Route::get('/leads/create', [LeadController::class, 'create'])->name('leads.create');
-        Route::post('/leads', [LeadController::class, 'store'])->name('leads.store');
-        Route::get('/leads/{lead}/edit', [LeadController::class, 'edit'])->name('leads.edit');
-        Route::patch('/leads/{lead}', [LeadController::class, 'update'])->name('leads.update');
-        Route::patch('/leads/{lead}/status', [LeadController::class, 'updateStatus'])->name('leads.updateStatus');
-        Route::delete('/leads/{lead}', [LeadController::class, 'destroy'])->name('leads.destroy');
+        Route::get('/leads/create', [LeadController::class, 'create'])->middleware('role:ADMIN|AGENCIERO|COLABORADOR')->name('leads.create');
+        Route::post('/leads', [LeadController::class, 'store'])->middleware('role:ADMIN|AGENCIERO|COLABORADOR')->name('leads.store');
+        Route::get('/leads/{lead}/edit', [LeadController::class, 'edit'])->middleware('role:ADMIN|AGENCIERO|COLABORADOR')->name('leads.edit');
+        Route::patch('/leads/{lead}', [LeadController::class, 'update'])->middleware('role:ADMIN|AGENCIERO|COLABORADOR')->name('leads.update');
+        Route::patch('/leads/{lead}/status', [LeadController::class, 'updateStatus'])->middleware('role:ADMIN|AGENCIERO|COLABORADOR')->name('leads.updateStatus');
+        Route::delete('/leads/{lead}', [LeadController::class, 'destroy'])->middleware('role:ADMIN|AGENCIERO|COLABORADOR')->name('leads.destroy');
 
         // Analytics Dashboard
         Route::get('/analytics', [\App\Http\Controllers\Admin\AnalyticsController::class, 'index'])->name('analytics.index');
@@ -256,7 +252,12 @@ Route::get('/subscriptions/failure', [SubscriptionController::class, 'failure'])
         Route::get('/landing-templates', [LandingTemplateController::class, 'select'])->name('landing-template.select');
         Route::post('/landing-templates', [LandingTemplateController::class, 'store'])->name('landing-template.store');
         Route::get('/landing-templates/{template}/edit', [LandingTemplateController::class, 'edit'])->name('landing-template.edit');
+        Route::post('/admin/template/hero/{tenant}', [LandingTemplateController::class, 'updateHero'])->name('admin.template.hero.update');
         
+        // Configuración de visibilidad de planes y roles
+        Route::get('/planes/configuracion', [\App\Http\Controllers\Admin\PlanRolPermisoController::class, 'index'])->name('planes.configuracion');
+        Route::post('/planes/configuracion', [\App\Http\Controllers\Admin\PlanRolPermisoController::class, 'store'])->name('planes.configuracion.store');
+
         // Gestión de Tenants (Solo ADMIN) - Multi-Tenancy
         Route::middleware('role:ADMIN')->group(function () {
             Route::get('/tenants', [TenantController::class, 'index'])->name('tenants.index');

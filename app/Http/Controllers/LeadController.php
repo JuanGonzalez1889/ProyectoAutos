@@ -21,7 +21,7 @@ class LeadController extends Controller
         }
         
         $leads = $query->latest()->paginate(20);
-        
+
         $stats = [
             'total' => $query->count(),
             'new' => (clone $query)->new()->count(),
@@ -29,8 +29,16 @@ class LeadController extends Controller
             'won' => (clone $query)->won()->count(),
             'lost' => (clone $query)->lost()->count(),
         ];
-        
-        return view('leads.index', compact('leads', 'stats'));
+
+        // Leads con seguimiento pendiente (hoy o anterior, no ganados/perdidos)
+        $pendingFollowUps = (clone $query)
+            ->whereNotIn('status', ['won', 'lost'])
+            ->whereNotNull('next_follow_up')
+            ->whereDate('next_follow_up', '<=', now()->addDays(5)->toDateString())
+            ->orderBy('next_follow_up')
+            ->get();
+
+        return view('leads.index', compact('leads', 'stats', 'pendingFollowUps'));
     }
 
     public function create()

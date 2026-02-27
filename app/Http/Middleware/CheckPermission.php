@@ -20,8 +20,11 @@ class CheckPermission
             return redirect('login');
         }
 
-        // Check if user has the required permission
-        if (!auth()->user()->hasPermissionTo($permission)) {
+        // Usar la lógica de canSeeMenu para permisos de menú
+        if (!function_exists('canSeeMenu')) {
+            require_once base_path('app/Helpers/plan_menu.php');
+        }
+        if (!canSeeMenu($permission)) {
             // Log failed permission attempt
             $tenantId = auth()->user()?->tenant_id ?? session('impersonate_original_tenant_id') ?? null;
             ActivityLog::logActivity([

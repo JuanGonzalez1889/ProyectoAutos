@@ -12,6 +12,7 @@ use App\Models\Invoice;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Carbon\Carbon;
 
 class DashboardController extends Controller
 {
@@ -35,9 +36,10 @@ class DashboardController extends Controller
                 ->filter(fn($inv) => $inv->status === 'paid' && $inv->created_at->diffInDays(now()) <= 30)
                 ->sum('total');
 
-            $salesPerformance = $invoices
-                ->filter(fn($inv) => $inv->created_at->diffInMonths(now()) < 6 && $inv->status === 'paid')
-                ->sum('total');
+            // Rendimiento de ventas (últimos 6 meses)
+            $salesPerformance = $vehicles
+                ->filter(fn($veh) => $veh->status === 'sold' && $veh->sold_price && $veh->updated_at->diffInMonths(now()) < 6)
+                ->sum('sold_price');
 
             // Unidades vendidas: vehículos con status 'sold'
             $unitsSold = $vehicles->where('status', 'sold')->count();
@@ -124,17 +126,21 @@ class DashboardController extends Controller
             $leads = Lead::where('agencia_id', $agencia->id)->get();
             $events = Event::where('agencia_id', $agencia->id)->get();
             
-            // Ingresos mensuales (últimos 30 días)
-            $monthlyRevenue = $invoices
-                ->filter(fn($inv) => $inv->status === 'paid' && $inv->created_at->diffInDays(now()) <= 30)
-                ->sum('total');
+            // Obtener mes seleccionado o actual
+            $selectedMonth = request('month', now()->format('Y-m'));
+            $monthStart = \Carbon\Carbon::createFromFormat('Y-m', $selectedMonth)->startOfMonth();
+            $monthEnd = (clone $monthStart)->endOfMonth();
+
+            // Ingresos mensuales: suma de sold_price de vehículos vendidos en ese mes
+            $monthlyRevenue = $vehicles
+                ->filter(fn($veh) => $veh->status === 'sold' && $veh->sold_price && $veh->updated_at->between($monthStart, $monthEnd))
+                ->sum('sold_price');
 
             // Rendimiento de ventas (últimos 6 meses)
-            // Rendimiento de ventas: suma de precios de vehículos vendidos en los últimos 6 meses
             $salesPerformance = $vehicles
-                ->filter(fn($veh) => $veh->status === 'sold' && $veh->updated_at->diffInMonths(now()) < 6)
-                ->sum('price');
-            
+                ->filter(fn($veh) => $veh->status === 'sold' && $veh->sold_price && $veh->updated_at->diffInMonths(now()) < 6)
+                ->sum('sold_price');
+
             // Unidades vendidas: vehículos con status 'sold'
             $unitsSold = $vehicles->where('status', 'sold')->count();
             
@@ -146,6 +152,10 @@ class DashboardController extends Controller
             
             // Leads activos
             $activeLeads = $leads->where('status', 'active')->count();
+            // Leads con seguimiento pendiente próximos 5 días
+            $pendingLeads = $leads->filter(function($lead) {
+                return !in_array($lead->status, ['won','lost']) && $lead->next_follow_up && $lead->next_follow_up->isBetween(now()->startOfDay(), now()->addDays(5)->endOfDay());
+            });
             
             // Vehículos más consultados
             $topVehicles = $vehicles->sortByDesc('views')->take(3);
@@ -173,6 +183,7 @@ class DashboardController extends Controller
                 'units_sold' => $unitsSold,
                 'active_inventory' => $activeInventory,
                 'pending_events' => $pendingEvents,
+                'pending_leads' => $pendingLeads->count(),
                 'active_leads' => $activeLeads,
                 'total_vehicles' => $vehicles->count(),
                 'total_invoices' => $invoices->count(),
@@ -208,6 +219,11 @@ class DashboardController extends Controller
             $vehiclesAssigned = Vehicle::where('agencia_id', $user->agencia_id)
                 ->get();
             
+            // Ingresos mensuales (últimos 30 días): suma de sold_price de vehículos vendidos en ese período
+            $monthlyRevenue = $vehiclesAssigned
+                ->filter(fn($veh) => $veh->status === 'sold' && $veh->sold_price && $veh->updated_at->diffInDays(now()) <= 30)
+                ->sum('sold_price');
+
             $stats = [
                 'pending_tasks' => $pendingTasks->count(),
                 'high_priority_tasks' => $highPriorityTasks->count(),
@@ -222,6 +238,7 @@ class DashboardController extends Controller
                     ->take(3)
                     ->get(),
                 'recent_vehicles' => $vehiclesAssigned->take(5),
+                'monthly_revenue' => $monthlyRevenue,
             ];
             
             return view('colaborador.dashboard', compact('stats'));

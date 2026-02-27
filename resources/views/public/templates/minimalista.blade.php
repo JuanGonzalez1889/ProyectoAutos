@@ -87,14 +87,29 @@
                 </div>
             </div>
             <div class="flex items-center gap-6">
+                <!-- Menú Desktop -->
                 <div class="hidden md:flex gap-6">
                     <a href="#inicio" class="text-sm" style="color: {{ $settings->navbar_links_color ?? 'var(--navbar-text-color, #fff)' }}">Inicio</a>
                     <a href="{{ route('public.vehiculos') }}" class="text-sm" style="color: {{ $settings->navbar_links_color ?? 'var(--navbar-text-color, #fff)' }}">Vehículos</a>
                     <a href="#nosotros" class="text-sm" style="color: {{ $settings->navbar_links_color ?? 'var(--navbar-text-color, #fff)' }}">Nosotros</a>
                     <a href="#contacto" class="text-sm" style="color: {{ $settings->navbar_links_color ?? 'var(--navbar-text-color, #fff)' }}">Contacto</a>
                 </div>
-              
+                <!-- Botón Hamburguesa Mobile -->
+                <button id="menu-toggle" class="md:hidden flex flex-col justify-center items-center w-10 h-10 focus:outline-none" aria-label="Abrir menú">
+                    <span class="block w-6 h-0.5 bg-white mb-1 transition-all"></span>
+                    <span class="block w-6 h-0.5 bg-white mb-1 transition-all"></span>
+                    <span class="block w-6 h-0.5 bg-white transition-all"></span>
+                </button>
             </div>
+        </div>
+        <!-- Menú Mobile -->
+        <div id="mobile-menu" class="md:hidden fixed inset-0 bg-gray-900 bg-opacity-95 z-50 flex flex-col items-center justify-center space-y-8 text-lg font-semibold transition-all duration-300 opacity-0 pointer-events-none">
+            <button id="menu-close" class="absolute top-6 right-6 text-white text-3xl focus:outline-none" aria-label="Cerrar menú">&times;</button>
+            <a href="#inicio" class="navbar-link-auto" style="color: {{ $settings->navbar_links_color ?? 'var(--navbar-text-color, #fff)' }}">Inicio</a>
+            <a href="{{ route('public.vehiculos') }}" class="navbar-link-auto" style="color: {{ $settings->navbar_links_color ?? 'var(--navbar-text-color, #fff)' }}">Vehículos</a>
+            <a href="#nosotros" class="navbar-link-auto" style="color: {{ $settings->navbar_links_color ?? 'var(--navbar-text-color, #fff)' }}">Nosotros</a>
+            <a href="#contacto" class="navbar-link-auto" style="color: {{ $settings->navbar_links_color ?? 'var(--navbar-text-color, #fff)' }}">Contacto</a>
+        </div>
         </div>
     </nav>
 
@@ -304,6 +319,36 @@
     </footer>
 
     <script>
+        // Menú hamburguesa responsive
+        document.addEventListener('DOMContentLoaded', function() {
+            var menuToggle = document.getElementById('menu-toggle');
+            var mobileMenu = document.getElementById('mobile-menu');
+            var menuClose = document.getElementById('menu-close');
+            function openMenu() {
+                mobileMenu.classList.remove('opacity-0', 'pointer-events-none');
+                mobileMenu.classList.add('opacity-100');
+                document.body.style.overflow = 'hidden';
+            }
+            function closeMenu() {
+                mobileMenu.classList.add('opacity-0', 'pointer-events-none');
+                mobileMenu.classList.remove('opacity-100');
+                document.body.style.overflow = '';
+            }
+            if(menuToggle && mobileMenu) {
+                menuToggle.addEventListener('click', openMenu);
+            }
+            if(menuClose && mobileMenu) {
+                menuClose.addEventListener('click', closeMenu);
+            }
+            // Cerrar menú al hacer click fuera
+            mobileMenu && mobileMenu.addEventListener('click', function(e) {
+                if(e.target === mobileMenu) closeMenu();
+            });
+            // Cerrar menú con ESC
+            document.addEventListener('keydown', function(e) {
+                if(e.key === 'Escape') closeMenu();
+            });
+        });
         function openForm(vehicleId, title) {
             document.getElementById('vehicle_id').value = vehicleId;
             document.querySelector('textarea[name="message"]').value = `Consulta: ${title}`;

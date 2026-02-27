@@ -27,18 +27,23 @@ class SubscriptionController extends Controller
     public function index()
     {
         $user = Auth::user();
+        if ($user->isAdmin()) {
+            $tenants = Tenant::with('subscription')->get();
+            return view('subscriptions.index', [
+                'tenants' => $tenants,
+                'adminView' => true
+            ]);
+        }
         if (!$user || !isset($user->tenant_id)) {
-            // Manejo de error: usuario no autenticado o sin tenant_id
             return response()->json(['error' => 'Usuario no autenticado o sin tenant_id'], 401);
         }
         $tenant = Tenant::find($user->tenant_id);
-
         $currentSubscription = $tenant?->activeSubscription();
-
         return view('subscriptions.index', [
             'tenant' => $tenant,
             'currentSubscription' => $currentSubscription,
-            'currentPlan' => $tenant?->getPlanInfo() ?? ['plan' => 'free', 'name' => 'Gratuito']
+            'currentPlan' => $tenant?->getPlanInfo() ?? ['plan' => 'free', 'name' => 'Gratuito'],
+            'adminView' => false
         ]);
     }
 

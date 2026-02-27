@@ -21,9 +21,7 @@ class AgenciaController extends Controller
         /** @var \App\Models\User $user */
         $user = Auth::user();
 
-        if (!$user->isAgenciero()) {
-            abort(403, 'Solo los agencieros pueden acceder a esta sección');
-        }
+        // El acceso depende solo de canSeeMenu('mi agencia') en el menú, no por rol.
 
         $agencia = $user->agencia;
 

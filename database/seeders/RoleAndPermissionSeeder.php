@@ -46,17 +46,17 @@ class RoleAndPermissionSeeder extends Seeder
         ];
 
         foreach ($permissions as $permission) {
-            Permission::create(['name' => $permission, 'guard_name' => 'web']);
+            Permission::findOrCreate($permission, 'web');
         }
 
         // Crear roles y asignar permisos
 
         // Rol ADMIN - Tiene todos los permisos
-        $adminRole = Role::create(['name' => 'ADMIN', 'guard_name' => 'web']);
+        $adminRole = Role::findOrCreate('ADMIN', 'web');
         $adminRole->givePermissionTo(Permission::all());
 
         // Rol AGENCIERO - Puede gestionar colaboradores
-        $agencieroRole = Role::create(['name' => 'AGENCIERO', 'guard_name' => 'web']);
+        $agencieroRole = Role::findOrCreate('AGENCIERO', 'web');
         $agencieroRole->givePermissionTo([
             'dashboard.access',
             'dashboard.stats',
@@ -67,7 +67,7 @@ class RoleAndPermissionSeeder extends Seeder
         ]);
 
         // Rol COLABORADOR - Permisos limitados
-        $colaboradorRole = Role::create(['name' => 'COLABORADOR', 'guard_name' => 'web']);
+        $colaboradorRole = Role::findOrCreate('COLABORADOR', 'web');
         $colaboradorRole->givePermissionTo([
             'dashboard.access',
         ]);

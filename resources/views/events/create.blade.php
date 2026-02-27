@@ -9,6 +9,9 @@
     <div class="bg-[hsl(var(--card))] border border-[hsl(var(--border))] rounded-lg p-6">
         <form action="{{ route('admin.events.store') }}" method="POST" class="space-y-6">
             @csrf
+            @if(isset($return))
+                <input type="hidden" name="return" value="{{ $return }}">
+            @endif
 
             <!-- Título -->
             <div>
@@ -77,19 +80,7 @@
                     @enderror
                 </div>
 
-                <div>
-                    <label for="end_time" class="block text-sm font-medium text-[hsl(var(--foreground))] mb-2">
-                        Fecha y Hora de Fin
-                    </label>
-                    <input type="datetime-local" 
-                           id="end_time" 
-                           name="end_time" 
-                           value="{{ old('end_time') }}"
-                           class="w-full px-4 py-2 bg-[hsl(var(--secondary))] border border-[hsl(var(--border))] rounded-lg text-[hsl(var(--foreground))] focus:outline-none focus:border-[hsl(var(--primary))] @error('end_time') border-red-500 @enderror">
-                    @error('end_time')
-                        <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
-                    @enderror
-                </div>
+                <!-- Eliminado campo Fecha y Hora Fin -->
             </div>
 
             <!-- Ubicación -->

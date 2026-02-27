@@ -151,11 +151,11 @@
                         <label class="block text-sm font-medium mb-2">Tipo</label>
                         <select name="type" required
                                 class="w-full h-10 px-3 bg-[hsl(var(--background))] border border-[hsl(var(--border))] rounded-lg text-sm focus:outline-none focus:border-[hsl(var(--primary))]">
-                            <option value="meeting">Reunión</option>
-                            <option value="delivery">Entrega de Unidad</option>
-                            <option value="test_drive">Prueba de Manejo</option>
-                            <option value="service">Servicio</option>
-                            <option value="other">Otro</option>
+                            <option value="Reunión">Reunión</option>
+                            <option value="Entrega de Unidad">Entrega de Unidad</option>
+                            <option value="Prueba de Manejo">Prueba de Manejo</option>
+                            <option value="Servicio">Servicio</option>
+                            <option value="Otro">Otro</option>
                         </select>
                     </div>
 
@@ -173,11 +173,7 @@
                                class="w-full h-10 px-3 bg-[hsl(var(--background))] border border-[hsl(var(--border))] rounded-lg text-sm focus:outline-none focus:border-[hsl(var(--primary))]">
                     </div>
 
-                    <div>
-                        <label class="block text-sm font-medium mb-2">Fecha y Hora Fin</label>
-                        <input type="datetime-local" name="end_time" required
-                               class="w-full h-10 px-3 bg-[hsl(var(--background))] border border-[hsl(var(--border))] rounded-lg text-sm focus:outline-none focus:border-[hsl(var(--primary))]">
-                    </div>
+                    <!-- Eliminado campo Fecha y Hora Fin -->
                 </div>
 
                 <div class="grid grid-cols-2 gap-4">
@@ -218,7 +214,7 @@ const eventsByDate = @json($eventsByDate);
 const events = eventsData.map(event => ({
     ...event,
     start_time: new Date(event.start_time),
-    end_time: new Date(event.end_time)
+    end_time: event.end_time ? new Date(event.end_time) : null
 }));
 
 let currentDate = new Date();
@@ -228,35 +224,35 @@ console.log('Current view:', currentView);
 
 function getTypeColor(type) {
     const colors = {
-        'meeting': { 
+        'Reunión': { 
             bg: 'bg-blue-500/5', 
             border: 'border-blue-500/30', 
             text: 'text-blue-500', 
             badge: 'bg-blue-500/20 text-blue-500',
             solid: 'bg-blue-500 text-white'
         },
-        'delivery': { 
+        'Entrega': { 
             bg: 'bg-green-500/5', 
             border: 'border-green-500/30', 
             text: 'text-green-500', 
             badge: 'bg-green-500/20 text-green-500',
             solid: 'bg-green-500 text-white'
         },
-        'test_drive': { 
+        'Prueba de manejo': { 
             bg: 'bg-orange-500/5', 
             border: 'border-orange-500/30', 
             text: 'text-orange-500', 
             badge: 'bg-orange-500/20 text-orange-500',
             solid: 'bg-orange-500 text-white'
         },
-        'service': { 
+        'Servicio': { 
             bg: 'bg-purple-500/5', 
             border: 'border-purple-500/30', 
             text: 'text-purple-500', 
             badge: 'bg-purple-500/20 text-purple-500',
             solid: 'bg-purple-500 text-white'
         },
-        'other': { 
+        'Otro': { 
             bg: 'bg-gray-500/5', 
             border: 'border-gray-500/30', 
             text: 'text-gray-500', 
@@ -264,16 +260,16 @@ function getTypeColor(type) {
             solid: 'bg-gray-500 text-white'
         }
     };
-    return colors[type] || colors['other'];
+    return colors[type] || colors['Otro'];
 }
 
 function getTypeLabel(type) {
     const labels = {
-        'meeting': 'Reunión',
-        'delivery': 'Entrega',
-        'test_drive': 'Prueba de Manejo',
-        'service': 'Servicio',
-        'other': 'Otro'
+        'Reunión': 'Reunión',
+        'Entrega': 'Entrega',
+        'Prueba de manejo': 'Prueba de Manejo',
+        'Servicio': 'Servicio',
+        'Otro': 'Otro'
     };
     return labels[type] || type;
 }
@@ -435,16 +431,16 @@ function createGridDayCell(dayNum, classes, dayEvents, dateStr, originalDayNum) 
                 `;
                 
                 // Extraer colores sólidos
-                if (event.type === 'meeting') {
+                if (event.type === 'Reunión') {
                     eventTag.style.backgroundColor = '#3b82f6';
                     eventTag.style.color = 'white';
-                } else if (event.type === 'delivery') {
+                } else if (event.type === 'Entrega') {
                     eventTag.style.backgroundColor = '#10b981';
                     eventTag.style.color = 'white';
-                } else if (event.type === 'test_drive') {
+                } else if (event.type === 'Prueba de manejo') {
                     eventTag.style.backgroundColor = '#f97316';
                     eventTag.style.color = 'white';
-                } else if (event.type === 'service') {
+                } else if (event.type === 'Servicio') {
                     eventTag.style.backgroundColor = '#a855f7';
                     eventTag.style.color = 'white';
                 } else {

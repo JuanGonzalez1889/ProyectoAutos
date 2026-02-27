@@ -118,34 +118,19 @@
                                 {{ \Carbon\Carbon::parse($date)->locale('es')->format('l, d \\d\\e F') }}
                             </h4>
                             <div class="space-y-2">
-                                @foreach($events as $event)
+                                @foreach($tasks as $task)
                                     <div class="flex items-start gap-3 p-3 bg-[hsl(var(--secondary))] rounded-lg hover:bg-[hsl(var(--border))] transition-colors">
                                         <div class="flex-1">
-                                            <p class="font-medium text-[hsl(var(--foreground))]">{{ $event->title }}</p>
+                                            <p class="font-medium text-[hsl(var(--foreground))]">{{ $task->title }}</p>
                                             <div class="flex gap-2 mt-1 text-xs text-[hsl(var(--muted-foreground))]">
-                                                <span>🕐 {{ $event->start_time->format('H:i') }}</span>
-                                                @if($event->location)
-                                                    <span>📍 {{ $event->location }}</span>
-                                                @endif
-                                                @if($event->client_name)
-                                                    <span>👤 {{ $event->client_name }}</span>
-                                                @endif
+                                                <span>🕐 {{ $task->due_date ? $task->due_date->format('H:i') : '' }}</span>
                                             </div>
-                                            @if($event->description)
-                                                <p class="text-xs text-[hsl(var(--muted-foreground))] mt-1">{{ $event->description }}</p>
+                                            @if($task->description)
+                                                <p class="text-xs text-[hsl(var(--muted-foreground))] mt-1">{{ $task->description }}</p>
                                             @endif
                                         </div>
                                         <div class="flex gap-2">
-                                            <a href="{{ route('admin.events.edit', $event->id) }}" class="text-[hsl(var(--primary))] hover:underline text-xs">
-                                                Editar
-                                            </a>
-                                            <form action="{{ route('admin.events.destroy', $event->id) }}" method="POST" style="display: inline;">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" onclick="return confirm('¿Eliminar este evento?')" class="text-red-500 hover:underline text-xs">
-                                                    Eliminar
-                                                </button>
-                                            </form>
+                                            <!-- Aquí podrías agregar edición/eliminación de tarea si lo deseas -->
                                         </div>
                                     </div>
                                 @endforeach

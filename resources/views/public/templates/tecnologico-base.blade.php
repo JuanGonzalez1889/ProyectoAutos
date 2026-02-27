@@ -52,7 +52,7 @@
 
     <!-- Navbar -->
     <nav class="sticky top-0 z-50" style="background: rgba(11,17,32,0.85); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255,255,255,0.06);">
-        <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between relative">
             <div class="flex items-center gap-3">
                 @if(isset($editMode) && $editMode)
                     <div class="editable-section inline-block relative">
@@ -80,17 +80,73 @@
                     <span class="text-lg font-bold text-white">{{ $tenant->name }}</span>
                 @endif
             </div>
-            <div class="flex items-center gap-8">
-                <div class="hidden md:flex gap-8">
+            <!-- Botón hamburguesa solo en mobile -->
+            <div class="md:hidden ml-4">
+                <div id="hamburger-btn" class="hamburger" onclick="toggleMenu()">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+            <!-- Menú normal en desktop -->
+            <div class="hidden md:flex items-center gap-8">
+                <a href="#inicio" class="text-sm font-medium transition hover:text-white" style="color: {{ $settings->navbar_links_color ?? 'rgba(255,255,255,0.6)' }}">Inventario</a>
+                <a href="{{ route('public.vehiculos') }}" class="text-sm font-medium transition hover:text-white" style="color: {{ $settings->navbar_links_color ?? 'rgba(255,255,255,0.6)' }}">Vehículos</a>
+                <a href="#nosotros" class="text-sm font-medium transition hover:text-white" style="color: {{ $settings->navbar_links_color ?? 'rgba(255,255,255,0.6)' }}">Nosotros</a>
+                <a href="#contacto" class="text-sm font-medium transition hover:text-white" style="color: {{ $settings->navbar_links_color ?? 'rgba(255,255,255,0.6)' }}">Contacto</a>
+            </div>
+            <!-- Menú hamburguesa en mobile -->
+            <div id="mobile-menu" class="mobile-menu md:hidden">
+                <div class="flex flex-col gap-4 p-4 bg-[#0B1120] border-t border-white/10">
                     <a href="#inicio" class="text-sm font-medium transition hover:text-white" style="color: {{ $settings->navbar_links_color ?? 'rgba(255,255,255,0.6)' }}">Inventario</a>
                     <a href="{{ route('public.vehiculos') }}" class="text-sm font-medium transition hover:text-white" style="color: {{ $settings->navbar_links_color ?? 'rgba(255,255,255,0.6)' }}">Vehículos</a>
                     <a href="#nosotros" class="text-sm font-medium transition hover:text-white" style="color: {{ $settings->navbar_links_color ?? 'rgba(255,255,255,0.6)' }}">Nosotros</a>
                     <a href="#contacto" class="text-sm font-medium transition hover:text-white" style="color: {{ $settings->navbar_links_color ?? 'rgba(255,255,255,0.6)' }}">Contacto</a>
                 </div>
-                
             </div>
         </div>
     </nav>
+    <style>
+        .hamburger {
+            display: block;
+            width: 32px;
+            height: 32px;
+            cursor: pointer;
+        }
+        .hamburger span {
+            display: block;
+            height: 4px;
+            margin: 6px 0;
+            background: var(--primary-color);
+            border-radius: 2px;
+            transition: 0.3s;
+        }
+        .mobile-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            z-index: 100;
+        }
+        .mobile-menu.open {
+            display: block;
+        }
+    </style>
+    <script>
+        function toggleMenu() {
+            var menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('open');
+        }
+        document.addEventListener('click', function(e) {
+            var menu = document.getElementById('mobile-menu');
+            var hamburger = document.getElementById('hamburger-btn');
+            if (!menu || !hamburger) return;
+            if (!menu.contains(e.target) && !hamburger.contains(e.target)) {
+                menu.classList.remove('open');
+            }
+        });
+    </script>
 
     @yield('content')
 

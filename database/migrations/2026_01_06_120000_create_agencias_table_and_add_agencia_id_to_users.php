@@ -15,6 +15,7 @@ return new class extends Migration
                 $table->string('nombre');
                 $table->string('ubicacion')->nullable();
                 $table->string('telefono', 50)->nullable();
+                $table->unsignedBigInteger('plan_id')->nullable()->after('telefono');
                 $table->timestamps();
             });
         }

@@ -79,9 +79,16 @@ class Subscription extends Model
      */
     public function isActive(): bool
     {
-        return $this->status === 'active' && 
-               $this->current_period_end && 
-               $this->current_period_end->isFuture();
+        // Considerar activa si status es 'active' y:
+        // - current_period_end es futuro
+        // - O current_period_end es null (para pruebas o pagos manuales)
+        if ($this->status !== 'active') {
+            return false;
+        }
+        if (is_null($this->current_period_end)) {
+            return true;
+        }
+        return $this->current_period_end->isFuture();
     }
 
     /**
@@ -160,6 +167,15 @@ class Subscription extends Model
             ],
         ];
 
-        return $plans[$this->plan] ?? $plans['basic'];
+        if (isset($plans[$this->plan])) {
+            return $plans[$this->plan];
+        }
+        // Si el plan no está en la lista, devolver el nombre real del plan
+        return [
+            'name' => $this->plan,
+            'price_usd' => $this->amount,
+            'price_ars' => $this->amount,
+            'features' => [],
+        ];
     }
 }

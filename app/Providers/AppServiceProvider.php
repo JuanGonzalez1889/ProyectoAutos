@@ -47,5 +47,8 @@ class AppServiceProvider extends ServiceProvider
                 <?php endif; ?>
             HTML;
         });
+
+        // Registrar helper global plan_menu.php
+        require_once app_path('Helpers/plan_menu.php');
     }
 }

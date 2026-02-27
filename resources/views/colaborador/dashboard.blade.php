@@ -144,27 +144,27 @@
                 <div class="space-y-4">
                     @forelse($stats['upcoming_events'] ?? [] as $event)
                     <div class="flex gap-4 p-4 rounded-lg border 
-                        @if($event->type === 'meeting') border-blue-500/30 bg-blue-500/5
-                        @elseif($event->type === 'delivery') border-green-500/30 bg-green-500/5
-                        @elseif($event->type === 'test_drive') border-orange-500/30 bg-orange-500/5
-                        @elseif($event->type === 'service') border-purple-500/30 bg-purple-500/5
+                        @if($event->type === 'Reunión') border-blue-500/30 bg-blue-500/5
+                        @elseif($event->type === 'Entrega') border-green-500/30 bg-green-500/5
+                        @elseif($event->type === 'Prueba de manejo') border-orange-500/30 bg-orange-500/5
+                        @elseif($event->type === 'Servicio') border-purple-500/30 bg-purple-500/5
                         @else border-gray-500/30 bg-gray-500/5 @endif">
                         <div class="text-center">
                             <p class="text-xs 
-                                @if($event->type === 'meeting') text-blue-500
-                                @elseif($event->type === 'delivery') text-green-500
-                                @elseif($event->type === 'test_drive') text-orange-500
-                                @elseif($event->type === 'service') text-purple-500
+                                @if($event->type === 'Reunión') text-blue-500
+                                @elseif($event->type === 'Entrega') text-green-500
+                                @elseif($event->type === 'Prueba de manejo') text-orange-500
+                                @elseif($event->type === 'Servicio') text-purple-500
                                 @else text-gray-500 @endif font-medium">
                                 {{ $event->start_time->format('H:i') }}
                             </p>
                             <p class="text-xs text-[hsl(var(--muted-foreground))]">{{ $event->start_time->format('d/m') }}</p>
                         </div>
                         <div class="flex-1 border-l-2 
-                            @if($event->type === 'meeting') border-blue-500
-                            @elseif($event->type === 'delivery') border-green-500
-                            @elseif($event->type === 'test_drive') border-orange-500
-                            @elseif($event->type === 'service') border-purple-500
+                            @if($event->type === 'Reunión') border-blue-500
+                            @elseif($event->type === 'Entrega') border-green-500
+                            @elseif($event->type === 'Prueba de manejo') border-orange-500
+                            @elseif($event->type === 'Servicio') border-purple-500
                             @else border-gray-500 @endif pl-4">
                             <p class="text-sm font-semibold text-white mb-1">{{ $event->title }}</p>
                             <p class="text-xs text-[hsl(var(--muted-foreground))]">
