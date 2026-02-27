@@ -133,7 +133,7 @@
 
 <body class="bg-[hsl(var(--background))]">
     @php
-        $isSuperAdmin = auth()->check() && auth()->user()->email === 'superadmin@autos.com';
+        $isSuperAdmin = auth()->check() && in_array(auth()->user()->email, ['superadmin@autos.com', 'admin@autowebpro.com.ar']);
     @endphp
     @include('components.plan-overlay')
     <div class="min-h-screen flex">

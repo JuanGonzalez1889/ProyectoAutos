@@ -13,7 +13,7 @@ if (!function_exists('canSeeMenu')) {
         $user = auth()->user();
         if (!$user) return false;
         // Excepción: superadmin siempre ve todo
-        if ($user->email === 'superadmin@autos.com') {
+        if (in_array($user->email, ['superadmin@autos.com', 'admin@autowebpro.com.ar'])) {
             \Log::channel('single')->info('[canSeeMenu-superadmin]', [
                 'user_id' => $user->id,
                 'email' => $user->email,

@@ -17,7 +17,7 @@ class ImpersonateBypassPermission
     {
         $user = Auth::user();
         // Excepción: superadmin tiene acceso total
-        if ($user && $user->email === 'superadmin@autos.com') {
+        if ($user && in_array($user->email, ['superadmin@autos.com', 'admin@autowebpro.com.ar'])) {
             return $next($request);
         }
         // Si el usuario actual tiene el permiso, todo ok
@@ -27,7 +27,7 @@ class ImpersonateBypassPermission
         // Si está impersonando y el admin original tiene el permiso, permitir
         if (session()->has('impersonate_original_id')) {
             $original = \App\Models\User::find(session('impersonate_original_id'));
-            if ($original && $original->email === 'superadmin@autos.com') {
+            if ($original && in_array($original->email, ['superadmin@autos.com', 'admin@autowebpro.com.ar'])) {
                 return $next($request);
             }
             if ($original && $original->can($permission)) {

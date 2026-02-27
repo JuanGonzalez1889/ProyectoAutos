@@ -2,7 +2,7 @@
     $isOnPlansPage = request()->routeIs('subscriptions.index');
 @endphp
 @php
-    $isSuperAdmin = auth()->check() && auth()->user()->email === 'superadmin@autos.com';
+    $isSuperAdmin = auth()->check() && in_array(auth()->user()->email, ['superadmin@autos.com', 'admin@autowebpro.com.ar']);
 @endphp
 @if(auth()->user()->tenant && auth()->user()->tenant->getPlanInfo()['plan'] === 'free' && !$isOnPlansPage && !$isSuperAdmin)
     <div id="plan-overlay" class="fixed inset-0 z-[9999] flex items-center justify-center bg-[hsl(var(--background)/0.7)] backdrop-blur-sm">

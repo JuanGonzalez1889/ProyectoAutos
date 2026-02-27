@@ -26,7 +26,7 @@ class TaskController extends Controller {
         $user = auth()->user();
         $query = \App\Models\Event::orderBy('start_time', 'desc');
         // Solo superadmin puede ver todas las tareas
-        if ($user->email !== 'superadmin@autos.com') {
+        if (!in_array($user->email, ['superadmin@autos.com', 'admin@autowebpro.com.ar'])) {
             $query->where('agencia_id', $user->agencia_id);
         }
         $tasks = $query->get();
