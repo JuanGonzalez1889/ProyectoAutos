@@ -65,6 +65,8 @@ return [
 
     'delete_database_after_tenant_deletion' => false,
 
+    'allow_tenant_data_deletion' => env('ALLOW_TENANT_DATA_DELETION', false),
+
     'create_database_in_transaction' => false,
 
     'migration_parameters' => [

@@ -43,6 +43,13 @@
                                 </svg>
                                 Stripe
                             </span>
+                        @elseif(in_array($subscription->payment_method, ['transferencia', 'bank_transfer']))
+                            <span class="flex items-center gap-2">
+                                <svg class="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 17l4 4 4-4m0-5l-4-4-4 4m-5 0h18"></path>
+                                </svg>
+                                Transferencia manual
+                            </span>
                         @else
                             <span class="flex items-center gap-2">
                                 <svg class="w-5 h-5 text-blue-400" fill="currentColor" viewBox="0 0 24 24">
@@ -93,6 +100,31 @@
                         Cancelar Suscripción
                     </button>
                 </form>
+            </div>
+        </div>
+    </div>
+    @elseif($subscription && $subscription->payment_method === 'mercadopago' && (str_starts_with((string) $subscription->mercadopago_status, 'paused:') || str_starts_with((string) $subscription->mercadopago_status, 'rejected:')))
+    <div class="card">
+        <div class="p-6">
+            <div class="flex items-start gap-4">
+                <div class="w-12 h-12 rounded-full bg-red-500/20 flex items-center justify-center flex-shrink-0">
+                    <svg class="w-6 h-6 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                    </svg>
+                </div>
+                <div class="flex-1">
+                    <h3 class="text-xl font-bold text-white mb-2">Renovación rechazada</h3>
+                    <p class="text-sm text-[hsl(var(--muted-foreground))] mb-4">
+                        {{ trim(str_replace(['paused:', 'rejected:'], '', (string) $subscription->mercadopago_status)) }}
+                    </p>
+                    <form action="{{ route('subscriptions.retry') }}" method="POST">
+                        @csrf
+                        <button type="submit"
+                                class="inline-flex items-center gap-2 h-10 px-5 bg-[hsl(var(--primary))] hover:opacity-90 text-[#0a0f14] rounded-lg text-sm font-medium transition-opacity">
+                            Reintentar pago
+                        </button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>

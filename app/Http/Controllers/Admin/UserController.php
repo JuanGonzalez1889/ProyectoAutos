@@ -3,10 +3,14 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Invoice;
+use App\Models\Plan;
+use App\Models\Subscription;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rules;
 use Spatie\Permission\Models\Role;
 
@@ -62,7 +66,16 @@ class UserController extends Controller
             abort(403, 'No tienes permiso para ver usuarios');
         }
         $users = $query->latest()->paginate(15);
-        return view('admin.users.index', compact('users', 'agencias'));
+
+        $availablePlans = collect();
+        if ($this->isSuperAdmin($user)) {
+            $availablePlans = Plan::query()
+                ->where('activo', true)
+                ->orderBy('price')
+                ->get(['id', 'slug', 'nombre', 'price']);
+        }
+
+        return view('admin.users.index', compact('users', 'agencias', 'availablePlans'));
     }
 
     /**
@@ -320,5 +333,105 @@ class UserController extends Controller
 
         $status = $user->is_active ? 'activado' : 'desactivado';
         return back()->with('success', "Usuario {$status} exitosamente.");
+    }
+
+    /**
+     * Activación manual de usuario/suscripción por transferencia (solo superadmin)
+     */
+    public function manualEnableTransfer(Request $request, User $user)
+    {
+        /** @var \App\Models\User $currentUser */
+        $currentUser = Auth::user();
+
+        if (!$this->isSuperAdmin($currentUser)) {
+            abort(403, 'Solo superadmin puede usar activación manual por transferencia.');
+        }
+
+        $validated = $request->validate([
+            'plan_slug' => ['required', 'string', 'exists:plans,slug'],
+            'transfer_reference' => ['nullable', 'string', 'max:255'],
+        ]);
+
+        $plan = Plan::query()
+            ->where('slug', $validated['plan_slug'])
+            ->where('activo', true)
+            ->first();
+
+        if (!$plan) {
+            return back()->with('error', 'El plan seleccionado no está activo.');
+        }
+
+        if (!$user->tenant_id) {
+            return back()->with('error', 'El usuario no tiene tenant asociado.');
+        }
+
+        $tenant = \App\Models\Tenant::find($user->tenant_id);
+        if (!$tenant) {
+            return back()->with('error', 'No se encontró el tenant del usuario.');
+        }
+
+        $periodStart = now();
+        $periodEnd = now()->addMonth();
+
+        DB::transaction(function () use ($user, $tenant, $plan, $periodStart, $periodEnd, $validated, $currentUser) {
+            $subscription = Subscription::create([
+                'tenant_id' => $tenant->id,
+                'plan' => $plan->slug,
+                'payment_method' => 'transferencia',
+                'status' => 'active',
+                'amount' => (float) ($plan->price ?? 0),
+                'currency' => 'ARS',
+                'current_period_start' => $periodStart,
+                'current_period_end' => $periodEnd,
+                'mercadopago_status' => 'manual:transferencia',
+            ]);
+
+            Invoice::create([
+                'tenant_id' => $tenant->id,
+                'subscription_id' => $subscription->id,
+                'invoice_number' => Invoice::generateInvoiceNumber(),
+                'amount' => (float) ($plan->price ?? 0),
+                'currency' => 'ARS',
+                'tax' => 0,
+                'total' => (float) ($plan->price ?? 0),
+                'status' => 'paid',
+                'payment_method' => 'transferencia',
+                'paid_at' => now(),
+                'due_date' => null,
+                'notes' => trim('Activación manual por superadmin' . (!empty($validated['transfer_reference']) ? ' | Ref: ' . $validated['transfer_reference'] : '')),
+            ]);
+
+            $tenant->update([
+                'plan' => $plan->slug,
+                'is_active' => true,
+                'subscription_ends_at' => $periodEnd,
+            ]);
+
+            $user->update(['is_active' => true]);
+
+            Log::warning('Manual transfer activation executed by superadmin', [
+                'actor_user_id' => $currentUser->id,
+                'actor_email' => $currentUser->email,
+                'target_user_id' => $user->id,
+                'target_user_email' => $user->email,
+                'tenant_id' => $tenant->id,
+                'plan' => $plan->slug,
+                'payment_method' => 'transferencia',
+                'period_start' => $periodStart->toDateTimeString(),
+                'period_end' => $periodEnd->toDateTimeString(),
+                'reference' => $validated['transfer_reference'] ?? null,
+            ]);
+        });
+
+        return back()->with('success', 'Activación manual aplicada: plan activo por transferencia para el usuario seleccionado.');
+    }
+
+    private function isSuperAdmin(?User $user): bool
+    {
+        if (!$user) {
+            return false;
+        }
+
+        return in_array($user->email, ['superadmin@autos.com', 'admin@autowebpro.com.ar'], true);
     }
 }

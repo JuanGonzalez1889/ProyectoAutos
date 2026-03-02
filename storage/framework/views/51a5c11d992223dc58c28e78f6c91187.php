@@ -18,7 +18,7 @@
             $currentPlan = ['plan' => ''];
             $allSubscriptions = collect();
             $allInvoices = collect();
-            if(auth()->user()->email === 'superadmin@autos.com') {
+            if(in_array(auth()->user()->email, ['superadmin@autos.com', 'admin@autowebpro.com.ar'])) {
                 // Superadmin: ver todas las suscripciones y facturas
                 $allSubscriptions = App\Models\Subscription::with('tenant')->orderByDesc('created_at')->get();
                 $allInvoices = App\Models\Invoice::with(['tenant', 'subscription'])->orderByDesc('created_at')->get();
@@ -38,7 +38,7 @@
                 }
             }
         ?>
-        <?php if(auth()->user()->email === 'superadmin@autos.com'): ?>
+        <?php if(in_array(auth()->user()->email, ['superadmin@autos.com', 'admin@autowebpro.com.ar'])): ?>
         <div class="mb-12">
             <h2 class="text-2xl font-bold mb-4">Todas las Suscripciones</h2>
             <div class="overflow-x-auto">
@@ -105,7 +105,7 @@
         </div>
         <?php endif; ?>
         
-        <?php if(auth()->user()->email !== 'superadmin@autos.com'): ?>
+        <?php if(!in_array(auth()->user()->email, ['superadmin@autos.com', 'admin@autowebpro.com.ar'])): ?>
             <div class="mb-10">
                 <div class="flex flex-col md:flex-row items-center justify-between bg-[#181f2a] border border-[#2c374a] rounded-xl px-8 py-6 mb-6">
                     <div>

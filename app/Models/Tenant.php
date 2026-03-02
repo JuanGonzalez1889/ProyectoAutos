@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Facades\Log;
 use Stancl\Tenancy\Database\Models\Tenant as BaseTenant;
 use Stancl\Tenancy\Contracts\TenantWithDatabase;
 use Stancl\Tenancy\Database\Concerns\HasDatabase;
@@ -11,6 +12,21 @@ use Stancl\Tenancy\Database\Concerns\HasDomains;
 class Tenant extends BaseTenant implements TenantWithDatabase
 {
     use HasDatabase, HasDomains, HasFactory;
+
+    protected static function booted(): void
+    {
+        static::deleting(function (Tenant $tenant) {
+            $allowDeletion = (bool) config('tenancy.allow_tenant_data_deletion', false);
+
+            if (app()->environment('production') && !$allowDeletion) {
+                Log::warning('Tenant deletion blocked by data protection policy', [
+                    'tenant_id' => $tenant->id,
+                ]);
+
+                throw new \RuntimeException('Tenant deletion is blocked in production by data protection policy.');
+            }
+        });
+    }
 
     protected $fillable = [
         'id',

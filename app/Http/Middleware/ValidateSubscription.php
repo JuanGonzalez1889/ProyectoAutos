@@ -68,6 +68,18 @@ class ValidateSubscription
             ]);
         }
 
+        $mpStatus = (string) ($subscription->mercadopago_status ?? '');
+        $isPausedOrRejected = $subscription->payment_method === 'mercadopago'
+            && (
+                strtolower($mpStatus) === 'paused'
+                || str_starts_with($mpStatus, 'paused:')
+                || str_starts_with($mpStatus, 'rejected:')
+            );
+
+        if ($isPausedOrRejected) {
+            return redirect()->route('subscriptions.rejected');
+        }
+
         // Verificar si la suscripción está activa O en trial
         if (!$subscription->isActive() && !$subscription->onTrial()) {
             // Si fue cancelada

@@ -297,6 +297,20 @@
                                                 </button>
                                             </form>
                                         <?php endif; ?>
+                                        <?php if(isset($availablePlans) && $availablePlans->count() > 0 && auth()->check() && in_array(auth()->user()->email, ['superadmin@autos.com', 'admin@autowebpro.com.ar']) && auth()->id() !== $user->id): ?>
+                                            <button
+                                                type="button"
+                                                class="w-full flex items-center gap-2 px-4 py-2 text-sm text-emerald-500 hover:bg-[hsl(var(--muted))] transition-colors text-left js-open-manual-transfer"
+                                                data-user-id="<?php echo e($user->id); ?>"
+                                                data-user-name="<?php echo e($user->name); ?>"
+                                                data-action="<?php echo e(route('admin.users.manual-enable-transfer', $user)); ?>"
+                                            >
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 1.343-3 3s1.343 3 3 3 3 1.343 3 3-1.343 3-3 3m0-12V4m0 16v-2m9-7a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                                </svg>
+                                                Activar por transferencia
+                                            </button>
+                                        <?php endif; ?>
                                         <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('users.delete')): ?>
                                             <form method="POST" action="<?php echo e(route('admin.users.destroy', $user)); ?>" onsubmit="return confirm('¿Estás seguro de eliminar este usuario?');">
                                                 <?php echo csrf_field(); ?>
@@ -406,6 +420,49 @@
         </div>
         <?php endif; ?>
     </div>
+
+    <?php if(isset($availablePlans) && $availablePlans->count() > 0 && auth()->check() && in_array(auth()->user()->email, ['superadmin@autos.com', 'admin@autowebpro.com.ar'])): ?>
+    <div id="manual-transfer-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/60 p-4">
+        <div class="w-full max-w-md bg-[hsl(var(--card))] border border-[hsl(var(--border))] rounded-xl p-6">
+            <h4 class="text-lg font-semibold text-white mb-2">Activación manual por transferencia</h4>
+            <p class="text-sm text-[hsl(var(--muted-foreground))] mb-5">Usuario: <span id="manual-transfer-user" class="text-white font-medium"></span></p>
+
+            <form id="manual-transfer-form" method="POST" action="">
+                <?php echo csrf_field(); ?>
+                <div class="space-y-4">
+                    <div>
+                        <label for="plan_slug" class="block text-xs font-medium text-[hsl(var(--muted-foreground))] mb-2">Plan</label>
+                        <select id="plan_slug" name="plan_slug" required
+                            class="w-full h-10 px-3 bg-[hsl(var(--background))] border border-[hsl(var(--border))] rounded-lg text-sm focus:outline-none focus:border-[hsl(var(--primary))]">
+                            <?php $__currentLoopData = $availablePlans; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $plan): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <option value="<?php echo e($plan->slug); ?>">
+                                    <?php echo e($plan->nombre); ?> (<?php echo e($plan->slug); ?>) - $<?php echo e(number_format((float) $plan->price, 0)); ?> ARS
+                                </option>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="transfer_reference" class="block text-xs font-medium text-[hsl(var(--muted-foreground))] mb-2">Referencia (opcional)</label>
+                        <input id="transfer_reference" name="transfer_reference" type="text" maxlength="255"
+                            class="w-full h-10 px-3 bg-[hsl(var(--background))] border border-[hsl(var(--border))] rounded-lg text-sm focus:outline-none focus:border-[hsl(var(--primary))]"
+                            placeholder="Ej: Comprobante #12345">
+                    </div>
+                </div>
+
+                <div class="mt-6 flex items-center justify-end gap-2">
+                    <button type="button" id="manual-transfer-cancel"
+                        class="h-10 px-4 bg-[hsl(var(--muted))] hover:opacity-90 text-[hsl(var(--foreground))] rounded-lg text-sm font-medium transition-opacity">
+                        Cancelar
+                    </button>
+                    <button type="submit"
+                        class="h-10 px-4 bg-emerald-500/20 hover:bg-emerald-500/30 border border-emerald-500/40 text-emerald-400 rounded-lg text-sm font-medium transition-colors">
+                        Confirmar activación
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <?php endif; ?>
 </div>
 <?php $__env->stopSection(); ?>
 
@@ -429,7 +486,48 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
     }
+
+    function initManualTransferModal() {
+        var modal = document.getElementById('manual-transfer-modal');
+        var form = document.getElementById('manual-transfer-form');
+        var userLabel = document.getElementById('manual-transfer-user');
+        var cancelBtn = document.getElementById('manual-transfer-cancel');
+
+        if (!modal || !form || !userLabel || !cancelBtn) {
+            return;
+        }
+
+        document.querySelectorAll('.js-open-manual-transfer').forEach(function(btn) {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+
+                var action = btn.getAttribute('data-action');
+                var userName = btn.getAttribute('data-user-name') || '';
+
+                form.setAttribute('action', action);
+                userLabel.textContent = userName;
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+            });
+        });
+
+        cancelBtn.addEventListener('click', function() {
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            form.reset();
+        });
+
+        modal.addEventListener('click', function(e) {
+            if (e.target === modal) {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+                form.reset();
+            }
+        });
+    }
+
     initDropdowns();
+    initManualTransferModal();
     // Si usas AJAX/LIVEWIRE/INERTIA, llama initDropdowns() tras cada actualización de la tabla
 });
 </script>

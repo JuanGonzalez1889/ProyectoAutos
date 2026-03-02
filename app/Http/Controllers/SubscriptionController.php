@@ -24,8 +24,10 @@ class SubscriptionController extends Controller
     /**
      * Show available plans
      */
-    public function index()
+    public function index(Request $request)
     {
+        $this->mercadoPagoService->syncFromCheckoutReturn($request);
+
         $user = Auth::user();
         if ($user->isAdmin()) {
             $tenants = Tenant::with('subscription')->get();
@@ -67,11 +69,10 @@ class SubscriptionController extends Controller
         // 2. Obtenemos los detalles directamente del Service para no repetir precios
         $planDetails = $this->mercadoPagoService->getPlanDetails($validated['plan']);
         $price = $planDetails['price'];
-        $planName = $planDetails['name'];
 
         // 3. Crear preferencia MercadoPago
         $preference = $this->mercadoPagoService->createPreference(
-            $planName,
+            $validated['plan'],
             $price,
             $user->email
         );
@@ -84,13 +85,17 @@ class SubscriptionController extends Controller
             return redirect()->to($preference['init_point']);
         }
 
-        return redirect()->back()->with('error', 'No se pudo iniciar el pago.');
+        $errorMessage = $preference['error'] ?? 'No se pudo iniciar el pago.';
+
+        return redirect()->back()->with('error', $errorMessage);
     }
     /**
      * Handle successful subscription
      */
     public function success(Request $request)
     {
+        $this->mercadoPagoService->syncFromCheckoutReturn($request);
+
         return view('subscriptions.success');
     }
 
@@ -111,6 +116,67 @@ class SubscriptionController extends Controller
     }
 
     /**
+     * Pantalla de pago rechazado con motivo y reintento
+     */
+    public function rejected()
+    {
+        $user = Auth::user();
+        $tenant = Tenant::find($user->tenant_id);
+        $subscription = $tenant?->subscriptions()->latest('updated_at')->first();
+        $lastFailedInvoice = $tenant?->invoices()
+            ->where('status', 'failed')
+            ->latest()
+            ->first();
+
+        $reason = $lastFailedInvoice?->notes;
+
+        if (!$reason && $subscription) {
+            $mpStatus = (string) $subscription->mercadopago_status;
+            if (str_starts_with($mpStatus, 'paused:')) {
+                $reason = trim(str_replace('paused:', '', $mpStatus));
+            } elseif (str_starts_with($mpStatus, 'rejected:')) {
+                $reason = trim(str_replace('rejected:', '', $mpStatus));
+            }
+        }
+
+        return view('subscriptions.rejected', [
+            'tenant' => $tenant,
+            'subscription' => $subscription,
+            'reason' => $reason ?: 'No se pudo renovar tu suscripción.',
+        ]);
+    }
+
+    /**
+     * Reintentar cobro con el último plan contratado
+     */
+    public function retry()
+    {
+        $user = Auth::user();
+        $tenant = Tenant::find($user->tenant_id);
+
+        if (!$tenant) {
+            return redirect()->route('subscriptions.index')->with('error', 'No tienes un tenant asociado');
+        }
+
+        $subscription = $tenant->subscriptions()->latest('updated_at')->first();
+        $plan = $subscription?->plan ?: 'basico';
+        $planDetails = $this->mercadoPagoService->getPlanDetails($plan);
+
+        $preference = $this->mercadoPagoService->createPreference(
+            $plan,
+            $planDetails['price'],
+            $user->email
+        );
+
+        if (isset($preference['init_point'])) {
+            return redirect()->to($preference['init_point']);
+        }
+
+        return redirect()->route('subscriptions.rejected')
+            ->with('error', $preference['error'] ?? 'No se pudo iniciar el reintento de pago.');
+    }
+
+    /**
      * Cancel current subscription
      */
     public function destroy()
@@ -124,7 +190,15 @@ class SubscriptionController extends Controller
             return redirect()->back()->with('error', 'No tienes una suscripción activa');
         }
 
-        $subscription->cancel();
+        try {
+            if ($subscription->payment_method === 'mercadopago') {
+                $this->mercadoPagoService->cancelSubscription($subscription);
+            } else {
+                $subscription->cancel();
+            }
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'No se pudo cancelar en Mercado Pago: ' . $e->getMessage());
+        }
 
         return redirect()->route('subscriptions.index')
             ->with('success', 'Suscripción cancelada correctamente');

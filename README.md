@@ -4,12 +4,32 @@ Sistema de administración con Laravel 11 que incluye gestión de usuarios con r
 
 ## Integración de pagos
 
-Actualmente el sistema utiliza **Stripe** para pagos y suscripciones. Mercado Pago ha sido eliminado completamente.
+Actualmente el sistema soporta **Stripe** y **Mercado Pago** para pagos/suscripciones.
+
+### Variables de entorno Mercado Pago
+- MERCADOPAGO_PUBLIC_KEY
+- MERCADOPAGO_ACCESS_TOKEN
+- MERCADOPAGO_WEBHOOK_SECRET
+- MERCADOPAGO_TEST_PAYER_EMAIL (opcional en local/sandbox)
 
 ### Variables de entorno Stripe
 - STRIPE_KEY
 - STRIPE_SECRET
 - STRIPE_WEBHOOK_SECRET
+
+### Pruebas de renovación automática (Mercado Pago)
+- Ver checklist: `MERCADOPAGO_AUTORENEW_SANDBOX_CHECKLIST.md`
+
+### Configuración webhook Mercado Pago
+- Ver guía: `MERCADOPAGO_WEBHOOK_SETUP.md`
+
+### Pruebas manuales webhook firmado
+- Ver guía: `MERCADOPAGO_WEBHOOK_MANUAL_TESTS.md`
+
+### Scheduler en producción Windows (sin popups)
+- Ver guía: `WINDOWS_PRODUCTION_SCHEDULER.md`
+- Script Task Scheduler: `scripts/install_windows_scheduler_task.ps1`
+- Script servicio NSSM: `scripts/install_windows_scheduler_service_nssm.ps1`
 
 ## Características
 

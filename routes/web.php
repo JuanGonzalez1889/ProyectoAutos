@@ -132,6 +132,8 @@ Route::middleware('auth')->group(function () {
         Route::post('/checkout', [SubscriptionController::class, 'checkout'])->name('checkout');
         Route::get('/cancel', [SubscriptionController::class, 'cancel'])->name('cancel');
         Route::get('/pending', [SubscriptionController::class, 'pending'])->name('pending');
+        Route::get('/rejected', [SubscriptionController::class, 'rejected'])->name('rejected');
+        Route::post('/retry', [SubscriptionController::class, 'retry'])->name('retry');
         Route::delete('/cancel-subscription', [SubscriptionController::class, 'destroy'])->name('destroy');
         Route::get('/billing', [SubscriptionController::class, 'billing'])->name('billing');
     });
@@ -179,6 +181,8 @@ Route::get('/subscriptions/failure', [SubscriptionController::class, 'failure'])
             Route::resource('users', UserController::class);
             Route::patch('users/{user}/toggle-status', [UserController::class, 'toggleStatus'])
                 ->name('users.toggle-status');
+            Route::post('users/{user}/manual-enable-transfer', [UserController::class, 'manualEnableTransfer'])
+                ->name('users.manual-enable-transfer');
             // User Permissions Management
             Route::get('users/{user}/permissions', [UserPermissionController::class, 'edit'])
                 ->name('users.permissions.edit');
