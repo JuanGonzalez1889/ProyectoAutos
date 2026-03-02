@@ -5,10 +5,17 @@ namespace App\Http\Controllers;
 use App\Models\Tenant;
 use App\Models\Domain;
 use App\Models\Vehicle;
+use App\Services\FormEmailNotificationService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class PublicLandingController extends Controller
 {
+    public function __construct(
+        private readonly FormEmailNotificationService $formEmailNotificationService
+    ) {
+    }
+
     /**
      * Mostrar landing pública del tenant
      */
@@ -71,7 +78,7 @@ class PublicLandingController extends Controller
         $agencia = $domainRecord->tenant->agencias()->first();
 
         // Crear un lead con la información de contacto
-        \App\Models\Lead::create([
+        $lead = \App\Models\Lead::create([
             'tenant_id' => $domainRecord->tenant->id,
             'agencia_id' => $agencia?->id,
             'name' => $validated['name'],
@@ -82,6 +89,15 @@ class PublicLandingController extends Controller
             'status' => 'new',
             'source' => 'landing_publica',
         ]);
+
+        try {
+            $this->formEmailNotificationService->notifyNewLead($lead);
+        } catch (\Throwable $exception) {
+            Log::warning('No se pudo enviar email de nuevo lead (submitContact)', [
+                'lead_id' => $lead->id,
+                'error' => $exception->getMessage(),
+            ]);
+        }
 
         return back()->with('success', '¡Gracias! Tu mensaje ha sido enviado correctamente. Nos contactaremos pronto.');
     }
@@ -125,7 +141,7 @@ class PublicLandingController extends Controller
         $agencia = $tenant->agencias()->first();
 
         // Crear un lead con la información de contacto
-        \App\Models\Lead::create([
+        $lead = \App\Models\Lead::create([
             'tenant_id' => $tenant->id,
             'agencia_id' => $agencia?->id,
             'name' => $validated['name'],
@@ -136,6 +152,15 @@ class PublicLandingController extends Controller
             'status' => 'new',
             'source' => 'landing_publica',
         ]);
+
+        try {
+            $this->formEmailNotificationService->notifyNewLead($lead);
+        } catch (\Throwable $exception) {
+            Log::warning('No se pudo enviar email de nuevo lead (submitContactByTenantId)', [
+                'lead_id' => $lead->id,
+                'error' => $exception->getMessage(),
+            ]);
+        }
 
         return back()->with('success', '¡Gracias! Tu mensaje ha sido enviado correctamente. Nos contactaremos pronto.');
     }
@@ -164,7 +189,7 @@ class PublicLandingController extends Controller
 
         $agencia = $domainRecord->tenant->agencias()->first();
 
-        \App\Models\Lead::create([
+        $lead = \App\Models\Lead::create([
             'tenant_id' => $domainRecord->tenant->id,
             'agencia_id' => $agencia?->id,
             'name' => $validated['name'],
@@ -175,6 +200,15 @@ class PublicLandingController extends Controller
             'status' => 'new',
             'source' => 'landing_publica',
         ]);
+
+        try {
+            $this->formEmailNotificationService->notifyNewLead($lead);
+        } catch (\Throwable $exception) {
+            Log::warning('No se pudo enviar email de nuevo lead (submitContactDirect)', [
+                'lead_id' => $lead->id,
+                'error' => $exception->getMessage(),
+            ]);
+        }
 
         return back()->with('success', '¡Gracias! Tu mensaje ha sido enviado correctamente. Nos contactaremos pronto.');
     }

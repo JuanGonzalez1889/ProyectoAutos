@@ -2,10 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\FormEmailNotificationService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class LandingController extends Controller
 {
+    public function __construct(
+        private readonly FormEmailNotificationService $formEmailNotificationService
+    ) {
+    }
+
     /**
      * Mostrar la página principal institucional
      */
@@ -47,8 +54,18 @@ class LandingController extends Controller
             'email' => 'required|email',
         ]);
 
-        // Aquí puedes agregar lógica para guardar el email en la base de datos
-        // o enviarlo a un servicio de email marketing
+        try {
+            $this->formEmailNotificationService->notifyNewsletterSubscription(
+                $request->string('email')->toString(),
+                $request->ip(),
+                $request->headers->get('referer')
+            );
+        } catch (\Throwable $exception) {
+            Log::warning('No se pudo enviar email de newsletter', [
+                'email' => $request->string('email')->toString(),
+                'error' => $exception->getMessage(),
+            ]);
+        }
 
         return back()->with('success', '¡Gracias por suscribirte!');
     }

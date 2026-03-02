@@ -4,11 +4,18 @@ namespace App\Http\Controllers;
 
 use App\Models\Lead;
 use App\Models\Vehicle;
+use App\Services\FormEmailNotificationService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class LeadController extends Controller
 {
+    public function __construct(
+        private readonly FormEmailNotificationService $formEmailNotificationService
+    ) {
+    }
+
     public function index()
     {
         /** @var \App\Models\User $user */
@@ -77,7 +84,16 @@ class LeadController extends Controller
             $validated['contacted_at'] = now();
         }
         
-        Lead::create($validated);
+        $lead = Lead::create($validated);
+
+        try {
+            $this->formEmailNotificationService->notifyNewLead($lead);
+        } catch (\Throwable $exception) {
+            Log::warning('No se pudo enviar email de nuevo lead (admin)', [
+                'lead_id' => $lead->id,
+                'error' => $exception->getMessage(),
+            ]);
+        }
         
         return redirect()->route('admin.leads.index')->with('success', 'Lead creado exitosamente');
     }
