@@ -374,6 +374,15 @@ class UserController extends Controller
         $periodEnd = now()->addMonth();
 
         DB::transaction(function () use ($user, $tenant, $plan, $periodStart, $periodEnd, $validated, $currentUser) {
+            Subscription::query()
+                ->where('tenant_id', $tenant->id)
+                ->where('status', 'active')
+                ->update([
+                    'status' => 'canceled',
+                    'canceled_at' => now(),
+                    'current_period_end' => now(),
+                ]);
+
             $subscription = Subscription::create([
                 'tenant_id' => $tenant->id,
                 'plan' => $plan->slug,

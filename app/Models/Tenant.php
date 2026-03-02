@@ -215,6 +215,7 @@ class Tenant extends BaseTenant implements TenantWithDatabase
         return $this->subscriptions()
             ->where('status', 'active')
             ->orderByDesc('current_period_start')
+            ->orderByDesc('id')
             ->first();
     }
 
