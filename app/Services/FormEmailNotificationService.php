@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\Lead;
 use App\Models\Tenant;
 use App\Models\User;
+use App\Notifications\InstitutionalContactReceivedNotification;
 use App\Notifications\NewLeadReceivedNotification;
 use App\Notifications\NewsletterSubscriptionReceivedNotification;
 use Illuminate\Support\Facades\Notification;
@@ -34,6 +35,44 @@ class FormEmailNotificationService
 
         Notification::route('mail', $recipients)
             ->notify(new NewsletterSubscriptionReceivedNotification($email, $ipAddress, $origin));
+    }
+
+    public function notifyInstitutionalContact(
+        string $name,
+        string $email,
+        string $message,
+        ?string $ipAddress = null,
+        ?string $origin = null
+    ): void {
+        $recipients = $this->resolveRecipients();
+
+        if (empty($recipients)) {
+            return;
+        }
+
+        Notification::route('mail', $recipients)
+            ->notify(new InstitutionalContactReceivedNotification($name, $email, $message, $ipAddress, $origin));
+    }
+
+    public function notifyInstitutionalContactWithRecipients(
+        string $name,
+        string $email,
+        string $message,
+        ?string $ipAddress = null,
+        ?string $origin = null,
+        array $additionalRecipients = []
+    ): void {
+        $recipients = array_merge($this->resolveRecipients(), $additionalRecipients);
+        $recipients = array_values(array_unique(array_filter($recipients, function ($recipient) {
+            return is_string($recipient) && filter_var($recipient, FILTER_VALIDATE_EMAIL);
+        })));
+
+        if (empty($recipients)) {
+            return;
+        }
+
+        Notification::route('mail', $recipients)
+            ->notify(new InstitutionalContactReceivedNotification($name, $email, $message, $ipAddress, $origin));
     }
 
     private function resolveRecipients(?Tenant $tenant = null): array

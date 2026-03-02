@@ -69,4 +69,38 @@ class LandingController extends Controller
 
         return back()->with('success', '¡Gracias por suscribirte!');
     }
+
+    public function submitContact(Request $request)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'message' => 'required|string|max:2000',
+            'notify_emails' => 'nullable|string|max:1000',
+        ]);
+
+        $additionalRecipients = collect(explode(',', $validated['notify_emails'] ?? ''))
+            ->map(fn ($email) => trim($email))
+            ->filter(fn ($email) => filter_var($email, FILTER_VALIDATE_EMAIL))
+            ->values()
+            ->all();
+
+        try {
+            $this->formEmailNotificationService->notifyInstitutionalContactWithRecipients(
+                $validated['name'],
+                $validated['email'],
+                $validated['message'],
+                $request->ip(),
+                $request->headers->get('referer'),
+                $additionalRecipients
+            );
+        } catch (\Throwable $exception) {
+            Log::warning('No se pudo enviar email de contacto institucional', [
+                'email' => $validated['email'],
+                'error' => $exception->getMessage(),
+            ]);
+        }
+
+        return back()->with('success', '¡Gracias! Tu mensaje fue enviado correctamente.');
+    }
 }

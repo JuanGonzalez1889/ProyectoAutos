@@ -1399,8 +1399,8 @@
                             </div>
                             <div>
                                 <p class="text-xs text-gray-500 uppercase font-semibold mb-1">Email</p>
-                                <a href="mailto:hola@autowebpro.com"
-                                    class="text-lg text-white hover:text-blue-400 transition-colors">hola@autowebpro.com</a>
+                                <a href="mailto:info@autowebpro.com.ar"
+                                    class="text-lg text-white hover:text-blue-400 transition-colors">info@autowebpro.com.ar</a>
                             </div>
                         </div>
 
@@ -1431,8 +1431,9 @@
 
                 <!-- Right Column - Contact Form -->
                 <div class="bg-slate-900/50 backdrop-blur-xl border border-white/10 rounded-2xl p-8">
-                    <form action="#" method="POST" class="space-y-6">
+                    <form action="{{ route('landing.contact') }}" method="POST" class="space-y-6">
                         @csrf
+                        <input type="hidden" name="notify_emails" value="info@autowebpro.com.ar,piru1889@gmail.com">
 
                         <!-- Name and Email Row -->
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">

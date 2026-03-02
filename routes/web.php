@@ -77,6 +77,7 @@ Route::view('/legal/cookies', 'legal.cookies')->name('legal.cookies');
 Route::view('/legal/seguridad', 'legal.seguridad')->name('legal.seguridad');
 Route::get('/precios', [LandingController::class, 'precios'])->name('landing.precios');
 Route::post('/newsletter', [LandingController::class, 'submitNewsletter'])->name('landing.newsletter');
+Route::post('/contacto-institucional', [LandingController::class, 'submitContact'])->name('landing.contact');
 
 // Rutas públicas de agencias (tenants)
 Route::get('/agencia/{domain}', [PublicLandingController::class, 'show'])->name('public.landing');
