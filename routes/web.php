@@ -60,12 +60,12 @@ Route::get('/', function (Request $request) {
         if (!in_array($domain, ['localhost', '127.0.0.1', env('APP_DOMAIN', 'proyectoautos.local')])) {
             $domainRecord = \App\Models\Domain::where('domain', $domain)->first();
             if ($domainRecord && $domainRecord->tenant) {
-                return (new PublicLandingController())->show($request);
+                return app(PublicLandingController::class)->show($request);
             }
         }
     }
     // En desarrollo, siempre mostrar landing institucional
-    return (new LandingController())->home();
+    return app(LandingController::class)->home();
 })->name('landing.home');
 Route::get('/nosotros', [LandingController::class, 'nosotros'])->name('landing.nosotros');
 Route::get('/proximamente', [LandingController::class, 'proximamente'])->name('landing.proximamente');
