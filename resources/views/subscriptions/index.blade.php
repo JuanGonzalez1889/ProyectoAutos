@@ -60,7 +60,8 @@
                             $hasPreapprovalId = !empty($sub->mercadopago_id) && !is_numeric((string) $sub->mercadopago_id);
                             $autoRenewEnabled = $sub->payment_method === 'mercadopago'
                                 && $hasPreapprovalId
-                                && $sub->status === 'active';
+                                && $sub->status === 'active'
+                                && (string) $sub->mercadopago_status === 'authorized';
                         @endphp
                         <tr>
                             <td class="border px-2 py-1">{{ $sub->id }}</td>

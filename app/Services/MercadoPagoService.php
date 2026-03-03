@@ -29,7 +29,7 @@ class MercadoPagoService
     /**
      * Crear suscripción mensual automática con Mercado Pago PreApproval
      */
-    public function createPreference($plan, $price, $userEmail)
+    public function createPreference($plan, $price, $userEmail, ?Carbon $startAt = null)
     {
         $traceId = (string) Str::uuid();
         $planDetails = $this->getPlanDetails((string) $plan);
@@ -71,6 +71,10 @@ class MercadoPagoService
                 ]),
                 'notification_url' => $webhookBaseUrl . '/webhooks/mercadopago',
             ];
+
+            if ($startAt) {
+                $payload['auto_recurring']['start_date'] = $startAt->copy()->utc()->format('Y-m-d\TH:i:s.v\Z');
+            }
 
             Log::info('MP_DEBUG_PAYLOAD', [
                 'trace_id' => $traceId,
@@ -826,23 +830,41 @@ class MercadoPagoService
                 ]);
             }
 
+            $hasCurrentPaidCycle = $subscription->status === 'active'
+                && $subscription->current_period_end
+                && $subscription->current_period_end->isFuture();
+
+            $preserveCurrentCycle = $status === 'pending' && $hasCurrentPaidCycle;
+
+            $effectiveStatus = $preserveCurrentCycle ? 'active' : $status;
+            $effectivePeriodStart = $preserveCurrentCycle
+                ? $subscription->current_period_start
+                : now();
+            $effectivePeriodEnd = $preserveCurrentCycle
+                ? $subscription->current_period_end
+                : $nextPaymentDate;
+
+            $effectiveMercadoPagoStatus = $preserveCurrentCycle
+                ? 'pending_auto_renew'
+                : (string) ($preapproval->status ?? 'pending');
+
             $subscription->fill([
                 'mercadopago_id' => (string) $preapproval->id,
-                'mercadopago_status' => $preapproval->status,
+                'mercadopago_status' => $effectiveMercadoPagoStatus,
                 'plan' => $plan,
-                'status' => $status,
+                'status' => $effectiveStatus,
                 'amount' => (float) ($autoRecurring['transaction_amount'] ?? $planDetails['price']),
                 'currency' => strtoupper((string) ($autoRecurring['currency_id'] ?? 'ARS')),
-                'current_period_start' => now(),
-                'current_period_end' => $nextPaymentDate,
-                'canceled_at' => in_array($status, ['canceled', 'expired'], true) ? now() : null,
+                'current_period_start' => $effectivePeriodStart,
+                'current_period_end' => $effectivePeriodEnd,
+                'canceled_at' => in_array($effectiveStatus, ['canceled', 'expired'], true) ? now() : null,
             ]);
             $subscription->save();
 
-            if ($status === 'active') {
+            if ($effectiveStatus === 'active') {
                 $tenant->update([
                     'plan' => $plan,
-                    'subscription_ends_at' => $nextPaymentDate,
+                    'subscription_ends_at' => $effectivePeriodEnd,
                 ]);
             }
 
@@ -851,6 +873,8 @@ class MercadoPagoService
                 'tenant_id' => $tenant->id,
                 'status' => $preapproval->status,
                 'mapped_status' => $status,
+                'effective_status' => $effectiveStatus,
+                'preserve_current_cycle' => $preserveCurrentCycle,
                 'subscription_id' => $subscription->id,
                 'next_payment_date' => $nextPaymentDate,
             ]);

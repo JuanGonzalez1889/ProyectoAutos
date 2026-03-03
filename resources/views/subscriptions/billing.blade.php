@@ -61,6 +61,22 @@
                     </p>
                 </div>
                 <div>
+                    @php
+                        $isAutoRenewPending = $subscription->payment_method === 'mercadopago'
+                            && (string) $subscription->mercadopago_status === 'pending_auto_renew';
+
+                        $hasAutoRenewEnabled = $subscription->payment_method === 'mercadopago'
+                            && !empty($subscription->mercadopago_id)
+                            && !is_numeric((string) $subscription->mercadopago_id)
+                            && $subscription->status === 'active'
+                            && (string) $subscription->mercadopago_status === 'authorized';
+                    @endphp
+                    <p class="text-xs text-[hsl(var(--muted-foreground))] mb-1">Renovación automática</p>
+                    <p class="text-lg font-bold {{ $hasAutoRenewEnabled ? 'text-emerald-400' : ($isAutoRenewPending ? 'text-blue-400' : 'text-amber-400') }}">
+                        {{ $hasAutoRenewEnabled ? 'Activada' : ($isAutoRenewPending ? 'En proceso' : 'No adherida') }}
+                    </p>
+                </div>
+                <div>
                     <p class="text-xs text-[hsl(var(--muted-foreground))] mb-1">Próxima Renovación</p>
                     <p class="text-lg font-bold text-white">
                         @if($subscription->current_period_end)
@@ -78,6 +94,32 @@
                     </p>
                 </div>
             </div>
+
+            @if($subscription->payment_method === 'mercadopago' && !$hasAutoRenewEnabled && !$isAutoRenewPending)
+            <div class="mt-6 p-4 rounded-lg border border-amber-500/30 bg-amber-500/10">
+                <p class="text-sm text-amber-300 mb-3">
+                    Ya tienes una suscripción activa, pero aún no adheriste la renovación automática.
+                </p>
+                <form action="{{ route('subscriptions.enable-auto-renew') }}" method="POST">
+                    @csrf
+                    <button type="submit"
+                            class="h-10 px-5 bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/40 text-amber-300 rounded-lg text-sm font-medium transition-colors">
+                        Adherirme a renovación automática
+                    </button>
+                </form>
+                <p class="text-xs text-[hsl(var(--muted-foreground))] mt-2">
+                    La adhesión se programa para después del vencimiento actual para evitar doble cobro inmediato.
+                </p>
+            </div>
+            @endif
+
+            @if($isAutoRenewPending)
+            <div class="mt-6 p-4 rounded-lg border border-blue-500/30 bg-blue-500/10">
+                <p class="text-sm text-blue-300">
+                    Tu adhesión a renovación automática está en proceso y quedará activa para el próximo período.
+                </p>
+            </div>
+            @endif
 
             <div class="mt-6 pt-6 border-t border-[hsl(var(--border))] flex gap-3">
                 <a href="{{ route('subscriptions.index') }}" 

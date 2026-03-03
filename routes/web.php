@@ -134,6 +134,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/pending', [SubscriptionController::class, 'pending'])->name('pending');
         Route::get('/rejected', [SubscriptionController::class, 'rejected'])->name('rejected');
         Route::post('/retry', [SubscriptionController::class, 'retry'])->name('retry');
+        Route::post('/enable-auto-renew', [SubscriptionController::class, 'enableAutoRenew'])->name('enable-auto-renew');
         Route::delete('/cancel-subscription', [SubscriptionController::class, 'destroy'])->name('destroy');
         Route::get('/billing', [SubscriptionController::class, 'billing'])->name('billing');
     });

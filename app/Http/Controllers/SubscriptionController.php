@@ -89,6 +89,67 @@ class SubscriptionController extends Controller
 
         return redirect()->back()->with('error', $errorMessage);
     }
+
+    /**
+     * Adherir una suscripción activa de MercadoPago a renovación automática (PreApproval)
+     */
+    public function enableAutoRenew()
+    {
+        $user = Auth::user();
+        $tenant = Tenant::find($user->tenant_id);
+
+        if (!$tenant) {
+            return redirect()->route('subscriptions.billing')
+                ->with('error', 'No tienes un tenant asociado.');
+        }
+
+        $subscription = $tenant->subscription;
+
+        if (!$subscription || !$subscription->isActive()) {
+            return redirect()->route('subscriptions.billing')
+                ->with('error', 'No tienes una suscripción activa para adherir a renovación automática.');
+        }
+
+        if ($subscription->payment_method !== 'mercadopago') {
+            return redirect()->route('subscriptions.billing')
+                ->with('error', 'La adhesión automática solo aplica a suscripciones de Mercado Pago.');
+        }
+
+        if (!$subscription->current_period_end || !$subscription->current_period_end->isFuture()) {
+            return redirect()->route('subscriptions.billing')
+                ->with('error', 'No se pudo adherir automáticamente sin riesgo de doble cobro porque el período actual no está vigente. Contacta soporte para activarlo de forma segura.');
+        }
+
+        $hasAutoRenewEnabled = !empty($subscription->mercadopago_id)
+            && !is_numeric((string) $subscription->mercadopago_id)
+            && $subscription->status === 'active'
+            && in_array((string) $subscription->mercadopago_status, ['authorized', 'pending_auto_renew'], true);
+
+        if ($hasAutoRenewEnabled) {
+            return redirect()->route('subscriptions.billing')
+                ->with('success', 'Tu renovación automática ya está activa.');
+        }
+
+        $plan = (string) ($subscription->plan ?: 'basico');
+        $planDetails = $this->mercadoPagoService->getPlanDetails($plan);
+        $amount = (float) ($subscription->amount ?: $planDetails['price']);
+
+        $startAt = $subscription->current_period_end->copy()->addMinutes(5);
+
+        $preference = $this->mercadoPagoService->createPreference(
+            $plan,
+            $amount,
+            $user->email,
+            $startAt
+        );
+
+        if (isset($preference['init_point'])) {
+            return redirect()->to($preference['init_point']);
+        }
+
+        return redirect()->route('subscriptions.billing')
+            ->with('error', $preference['error'] ?? 'No se pudo iniciar la adhesión a renovación automática.');
+    }
     /**
      * Handle successful subscription
      */
