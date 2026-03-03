@@ -155,23 +155,36 @@ class MercadoPagoService
                 'error' => 'Mercado Pago no devolvió init_point para iniciar el checkout de suscripción.',
             ];
         } catch (\Exception $e) {
-            $fallbackPreference = $this->createCheckoutProFallback(
-                $planDetails,
-                $transactionAmount,
-                $resolvedPayerEmail,
-                $checkoutBaseUrl,
-                $webhookBaseUrl,
-                $tenantId,
-                (string) $plan,
-                $e,
-                $traceId
-            );
+            $requirePreapproval = (bool) config('services.mercadopago.require_preapproval', true);
 
-            if (isset($fallbackPreference['init_point'])) {
-                return $fallbackPreference;
+            if (!$requirePreapproval) {
+                $fallbackPreference = $this->createCheckoutProFallback(
+                    $planDetails,
+                    $transactionAmount,
+                    $resolvedPayerEmail,
+                    $checkoutBaseUrl,
+                    $webhookBaseUrl,
+                    $tenantId,
+                    (string) $plan,
+                    $e,
+                    $traceId
+                );
+
+                if (isset($fallbackPreference['init_point'])) {
+                    return $fallbackPreference;
+                }
+            } else {
+                Log::warning('MP_STRICT_PREAPPROVAL_BLOCKED_FALLBACK', [
+                    'trace_id' => $traceId,
+                    'tenant_id' => $tenantId,
+                    'plan' => $plan,
+                    'reason' => 'preapproval_required',
+                ]);
             }
 
-            $friendlyError = 'No se pudo iniciar la suscripción automática en Mercado Pago.';
+            $friendlyError = $requirePreapproval
+                ? 'No se pudo activar el débito automático en Mercado Pago. No se generó cobro para evitar pagos sin renovación automática. Reintentá en unos minutos.'
+                : 'No se pudo iniciar la suscripción automática en Mercado Pago.';
 
             Log::error('MP_DEBUG_EXCEPTION', [
                 'trace_id' => $traceId,
