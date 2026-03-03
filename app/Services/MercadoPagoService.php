@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use MercadoPago\Client\Payment\PaymentClient;
 use MercadoPago\Client\PreApproval\PreApprovalClient;
+use MercadoPago\Client\Preference\PreferenceClient;
+use MercadoPago\Exceptions\MPApiException;
 use MercadoPago\MercadoPagoConfig;
 
 class MercadoPagoService
@@ -29,6 +31,7 @@ class MercadoPagoService
      */
     public function createPreference($plan, $price, $userEmail)
     {
+        $traceId = (string) Str::uuid();
         $planDetails = $this->getPlanDetails((string) $plan);
         $tenantId = Auth::user()?->tenant_id;
         $transactionAmount = (float) ($price ?: $planDetails['price']);
@@ -37,7 +40,8 @@ class MercadoPagoService
         $webhookBaseUrl = $this->resolveWebhookBaseUrl($checkoutBaseUrl);
 
         Log::info('MP_DEBUG_CREATE_PREF', [
-            'access_token' => config('services.mercadopago.access_token'),
+            'trace_id' => $traceId,
+            'access_token_masked' => $this->maskSecret((string) config('services.mercadopago.access_token')),
             'plan' => $plan,
             'price' => $price,
             'user_email' => $userEmail,
@@ -45,6 +49,7 @@ class MercadoPagoService
             'tenant_id' => $tenantId,
             'checkout_base_url' => $checkoutBaseUrl,
             'webhook_base_url' => $webhookBaseUrl,
+            'app_env' => config('app.env'),
         ]);
 
         try {
@@ -67,11 +72,61 @@ class MercadoPagoService
                 'notification_url' => $webhookBaseUrl . '/webhooks/mercadopago',
             ];
 
-            Log::info('MP_DEBUG_PAYLOAD', $payload);
+            Log::info('MP_DEBUG_PAYLOAD', [
+                'trace_id' => $traceId,
+                'provider' => 'preapproval',
+                'payload' => $this->sanitizePayloadForLogs($payload),
+            ]);
 
-            $preapproval = $client->create($payload);
+            try {
+                $preapproval = $client->create($payload);
+            } catch (MPApiException $firstException) {
+                $apiResponse = $firstException->getApiResponse();
+                $responseContent = $apiResponse ? $apiResponse->getContent() : null;
+                $apiMessage = is_array($responseContent)
+                    ? ($responseContent['message'] ?? null)
+                    : (is_object($responseContent) ? ($responseContent->message ?? null) : null);
+
+                $shouldRetryWithoutPayerEmail = !empty($payload['payer_email'])
+                    && is_string($apiMessage)
+                    && stripos($apiMessage, 'internal server error') !== false;
+
+                if (!$shouldRetryWithoutPayerEmail) {
+                    Log::error('MP_PREAPPROVAL_PRIMARY_FAILED', array_merge([
+                        'trace_id' => $traceId,
+                        'tenant_id' => $tenantId,
+                        'plan' => $plan,
+                        'retry_without_payer_email' => false,
+                    ], $this->extractApiExceptionDiagnostics($firstException)));
+                    throw $firstException;
+                }
+
+                $retryPayload = $payload;
+                unset($retryPayload['payer_email']);
+
+                Log::warning('MP_PREAPPROVAL_RETRY_WITHOUT_PAYER_EMAIL', [
+                    'trace_id' => $traceId,
+                    'tenant_id' => $tenantId,
+                    'plan' => $plan,
+                    'first_error' => $apiMessage,
+                    'retry_payload' => $this->sanitizePayloadForLogs($retryPayload),
+                ]);
+
+                try {
+                    $preapproval = $client->create($retryPayload);
+                } catch (MPApiException $retryException) {
+                    Log::error('MP_PREAPPROVAL_RETRY_FAILED', array_merge([
+                        'trace_id' => $traceId,
+                        'tenant_id' => $tenantId,
+                        'plan' => $plan,
+                    ], $this->extractApiExceptionDiagnostics($retryException)));
+
+                    throw $retryException;
+                }
+            }
 
             Log::info('MP_DEBUG_PREF_RESPONSE', [
+                'trace_id' => $traceId,
                 'preapproval' => $preapproval,
                 'preapproval_id' => $preapproval->id ?? null,
                 'init_point' => $preapproval->init_point ?? null,
@@ -80,6 +135,7 @@ class MercadoPagoService
 
             if (isset($preapproval->status) && !in_array($preapproval->status, ['authorized', 'pending'], true)) {
                 Log::warning('MP_DEBUG_PREF_STATUS', [
+                    'trace_id' => $traceId,
                     'status' => $preapproval->status,
                 ]);
             }
@@ -91,6 +147,7 @@ class MercadoPagoService
             }
 
             Log::error('MP_DEBUG_NO_INIT_POINT', [
+                'trace_id' => $traceId,
                 'preapproval' => $preapproval,
             ]);
 
@@ -98,9 +155,26 @@ class MercadoPagoService
                 'error' => 'Mercado Pago no devolvió init_point para iniciar el checkout de suscripción.',
             ];
         } catch (\Exception $e) {
+            $fallbackPreference = $this->createCheckoutProFallback(
+                $planDetails,
+                $transactionAmount,
+                $resolvedPayerEmail,
+                $checkoutBaseUrl,
+                $webhookBaseUrl,
+                $tenantId,
+                (string) $plan,
+                $e,
+                $traceId
+            );
+
+            if (isset($fallbackPreference['init_point'])) {
+                return $fallbackPreference;
+            }
+
             $friendlyError = 'No se pudo iniciar la suscripción automática en Mercado Pago.';
 
             Log::error('MP_DEBUG_EXCEPTION', [
+                'trace_id' => $traceId,
                 'message' => $e->getMessage(),
                 'trace' => $e->getTraceAsString(),
                 'exception_class' => get_class($e),
@@ -121,17 +195,24 @@ class MercadoPagoService
                     if (!empty($apiMessage)) {
                         $friendlyError = 'Mercado Pago: ' . $apiMessage;
 
+                        if (stripos($apiMessage, 'internal server error') !== false) {
+                            $friendlyError .= ' (error temporal de Mercado Pago, reintentá en unos segundos).';
+                        }
+
                         if (stripos($apiMessage, 'different countries') !== false) {
                             $friendlyError .= ' (usa un usuario comprador del mismo país que tu cuenta de Mercado Pago; en local podés setear MERCADOPAGO_TEST_PAYER_EMAIL).';
                         }
                     }
 
                     Log::error('MP_DEBUG_API_RESPONSE', [
+                        'trace_id' => $traceId,
+                        'diagnostics' => $this->extractApiExceptionDiagnostics($e),
                         'api_response' => $apiResponse ? json_encode($responseContent) : null,
                     ]);
                 }
             } catch (\Throwable $t) {
                 Log::error('MP_DEBUG_API_RESPONSE_FAIL', [
+                    'trace_id' => $traceId,
                     'message' => $t->getMessage(),
                     'trace' => $t->getTraceAsString(),
                 ]);
@@ -141,6 +222,173 @@ class MercadoPagoService
                 'error' => $friendlyError,
             ];
         }
+    }
+
+    private function createCheckoutProFallback(
+        array $planDetails,
+        float $transactionAmount,
+        string $resolvedPayerEmail,
+        string $checkoutBaseUrl,
+        string $webhookBaseUrl,
+        ?string $tenantId,
+        string $plan,
+        \Exception $originalException,
+        string $traceId
+    ): array {
+        try {
+            $client = new PreferenceClient();
+
+            $payload = [
+                'items' => [
+                    [
+                        'title' => 'Suscripción mensual ' . ($planDetails['name'] ?? 'Plan'),
+                        'quantity' => 1,
+                        'unit_price' => $transactionAmount,
+                        'currency_id' => 'ARS',
+                    ],
+                ],
+                'payer' => [
+                    'email' => $resolvedPayerEmail,
+                ],
+                'back_urls' => [
+                    'success' => $checkoutBaseUrl . '/subscriptions/success',
+                    'failure' => $checkoutBaseUrl . '/subscriptions/failure',
+                    'pending' => $checkoutBaseUrl . '/subscriptions/pending',
+                ],
+                'notification_url' => $webhookBaseUrl . '/webhooks/mercadopago',
+                'external_reference' => json_encode([
+                    'tenant_id' => $tenantId,
+                    'plan' => $plan,
+                ]),
+                'auto_return' => 'approved',
+            ];
+
+            Log::warning('MP_PREAPPROVAL_FAILED_USING_CHECKOUT_PRO_FALLBACK', [
+                'trace_id' => $traceId,
+                'tenant_id' => $tenantId,
+                'plan' => $plan,
+                'original_exception' => get_class($originalException),
+                'original_message' => $originalException->getMessage(),
+                'fallback_payload' => $this->sanitizePayloadForLogs($payload),
+            ]);
+
+            $preference = $client->create($payload);
+
+            if (!isset($preference->init_point)) {
+                return [];
+            }
+
+            return [
+                'init_point' => $preference->init_point,
+                'sandbox_init_point' => $preference->sandbox_init_point ?? null,
+                'fallback_mode' => 'checkout_pro',
+            ];
+        } catch (\Throwable $fallbackException) {
+            $diagnostics = $fallbackException instanceof MPApiException
+                ? $this->extractApiExceptionDiagnostics($fallbackException)
+                : [];
+
+            Log::error('MP_CHECKOUT_PRO_FALLBACK_FAILED', array_merge([
+                'trace_id' => $traceId,
+                'tenant_id' => $tenantId,
+                'plan' => $plan,
+                'error' => $fallbackException->getMessage(),
+            ], $diagnostics));
+
+            return [];
+        }
+    }
+
+    private function extractApiExceptionDiagnostics(\Throwable $exception): array
+    {
+        $data = [
+            'exception_class' => get_class($exception),
+            'exception_message' => $exception->getMessage(),
+        ];
+
+        if (!method_exists($exception, 'getApiResponse')) {
+            return $data;
+        }
+
+        try {
+            $apiResponse = call_user_func([$exception, 'getApiResponse']);
+
+            if (!$apiResponse) {
+                return $data;
+            }
+
+            $statusCode = null;
+            if (method_exists($apiResponse, 'getStatusCode')) {
+                $statusCode = $apiResponse->getStatusCode();
+            } elseif (property_exists($apiResponse, 'statusCode')) {
+                $statusCode = $apiResponse->statusCode;
+            }
+
+            $content = null;
+            if (method_exists($apiResponse, 'getContent')) {
+                $content = $apiResponse->getContent();
+            }
+
+            $headers = null;
+            if (method_exists($apiResponse, 'getHeaders')) {
+                $headers = $apiResponse->getHeaders();
+            } elseif (property_exists($apiResponse, 'headers')) {
+                $headers = $apiResponse->headers;
+            }
+
+            $data['api_status_code'] = $statusCode;
+            $data['api_content'] = is_string($content) ? $content : json_encode($content);
+            $data['api_headers'] = $headers;
+        } catch (\Throwable $parseError) {
+            $data['api_parse_error'] = $parseError->getMessage();
+        }
+
+        return $data;
+    }
+
+    private function sanitizePayloadForLogs(array $payload): array
+    {
+        $sanitized = $payload;
+
+        if (isset($sanitized['payer_email'])) {
+            $sanitized['payer_email'] = $this->maskEmail((string) $sanitized['payer_email']);
+        }
+
+        if (isset($sanitized['payer']['email'])) {
+            $sanitized['payer']['email'] = $this->maskEmail((string) $sanitized['payer']['email']);
+        }
+
+        return $sanitized;
+    }
+
+    private function maskEmail(string $email): string
+    {
+        $parts = explode('@', $email);
+        if (count($parts) !== 2) {
+            return '***';
+        }
+
+        $local = $parts[0];
+        $domain = $parts[1];
+        $maskedLocal = strlen($local) <= 2
+            ? str_repeat('*', strlen($local))
+            : substr($local, 0, 2) . str_repeat('*', max(strlen($local) - 2, 1));
+
+        return $maskedLocal . '@' . $domain;
+    }
+
+    private function maskSecret(string $secret): string
+    {
+        if ($secret === '') {
+            return '';
+        }
+
+        $length = strlen($secret);
+        if ($length <= 8) {
+            return str_repeat('*', $length);
+        }
+
+        return substr($secret, 0, 4) . str_repeat('*', $length - 8) . substr($secret, -4);
     }
 
     private function resolvePayerEmail(string $defaultEmail): string
