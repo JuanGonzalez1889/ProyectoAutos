@@ -49,17 +49,27 @@
                             <th class="px-2 py-1">Tenant</th>
                             <th class="px-2 py-1">Plan</th>
                             <th class="px-2 py-1">Estado</th>
+                            <th class="px-2 py-1">Renovación activada</th>
                             <th class="px-2 py-1">Inicio</th>
                             <th class="px-2 py-1">Fin</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach($allSubscriptions as $sub)
+                        @php
+                            $hasPreapprovalId = !empty($sub->mercadopago_id) && !is_numeric((string) $sub->mercadopago_id);
+                            $autoRenewEnabled = $sub->payment_method === 'mercadopago'
+                                && $hasPreapprovalId
+                                && $sub->status === 'active';
+                        @endphp
                         <tr>
                             <td class="border px-2 py-1">{{ $sub->id }}</td>
                             <td class="border px-2 py-1">{{ $sub->tenant->name ?? '-' }}</td>
                             <td class="border px-2 py-1">{{ $sub->plan }}</td>
                             <td class="border px-2 py-1">{{ $sub->status }}</td>
+                            <td class="border px-2 py-1 font-semibold {{ $autoRenewEnabled ? 'text-emerald-600' : 'text-red-600' }}">
+                                {{ $autoRenewEnabled ? 'SI' : 'NO' }}
+                            </td>
                             <td class="border px-2 py-1">{{ $sub->current_period_start ? $sub->current_period_start->format('Y-m-d') : '-' }}</td>
                             <td class="border px-2 py-1">{{ $sub->current_period_end ? $sub->current_period_end->format('Y-m-d') : '-' }}</td>
                         </tr>
