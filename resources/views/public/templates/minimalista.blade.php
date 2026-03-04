@@ -127,7 +127,7 @@
                     <div class="editable-section inline-block relative mb-4">
                         <h1 class="text-5xl font-bold" style="color: {{ $settings->hero_title_color ?? '#fff' }}">{{ $settings->hero_title }}</h1>
                         <div class="edit-btn" onclick="editText('hero_title', 'Editar Título del Hero')">
-                            <i class="fa fa-pencil"></i>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="14" height="14" fill="currentColor" style="vertical-align:middle"><path d="M12.146.854a.5.5 0 0 1 .708 0l2.292 2.292a.5.5 0 0 1 0 .708l-9.5 9.5a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l9.5-9.5z"/></svg>
                         </div>
                     </div>
                 @else
@@ -154,7 +154,7 @@
                             </div>
                         @endif
                         <div class="edit-btn absolute top-4 right-4 z-20" onclick="editImage('banner_url')">
-                            <i class="fa fa-pencil"></i>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="14" height="14" fill="currentColor" style="vertical-align:middle"><path d="M12.146.854a.5.5 0 0 1 .708 0l2.292 2.292a.5.5 0 0 1 0 .708l-9.5 9.5a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l9.5-9.5z"/></svg>
                         </div>
                     </div>
                 @else

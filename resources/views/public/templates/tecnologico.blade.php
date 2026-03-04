@@ -188,14 +188,14 @@
                                 </svg>
                             </div>
                         @endif
-                        <div class="edit-btn" onclick="editImage('logo_url')"><i class="fa fa-pencil"></i></div>
+                        <div class="edit-btn" onclick="editImage('logo_url')"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="14" height="14" fill="currentColor" style="vertical-align:middle"><path d="M12.146.854a.5.5 0 0 1 .708 0l2.292 2.292a.5.5 0 0 1 0 .708l-9.5 9.5a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l9.5-9.5z"/></svg></div>
                     </div>
                     <div class="editable-section inline-block relative"
                         style="min-width:100px; display:flex; align-items:center; gap:6px;">
                         <span class="text-lg font-bold text-white">{{ $tenant->name }}</span>
                         <button type="button" class="edit-btn"
                             style="position:static; display:flex; margin-left:4px; background:var(--primary-color); color:#fff; width:24px; height:24px; border-radius:50%; align-items:center; justify-content:center; cursor:pointer; z-index:50; border:none; font-size:10px;"
-                            onclick="editText('agency_name','Editar Nombre')"><i class="fa fa-pencil"></i></button>
+                            onclick="editText('agency_name','Editar Nombre')"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="14" height="14" fill="currentColor" style="vertical-align:middle"><path d="M12.146.854a.5.5 0 0 1 .708 0l2.292 2.292a.5.5 0 0 1 0 .708l-9.5 9.5a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l9.5-9.5z"/></svg></button>
                     </div>
                 @else
                     <div class="inline-block relative">
@@ -321,8 +321,7 @@
                                 <span class="gradient-text italic">{{ $heroLine2 }}</span>
                             @endif
                         </h1>
-                        <div class="edit-btn" onclick="editHeroTitle()"><i
-                                class="fa fa-pencil"></i></div>
+                        <div class="edit-btn" onclick="editHeroTitle()"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="14" height="14" fill="currentColor" style="vertical-align:middle"><path d="M12.146.854a.5.5 0 0 1 .708 0l2.292 2.292a.5.5 0 0 1 0 .708l-9.5 9.5a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l9.5-9.5z"/></svg></div>
                     </div>
                 @else
                     <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight mb-6">
@@ -338,8 +337,7 @@
                             style="color: {{ $settings->home_description_color ?? 'rgba(255,255,255,0.6)' }}">
                             {{ $settings->home_description ?? 'Gestión inteligente de inventario y CRM especializado para el sector de automóviles. La herramienta definitiva para vendedores de élite.' }}
                         </p>
-                        <div class="edit-btn" onclick="editText('home_description','Editar Descripción')"><i
-                                class="fa fa-pencil"></i></div>
+                        <div class="edit-btn" onclick="editText('home_description','Editar Descripción')"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="14" height="14" fill="currentColor" style="vertical-align:middle"><path d="M12.146.854a.5.5 0 0 1 .708 0l2.292 2.292a.5.5 0 0 1 0 .708l-9.5 9.5a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l9.5-9.5z"/></svg></div>
                     </div>
                 @else
                     <p class="text-lg text-white/60 leading-relaxed max-w-lg mb-8"
@@ -372,7 +370,7 @@
                                 </svg>
                             </div>
                         @endif
-                        <div class="edit-btn" onclick="editImage('banner_url')"><i class="fa fa-pencil"></i></div>
+                        <div class="edit-btn" onclick="editImage('banner_url')"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="14" height="14" fill="currentColor" style="vertical-align:middle"><path d="M12.146.854a.5.5 0 0 1 .708 0l2.292 2.292a.5.5 0 0 1 0 .708l-9.5 9.5a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l9.5-9.5z"/></svg></div>
                     </div>
                 @else
                     @if ($settings && $settings->banner_url)
@@ -575,7 +573,7 @@
                             <img src="{{ $settings->nosotros_url ?? 'https://images.unsplash.com/photo-1560958089-b8a1929cea89?w=800&h=500&fit=crop' }}"
                                 alt="Nosotros" class="w-full h-72 object-cover rounded-2xl"
                                 style="border: 1px solid rgba(255,255,255,0.06);">
-                            <div class="edit-btn" onclick="editImage('nosotros_url')"><i class="fa fa-pencil"></i>
+                            <div class="edit-btn" onclick="editImage('nosotros_url')"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="14" height="14" fill="currentColor" style="vertical-align:middle"><path d="M12.146.854a.5.5 0 0 1 .708 0l2.292 2.292a.5.5 0 0 1 0 .708l-9.5 9.5a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l9.5-9.5z"/></svg>
                             </div>
                         </div>
                     @else
@@ -595,8 +593,7 @@
                                 style="color: {{ $settings->nosotros_description_color ?? 'rgba(255,255,255,0.6)' }}">
                                 {{ $settings->nosotros_description ?? "Somos una plataforma automotriz de nueva generación que combina tecnología de punta con la pasión por los automóviles.\n\nNuestro equipo de expertos se dedica a encontrar el vehículo perfecto para cada cliente, con opciones de financiamiento a medida y un proceso 100% transparente." }}
                             </p>
-                            <div class="edit-btn" onclick="editText('nosotros_description','Editar Descripción')"><i
-                                    class="fa fa-pencil"></i></div>
+                            <div class="edit-btn" onclick="editText('nosotros_description','Editar Descripción')"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="14" height="14" fill="currentColor" style="vertical-align:middle"><path d="M12.146.854a.5.5 0 0 1 .708 0l2.292 2.292a.5.5 0 0 1 0 .708l-9.5 9.5a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l9.5-9.5z"/></svg></div>
                         </div>
                     @else
                         <p class="text-base text-white/60 leading-relaxed whitespace-pre-line mb-6"
@@ -620,7 +617,7 @@
                                 <div class="text-2xl font-bold text-white">{{ $settings->stat3 ?? '24/7' }}</div>
                                 <p class="text-xs text-white/40 mt-0.5">{{ $settings->stat3_label ?? 'Soporte' }}</p>
                             </div>
-                            <div class="edit-btn self-center" onclick="editStats()"><i class="fa fa-pencil"></i>
+                            <div class="edit-btn self-center" onclick="editStats()"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="14" height="14" fill="currentColor" style="vertical-align:middle"><path d="M12.146.854a.5.5 0 0 1 .708 0l2.292 2.292a.5.5 0 0 1 0 .708l-9.5 9.5a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l9.5-9.5z"/></svg>
                             </div>
                         </div>
                     @else

@@ -124,13 +124,13 @@
                             <div class="w-10 h-10 rounded-full" style="background: linear-gradient(135deg, var(--primary-color), white);"></div>
                         @endif
                         <div class="edit-btn" onclick="editImage('logo_url')">
-                            <i class="fa fa-pencil"></i>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="14" height="14" fill="currentColor" style="vertical-align:middle"><path d="M12.146.854a.5.5 0 0 1 .708 0l2.292 2.292a.5.5 0 0 1 0 .708l-9.5 9.5a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l9.5-9.5z"/></svg>
                         </div>
                     </div>
                     <div class="editable-section inline-block">
                         <span class="font-black text-xl tracking-wider" style="color: {{ $settings->agency_name_color ?? '#fff' }}">{{ $tenant->name }}</span>
                         <div class="edit-btn" onclick="editText('agency_name', 'Editar Nombre de Agencia')">
-                            <i class="fa fa-pencil"></i>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="14" height="14" fill="currentColor" style="vertical-align:middle"><path d="M12.146.854a.5.5 0 0 1 .708 0l2.292 2.292a.5.5 0 0 1 0 .708l-9.5 9.5a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l9.5-9.5z"/></svg>
                         </div>
                     </div>
                 @else

@@ -87,7 +87,7 @@
                         @if($showAgencyName)
                             <span class="text-xl font-bold" style="color: {{ $settings->agency_name_color ?? '#fff' }}; min-width: 80px; display: inline-block;">{{ $tenant->name }}</span>
                         @endif
-                        <button type="button" class="edit-btn" style="position:static; display:flex; margin-left:4px; background:#3b82f6; color:#fff; width:32px; height:32px; border-radius:50%; align-items:center; justify-content:center; cursor:pointer; box-shadow:0 2px 8px rgba(0,0,0,0.3); z-index:50; border:none;" onclick="editText('agency_name','Editar Nombre de Agencia')"><i class="fa fa-pencil"></i></button>
+                        <button type="button" class="edit-btn" style="position:static; display:flex; margin-left:4px; background:#3b82f6; color:#fff; width:32px; height:32px; border-radius:50%; align-items:center; justify-content:center; cursor:pointer; box-shadow:0 2px 8px rgba(0,0,0,0.3); z-index:50; border:none;" onclick="editText('agency_name','Editar Nombre de Agencia')"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="14" height="14" fill="currentColor" style="vertical-align:middle"><path d="M12.146.854a.5.5 0 0 1 .708 0l2.292 2.292a.5.5 0 0 1 0 .708l-9.5 9.5a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l9.5-9.5z"/></svg></button>
                     </div>
                 @else
                     @if($settings && $settings->logo_url)
@@ -178,7 +178,7 @@
                     <img src="{{ $settings->banner_url }}" alt="Banner" class="absolute inset-0 w-full h-full object-cover">
                 @endif
                 <div class="editable-section" style="position:absolute; top:16px; right:16px; z-index:51; width:40px; height:40px; display:flex; align-items:center; justify-content:center;">
-                    <button type="button" class="edit-btn" style="position:static; display:flex; background:#3b82f6; color:#fff; width:40px; height:40px; border-radius:50%; align-items:center; justify-content:center; cursor:pointer; box-shadow:0 2px 8px rgba(0,0,0,0.3); z-index:51; border:none;" onclick="editImage('banner_url')"><i class="fa fa-pencil"></i></button>
+                    <button type="button" class="edit-btn" style="position:static; display:flex; background:#3b82f6; color:#fff; width:40px; height:40px; border-radius:50%; align-items:center; justify-content:center; cursor:pointer; box-shadow:0 2px 8px rgba(0,0,0,0.3); z-index:51; border:none;" onclick="editImage('banner_url')"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="14" height="14" fill="currentColor" style="vertical-align:middle"><path d="M12.146.854a.5.5 0 0 1 .708 0l2.292 2.292a.5.5 0 0 1 0 .708l-9.5 9.5a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l9.5-9.5z"/></svg></button>
                 </div>
             </div>
         @else
@@ -192,7 +192,7 @@
                 @if(isset($editMode) && $editMode)
                     <div class="editable-section inline-block max-w-2xl mx-auto mb-6">
                         <p class="text-xl md:text-2xl font-extralight tracking-wide opacity-90" style="color: {{ $settings->home_description_color ?? '#fff' }}">{{ $settings->home_description ?? 'Descubre nuestro catálogo premium de vehículos' }}</p>
-                        <div class="edit-btn" onclick="editText('home_description','Editar Descripción Principal')"><i class="fa fa-pencil"></i></div>
+                        <div class="edit-btn" onclick="editText('home_description','Editar Descripción Principal')"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="14" height="14" fill="currentColor" style="vertical-align:middle"><path d="M12.146.854a.5.5 0 0 1 .708 0l2.292 2.292a.5.5 0 0 1 0 .708l-9.5 9.5a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l9.5-9.5z"/></svg></div>
                     </div>
                 @else
                     <p class="text-xl md:text-2xl max-w-2xl mx-auto font-extralight tracking-wide opacity-90 mb-6" style="color: {{ $settings->home_description_color ?? '#fff' }}">{{ $settings->home_description ?? 'Descubre nuestro catálogo premium de vehículos' }}</p>
@@ -292,7 +292,7 @@
                     @if(isset($editMode) && $editMode)
                         <div class="editable-section">
                             <p class="text-lg mb-8 leading-loose whitespace-pre-line font-light" style="color: {{ $settings->nosotros_description_color ?? '#222' }}">{{ $settings->nosotros_description ?? 'Somos una agencia de autos con más de 15 años de experiencia en el mercado automotriz.\n\nNuestro equipo de profesionales está comprometido en brindarte la mejor atención y asesoramiento.' }}</p>
-                            <div class="edit-btn" onclick="editText('nosotros_description','Editar Sección Nosotros')"><i class="fa fa-pencil"></i></div>
+                            <div class="edit-btn" onclick="editText('nosotros_description','Editar Sección Nosotros')"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="14" height="14" fill="currentColor" style="vertical-align:middle"><path d="M12.146.854a.5.5 0 0 1 .708 0l2.292 2.292a.5.5 0 0 1 0 .708l-9.5 9.5a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l9.5-9.5z"/></svg></div>
                         </div>
                         <div class="editable-section flex gap-6 mt-4">
                             <div class="text-center">
@@ -307,7 +307,7 @@
                                 <div class="text-4xl font-bold" style="color: var(--primary-color);">{{ $settings->stat3 ?? '24h' }}</div>
                                 <p class="text-gray-300">{{ $settings->stat3_label ?? 'Atención al Cliente' }}</p>
                             </div>
-                            <div class="edit-btn self-center" onclick="editStats()"><i class="fa fa-pencil"></i></div>
+                            <div class="edit-btn self-center" onclick="editStats()"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="14" height="14" fill="currentColor" style="vertical-align:middle"><path d="M12.146.854a.5.5 0 0 1 .708 0l2.292 2.292a.5.5 0 0 1 0 .708l-9.5 9.5a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l9.5-9.5z"/></svg></div>
                         </div>
                     @else
                         <p class="text-lg mb-8 leading-loose whitespace-pre-line font-light" style="color: {{ $settings->nosotros_description_color ?? '#222' }}">{{ $settings->nosotros_description ?? 'Somos una agencia de autos con más de 15 años de experiencia en el mercado automotriz.\n\nNuestro equipo de profesionales está comprometido en brindarte la mejor atención y asesoramiento.' }}</p>
@@ -330,7 +330,7 @@
                 <div class="h-96 rounded-3xl overflow-hidden shadow-2xl glass @if(isset($editMode) && $editMode) editable-section @endif">
                     <img src="{{ $settings->nosotros_url ?? 'https://images.unsplash.com/photo-1487730116645-74489c95b41b?w=600&h=500&fit=crop' }}" alt="Nosotros" class="w-full h-full object-cover">
                     @if(isset($editMode) && $editMode)
-                        <div class="edit-btn" onclick="editImage('nosotros_url')"><i class="fa fa-pencil"></i></div>
+                        <div class="edit-btn" onclick="editImage('nosotros_url')"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="14" height="14" fill="currentColor" style="vertical-align:middle"><path d="M12.146.854a.5.5 0 0 1 .708 0l2.292 2.292a.5.5 0 0 1 0 .708l-9.5 9.5a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l9.5-9.5z"/></svg></div>
                     @endif
                 </div>
             </div>

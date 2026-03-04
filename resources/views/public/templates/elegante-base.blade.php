@@ -65,11 +65,11 @@
                                 <span class="font-display text-xl" style="color: var(--primary-color);">{{ substr($tenant->name, 0, 1) }}</span>
                             </div>
                         @endif
-                        <div class="edit-btn" onclick="editImage('logo_url')"><i class="fa fa-pencil"></i></div>
+                        <div class="edit-btn" onclick="editImage('logo_url')"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="14" height="14" fill="currentColor" style="vertical-align:middle"><path d="M12.146.854a.5.5 0 0 1 .708 0l2.292 2.292a.5.5 0 0 1 0 .708l-9.5 9.5a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l9.5-9.5z"/></svg></div>
                     </div>
                     <div class="editable-section inline-block relative" style="min-width: 120px; display: flex; align-items: center; gap: 8px;">
                         <span class="font-display text-lg tracking-[0.3em] uppercase" style="color: {{ $settings->agency_name_color ?? 'var(--primary-color)' }}">{{ $tenant->name }}</span>
-                        <button type="button" class="edit-btn" style="position:static; display:flex; margin-left:4px; background:var(--primary-color); color:#0a0a0a; width:28px; height:28px; border-radius:50%; align-items:center; justify-content:center; cursor:pointer; z-index:50; border:none;" onclick="editText('agency_name','Editar Nombre de Agencia')"><i class="fa fa-pencil"></i></button>
+                        <button type="button" class="edit-btn" style="position:static; display:flex; margin-left:4px; background:var(--primary-color); color:#0a0a0a; width:28px; height:28px; border-radius:50%; align-items:center; justify-content:center; cursor:pointer; z-index:50; border:none;" onclick="editText('agency_name','Editar Nombre de Agencia')"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="14" height="14" fill="currentColor" style="vertical-align:middle"><path d="M12.146.854a.5.5 0 0 1 .708 0l2.292 2.292a.5.5 0 0 1 0 .708l-9.5 9.5a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l9.5-9.5z"/></svg></button>
                     </div>
                 @else
                     <div class="inline-block relative mb-1">

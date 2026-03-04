@@ -129,11 +129,11 @@
                                 <span class="text-white font-bold text-lg">{{ substr($tenant->name, 0, 1) }}</span>
                             </div>
                         @endif
-                        <div class="edit-btn" onclick="editImage('logo_url')"><i class="fa fa-pencil"></i></div>
+                        <div class="edit-btn" onclick="editImage('logo_url')"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="14" height="14" fill="currentColor" style="vertical-align:middle"><path d="M12.146.854a.5.5 0 0 1 .708 0l2.292 2.292a.5.5 0 0 1 0 .708l-9.5 9.5a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l9.5-9.5z"/></svg></div>
                     </div>
                     <div class="editable-section inline-block relative" style="min-width:100px; display:flex; align-items:center; gap:6px;">
                         <span class="text-lg font-semibold" style="color: var(--primary-color);">{{ $tenant->name }}</span>
-                        <button type="button" class="edit-btn" style="position:static; display:flex; margin-left:4px; background:var(--primary-color); color:#fff; width:24px; height:24px; border-radius:50%; align-items:center; justify-content:center; cursor:pointer; z-index:50; border:none; font-size:10px;" onclick="editText('agency_name','Editar Nombre')"><i class="fa fa-pencil"></i></button>
+                        <button type="button" class="edit-btn" style="position:static; display:flex; margin-left:4px; background:var(--primary-color); color:#fff; width:24px; height:24px; border-radius:50%; align-items:center; justify-content:center; cursor:pointer; z-index:50; border:none; font-size:10px;" onclick="editText('agency_name','Editar Nombre')"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="14" height="14" fill="currentColor" style="vertical-align:middle"><path d="M12.146.854a.5.5 0 0 1 .708 0l2.292 2.292a.5.5 0 0 1 0 .708l-9.5 9.5a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l9.5-9.5z"/></svg></button>
                     </div>
                 @else
                     @if($settings && $settings->logo_url)
@@ -228,7 +228,7 @@
                             <svg class="w-16 h-16 text-white/20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
                         </div>
                     @endif
-                    <button type="button" class="edit-btn" style="position:absolute; top:16px; right:16px; background:var(--primary-color); color:#fff; width:40px; height:40px; border-radius:50%; display:flex; align-items:center; justify-content:center; cursor:pointer; z-index:51; border:none;" onclick="editImage('banner_url')"><i class="fa fa-pencil"></i></button>
+                    <button type="button" class="edit-btn" style="position:absolute; top:16px; right:16px; background:var(--primary-color); color:#fff; width:40px; height:40px; border-radius:50%; display:flex; align-items:center; justify-content:center; cursor:pointer; z-index:51; border:none;" onclick="editImage('banner_url')"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="14" height="14" fill="currentColor" style="vertical-align:middle"><path d="M12.146.854a.5.5 0 0 1 .708 0l2.292 2.292a.5.5 0 0 1 0 .708l-9.5 9.5a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l9.5-9.5z"/></svg></button>
                 </div>
             @else
                 @if($settings && $settings->banner_url)
@@ -262,7 +262,7 @@
             @if(isset($editMode) && $editMode)
                 <div class="editable-section mb-6">
                     <p class="text-xl md:text-2xl font-light leading-relaxed" style="color: {{ $settings->home_description_color ?? $textColor }}">{{ $settings->home_description ?? 'Su próximo vehículo lo espera. Más de 15 años ofreciendo las mejores opciones del mercado con financiamiento a medida.' }}</p>
-                    <div class="edit-btn" onclick="editText('home_description','Editar Descripción')"><i class="fa fa-pencil"></i></div>
+                    <div class="edit-btn" onclick="editText('home_description','Editar Descripción')"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="14" height="14" fill="currentColor" style="vertical-align:middle"><path d="M12.146.854a.5.5 0 0 1 .708 0l2.292 2.292a.5.5 0 0 1 0 .708l-9.5 9.5a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l9.5-9.5z"/></svg></div>
                 </div>
             @else
                 <p class="text-xl md:text-2xl font-light leading-relaxed mb-6" style="color: {{ $settings->home_description_color ?? $textColor }}">{{ $settings->home_description ?? 'Su próximo vehículo lo espera. Más de 15 años ofreciendo las mejores opciones del mercado con financiamiento a medida.' }}</p>
@@ -404,7 +404,7 @@
                     @if(isset($editMode) && $editMode)
                         <div class="editable-section mb-6">
                             <p class="text-gray-600 text-base leading-relaxed whitespace-pre-line" style="color: {{ $settings->nosotros_description_color ?? '#4b5563' }}">{{ $settings->nosotros_description ?? "Somos una empresa automotriz comprometida con la excelencia en el servicio.\n\nContamos con un equipo profesional dedicado a encontrar el vehículo ideal para cada cliente, con opciones de financiamiento adaptadas a sus necesidades." }}</p>
-                            <div class="edit-btn" onclick="editText('nosotros_description','Editar Descripción Empresa')"><i class="fa fa-pencil"></i></div>
+                            <div class="edit-btn" onclick="editText('nosotros_description','Editar Descripción Empresa')"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="14" height="14" fill="currentColor" style="vertical-align:middle"><path d="M12.146.854a.5.5 0 0 1 .708 0l2.292 2.292a.5.5 0 0 1 0 .708l-9.5 9.5a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l9.5-9.5z"/></svg></div>
                         </div>
                     @else
                         <p class="text-gray-600 text-base leading-relaxed whitespace-pre-line mb-6" style="color: {{ $settings->nosotros_description_color ?? '#4b5563' }}">{{ $settings->nosotros_description ?? "Somos una empresa automotriz comprometida con la excelencia en el servicio.\n\nContamos con un equipo profesional dedicado a encontrar el vehículo ideal para cada cliente, con opciones de financiamiento adaptadas a sus necesidades." }}</p>
@@ -423,7 +423,7 @@
                                 <div class="text-2xl font-bold" style="color: var(--primary-color);">{{ $settings->stat3 ?? '100%' }}</div>
                                 <p class="text-xs text-gray-500 mt-0.5">{{ $settings->stat3_label ?? 'Documentación Legal' }}</p>
                             </div>
-                            <div class="edit-btn self-center" onclick="editStats()"><i class="fa fa-pencil"></i></div>
+                            <div class="edit-btn self-center" onclick="editStats()"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="14" height="14" fill="currentColor" style="vertical-align:middle"><path d="M12.146.854a.5.5 0 0 1 .708 0l2.292 2.292a.5.5 0 0 1 0 .708l-9.5 9.5a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l9.5-9.5z"/></svg></div>
                         </div>
                     @else
                         <div class="flex gap-10 pt-6 border-t border-gray-200">
@@ -446,7 +446,7 @@
                     @if(isset($editMode) && $editMode)
                         <div class="editable-section rounded-2xl overflow-hidden shadow-xl">
                             <img src="{{ $settings->nosotros_url ?? 'https://images.unsplash.com/photo-1560958089-b8a1929cea89?w=800&h=600&fit=crop' }}" alt="Empresa" class="w-full h-80 object-cover">
-                            <div class="edit-btn" onclick="editImage('nosotros_url')"><i class="fa fa-pencil"></i></div>
+                            <div class="edit-btn" onclick="editImage('nosotros_url')"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="14" height="14" fill="currentColor" style="vertical-align:middle"><path d="M12.146.854a.5.5 0 0 1 .708 0l2.292 2.292a.5.5 0 0 1 0 .708l-9.5 9.5a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l9.5-9.5z"/></svg></div>
                         </div>
                     @else
                         <div class="rounded-2xl overflow-hidden shadow-xl">

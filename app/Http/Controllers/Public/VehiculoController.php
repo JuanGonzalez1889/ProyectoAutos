@@ -20,6 +20,7 @@ class VehiculoController extends Controller
         $settings = $tenant->settings ?? null;
         $vehicles = Vehicle::where('is_active', true)
             ->where('tenant_id', $tenant->id)
+            ->where('status', 'published')
             ->get();
         // Selección dinámica de vista según template
         $template = $settings && $settings->template ? $settings->template : 'moderno';
@@ -83,6 +84,7 @@ class VehiculoController extends Controller
 
         $vehicles = Vehicle::where('is_active', true)
             ->where('tenant_id', $tenant->id)
+            ->where('status', 'published')
             ->get();
 
         // Selección dinámica de vista según template

@@ -106,11 +106,11 @@
                                 <span class="font-display text-xl" style="color: var(--primary-color);">{{ substr($tenant->name, 0, 1) }}</span>
                             </div>
                         @endif
-                        <div class="edit-btn" onclick="editImage('logo_url')"><i class="fa fa-pencil"></i></div>
+                        <div class="edit-btn" onclick="editImage('logo_url')"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="14" height="14" fill="currentColor" style="vertical-align:middle"><path d="M12.146.854a.5.5 0 0 1 .708 0l2.292 2.292a.5.5 0 0 1 0 .708l-9.5 9.5a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l9.5-9.5z"/></svg></div>
                     </div>
                     <div class="editable-section inline-block relative" style="min-width: 120px; display: flex; align-items: center; gap: 8px;">
                         <span class="font-display text-lg tracking-[0.3em] uppercase" style="color: {{ $settings->agency_name_color ?? 'var(--primary-color)' }}">{{ $tenant->name }}</span>
-                        <button type="button" class="edit-btn" style="position:static; display:flex; margin-left:4px; background:var(--primary-color); color:#0a0a0a; width:28px; height:28px; border-radius:50%; align-items:center; justify-content:center; cursor:pointer; z-index:50; border:none;" onclick="editText('agency_name','Editar Nombre de Agencia')"><i class="fa fa-pencil"></i></button>
+                        <button type="button" class="edit-btn" style="position:static; display:flex; margin-left:4px; background:var(--primary-color); color:#0a0a0a; width:28px; height:28px; border-radius:50%; align-items:center; justify-content:center; cursor:pointer; z-index:50; border:none;" onclick="editText('agency_name','Editar Nombre de Agencia')"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="14" height="14" fill="currentColor" style="vertical-align:middle"><path d="M12.146.854a.5.5 0 0 1 .708 0l2.292 2.292a.5.5 0 0 1 0 .708l-9.5 9.5a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l9.5-9.5z"/></svg></button>
                     </div>
                 @else
                     <div class="inline-block relative mb-1">
@@ -165,7 +165,7 @@
                         <div class="w-full h-full" style="background: linear-gradient(135deg, #1a1a1a, #0a0a0a);"></div>
                     @endif
                     <div class="editable-section" style="position:absolute; top:16px; right:16px; z-index:51; width:40px; height:40px; display:flex; align-items:center; justify-content:center;">
-                        <button type="button" class="edit-btn" style="position:static; display:flex; background:var(--primary-color); color:#0a0a0a; width:40px; height:40px; border-radius:50%; align-items:center; justify-content:center; cursor:pointer; z-index:51; border:none;" onclick="editImage('banner_url')"><i class="fa fa-pencil"></i></button>
+                        <button type="button" class="edit-btn" style="position:static; display:flex; background:var(--primary-color); color:#0a0a0a; width:40px; height:40px; border-radius:50%; align-items:center; justify-content:center; cursor:pointer; z-index:51; border:none;" onclick="editImage('banner_url')"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="14" height="14" fill="currentColor" style="vertical-align:middle"><path d="M12.146.854a.5.5 0 0 1 .708 0l2.292 2.292a.5.5 0 0 1 0 .708l-9.5 9.5a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l9.5-9.5z"/></svg></button>
                     </div>
                 </div>
             @else
@@ -185,7 +185,7 @@
             @if(isset($editMode) && $editMode)
                 <div class="editable-section mb-8">
                     <p class="font-display text-2xl md:text-3xl font-light leading-relaxed italic" style="color: {{ $settings->home_description_color ?? 'rgba(255,255,255,0.85)' }}">{{ $settings->home_description ?? 'Donde la excelencia automotriz se encuentra con el servicio personalizado.' }}</p>
-                    <div class="edit-btn" onclick="editText('home_description','Editar Descripción Principal')"><i class="fa fa-pencil"></i></div>
+                    <div class="edit-btn" onclick="editText('home_description','Editar Descripción Principal')"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="14" height="14" fill="currentColor" style="vertical-align:middle"><path d="M12.146.854a.5.5 0 0 1 .708 0l2.292 2.292a.5.5 0 0 1 0 .708l-9.5 9.5a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l9.5-9.5z"/></svg></div>
                 </div>
             @else
                 <p class="font-display text-2xl md:text-3xl font-light leading-relaxed italic mb-8" style="color: {{ $settings->home_description_color ?? 'rgba(255,255,255,0.85)' }}">{{ $settings->home_description ?? 'Donde la excelencia automotriz se encuentra con el servicio personalizado.' }}</p>
@@ -260,7 +260,7 @@
         <div class="absolute inset-0 @if(isset($editMode) && $editMode) editable-section @endif">
             <img src="{{ $settings->nosotros_url ?? 'https://images.unsplash.com/photo-1563720223185-11003d516935?w=1200&h=600&fit=crop' }}" alt="Nosotros" class="w-full h-full object-cover">
             @if(isset($editMode) && $editMode)
-                <div class="edit-btn" onclick="editImage('nosotros_url')"><i class="fa fa-pencil"></i></div>
+                <div class="edit-btn" onclick="editImage('nosotros_url')"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="14" height="14" fill="currentColor" style="vertical-align:middle"><path d="M12.146.854a.5.5 0 0 1 .708 0l2.292 2.292a.5.5 0 0 1 0 .708l-9.5 9.5a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l9.5-9.5z"/></svg></div>
             @endif
         </div>
         <div class="absolute inset-0" style="background: linear-gradient(to right, rgba(10,10,10,0.92) 0%, rgba(10,10,10,0.7) 50%, rgba(10,10,10,0.4) 100%);"></div>
@@ -272,7 +272,7 @@
                 @if(isset($editMode) && $editMode)
                     <div class="editable-section mb-8">
                         <p class="font-body text-lg leading-loose text-gray-200 whitespace-pre-line" style="color: {{ $settings->nosotros_description_color ?? '#e5e7eb' }}">{{ $settings->nosotros_description ?? "Somos una agencia de autos premium con más de 15 años de experiencia.\n\nNos especializamos en vehículos de alta gama, ofreciendo un servicio personalizado y exclusivo." }}</p>
-                        <div class="edit-btn" onclick="editText('nosotros_description','Editar Sección Nosotros')"><i class="fa fa-pencil"></i></div>
+                        <div class="edit-btn" onclick="editText('nosotros_description','Editar Sección Nosotros')"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="14" height="14" fill="currentColor" style="vertical-align:middle"><path d="M12.146.854a.5.5 0 0 1 .708 0l2.292 2.292a.5.5 0 0 1 0 .708l-9.5 9.5a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l9.5-9.5z"/></svg></div>
                     </div>
                 @else
                     <p class="font-body text-lg leading-loose text-gray-200 whitespace-pre-line mb-8" style="color: {{ $settings->nosotros_description_color ?? '#e5e7eb' }}">{{ $settings->nosotros_description ?? "Somos una agencia de autos premium con más de 15 años de experiencia.\n\nNos especializamos en vehículos de alta gama, ofreciendo un servicio personalizado y exclusivo." }}</p>
@@ -291,7 +291,7 @@
                             <div class="font-display text-3xl font-bold" style="color: var(--primary-color);">{{ $settings->stat3 ?? '24h' }}</div>
                             <p class="text-gray-500 text-[10px] tracking-[0.2em] uppercase mt-1">{{ $settings->stat3_label ?? 'Atención' }}</p>
                         </div>
-                        <div class="edit-btn self-center" onclick="editStats()"><i class="fa fa-pencil"></i></div>
+                        <div class="edit-btn self-center" onclick="editStats()"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="14" height="14" fill="currentColor" style="vertical-align:middle"><path d="M12.146.854a.5.5 0 0 1 .708 0l2.292 2.292a.5.5 0 0 1 0 .708l-9.5 9.5a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l9.5-9.5z"/></svg></div>
                     </div>
                 @else
                     <div class="flex gap-12 mt-8 pt-8" style="border-top: 1px solid rgba(201,169,110,0.15);">

@@ -247,9 +247,10 @@
                             class="inline-block px-3 py-1 bg-blue-500/10 border border-blue-500/30 rounded-md text-xs font-bold text-blue-400 mb-2">
                             01 / REGISTRO
                         </div>
-                        <h3 class="text-xl font-bold text-white mb-2">Registro</h3>
+                        <h3 class="text-xl font-bold text-white mb-2">Registro y Selección de dominio</h3>
                         <p class="text-slate-400 text-sm leading-relaxed">
-                            Creá tu cuenta en segundos con email y contraseña. Sin tarjetas de crédito, comenzás gratis.
+                            Creá tu cuenta en segundos con email y contraseña, Y elegí un subdominio gratuito. Si querés un
+                            dominio personalizado, también podés hacerlo.
                         </p>
                     </div>
 
@@ -273,6 +274,8 @@
                         <p class="text-slate-400 text-sm leading-relaxed">
                             Elegí entre diseños profesionales optimizados para concesionarias. Todos responsive y rápidos.
                         </p>
+                        <p class="text-slate-400 text-sm leading-relaxed">Vistas: Inicio - Vehículos - Nosotros - Contacto</p>
+
                     </div>
 
                     <!-- Step 3 -->
@@ -293,7 +296,8 @@
                         </div>
                         <h3 class="text-xl font-bold text-white mb-2">Datos e Imágenes</h3>
                         <p class="text-slate-400 text-sm leading-relaxed">
-                            Completá el nombre de tu agencia, logo, colores y subí las fotos de tus vehículos. Todo drag &
+                            Completá el nombre de tu agencia, logo, colores y editá la plantilla con tus datos reales. Todo
+                            drag &
                             drop.
                         </p>
                     </div>
@@ -312,11 +316,12 @@
 
                         <div
                             class="inline-block px-3 py-1 bg-blue-500/10 border border-blue-500/30 rounded-md text-xs font-bold text-blue-400 mb-2">
-                            04 / DOMINIO
+                            04 / INVENTARIO
                         </div>
-                        <h3 class="text-xl font-bold text-white mb-2">Selección de Dominio</h3>
+                        <h3 class="text-xl font-bold text-white mb-2">Subir tus vehículos a la web</h3>
                         <p class="text-slate-400 text-sm leading-relaxed">
-                            Elegí tu dominio personalizado (ej: tuagencia.com) o usá un subdominio gratis mientras decidís.
+                            Ingresá a INVENTARIO, y comenzá a agregar vehículos con fotos, descripción, precio y detalles
+                            técnicos. Todo lo que tus clientes necesitan saber.
                         </p>
                     </div>
 
@@ -480,7 +485,7 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7">
                             </path>
                         </svg>
-                        Integración con redes sociales y formularios de contacto.
+                        Formulario de contacto y botón de whatsapp integrados para cada vehículo.
                     </li>
                 </ul>
                 <a href="login" class="text-blue-400 font-semibold hover:text-blue-300 transition-colors">Ver ejemplos

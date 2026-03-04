@@ -222,37 +222,9 @@
             formData.append('font_family', fontFamily);
             formData.append('template', '{{ $template }}');
 
-            // Mantener valores actuales usando un objeto
-            const currentValues = {
-                home_description: @json($settings->home_description ?? ''),
-                nosotros_description: @json($settings->nosotros_description ?? ''),
-                nosotros_url: @json($settings->nosotros_url ?? ''),
-                contact_message: @json($settings->contact_message ?? ''),
-                phone: @json($settings->phone ?? ''),
-                email: @json($settings->email ?? ''),
-                whatsapp: @json($settings->whatsapp ?? ''),
-                logo_url: @json($settings->logo_url ?? ''),
-                banner_url: @json($settings->banner_url ?? ''),
-                facebook_url: @json($settings->facebook_url ?? ''),
-                instagram_url: @json($settings->instagram_url ?? ''),
-                linkedin_url: @json($settings->linkedin_url ?? ''),
-                stat1: @json($settings->stat1 ?? ''),
-                stat2: @json($settings->stat2 ?? ''),
-                stat3: @json($settings->stat3 ?? ''),
-                stat1_label: @json($settings->stat1_label ?? ''),
-                stat2_label: @json($settings->stat2_label ?? ''),
-                stat3_label: @json($settings->stat3_label ?? '')
-            };
-
-            // Agregar solo campos no vacíos
-            Object.keys(currentValues).forEach(key => {
-                if (currentValues[key]) {
-                    formData.append(key, currentValues[key]);
-                }
-            });
-
-            formData.append('show_vehicles', '{{ $settings->show_vehicles ? "1" : "0" }}');
-            formData.append('show_contact_form', '{{ $settings->show_contact_form ? "1" : "0" }}');
+            // Solo enviar colores, fuente y template.
+            // Los demas campos (logo, banner, textos, etc.) ya se guardan en tiempo real
+            // via updateField() dentro del iframe, no reenviarlos aqui.
 
             fetch('{{ route("admin.landing-config.update") }}', {
                 method: 'POST',
