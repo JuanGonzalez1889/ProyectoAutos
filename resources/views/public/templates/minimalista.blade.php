@@ -193,7 +193,7 @@
                                 </div>
                                 <p class="text-gray-300 text-sm mb-3 line-clamp-2">{{ Str::limit($vehicle->description, 150) }}</p>
                                 <a href="{{ route('public.vehiculos.show', $vehicle->id) }}" class="px-4 py-2 rounded text-white text-sm font-medium transition hover:opacity-90" style="background: linear-gradient(135deg, var(--primary-color), var(--tertiary-color));">Ver más</a>
-                                <button onclick="openForm('{{ $vehicle->id }}', '{{ $vehicle->title }}')" class="ml-2 px-4 py-2 rounded text-white text-sm font-medium transition hover:opacity-90 bg-blue-700">Consultar</button>
+                                <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $settings->whatsapp ?? '') }}?text=Hola! Estoy interesado en el {{ urlencode($vehicle->title) }}" target="_blank" class="ml-2 px-4 py-2 rounded text-white text-sm font-medium transition hover:opacity-90" style="background: #25d366;">💬 WhatsApp</a>
                             </div>
                         </div>
                     </div>

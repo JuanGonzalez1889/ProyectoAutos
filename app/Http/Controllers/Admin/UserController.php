@@ -297,13 +297,7 @@ class UserController extends Controller
                 ]);
                 abort(403, 'No tienes permiso para eliminar este usuario');
             }
-            // Además, debe tener el permiso granular
-            if (!$currentUser->can('users.delete.agencia')) {
-                Log::warning('[DEBUG USERS] Agenciero SIN permiso users.delete.agencia', [
-                    'user_id' => $currentUser->id
-                ]);
-                abort(403, 'No tienes permiso para eliminar usuarios de tu agencia');
-            }
+            Log::info('[DEBUG USERS] Agenciero eliminando usuario de su agencia');
         } else {
             Log::warning('[DEBUG USERS] User sin permisos para eliminar usuarios', ['id' => $currentUser->id]);
             abort(403, 'No tienes permiso para eliminar usuarios');

@@ -140,18 +140,18 @@
             </div>
             <!-- Menú normal en desktop -->
             <div class="hidden md:flex items-center gap-8">
-                <a href="#inicio" class="navbar-link-auto hover:opacity-80 transition font-medium" style="color: {{ $settings->navbar_links_color ?? 'var(--navbar-text-color, #fff)' }}">Inicio</a>
+                <a href="/" class="navbar-link-auto hover:opacity-80 transition font-medium" style="color: {{ $settings->navbar_links_color ?? 'var(--navbar-text-color, #fff)' }}">Inicio</a>
                 <a href="{{ route('public.vehiculos') }}" class="navbar-link-auto hover:opacity-80 transition font-medium" style="color: {{ $settings->navbar_links_color ?? 'var(--navbar-text-color, #fff)' }}">Vehículos</a>
-                <a href="#nosotros" class="navbar-link-auto hover:opacity-80 transition font-medium" style="color: {{ $settings->navbar_links_color ?? 'var(--navbar-text-color, #fff)' }}">Nosotros</a>
-                <a href="#contacto" class="navbar-link-auto hover:opacity-80 transition font-medium" style="color: {{ $settings->navbar_links_color ?? 'var(--navbar-text-color, #fff)' }}">Contacto</a>
+                <a href="/#nosotros" class="navbar-link-auto hover:opacity-80 transition font-medium" style="color: {{ $settings->navbar_links_color ?? 'var(--navbar-text-color, #fff)' }}">Nosotros</a>
+                <a href="/#contacto" class="navbar-link-auto hover:opacity-80 transition font-medium" style="color: {{ $settings->navbar_links_color ?? 'var(--navbar-text-color, #fff)' }}">Contacto</a>
             </div>
             <!-- Menú hamburguesa en mobile -->
             <div id="mobile-menu" class="mobile-menu md:hidden">
                 <div class="flex flex-col gap-4 p-4">
-                    <a href="#inicio" class="navbar-link-auto hover:opacity-80 transition font-medium" style="color: {{ $settings->navbar_links_color ?? 'var(--navbar-text-color, #fff)' }}">Inicio</a>
+                    <a href="/" class="navbar-link-auto hover:opacity-80 transition font-medium" style="color: {{ $settings->navbar_links_color ?? 'var(--navbar-text-color, #fff)' }}">Inicio</a>
                     <a href="{{ route('public.vehiculos') }}" class="navbar-link-auto hover:opacity-80 transition font-medium" style="color: {{ $settings->navbar_links_color ?? 'var(--navbar-text-color, #fff)' }}">Vehículos</a>
-                    <a href="#nosotros" class="navbar-link-auto hover:opacity-80 transition font-medium" style="color: {{ $settings->navbar_links_color ?? 'var(--navbar-text-color, #fff)' }}">Nosotros</a>
-                    <a href="#contacto" class="navbar-link-auto hover:opacity-80 transition font-medium" style="color: {{ $settings->navbar_links_color ?? 'var(--navbar-text-color, #fff)' }}">Contacto</a>
+                    <a href="/#nosotros" class="navbar-link-auto hover:opacity-80 transition font-medium" style="color: {{ $settings->navbar_links_color ?? 'var(--navbar-text-color, #fff)' }}">Nosotros</a>
+                    <a href="/#contacto" class="navbar-link-auto hover:opacity-80 transition font-medium" style="color: {{ $settings->navbar_links_color ?? 'var(--navbar-text-color, #fff)' }}">Contacto</a>
                 </div>
             </div>
         </div>

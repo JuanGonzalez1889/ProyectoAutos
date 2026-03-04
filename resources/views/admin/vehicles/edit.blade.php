@@ -105,8 +105,9 @@
                     <select name="fuel_type"
                             class="w-full h-10 px-3 bg-[hsl(var(--background))] border border-[hsl(var(--border))] rounded-lg text-sm focus:outline-none focus:border-[hsl(var(--primary))]">
                         <option value="">Seleccionar...</option>
-                        <option value="Gasolina" {{ old('fuel_type', $vehicle->fuel_type) === 'Gasolina' ? 'selected' : '' }}>Gasolina</option>
+                        <option value="Nafta" {{ old('fuel_type', $vehicle->fuel_type) === 'Nafta' ? 'selected' : '' }}>Nafta</option>
                         <option value="Diesel" {{ old('fuel_type', $vehicle->fuel_type) === 'Diesel' ? 'selected' : '' }}>Diesel</option>
+                        <option value="GNC" {{ old('fuel_type', $vehicle->fuel_type) === 'GNC' ? 'selected' : '' }}>GNC</option>
                         <option value="Eléctrico" {{ old('fuel_type', $vehicle->fuel_type) === 'Eléctrico' ? 'selected' : '' }}>Eléctrico</option>
                         <option value="Híbrido" {{ old('fuel_type', $vehicle->fuel_type) === 'Híbrido' ? 'selected' : '' }}>Híbrido</option>
                     </select>

@@ -105,8 +105,8 @@
                 <div class="hidden md:flex gap-6">
                     <a href="/" class="text-sm navbar-link-auto transition" style="color: {{ $settings->navbar_links_color ?? 'var(--navbar-text-color, #fff)' }}">Inicio</a>
                     <a href="{{ route('public.vehiculos') }}" class="text-sm navbar-link-auto transition" style="color: {{ $settings->navbar_links_color ?? 'var(--navbar-text-color, #fff)' }}">Vehículos</a>
-                    <a href="#nosotros" class="text-sm navbar-link-auto transition" style="color: {{ $settings->navbar_links_color ?? 'var(--navbar-text-color, #fff)' }}">Nosotros</a>
-                    <a href="#contacto" class="text-sm navbar-link-auto transition" style="color: {{ $settings->navbar_links_color ?? 'var(--navbar-text-color, #fff)' }}">Contacto</a>
+                    <a href="/#nosotros" class="text-sm navbar-link-auto transition" style="color: {{ $settings->navbar_links_color ?? 'var(--navbar-text-color, #fff)' }}">Nosotros</a>
+                    <a href="/#contacto" class="text-sm navbar-link-auto transition" style="color: {{ $settings->navbar_links_color ?? 'var(--navbar-text-color, #fff)' }}">Contacto</a>
                 </div>
                 <!-- Botón Hamburguesa Mobile -->
                 <button id="menu-toggle" class="md:hidden flex flex-col justify-center items-center w-10 h-10 focus:outline-none" aria-label="Abrir menú">
@@ -121,8 +121,8 @@
             <button id="menu-close" class="absolute top-6 right-6 text-white text-3xl focus:outline-none" aria-label="Cerrar menú">&times;</button>
             <a href="/" class="navbar-link-auto" style="color: {{ $settings->navbar_links_color ?? 'var(--navbar-text-color, #fff)' }}">Inicio</a>
             <a href="{{ route('public.vehiculos') }}" class="navbar-link-auto" style="color: {{ $settings->navbar_links_color ?? 'var(--navbar-text-color, #fff)' }}">Vehículos</a>
-            <a href="#nosotros" class="navbar-link-auto" style="color: {{ $settings->navbar_links_color ?? 'var(--navbar-text-color, #fff)' }}">Nosotros</a>
-            <a href="#contacto" class="navbar-link-auto" style="color: {{ $settings->navbar_links_color ?? 'var(--navbar-text-color, #fff)' }}">Contacto</a>
+            <a href="/#nosotros" class="navbar-link-auto" style="color: {{ $settings->navbar_links_color ?? 'var(--navbar-text-color, #fff)' }}">Nosotros</a>
+            <a href="/#contacto" class="navbar-link-auto" style="color: {{ $settings->navbar_links_color ?? 'var(--navbar-text-color, #fff)' }}">Contacto</a>
         </div>
         </div>
     </nav>

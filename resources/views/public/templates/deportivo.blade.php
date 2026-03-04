@@ -597,9 +597,9 @@
                             
                             <p class="text-gray-300 text-xs mb-3 line-clamp-1">{{ Str::limit($vehicle->description, 50) }}</p>
 
-                            <button onclick="openForm('{{ $vehicle->id }}', '{{ $vehicle->title }}')" class="w-full py-2 rounded-lg font-black text-xs text-white transition hover:shadow-lg" style="background: linear-gradient(135deg, var(--primary-color), var(--tertiary-color));">
-                                CONSULTAR
-                            </button>
+                            <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $settings->whatsapp ?? '') }}?text=Hola! Estoy interesado en el {{ urlencode($vehicle->title) }}" target="_blank" class="w-full py-2 rounded-lg font-black text-xs text-white transition hover:shadow-lg text-center block" style="background: #25d366;">
+                                💬 CONSULTAR POR WHATSAPP
+                            </a>
                         </div>
                     </div>
                 @endforeach

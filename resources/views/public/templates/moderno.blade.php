@@ -241,12 +241,12 @@
 
                                 <p class="text-gray-400 text-xs mb-3 line-clamp-2">{{ Str::limit($vehicle->description, 60) }}</p>
 
-                                <button type="button" 
-                                    onclick="openContactForm('{{ $vehicle->id }}', '{{ $vehicle->title }}')"
-                                    class="w-full py-2 rounded text-xs font-bold text-white transition hover:shadow-lg" 
-                                    style="background: linear-gradient(135deg, var(--primary-color), var(--tertiary-color));">
-                                    Consultar
-                                </button>
+                                <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $settings->whatsapp ?? '') }}?text=Hola! Estoy interesado en el {{ urlencode($vehicle->title) }}"
+                                    target="_blank"
+                                    class="w-full py-2 rounded text-xs font-bold text-white transition hover:shadow-lg text-center block" 
+                                    style="background: #25d366;">
+                                    💬 Consultar por WhatsApp
+                                </a>
                             </div>
                         </div>
                     @endforeach

@@ -307,19 +307,29 @@
                     <span class="w-1.5 h-1.5 rounded-full" style="background: var(--primary-color);"></span>
                     Agencia de Autos
                 </div>
+                @php
+                    $heroTitle = $settings->hero_title ?? "Eleva la Presencia\nDigital de tu Concesionario";
+                    $heroParts = explode("\n", $heroTitle, 2);
+                    $heroLine1 = $heroParts[0];
+                    $heroLine2 = $heroParts[1] ?? '';
+                @endphp
                 @if (isset($editMode) && $editMode)
                     <div class="editable-section mb-6">
                         <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight">
-                            <span class="text-white">Eleva la Presencia </span>
-                            <span class="gradient-text italic">Digital de tu Concesionario</span>
+                            <span style="color: {{ $settings->hero_title_color ?? '#ffffff' }}">{{ $heroLine1 }} </span>
+                            @if($heroLine2)
+                                <span class="gradient-text italic">{{ $heroLine2 }}</span>
+                            @endif
                         </h1>
-                        <div class="edit-btn" onclick="editText('hero_title','Editar Título del Hero')"><i
+                        <div class="edit-btn" onclick="editHeroTitle()"><i
                                 class="fa fa-pencil"></i></div>
                     </div>
                 @else
                     <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight mb-6">
-                        <span class="text-white">Eleva la Presencia </span>
-                        <span class="gradient-text italic">Digital de tu Concesionario</span>
+                        <span style="color: {{ $settings->hero_title_color ?? '#ffffff' }}">{{ $heroLine1 }} </span>
+                        @if($heroLine2)
+                            <span class="gradient-text italic">{{ $heroLine2 }}</span>
+                        @endif
                     </h1>
                 @endif
                 @if (isset($editMode) && $editMode)
@@ -465,7 +475,7 @@
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                 d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                                         </svg>
-                                        {{ number_format($vehicle->kilometers / 1000, 1) }}k
+                                        {{ $vehicle->kilometers == 0 ? '0 km' : number_format($vehicle->kilometers) . ' km' }}
                                     </span>
                                     <span class="flex items-center gap-1">
                                         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor"
@@ -489,16 +499,14 @@
                                     style="border-top: 1px solid rgba(255,255,255,0.06);">
                                     <span
                                         class="text-xl font-bold text-white">${{ number_format($vehicle->price) }}</span>
-                                    <button type="button"
-                                        onclick="openContactForm('{{ $vehicle->id }}', '{{ $vehicle->title }}')"
+                                    <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $settings->whatsapp ?? '') }}?text=Hola! Estoy interesado en el {{ urlencode($vehicle->title) }}"
+                                        target="_blank"
                                         class="w-10 h-10 rounded-xl flex items-center justify-center transition hover:opacity-80"
-                                        style="background: rgba(37,99,235,0.12); color: var(--primary-color);">
-                                        <svg class="w-5 h-5" fill="none" stroke="currentColor"
-                                            viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                                        style="background: rgba(37,211,102,0.15); color: #25d366;">
+                                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
                                         </svg>
-                                    </button>
+                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -805,10 +813,74 @@
 
     @if (isset($editMode) && $editMode)
         @include('public.templates.partials.editor-scripts')
-    @endif
 
-    <script>
-        function openContactForm(vehicleId, vehicleTitle) {
+        <!-- Modal Hero Title personalizado para tecnologico (2 líneas) -->
+        <div id="heroTitleModal" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center z-[99999] p-4">
+            <div class="bg-white rounded-lg shadow-xl max-w-2xl w-full">
+                <div class="p-6 border-b"><h3 class="text-xl font-bold text-gray-900">Editar Título del Hero</h3></div>
+                <div class="p-6">
+                    <p class="text-sm text-gray-500 mb-4">Este título tiene 2 partes: la primera línea aparece en color sólido y la segunda en estilo gradient (degradado con el color primario de tu web).</p>
+                    
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Línea 1 (color sólido)</label>
+                    <input type="text" id="heroLine1Input" class="w-full px-4 py-2 border rounded-lg text-gray-900 focus:ring-2 focus:ring-blue-500 mb-2" placeholder="Ej: Eleva la Presencia">
+                    <div class="flex items-center gap-3 mb-5">
+                        <label class="text-gray-600 text-sm">Color:</label>
+                        <input type="color" id="heroLine1Color" value="#ffffff" class="h-8 w-12 p-0 border-0 bg-transparent">
+                    </div>
+
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Línea 2 (estilo gradient / degradado)</label>
+                    <input type="text" id="heroLine2Input" class="w-full px-4 py-2 border rounded-lg text-gray-900 focus:ring-2 focus:ring-blue-500 mb-1" placeholder="Ej: Digital de tu Concesionario">
+                    <p class="text-xs text-gray-400 mb-4">Esta línea usa el degradado del color primario de tu template. Dejala vacía si querés un título de una sola línea.</p>
+                </div>
+                <div class="p-6 border-t flex justify-end gap-3">
+                    <button onclick="closeHeroTitleModal()" class="px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-lg">Cancelar</button>
+                    <button onclick="saveHeroTitle()" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">Guardar</button>
+                </div>
+            </div>
+        </div>
+
+        <script>
+        function editHeroTitle() {
+            const fullTitle = @json($settings->hero_title ?? "Eleva la Presencia\nDigital de tu Concesionario");
+            const parts = fullTitle.split("\n");
+            document.getElementById('heroLine1Input').value = parts[0] || '';
+            document.getElementById('heroLine2Input').value = parts[1] || '';
+            document.getElementById('heroLine1Color').value = @json($settings->hero_title_color ?? '#ffffff');
+            document.getElementById('heroTitleModal').classList.remove('hidden');
+        }
+        function closeHeroTitleModal() {
+            document.getElementById('heroTitleModal').classList.add('hidden');
+        }
+        function saveHeroTitle() {
+            const line1 = document.getElementById('heroLine1Input').value.trim();
+            const line2 = document.getElementById('heroLine2Input').value.trim();
+            const color = document.getElementById('heroLine1Color').value;
+            const heroTitle = line2 ? line1 + "\n" + line2 : line1;
+
+            const fd = new FormData();
+            fd.append('_token', document.querySelector('meta[name="csrf-token"]').content);
+            fd.append('_method', 'PATCH');
+            fd.append('hero_title', heroTitle);
+            fd.append('hero_title_color', color);
+            fd.append('template', 'tecnologico');
+            const fields = ['home_description','nosotros_description','nosotros_url','contact_message','phone','email','whatsapp','logo_url','banner_url','primary_color','secondary_color','facebook_url','instagram_url','linkedin_url','agency_name','navbar_agency_name'];
+            fields.forEach(f => fd.append(f, getFieldValue(f)));
+            fd.append('show_vehicles', '{{ $settings->show_vehicles ?? 1 }}');
+            fd.append('show_contact_form', '{{ $settings->show_contact_form ?? 1 }}');
+
+            fetch('{{ route("admin.landing-config.update") }}', {
+                method: 'POST',
+                headers: { 'X-Requested-With': 'XMLHttpRequest', 'Accept': 'application/json' },
+                body: fd
+            })
+            .then(r => r.json())
+            .then(d => { if(d.success) { location.reload(); } else { alert('Error al guardar'); } })
+            .catch(e => { console.error(e); alert('Error al guardar'); });
+
+            closeHeroTitleModal();
+        }
+        </script>
+    @endif
             document.getElementById('vehicle_id').value = vehicleId;
             document.querySelector('textarea[name="message"]').value = `Consulta por: ${vehicleTitle}`;
             document.getElementById('contacto').scrollIntoView({
@@ -818,8 +890,5 @@
         }
     </script>
 </body>
-@if (isset($editMode) && $editMode)
-    @include('public.templates.partials.editor-scripts')
-@endif
 
 </html>

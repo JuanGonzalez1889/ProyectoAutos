@@ -87,10 +87,10 @@
             <div class="flex items-center justify-center gap-10">
                 <!-- Menú Desktop -->
                 <div class="hidden md:flex items-center gap-10">
-                    <a href="#inicio" class="text-xs tracking-[0.25em] uppercase font-light transition hover:opacity-60" style="color: {{ $settings->navbar_links_color ?? 'rgba(255,255,255,0.5)' }}">Inicio</a>
+                    <a href="/" class="text-xs tracking-[0.25em] uppercase font-light transition hover:opacity-60" style="color: {{ $settings->navbar_links_color ?? 'rgba(255,255,255,0.5)' }}">Inicio</a>
                     <a href="{{ route('public.vehiculos') }}" class="text-xs tracking-[0.25em] uppercase font-light transition hover:opacity-60" style="color: {{ $settings->navbar_links_color ?? 'rgba(255,255,255,0.5)' }}">Colección</a>
-                    <a href="#nosotros" class="text-xs tracking-[0.25em] uppercase font-light transition hover:opacity-60" style="color: {{ $settings->navbar_links_color ?? 'rgba(255,255,255,0.5)' }}">Nosotros</a>
-                    <a href="#contacto" class="text-xs tracking-[0.25em] uppercase font-light transition hover:opacity-60" style="color: {{ $settings->navbar_links_color ?? 'rgba(255,255,255,0.5)' }}">Contacto</a>
+                    <a href="/#nosotros" class="text-xs tracking-[0.25em] uppercase font-light transition hover:opacity-60" style="color: {{ $settings->navbar_links_color ?? 'rgba(255,255,255,0.5)' }}">Nosotros</a>
+                    <a href="/#contacto" class="text-xs tracking-[0.25em] uppercase font-light transition hover:opacity-60" style="color: {{ $settings->navbar_links_color ?? 'rgba(255,255,255,0.5)' }}">Contacto</a>
                 </div>
                 <!-- Botón Hamburguesa Mobile -->
                 <button id="menu-toggle" class="md:hidden flex flex-col justify-center items-center w-10 h-10 focus:outline-none ml-2" aria-label="Abrir menú">
@@ -103,10 +103,10 @@
         <!-- Menú Mobile -->
         <div id="mobile-menu" class="md:hidden fixed inset-0 bg-black bg-opacity-95 z-50 flex flex-col items-center justify-center space-y-8 text-lg font-semibold transition-all duration-300 opacity-0 pointer-events-none">
             <button id="menu-close" class="absolute top-6 right-6 text-[var(--primary-color)] text-3xl focus:outline-none" aria-label="Cerrar menú">&times;</button>
-            <a href="#inicio" class="navbar-link-auto" style="color: {{ $settings->navbar_links_color ?? 'rgba(255,255,255,0.7)' }}">Inicio</a>
+            <a href="/" class="navbar-link-auto" style="color: {{ $settings->navbar_links_color ?? 'rgba(255,255,255,0.7)' }}">Inicio</a>
             <a href="{{ route('public.vehiculos') }}" class="navbar-link-auto" style="color: {{ $settings->navbar_links_color ?? 'rgba(255,255,255,0.7)' }}">Colección</a>
-            <a href="#nosotros" class="navbar-link-auto" style="color: {{ $settings->navbar_links_color ?? 'rgba(255,255,255,0.7)' }}">Nosotros</a>
-            <a href="#contacto" class="navbar-link-auto" style="color: {{ $settings->navbar_links_color ?? 'rgba(255,255,255,0.7)' }}">Contacto</a>
+            <a href="/#nosotros" class="navbar-link-auto" style="color: {{ $settings->navbar_links_color ?? 'rgba(255,255,255,0.7)' }}">Nosotros</a>
+            <a href="/#contacto" class="navbar-link-auto" style="color: {{ $settings->navbar_links_color ?? 'rgba(255,255,255,0.7)' }}">Contacto</a>
         </div>
         </div>
     </nav>

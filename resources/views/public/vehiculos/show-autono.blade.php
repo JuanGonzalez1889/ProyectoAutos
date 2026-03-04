@@ -8,11 +8,11 @@
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
         {{-- Galería --}}
         <div>
-            <img src="{{ $vehicle->main_image }}" alt="{{ $vehicle->title }}" class="w-full h-[400px] object-cover rounded-2xl mb-4">
+            <img id="main-vehicle-image" src="{{ $vehicle->main_image }}" alt="{{ $vehicle->title }}" class="w-full h-[400px] object-cover rounded-2xl mb-4">
             @if($vehicle->images && count($vehicle->images) > 1)
                 <div class="grid grid-cols-4 gap-2">
                     @foreach($vehicle->images as $img)
-                        <img src="{{ $img }}" alt="{{ $vehicle->title }}" class="w-full h-20 object-cover rounded-lg cursor-pointer hover:opacity-80 transition">
+                        <img src="{{ $img }}" alt="{{ $vehicle->title }}" class="w-full h-20 object-cover rounded-lg cursor-pointer hover:opacity-80 transition" onclick="document.getElementById('main-vehicle-image').src = this.src">
                     @endforeach
                 </div>
             @endif

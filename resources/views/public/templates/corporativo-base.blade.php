@@ -125,18 +125,18 @@
             </div>
             <!-- Menú normal en desktop -->
             <div class="hidden md:flex items-center gap-8">
-                <a href="#inicio" class="text-sm font-medium text-gray-500 hover:text-gray-900 transition" style="color: {{ $settings->navbar_links_color ?? '#64748b' }}">Inicio</a>
+                <a href="/" class="text-sm font-medium text-gray-500 hover:text-gray-900 transition" style="color: {{ $settings->navbar_links_color ?? '#64748b' }}">Inicio</a>
                 <a href="{{ route('public.vehiculos') }}" class="text-sm font-medium text-gray-500 hover:text-gray-900 transition" style="color: {{ $settings->navbar_links_color ?? '#64748b' }}">Inventario</a>
-                <a href="#nosotros" class="text-sm font-medium text-gray-500 hover:text-gray-900 transition" style="color: {{ $settings->navbar_links_color ?? '#64748b' }}">Empresa</a>
-                <a href="#contacto" class="text-sm font-medium px-5 py-2 rounded-lg text-white transition hover:opacity-90" style="background: var(--primary-color);">Contactar</a>
+                <a href="/#nosotros" class="text-sm font-medium text-gray-500 hover:text-gray-900 transition" style="color: {{ $settings->navbar_links_color ?? '#64748b' }}">Empresa</a>
+                <a href="/#contacto" class="text-sm font-medium px-5 py-2 rounded-lg text-white transition hover:opacity-90" style="background: var(--primary-color);">Contactar</a>
             </div>
             <!-- Menú hamburguesa en mobile -->
             <div id="mobile-menu" class="mobile-menu md:hidden" style="background: var(--secondary-color); border-top: 1px solid var(--tertiary-color);">
                 <div class="flex flex-col gap-4 p-4">
-                    <a href="#inicio" class="text-sm font-medium text-gray-500 hover:text-gray-900 transition" style="color: {{ $settings->navbar_links_color ?? '#64748b' }}">Inicio</a>
+                    <a href="/" class="text-sm font-medium text-gray-500 hover:text-gray-900 transition" style="color: {{ $settings->navbar_links_color ?? '#64748b' }}">Inicio</a>
                     <a href="{{ route('public.vehiculos') }}" class="text-sm font-medium text-gray-500 hover:text-gray-900 transition" style="color: {{ $settings->navbar_links_color ?? '#64748b' }}">Inventario</a>
-                    <a href="#nosotros" class="text-sm font-medium text-gray-500 hover:text-gray-900 transition" style="color: {{ $settings->navbar_links_color ?? '#64748b' }}">Empresa</a>
-                    <a href="#contacto" class="text-sm font-medium px-5 py-2 rounded-lg text-white transition hover:opacity-90" style="background: var(--primary-color);">Contactar</a>
+                    <a href="/#nosotros" class="text-sm font-medium text-gray-500 hover:text-gray-900 transition" style="color: {{ $settings->navbar_links_color ?? '#64748b' }}">Empresa</a>
+                    <a href="/#contacto" class="text-sm font-medium px-5 py-2 rounded-lg text-white transition hover:opacity-90" style="background: var(--primary-color);">Contactar</a>
                 </div>
             </div>
         </div>

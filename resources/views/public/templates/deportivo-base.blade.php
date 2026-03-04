@@ -154,19 +154,19 @@
             </div>
             <!-- Menú normal en desktop -->
             <div class="hidden md:flex items-center gap-6">
-                <a href="#inicio" class="navbar-link-auto transition" style="color: {{ $settings->navbar_links_color ?? 'var(--navbar-text-color, #fff)' }}">INICIO</a>
+                <a href="/" class="navbar-link-auto transition" style="color: {{ $settings->navbar_links_color ?? 'var(--navbar-text-color, #fff)' }}">INICIO</a>
                 <a href="{{ route('public.vehiculos') }}" class="navbar-link-auto transition" style="color: {{ $settings->navbar_links_color ?? 'var(--navbar-text-color, #fff)' }}">VEHÍCULOS</a>
-                <a href="#nosotros" class="navbar-link-auto transition" style="color: {{ $settings->navbar_links_color ?? 'var(--navbar-text-color, #fff)' }}">NOSOTROS</a>
-                <a href="#contacto" class="navbar-link-auto transition" style="color: {{ $settings->navbar_links_color ?? 'var(--navbar-text-color, #fff)' }}">CONTACTO</a>
+                <a href="/#nosotros" class="navbar-link-auto transition" style="color: {{ $settings->navbar_links_color ?? 'var(--navbar-text-color, #fff)' }}">NOSOTROS</a>
+                <a href="/#contacto" class="navbar-link-auto transition" style="color: {{ $settings->navbar_links_color ?? 'var(--navbar-text-color, #fff)' }}">CONTACTO</a>
                
             </div>
             <!-- Menú hamburguesa en mobile -->
             <div id="mobile-menu" class="mobile-menu md:hidden">
                 <div class="flex flex-col gap-4 p-4">
-                    <a href="#inicio" class="navbar-link-auto transition" style="color: {{ $settings->navbar_links_color ?? 'var(--navbar-text-color, #fff)' }}">INICIO</a>
+                    <a href="/" class="navbar-link-auto transition" style="color: {{ $settings->navbar_links_color ?? 'var(--navbar-text-color, #fff)' }}">INICIO</a>
                     <a href="{{ route('public.vehiculos') }}" class="navbar-link-auto transition" style="color: {{ $settings->navbar_links_color ?? 'var(--navbar-text-color, #fff)' }}">VEHÍCULOS</a>
-                    <a href="#nosotros" class="navbar-link-auto transition" style="color: {{ $settings->navbar_links_color ?? 'var(--navbar-text-color, #fff)' }}">NOSOTROS</a>
-                    <a href="#contacto" class="navbar-link-auto transition" style="color: {{ $settings->navbar_links_color ?? 'var(--navbar-text-color, #fff)' }}">CONTACTO</a>
+                    <a href="/#nosotros" class="navbar-link-auto transition" style="color: {{ $settings->navbar_links_color ?? 'var(--navbar-text-color, #fff)' }}">NOSOTROS</a>
+                    <a href="/#contacto" class="navbar-link-auto transition" style="color: {{ $settings->navbar_links_color ?? 'var(--navbar-text-color, #fff)' }}">CONTACTO</a>
                     
                 </div>
             </div>

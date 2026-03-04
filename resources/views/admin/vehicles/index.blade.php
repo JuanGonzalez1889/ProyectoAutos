@@ -210,7 +210,7 @@
         <h2 style="font-size:1.3rem; font-weight:bold; margin-bottom:1rem; color:#ffffff;">Registrar valor de venta</h2>
         <form id="soldPriceForm">
             <label style="font-size:0.95rem; font-weight:500; color:#ffffff; margin-bottom:0.5rem; display:block;">¿A qué valor se vendió el vehículo?</label>
-            <input type="text" min="0" step="1000" id="soldPriceInput" required style="width:100%; height:2.5rem; padding:0 1rem; border:1px solid #ccc; border-radius:6px; margin-bottom:1rem; font-size:1rem;" oninput="this.value = this.value.replace(/\D/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, '.');">
+            <input type="text" id="soldPriceInput" required placeholder="Ej: 2.500.000" style="width:100%; height:2.5rem; padding:0 1rem; border:1px solid #ccc; border-radius:6px; margin-bottom:1rem; font-size:1rem; color:#333; background:#fff;" oninput="this.value = this.value.replace(/\D/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, '.');">
             <div style="display:flex; justify-content:flex-end; gap:0.5rem;">
                 <button type="button" id="cancelSoldPriceBtn" style="padding:0.5rem 1.2rem; border-radius:5px; background:#eee; color:#333; border:none;">Cancelar</button>
                 <button type="submit" style="padding:0.5rem 1.2rem; border-radius:5px; background:rgb(22 163 74 / var(--tw-bg-opacity, 1)); color:white; border:none;">Guardar</button>
@@ -235,8 +235,9 @@ document.addEventListener('DOMContentLoaded', function() {
     };
     document.getElementById('soldPriceForm').onsubmit = async function(e) {
         e.preventDefault();
-        const soldPrice = document.getElementById('soldPriceInput').value;
-        if (!soldPrice || !currentVehicleId) return;
+        const soldPriceRaw = document.getElementById('soldPriceInput').value.replace(/\./g, '');
+        if (!soldPriceRaw || !currentVehicleId) return;
+        const soldPrice = parseInt(soldPriceRaw, 10);
         try {
             const resp = await fetch(`/admin/vehicles/${currentVehicleId}/mark-as-sold`, {
                 method: 'PATCH',

@@ -237,11 +237,11 @@
                                             <span class="text-sm text-gray-300">{{ number_format($vehicle->kilometers) }} km</span>
                                         </div>
                                     </div>
-                                    <button type="button" onclick="openContactForm('{{ $vehicle->id }}', '{{ $vehicle->title }}')"
-                                        class="w-full py-3 text-[11px] tracking-[0.25em] uppercase font-medium border transition-all duration-300 hover:bg-[rgba(201,169,110,0.1)]"
-                                        style="color: var(--primary-color); border-color: rgba(201,169,110,0.3);">
-                                        Solicitar Información
-                                    </button>
+                                    <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $settings->whatsapp ?? '') }}?text=Hola! Estoy interesado en el {{ urlencode($vehicle->title) }}" target="_blank"
+                                        class="w-full py-3 text-[11px] tracking-[0.25em] uppercase font-medium border transition-all duration-300 hover:bg-[rgba(37,211,102,0.1)] text-center block"
+                                        style="color: #25d366; border-color: rgba(37,211,102,0.3);">
+                                        Consultar por WhatsApp
+                                    </a>
                                 </div>
                             </div>
                         </div>

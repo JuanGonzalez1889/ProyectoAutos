@@ -352,7 +352,7 @@
                                     </div>
                                     <div class="flex items-center justify-between mt-3">
                                         <span class="text-xl font-bold" style="color: var(--primary-color);">${{ number_format($vehicle->price) }}</span>
-                                        <button type="button" onclick="openContactForm('{{ $vehicle->id }}', '{{ $vehicle->title }}')" class="px-4 py-2 text-xs font-semibold text-white rounded-lg transition hover:opacity-90" style="background: var(--primary-color);">Consultar</button>
+                                        <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $settings->whatsapp ?? '') }}?text=Hola! Estoy interesado en el {{ urlencode($vehicle->title) }}" target="_blank" class="px-4 py-2 text-xs font-semibold text-white rounded-lg transition hover:opacity-90" style="background: #25d366;">WhatsApp</a>
                                     </div>
                                 </div>
                             </div>
@@ -377,7 +377,7 @@
                                     <span class="text-lg font-bold" style="color: var(--primary-color);">${{ number_format($vehicle->price) }}</span>
                                 </div>
                                 <div class="col-span-2 text-right">
-                                    <button type="button" onclick="openContactForm('{{ $vehicle->id }}', '{{ $vehicle->title }}')" class="px-5 py-2 text-xs font-semibold text-white rounded-lg transition hover:opacity-90 hover:shadow-lg" style="background: var(--primary-color);">Consultar</button>
+                                    <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $settings->whatsapp ?? '') }}?text=Hola! Estoy interesado en el {{ urlencode($vehicle->title) }}" target="_blank" class="px-5 py-2 text-xs font-semibold text-white rounded-lg transition hover:opacity-90 hover:shadow-lg inline-block" style="background: #25d366;">WhatsApp</a>
                                 </div>
                             </div>
                         </div>

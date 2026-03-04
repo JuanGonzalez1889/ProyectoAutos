@@ -190,7 +190,9 @@
 
             <!-- Navigation -->
             <?php \Log::channel('single')->info('[sidebar-blade]', ['user_id' => auth()->user()->id ?? null, 'email' => auth()->user()->email ?? null]); ?>
-            <nav class="flex-1 flex flex-col justify-center space-y-1">
+            <nav class="flex-1 flex flex-col justify-start pt-6 space-y-1" style="
+    margin-top: 1rem;
+">
                 <?php if(canSeeMenu('personalizar mi web')): ?>
                 <a href="<?php echo e(route('admin.landing-template.select')); ?>"
                     class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors <?php echo e(request()->routeIs('landing-template.*') ? 'bg-[hsl(var(--primary))] text-white' : 'text-[hsl(var(--muted-foreground))] hover:bg-[hsl(var(--secondary))] hover:text-[hsl(var(--foreground))]'); ?>">

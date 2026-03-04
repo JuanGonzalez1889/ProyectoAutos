@@ -227,9 +227,9 @@
                             <p class="text-gray-400 text-xs mb-2">{{ $vehicle->brand }} {{ $vehicle->model }} · {{ $vehicle->year }}</p>
                             <p class="text-gray-300 text-xs mb-3 line-clamp-1">{{ Str::limit($vehicle->description, 60) }}</p>
 
-                            <button onclick="openForm('{{ $vehicle->id }}', '{{ $vehicle->title }}')" class="w-full py-2 text-white font-semibold rounded text-xs transition hover:opacity-90" style="background: linear-gradient(135deg, var(--primary-color), var(--tertiary-color));">
-                                Ver Detalles
-                            </button>
+                            <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $settings->whatsapp ?? '') }}?text=Hola! Estoy interesado en el {{ urlencode($vehicle->title) }}" target="_blank" class="w-full py-2 text-white font-semibold rounded text-xs transition hover:opacity-90 text-center block" style="background: #25d366;">
+                                💬 Consultar por WhatsApp
+                            </a>
                         </div>
                     </div>
                 @endforeach

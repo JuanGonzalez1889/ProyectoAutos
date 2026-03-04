@@ -287,7 +287,7 @@
                         <p class="text-sm mb-3" style="color: var(--text-muted-on-secondary);">{{ $vehicle->brand }} {{ $vehicle->model }} · {{ $vehicle->year }}</p>
                         <div class="flex items-center justify-between gap-3">
                             <span class="font-bold text-lg" style="color: var(--text-on-secondary);">${{ number_format($vehicle->price) }}</span>
-                            <button onclick="openContactForm({{ $vehicle->id }}, '{{ addslashes($vehicle->title) }}')" class="px-4 py-2 rounded-full text-sm" style="background: var(--primary-color); color: var(--text-on-primary);">Consultar</button>
+                            <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $settings->whatsapp ?? '') }}?text=Hola! Estoy interesado en el {{ urlencode($vehicle->title) }}" target="_blank" class="px-4 py-2 rounded-full text-sm text-center" style="background: #25d366; color: #fff;">💬 WhatsApp</a>
                         </div>
                     </div>
                 </article>

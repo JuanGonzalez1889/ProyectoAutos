@@ -27,7 +27,14 @@
 <div class="max-w-4xl mx-auto px-4 py-12" style="font-family: {{ $settings->font_family ?? 'inherit' }};">
     <div class="flex flex-col md:flex-row gap-8">
         <div class="md:w-1/2">
-            <img src="{{ $vehicle->main_image }}" alt="{{ $vehicle->title }}" class="w-full h-80 object-cover rounded-2xl mb-4">
+            <img id="main-vehicle-image" src="{{ $vehicle->main_image }}" alt="{{ $vehicle->title }}" class="w-full h-80 object-cover rounded-2xl mb-4">
+            @if($vehicle->images && count($vehicle->images) > 1)
+                <div class="grid grid-cols-4 gap-2">
+                    @foreach($vehicle->images as $img)
+                        <img src="{{ $img }}" alt="{{ $vehicle->title }}" class="w-full h-20 object-cover rounded-lg cursor-pointer hover:opacity-80 transition" onclick="document.getElementById('main-vehicle-image').src = this.src">
+                    @endforeach
+                </div>
+            @endif
         </div>
         <div class="md:w-1/2 flex flex-col">
             <h1 class="text-3xl font-bold mb-2 vehiculo-card-auto">{{ $vehicle->title }}</h1>
