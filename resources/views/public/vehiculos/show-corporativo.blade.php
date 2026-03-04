@@ -1,7 +1,7 @@
 @extends('public.templates.corporativo-base')
 @section('content')
 <style>
-    .vehiculo-card-auto { color: var(--auto-text-color, #222); }
+    .vehiculo-card-auto { color: var(--auto-text-color, #222); overflow-wrap: break-word; word-break: break-word; }
 </style>
 <script>
     (function() {
@@ -50,7 +50,7 @@
                 <li><strong>Combustible:</strong> {{ $vehicle->fuel_type ?? '-' }}</li>
                 <li><strong>Transmisión:</strong> {{ $vehicle->transmission ?? '-' }}</li>
             </ul>
-            <form action="{{ route('public.contacto') }}" method="POST" class="mb-4">
+            <form action="/contacto" method="POST" class="mb-4">
                 @csrf
                 <input type="hidden" name="vehicle_id" value="{{ $vehicle->id }}">
                 <input type="text" name="name" placeholder="Tu Nombre" required class="w-full px-4 py-2 mb-2 rounded vehiculo-card-auto" style="background: var(--secondary-color); border: 1px solid #e5e7eb;">

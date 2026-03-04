@@ -116,6 +116,14 @@ class Tenant extends BaseTenant implements TenantWithDatabase
     }
 
     /**
+     * Get all agencias for this tenant
+     */
+    public function agencias()
+    {
+        return $this->hasMany(Agencia::class, 'tenant_id', 'id');
+    }
+
+    /**
      * Get all subscriptions for this tenant
      */
     public function subscriptions()

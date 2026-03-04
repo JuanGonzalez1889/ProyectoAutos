@@ -363,7 +363,7 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     @foreach ($vehicles as $index => $vehicle)
                         <div class="vehicle-card-light group">
-                            <div class="relative overflow-hidden">
+                            <a href="{{ route('public.vehiculos.show', $vehicle->id) }}" class="block relative overflow-hidden">
                                 <img src="{{ $vehicle->main_image }}" alt="{{ $vehicle->title }}"
                                     class="w-full h-52 object-cover transition duration-500 group-hover:scale-105">
                                 <div class="absolute top-3 right-3">
@@ -375,7 +375,7 @@
                                             class="status-reserved-light px-2.5 py-1 rounded-lg text-[10px] font-bold uppercase tracking-wider">Reservado</span>
                                     @endif
                                 </div>
-                            </div>
+                            </a>
                             <div class="p-5">
                                 <div class="flex items-center gap-2 mb-1">
                                     <span
@@ -758,8 +758,5 @@
         }
     </script>
 </body>
-@if (isset($editMode) && $editMode)
-    @include('public.templates.partials.editor-scripts')
-@endif
 
 </html>

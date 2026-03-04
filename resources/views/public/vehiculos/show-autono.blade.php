@@ -46,14 +46,14 @@
             @if($vehicle->description)
                 <div class="mb-6">
                     <h3 class="text-sm uppercase tracking-wider mb-2" style="color: var(--text-muted-on-secondary);">Descripción</h3>
-                    <p class="leading-relaxed" style="color: var(--text-on-secondary);">{{ $vehicle->description }}</p>
+                    <p class="leading-relaxed" style="color: var(--text-on-secondary); overflow-wrap: break-word; word-break: break-word;">{{ $vehicle->description }}</p>
                 </div>
             @endif
 
             {{-- Formulario de contacto --}}
             <div class="p-6 rounded-xl" style="border: 1px solid var(--border-on-secondary);">
                 <h3 class="text-lg font-semibold mb-4" style="color: var(--text-on-secondary);">Consultar por este vehículo</h3>
-                <form action="{{ route('public.contacto') }}" method="POST" class="space-y-3">
+                <form action="/contacto" method="POST" class="space-y-3">
                     @csrf
                     <input type="hidden" name="vehicle_id" value="{{ $vehicle->id }}">
                     <input type="text" name="name" placeholder="Tu nombre" required class="w-full px-4 py-3 rounded-xl focus:outline-none" style="border: 1px solid var(--border-on-secondary); background: var(--secondary-color); color: var(--text-on-secondary);">

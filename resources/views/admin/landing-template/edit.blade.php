@@ -226,11 +226,12 @@
             // Los demas campos (logo, banner, textos, etc.) ya se guardan en tiempo real
             // via updateField() dentro del iframe, no reenviarlos aqui.
 
-            fetch('{{ route("admin.landing-config.update") }}', {
+            fetch('{{ parse_url(route("admin.landing-config.update"), PHP_URL_PATH) }}', {
                 method: 'POST',
                 headers: {
                     'X-Requested-With': 'XMLHttpRequest',
-                    'Accept': 'application/json'
+                    'Accept': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
                 },
                 body: formData
             })

@@ -199,8 +199,11 @@
             formData.append('show_vehicles', '{{ $settings->show_vehicles ? "1" : "0" }}');
             formData.append('show_contact_form', '{{ $settings->show_contact_form ? "1" : "0" }}');
 
-            fetch('{{ route("admin.landing-config.update") }}', {
+            fetch('{{ parse_url(route("admin.landing-config.update"), PHP_URL_PATH) }}', {
                 method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                },
                 body: formData
             })
             .then(response => response.json())
@@ -251,8 +254,11 @@
             formData.append('show_vehicles', '{{ $settings->show_vehicles ? "1" : "0" }}');
             formData.append('show_contact_form', '{{ $settings->show_contact_form ? "1" : "0" }}');
 
-            fetch('{{ route("admin.landing-config.update") }}', {
+            fetch('{{ parse_url(route("admin.landing-config.update"), PHP_URL_PATH) }}', {
                 method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                },
                 body: formData
             })
             .then(response => response.json())

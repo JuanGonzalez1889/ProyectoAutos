@@ -39,7 +39,7 @@ function saveText(){
   fields.forEach(f=>{ if(f!==currentField && f!==(currentField+'_color')){ fd.append(f, getFieldValue(f)); } });
   fd.append('show_vehicles','{{ $settings->show_vehicles ?? 1 }}');
   fd.append('show_contact_form','{{ $settings->show_contact_form ?? 1 }}');
-  fetch('{{ route("admin.landing-config.update") }}',{method:'POST', headers:{'X-Requested-With':'XMLHttpRequest','Accept':'application/json'}, body:fd})
+  fetch('{{ parse_url(route("admin.landing-config.update"), PHP_URL_PATH) }}',{method:'POST', headers:{'X-Requested-With':'XMLHttpRequest','Accept':'application/json','X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content}, body:fd})
     .then(r=>r.json()).then(d=>{ if(d.success){ location.reload(); } else { alert('Error al guardar'); } })
     .catch(e=>{ console.error(e); alert('Error al guardar'); });
   closeTextModal();
@@ -71,7 +71,7 @@ async function saveImage(){
     formData.append('field', currentField);
     formData.append('_token', document.querySelector('meta[name="csrf-token"]').content);
     try{
-      const resp = await fetch('{{ route("admin.landing-config.upload-image") }}',{method:'POST', body:formData});
+      const resp = await fetch('{{ parse_url(route("admin.landing-config.upload-image"), PHP_URL_PATH) }}',{method:'POST', headers:{'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content}, body:formData});
       const data = await resp.json();
       if(data.success){
         updateField(currentField, data.url);
@@ -111,7 +111,7 @@ function saveContact(){
   ;['home_description','nosotros_description','nosotros_url','contact_message','logo_url','banner_url','primary_color','secondary_color','facebook_url','instagram_url','linkedin_url','agency_name','navbar_agency_name'].forEach(f=>fd.append(f,getFieldValue(f)));
   fd.append('show_vehicles','{{ $settings->show_vehicles ?? 1 }}');
   fd.append('show_contact_form','{{ $settings->show_contact_form ?? 1 }}');
-  fetch('{{ route("admin.landing-config.update") }}',{method:'POST', headers:{'X-Requested-With':'XMLHttpRequest','Accept':'application/json'}, body:fd})
+  fetch('{{ parse_url(route("admin.landing-config.update"), PHP_URL_PATH) }}',{method:'POST', headers:{'X-Requested-With':'XMLHttpRequest','Accept':'application/json','X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content}, body:fd})
   .then(r=>r.json()).then(d=>{ if(d.success){ closeContactModal(); location.reload(); } else { alert('Error al guardar: '+(d.message||'Error desconocido')); } })
   .catch(e=>{ console.error(e); alert('Error al guardar'); });
 }
@@ -134,7 +134,7 @@ function saveStats(){
   ;['home_description','nosotros_description','nosotros_url','contact_message','phone','email','whatsapp','logo_url','banner_url','primary_color','secondary_color','facebook_url','instagram_url','linkedin_url','agency_name','navbar_agency_name'].forEach(f=>fd.append(f,getFieldValue(f)));
   fd.append('show_vehicles','{{ $settings->show_vehicles ?? 1 }}');
   fd.append('show_contact_form','{{ $settings->show_contact_form ?? 1 }}');
-  fetch('{{ route("admin.landing-config.update") }}',{method:'POST', headers:{'X-Requested-With':'XMLHttpRequest','Accept':'application/json'}, body:fd})
+  fetch('{{ parse_url(route("admin.landing-config.update"), PHP_URL_PATH) }}',{method:'POST', headers:{'X-Requested-With':'XMLHttpRequest','Accept':'application/json','X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content}, body:fd})
   .then(r=>r.json()).then(d=>{ if(d.success){ closeStatsModal(); location.reload(); } else { alert('Error al guardar'); } })
   .catch(e=>{ console.error(e); alert('Error al guardar'); });
 }
@@ -180,7 +180,7 @@ function updateField(field, value){
   fields.forEach(f=>{ if(f!==field){ fd.append(f, getFieldValue(f)); } });
   fd.append('show_vehicles','{{ $settings->show_vehicles ?? 1 }}');
   fd.append('show_contact_form','{{ $settings->show_contact_form ?? 1 }}');
-  fetch('{{ route("admin.landing-config.update") }}',{method:'POST', headers:{'X-Requested-With':'XMLHttpRequest','Accept':'application/json'}, body:fd})
+  fetch('{{ parse_url(route("admin.landing-config.update"), PHP_URL_PATH) }}',{method:'POST', headers:{'X-Requested-With':'XMLHttpRequest','Accept':'application/json','X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content}, body:fd})
   .then(r=>r.json()).then(d=>{ if(d.success){ location.reload(); } else { alert('Error al guardar'); } })
   .catch(e=>{ console.error(e); alert('Error al guardar'); });
 }
@@ -240,7 +240,6 @@ window.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 @endif
-  </script>
 
 <div id="imageModal" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center z-[99999] p-4">
   <div class="bg-white rounded-lg shadow-xl max-w-md w-full">

@@ -445,7 +445,7 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     @foreach ($vehicles as $index => $vehicle)
                         <div class="vehicle-card-tech group">
-                            <div class="relative overflow-hidden">
+                            <a href="{{ route('public.vehiculos.show', $vehicle->id) }}" class="block relative overflow-hidden">
                                 <img src="{{ $vehicle->main_image }}" alt="{{ $vehicle->title }}"
                                     class="w-full h-52 object-cover transition duration-500 group-hover:scale-105">
                                 <!-- Badges top -->
@@ -462,7 +462,7 @@
                                             class="status-reserved px-2.5 py-1 rounded-lg text-[10px] font-bold uppercase tracking-wider">Reservado</span>
                                     @endif
                                 </div>
-                            </div>
+                            </a>
                             <div class="p-5">
                                 <h4 class="text-base font-bold text-white mb-1">{{ $vehicle->title }}</h4>
                                 <!-- Specs row -->
@@ -865,9 +865,9 @@
             fd.append('show_vehicles', '{{ $settings->show_vehicles ?? 1 }}');
             fd.append('show_contact_form', '{{ $settings->show_contact_form ?? 1 }}');
 
-            fetch('{{ route("admin.landing-config.update") }}', {
+            fetch('{{ parse_url(route("admin.landing-config.update"), PHP_URL_PATH) }}', {
                 method: 'POST',
-                headers: { 'X-Requested-With': 'XMLHttpRequest', 'Accept': 'application/json' },
+                headers: { 'X-Requested-With': 'XMLHttpRequest', 'Accept': 'application/json', 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content },
                 body: fd
             })
             .then(r => r.json())

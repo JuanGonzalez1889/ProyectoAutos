@@ -1,0 +1,162 @@
+<?php
+    // Base layout for tecnologico template — vehicle detail pages
+?>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="<?php echo e(isset($settings) && $settings->logo_url ? $settings->logo_url : '/storage/icono.png'); ?>">
+    <meta name="csrf-token" content="<?php echo e(csrf_token()); ?>">
+    <title><?php echo e($tenant->name ?? 'Agencia de Autos'); ?></title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <?php
+        $font = $settings->font_family ?? 'Inter, sans-serif';
+        $googleFonts = [
+            'Roboto, sans-serif' => 'Roboto',
+            'Open Sans, sans-serif' => 'Open+Sans',
+            'Montserrat, sans-serif' => 'Montserrat',
+            'Lato, sans-serif' => 'Lato',
+            'Poppins, sans-serif' => 'Poppins',
+            'Inter, sans-serif' => 'Inter',
+            'Nunito, sans-serif' => 'Nunito',
+            'Oswald, sans-serif' => 'Oswald',
+            'Raleway, sans-serif' => 'Raleway',
+            'Merriweather, serif' => 'Merriweather',
+            'Playfair Display, serif' => 'Playfair+Display',
+            'Muli, sans-serif' => 'Muli',
+            'Quicksand, sans-serif' => 'Quicksand',
+            'Source Sans Pro, sans-serif' => 'Source+Sans+Pro',
+            'Work Sans, sans-serif' => 'Work+Sans',
+            'PT Sans, sans-serif' => 'PT+Sans',
+            'Ubuntu, sans-serif' => 'Ubuntu',
+            'Fira Sans, sans-serif' => 'Fira+Sans',
+        ];
+        $fontUrl = isset($googleFonts[$font]) ? 'https://fonts.googleapis.com/css?family=' . $googleFonts[$font] . ':300,400,500,600,700&display=swap' : null;
+    ?>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <?php if($fontUrl): ?>
+        <link href="<?php echo e($fontUrl); ?>" rel="stylesheet">
+    <?php endif; ?>
+    <style>
+        :root {
+            --primary-color: <?php echo e($settings && $settings->primary_color ? $settings->primary_color : '#2563eb'); ?>;
+            --secondary-color: <?php echo e($settings && $settings->secondary_color ? $settings->secondary_color : '#0B1120'); ?>;
+            --tertiary-color: <?php echo e($settings && $settings->tertiary_color ? $settings->tertiary_color : '#1e40af'); ?>;
+        }
+        body { font-family: <?php echo e($settings->font_family ?? "'Inter', sans-serif"); ?>; }
+    </style>
+</head>
+<body style="background-color: var(--secondary-color);" class="text-white antialiased">
+    <?php ($template = 'tecnologico'); ?>
+
+    <!-- Navbar -->
+    <nav class="sticky top-0 z-50" style="background: rgba(11,17,32,0.85); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255,255,255,0.06);">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between relative">
+            <div class="flex items-center gap-3">
+                <?php if(isset($editMode) && $editMode): ?>
+                    <div class="editable-section inline-block relative">
+                        <?php if($settings && $settings->logo_url): ?>
+                            <img src="<?php echo e($settings->logo_url); ?>" alt="<?php echo e($tenant->name); ?>" class="h-9 object-contain">
+                        <?php else: ?>
+                            <div class="h-9 w-9 rounded-xl flex items-center justify-center" style="background: var(--primary-color);">
+                                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                            </div>
+                        <?php endif; ?>
+                        <div class="edit-btn" onclick="editImage('logo_url')"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="18" height="18" fill="currentColor" style="vertical-align:middle"><path d="M12.146 2.146a1 1 0 0 1 1.414 0l.294.294a1 1 0 0 1 0 1.414l-8.5 8.5a1 1 0 0 1-.293.207l-2.5 1.25a.5.5 0 0 1-.66-.66l1.25-2.5a1 1 0 0 1 .207-.293l8.5-8.5zm1.414-1.414a2 2 0 0 0-2.828 0l-8.5 8.5a2 2 0 0 0-.414.586l-1.25 2.5A1.5 1.5 0 0 0 2.5 14.5l2.5-1.25a2 2 0 0 0 .586-.414l8.5-8.5a2 2 0 0 0 0-2.828l-.294-.294z"/></svg></div>
+                    </div>
+                    <div class="editable-section inline-block relative" style="min-width:100px; display:flex; align-items:center; gap:6px;">
+                        <span class="text-lg font-bold text-white"><?php echo e($tenant->name); ?></span>
+                        <button type="button" class="edit-btn" style="position:static; display:flex; margin-left:4px; background:var(--primary-color); color:#fff; width:24px; height:24px; border-radius:50%; align-items:center; justify-content:center; cursor:pointer; z-index:50; border:none; font-size:10px;" onclick="editText('agency_name','Editar Nombre')"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="14" height="14" fill="currentColor" style="vertical-align:middle"><path d="M12.146.854a.5.5 0 0 1 .708 0l2.292 2.292a.5.5 0 0 1 0 .708l-9.5 9.5a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l9.5-9.5z"/></svg></button>
+                    </div>
+                <?php else: ?>
+                    <?php if($settings && $settings->logo_url): ?>
+                        <img src="<?php echo e($settings->logo_url); ?>" alt="<?php echo e($tenant->name); ?>" class="h-9 object-contain">
+                    <?php else: ?>
+                        <div class="h-9 w-9 rounded-xl flex items-center justify-center" style="background: var(--primary-color);">
+                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                        </div>
+                    <?php endif; ?>
+                    <span class="text-lg font-bold text-white"><?php echo e($tenant->name); ?></span>
+                <?php endif; ?>
+            </div>
+            <!-- Botón hamburguesa solo en mobile -->
+            <div class="md:hidden ml-4">
+                <div id="hamburger-btn" class="hamburger" onclick="toggleMenu()">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+            <!-- Menú normal en desktop -->
+            <div class="hidden md:flex items-center gap-8">
+                <a href="/" class="text-sm font-medium transition hover:text-white" style="color: <?php echo e($settings->navbar_links_color ?? 'rgba(255,255,255,0.6)'); ?>">Inicio</a>
+                <a href="<?php echo e(route('public.vehiculos')); ?>" class="text-sm font-medium transition hover:text-white" style="color: <?php echo e($settings->navbar_links_color ?? 'rgba(255,255,255,0.6)'); ?>">Vehículos</a>
+                <a href="/#nosotros" class="text-sm font-medium transition hover:text-white" style="color: <?php echo e($settings->navbar_links_color ?? 'rgba(255,255,255,0.6)'); ?>">Nosotros</a>
+                <a href="/#contacto" class="text-sm font-medium transition hover:text-white" style="color: <?php echo e($settings->navbar_links_color ?? 'rgba(255,255,255,0.6)'); ?>">Contacto</a>
+            </div>
+            <!-- Menú hamburguesa en mobile -->
+            <div id="mobile-menu" class="mobile-menu md:hidden">
+                <div class="flex flex-col gap-4 p-4 bg-[#0B1120] border-t border-white/10">
+                    <a href="/" class="text-sm font-medium transition hover:text-white" style="color: <?php echo e($settings->navbar_links_color ?? 'rgba(255,255,255,0.6)'); ?>">Inicio</a>
+                    <a href="<?php echo e(route('public.vehiculos')); ?>" class="text-sm font-medium transition hover:text-white" style="color: <?php echo e($settings->navbar_links_color ?? 'rgba(255,255,255,0.6)'); ?>">Vehículos</a>
+                    <a href="/#nosotros" class="text-sm font-medium transition hover:text-white" style="color: <?php echo e($settings->navbar_links_color ?? 'rgba(255,255,255,0.6)'); ?>">Nosotros</a>
+                    <a href="/#contacto" class="text-sm font-medium transition hover:text-white" style="color: <?php echo e($settings->navbar_links_color ?? 'rgba(255,255,255,0.6)'); ?>">Contacto</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <style>
+        .hamburger {
+            display: block;
+            width: 32px;
+            height: 32px;
+            cursor: pointer;
+        }
+        .hamburger span {
+            display: block;
+            height: 4px;
+            margin: 6px 0;
+            background: var(--primary-color);
+            border-radius: 2px;
+            transition: 0.3s;
+        }
+        .mobile-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            z-index: 100;
+        }
+        .mobile-menu.open {
+            display: block;
+        }
+    </style>
+    <script>
+        function toggleMenu() {
+            var menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('open');
+        }
+        document.addEventListener('click', function(e) {
+            var menu = document.getElementById('mobile-menu');
+            var hamburger = document.getElementById('hamburger-btn');
+            if (!menu || !hamburger) return;
+            if (!menu.contains(e.target) && !hamburger.contains(e.target)) {
+                menu.classList.remove('open');
+            }
+        });
+    </script>
+
+    <?php echo $__env->yieldContent('content'); ?>
+
+    <!-- Footer -->
+    <footer class="py-8 text-center text-xs text-white/25" style="background: rgba(0,0,0,0.3); border-top: 1px solid rgba(255,255,255,0.04);">
+        © <?php echo e(date('Y')); ?> <?php echo e($tenant->name); ?>. Todos los derechos reservados.
+    </footer>
+    <?php if(isset($editMode) && $editMode): ?>
+        <?php echo $__env->make('public.templates.partials.editor-scripts', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
+    <?php endif; ?>
+</body>
+</html>
+<?php /**PATH C:\Proyectos\ProyectoAutos\resources\views\public\templates\tecnologico-base.blade.php ENDPATH**/ ?>

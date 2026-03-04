@@ -342,7 +342,9 @@
                         <div class="vehicle-row p-4 lg:p-0">
                             <!-- Mobile: card layout -->
                             <div class="lg:hidden flex flex-col gap-3 p-2">
-                                <img src="{{ $vehicle->main_image }}" alt="{{ $vehicle->title }}" class="w-full h-48 object-cover rounded-lg">
+                                <a href="{{ route('public.vehiculos.show', $vehicle->id) }}" class="block">
+                                    <img src="{{ $vehicle->main_image }}" alt="{{ $vehicle->title }}" class="w-full h-48 object-cover rounded-lg">
+                                </a>
                                 <div>
                                     <p class="text-xs font-medium uppercase tracking-wide text-gray-400">{{ $vehicle->brand }}</p>
                                     <h4 class="text-lg font-semibold text-gray-900">{{ $vehicle->title }}</h4>
@@ -360,7 +362,9 @@
                             <!-- Desktop: table row -->
                             <div class="hidden lg:grid grid-cols-12 gap-4 items-center px-6 py-4">
                                 <div class="col-span-2">
-                                    <img src="{{ $vehicle->main_image }}" alt="{{ $vehicle->title }}" class="w-28 h-20 object-cover rounded-lg">
+                                    <a href="{{ route('public.vehiculos.show', $vehicle->id) }}" class="block">
+                                        <img src="{{ $vehicle->main_image }}" alt="{{ $vehicle->title }}" class="w-28 h-20 object-cover rounded-lg">
+                                    </a>
                                 </div>
                                 <div class="col-span-3">
                                     <p class="text-[10px] font-semibold uppercase tracking-wider text-gray-400 mb-0.5">{{ $vehicle->brand }}</p>
@@ -648,7 +652,4 @@
         }
     </script>
 </body>
-@if(isset($editMode) && $editMode)
-    @include('public.templates.partials.editor-scripts')
-@endif
 </html>

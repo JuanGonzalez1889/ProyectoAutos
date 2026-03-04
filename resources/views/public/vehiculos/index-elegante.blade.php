@@ -1,7 +1,7 @@
 @extends('public.templates.elegante-base')
 @section('content')
 <style>
-    .vehiculo-card-auto { color: var(--auto-text-color, #222); }
+    .vehiculo-card-auto { color: var(--auto-text-color, #222); overflow-wrap: break-word; word-break: break-word; }
     .vehiculo-card-bg { background: var(--secondary-color); border-color: var(--primary-color); }
 </style>
 <script>
