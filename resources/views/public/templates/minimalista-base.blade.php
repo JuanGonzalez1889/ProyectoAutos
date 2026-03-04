@@ -2,7 +2,7 @@
     // Copia de la estructura general de minimalista, pero sin hero, nosotros, etc.
 @endphp
 <!DOCTYPE html>
-<html lang="es" style="font-size: 140%;">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -153,7 +153,7 @@
                 </div>
             </div>
         </div>
-    </section
+    </section>
 
     <!-- Footer -->
     <footer class="bg-gray-900 py-8 text-center text-gray-400 text-sm border-t border-gray-700">

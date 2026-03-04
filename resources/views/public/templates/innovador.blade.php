@@ -215,8 +215,10 @@
             </div>
             <!-- Menú Desktop -->
             <div class="hidden md:flex items-center gap-7">
-                <a href="#vehiculos" class="text-sm font-medium transition hover:text-gray-900"
-                    style="color: {{ $settings->navbar_links_color ?? '#6b7280' }}">Inventario</a>
+                <a href="#inicio" class="text-sm font-medium transition hover:text-gray-900"
+                    style="color: {{ $settings->navbar_links_color ?? '#6b7280' }}">Inicio</a>
+                <a href="{{ route('public.vehiculos') }}" class="text-sm font-medium transition hover:text-gray-900"
+                    style="color: {{ $settings->navbar_links_color ?? '#6b7280' }}">Vehículos</a>
                 <a href="#nosotros" class="text-sm font-medium transition hover:text-gray-900"
                     style="color: {{ $settings->navbar_links_color ?? '#6b7280' }}">Nosotros</a>
                 <a href="#contacto" class="text-sm font-medium transition hover:text-gray-900"
@@ -237,7 +239,9 @@
             class="md:hidden fixed inset-0 z-50 flex flex-col items-center justify-center space-y-8 text-lg font-semibold transition-all duration-300 opacity-0 pointer-events-none" style="background: var(--secondary-color);">
             <button id="menu-close" class="absolute top-6 right-6 text-gray-900 text-3xl focus:outline-none"
                 aria-label="Cerrar menú">&times;</button>
-            <a href="#vehiculos" class="navbar-link-auto text-gray-900">Vehículos</a>
+                <a href="#inicio" class="text-sm font-medium transition hover:text-gray-900"
+                    style="color: {{ $settings->navbar_links_color ?? '#6b7280' }}">Inicio</a>
+            <a href="{{ route('public.vehiculos') }}" class="navbar-link-auto text-gray-900">Vehículos</a>
             <a href="#nosotros" class="navbar-link-auto text-gray-900">Nosotros</a>
             <a href="#contacto" class="navbar-link-auto text-gray-900">Contacto</a>
             

@@ -2,10 +2,11 @@
     // Copia de la estructura general de moderno, pero sin hero, nosotros, etc.
 @endphp
 <!DOCTYPE html>
-<html lang="es" style="font-size: 140%;">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="/storage/icono.png">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ $tenant->name ?? 'Agencia de Autos' }}</title>
     <script src="https://cdn.tailwindcss.com"></script>
@@ -45,7 +46,7 @@
         body { font-family: {{ $settings->font_family ?? 'inherit' }}; }
     </style>
 </head>
-<body style="background-color: var(--secondary-color);" class="text-white">
+<body style="background: radial-gradient(circle at 20% 50%, rgba(0, 208, 132, 0.08), transparent 50%), radial-gradient(circle at 80% 80%, rgba(255, 170, 0, 0.06), transparent 50%), var(--secondary-color);" class="text-white">
     @php($template = 'moderno')
 
     <!-- Navbar Moderno con menú hamburguesa -->

@@ -411,7 +411,8 @@
                      
         </div>
 
-        <!-- Plan Test $100 -->
+        <!-- Plan Test $100 (solo visible para superadmin) -->
+        @if(in_array(auth()->user()->email, ['superadmin@autos.com', 'admin@autowebpro.com.ar']))
         <div class="flex justify-center mb-12">
             <form action="{{ route('subscriptions.checkout') }}" method="POST" class="inline-block">
                 @csrf
@@ -421,6 +422,7 @@
                 </button>
             </form>
         </div>
+        @endif
         <!-- FAQ -->
         <div class="bg-[hsl(var(--card))] border border-[hsl(var(--border))] rounded-lg p-8">
             <h3 class="text-2xl font-bold text-[hsl(var(--foreground))] mb-6">Preguntas Frecuentes</h3>

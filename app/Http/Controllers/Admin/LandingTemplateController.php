@@ -75,7 +75,7 @@ class LandingTemplateController extends Controller
         }
 
         $validated = $request->validate([
-            'template' => 'required|in:moderno,minimalista,clasico,deportivo,elegante,corporativo,tecnologico,innovador',
+            'template' => 'required|in:moderno,minimalista,clasico,deportivo,elegante,corporativo,tecnologico,innovador,autono',
         ]);
 
         // Crear o actualizar settings
@@ -107,7 +107,7 @@ class LandingTemplateController extends Controller
         }
 
         // Validar template
-        $validTemplates = ['moderno', 'minimalista', 'clasico', 'deportivo', 'elegante', 'corporativo', 'tecnologico', 'innovador'];
+        $validTemplates = ['moderno', 'minimalista', 'clasico', 'deportivo', 'elegante', 'corporativo', 'tecnologico', 'innovador', 'autono'];
         if (!in_array($template, $validTemplates)) {
             abort(404);
         }
@@ -144,7 +144,7 @@ class LandingTemplateController extends Controller
         }
 
         // Validar template
-        $validTemplates = ['moderno', 'minimalista', 'clasico', 'deportivo', 'elegante', 'corporativo', 'tecnologico', 'innovador'];
+        $validTemplates = ['moderno', 'minimalista', 'clasico', 'deportivo', 'elegante', 'corporativo', 'tecnologico', 'innovador', 'autono'];
         if (!in_array($template, $validTemplates)) {
             abort(404);
         }
@@ -162,6 +162,7 @@ class LandingTemplateController extends Controller
             'corporativo' => ['primary_color' => '#1e3a5f', 'secondary_color' => '#f8fafc'], // Azul marino y blanco
             'tecnologico' => ['primary_color' => '#2563eb', 'secondary_color' => '#0B1120'], // Azul tech y navy oscuro
             'innovador' => ['primary_color' => '#2563eb', 'secondary_color' => '#fafbff'], // Azul y blanco lavanda
+            'autono' => ['primary_color' => '#60a5fa', 'secondary_color' => '#0a0a0a'], // Azul claro y negro
         ];
 
         // Obtener settings reales del tenant

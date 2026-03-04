@@ -111,8 +111,7 @@ class AgenciaController extends Controller
                 'max:255',
                 'regex:/^[a-z0-9]+(?:-[a-z0-9]+)*$/',
                 function ($attribute, $value, $fail) use ($currentTenant) {
-                    // MODIFICADO: Uso de config central_domain
-                    $fullDomain = strtolower(trim($value)) . '.' . config('app.central_domain');
+                    $fullDomain = strtolower(trim($value)) . '.' . env('CENTRAL_DOMAIN', 'autowebpro.com.ar');
                     $query = Domain::where('domain', $fullDomain);
                     if ($currentTenant) {
                         $query->where('tenant_id', '!=', $currentTenant->id);
@@ -170,8 +169,8 @@ class AgenciaController extends Controller
                     $agencia->save();
                 }
 
-                // MODIFICADO: Uso de config central_domain
-                $fullDomain = strtolower(trim($validated['domain'])) . '.' . config('app.central_domain');
+                // Construir dominio completo
+                $fullDomain = strtolower(trim($validated['domain'])) . '.' . env('CENTRAL_DOMAIN', 'autowebpro.com.ar');
 
                 Domain::where('tenant_id', $tenant->id)
                     ->where('domain', '!=', $fullDomain)
@@ -313,8 +312,7 @@ class AgenciaController extends Controller
             return response()->json(['available' => false, 'message' => 'Dominio con formato inválido']);
         }
 
-        // MODIFICADO: Uso de config central_domain
-        $fullDomain = strtolower(trim($domain)) . '.' . config('app.central_domain');
+        $fullDomain = strtolower(trim($domain)) . '.' . env('CENTRAL_DOMAIN', 'autowebpro.com.ar');
 
         $existingDomain = Domain::where('domain', $fullDomain)->first();
 

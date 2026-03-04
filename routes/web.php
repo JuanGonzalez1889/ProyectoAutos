@@ -26,6 +26,7 @@ Route::middleware(['auth'])->get('/impersonate/leave', function () {
 
 use App\Http\Controllers\Admin\AgenciaController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\InstructivosController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\UserPermissionController;
 use App\Http\Controllers\Admin\VehicleController;
@@ -167,6 +168,9 @@ Route::get('/subscriptions/failure', [SubscriptionController::class, 'failure'])
         // Dashboard - Accesible para todos los usuarios autenticados
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
         Route::post('/onboarding', [AgenciaController::class, 'completeOnboarding'])->name('onboarding.complete');
+
+        // Instructivos - Accesible para todos los usuarios autenticados
+        Route::get('/instructivos', [InstructivosController::class, 'index'])->name('instructivos');
         Route::get('/api/check-domain', [AgenciaController::class, 'checkDomainAvailability'])->name('check-domain');
         
         // Gestión de Agencia - Solo para AGENCIERO

@@ -90,7 +90,7 @@
             </div>
             <!-- Menú normal en desktop -->
             <div class="hidden md:flex items-center gap-8">
-                <a href="#inicio" class="text-sm font-medium transition hover:text-white" style="color: {{ $settings->navbar_links_color ?? 'rgba(255,255,255,0.6)' }}">Inventario</a>
+                <a href="#inicio" class="text-sm font-medium transition hover:text-white" style="color: {{ $settings->navbar_links_color ?? 'rgba(255,255,255,0.6)' }}">Inicio</a>
                 <a href="{{ route('public.vehiculos') }}" class="text-sm font-medium transition hover:text-white" style="color: {{ $settings->navbar_links_color ?? 'rgba(255,255,255,0.6)' }}">Vehículos</a>
                 <a href="#nosotros" class="text-sm font-medium transition hover:text-white" style="color: {{ $settings->navbar_links_color ?? 'rgba(255,255,255,0.6)' }}">Nosotros</a>
                 <a href="#contacto" class="text-sm font-medium transition hover:text-white" style="color: {{ $settings->navbar_links_color ?? 'rgba(255,255,255,0.6)' }}">Contacto</a>
@@ -98,7 +98,7 @@
             <!-- Menú hamburguesa en mobile -->
             <div id="mobile-menu" class="mobile-menu md:hidden">
                 <div class="flex flex-col gap-4 p-4 bg-[#0B1120] border-t border-white/10">
-                    <a href="#inicio" class="text-sm font-medium transition hover:text-white" style="color: {{ $settings->navbar_links_color ?? 'rgba(255,255,255,0.6)' }}">Inventario</a>
+                    <a href="#inicio" class="text-sm font-medium transition hover:text-white" style="color: {{ $settings->navbar_links_color ?? 'rgba(255,255,255,0.6)' }}">Inicio</a>
                     <a href="{{ route('public.vehiculos') }}" class="text-sm font-medium transition hover:text-white" style="color: {{ $settings->navbar_links_color ?? 'rgba(255,255,255,0.6)' }}">Vehículos</a>
                     <a href="#nosotros" class="text-sm font-medium transition hover:text-white" style="color: {{ $settings->navbar_links_color ?? 'rgba(255,255,255,0.6)' }}">Nosotros</a>
                     <a href="#contacto" class="text-sm font-medium transition hover:text-white" style="color: {{ $settings->navbar_links_color ?? 'rgba(255,255,255,0.6)' }}">Contacto</a>

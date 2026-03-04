@@ -203,7 +203,7 @@ class TenantController extends Controller
         }
 
         // Construcción del dominio completo
-        $fullDomain = $domain . '.' . config('app.central_domain');
+        $fullDomain = $domain . '.' . env('CENTRAL_DOMAIN', 'autowebpro.com.ar');
 
         // Verificar si ya existe
         $exists = Domain::where('domain', $fullDomain)->exists();

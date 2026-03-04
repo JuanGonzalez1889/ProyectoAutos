@@ -2,7 +2,7 @@
     // Copia de la estructura general de deportivo, pero sin hero, nosotros, etc.
 @endphp
 <!DOCTYPE html>
-<html lang="es" style="font-size: 140%;">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -116,22 +116,34 @@
     <nav class="sticky top-0 z-50 backdrop-blur-lg border-b" style="border-color: var(--primary-color);">
         <div class="max-w-7xl mx-auto px-6 py-3 flex justify-between items-center relative">
             <div class="flex items-center gap-3">
-                <div class="editable-section inline-block relative">
-                    @if($settings && $settings->logo_url)
-                        <img src="{{ $settings->logo_url }}" alt="{{ $tenant->name }}" class="h-8 object-contain">
-                    @endif
-                    <div class="edit-btn" onclick="editImage('logo_url')">
-                        <i class="fa fa-pencil"></i>
+                @if(isset($editMode) && $editMode)
+                    <div class="editable-section inline-block">
+                        @if($settings && $settings->logo_url)
+                            <img src="{{ $settings->logo_url }}" alt="{{ $tenant->name }}" class="h-8 object-contain">
+                        @else
+                            <div class="w-10 h-10 rounded-full" style="background: linear-gradient(135deg, var(--primary-color), white);"></div>
+                        @endif
+                        <div class="edit-btn" onclick="editImage('logo_url')">
+                            <i class="fa fa-pencil"></i>
+                        </div>
                     </div>
-                </div>
-                <div class="editable-section inline-block relative ml-2">
-                    <span class="font-semibold" style="color: {{ $settings->navbar_agency_name_color ?? '#fff' }}">{{ $settings->navbar_agency_name }}</span>
-                    <div class="edit-btn" onclick="editText('navbar_agency_name', 'Editar Nombre de Agencia (Navbar)')">
-                        <i class="fa fa-pencil"></i>
+                    <div class="editable-section inline-block">
+                        <span class="font-black text-xl tracking-wider" style="color: {{ $settings->agency_name_color ?? '#fff' }}">{{ $tenant->name }}</span>
+                        <div class="edit-btn" onclick="editText('agency_name', 'Editar Nombre de Agencia')">
+                            <i class="fa fa-pencil"></i>
+                        </div>
                     </div>
-                </div>
+                @else
+                    <div class="inline-block relative">
+                        @if($settings && $settings->logo_url)
+                            <img src="{{ $settings->logo_url }}" alt="{{ $tenant->name }}" class="h-8 object-contain">
+                        @else
+                            <div class="w-10 h-10 rounded-full" style="background: linear-gradient(135deg, var(--primary-color), white);"></div>
+                        @endif
+                    </div>
+                    <span class="font-black text-xl tracking-wider">{{ $tenant->name }}</span>
+                @endif
             </div>
-            <span class="font-black text-xl tracking-wider navbar-auto">{{ $tenant->name }}</span>
             <!-- Botón hamburguesa solo en mobile -->
             <div class="md:hidden ml-4">
                 <div id="hamburger-btn" class="hamburger" onclick="toggleMenu()">
@@ -146,9 +158,7 @@
                 <a href="{{ route('public.vehiculos') }}" class="navbar-link-auto transition" style="color: {{ $settings->navbar_links_color ?? 'var(--navbar-text-color, #fff)' }}">VEHÍCULOS</a>
                 <a href="#nosotros" class="navbar-link-auto transition" style="color: {{ $settings->navbar_links_color ?? 'var(--navbar-text-color, #fff)' }}">NOSOTROS</a>
                 <a href="#contacto" class="navbar-link-auto transition" style="color: {{ $settings->navbar_links_color ?? 'var(--navbar-text-color, #fff)' }}">CONTACTO</a>
-                <a href="{{ route('login') }}" class="px-6 py-2 rounded-full font-bold transition hover:scale-105" style="background-color: var(--primary-color); color: var(--secondary-color);">
-                    ACCESO
-                </a>
+               
             </div>
             <!-- Menú hamburguesa en mobile -->
             <div id="mobile-menu" class="mobile-menu md:hidden">
@@ -157,31 +167,12 @@
                     <a href="{{ route('public.vehiculos') }}" class="navbar-link-auto transition" style="color: {{ $settings->navbar_links_color ?? 'var(--navbar-text-color, #fff)' }}">VEHÍCULOS</a>
                     <a href="#nosotros" class="navbar-link-auto transition" style="color: {{ $settings->navbar_links_color ?? 'var(--navbar-text-color, #fff)' }}">NOSOTROS</a>
                     <a href="#contacto" class="navbar-link-auto transition" style="color: {{ $settings->navbar_links_color ?? 'var(--navbar-text-color, #fff)' }}">CONTACTO</a>
-                    <a href="{{ route('login') }}" class="px-6 py-2 rounded-full font-bold transition hover:scale-105" style="background-color: var(--primary-color); color: var(--secondary-color);">
-                        ACCESO
-                    </a>
+                    
                 </div>
             </div>
         </div>
     </nav>
 
-    <!-- Card Personalización -->
-    <div class="flex justify-center items-center my-12">
-        <div class="bg-gray-800 rounded-lg shadow-lg overflow-hidden flex flex-col justify-between w-[370px] mx-auto">
-            <div class="p-6 flex flex-col items-center justify-center h-64">
-                <div class="mb-4">
-                    <svg width="64" height="64" fill="none" stroke="currentColor" viewBox="0 0 24 24" class="text-yellow-400 mx-auto">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-                    </svg>
-                </div>
-                <h2 class="text-2xl font-bold text-white mb-2 text-center">QUIERO PERSONALIZAR MI WEB</h2>
-                <p class="text-gray-400 text-center text-sm mb-4">¿Buscás algo único? Podemos crear una web a medida para tu agencia, con funcionalidades y diseño exclusivo.</p>
-            </div>
-            <div class="px-6 pb-6 flex justify-center">
-                <a href="mailto:info@tuagencia.com" class="bg-yellow-400 text-gray-900 font-semibold px-6 py-2 rounded transition hover:bg-yellow-300 shadow">Contactar</a>
-            </div>
-        </div>
-    </div>
     @yield('content')
 
     <!-- Footer -->

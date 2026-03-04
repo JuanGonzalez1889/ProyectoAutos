@@ -36,7 +36,7 @@
         <!-- Plantilla Moderno -->
         <div class="template-card bg-[hsl(var(--card))] rounded-lg overflow-hidden shadow border border-[hsl(var(--border))]">
             <div class="relative bg-gradient-to-br from-purple-600 to-pink-500 h-48 overflow-hidden">
-                <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=400&h=300&fit=crop" alt="Moderno" class="w-full h-full object-cover opacity-40">
+                <img src="https://images.unsplash.com/photo-1583121274602-3e2820c69888?w=400&h=300&fit=crop" alt="Moderno" class="w-full h-full object-cover opacity-40">
                 <div class="absolute inset-0 flex items-center justify-center text-white">
                     <div class="text-center">
                         <div class="text-3xl font-bold mb-1">Moderno</div>
@@ -65,7 +65,7 @@
         <!-- Plantilla Minimalista -->
         <div class="template-card bg-[hsl(var(--card))] rounded-lg overflow-hidden shadow border border-[hsl(var(--border))]">
             <div class="relative bg-gradient-to-br from-gray-700 to-gray-900 h-48 overflow-hidden">
-                <img src="https://images.unsplash.com/photo-1618172193622-ae2d025f4032?w=400&h=300&fit=crop" alt="Minimalista" class="w-full h-full object-cover opacity-30">
+                <img src="https://images.unsplash.com/photo-1542362567-b07e54358753?w=400&h=300&fit=crop" alt="Minimalista" class="w-full h-full object-cover opacity-30">
                 <div class="absolute inset-0 flex items-center justify-center text-white">
                     <div class="text-center">
                         <div class="text-3xl font-bold mb-1">Minimal</div>
@@ -239,7 +239,7 @@
         <!-- Plantilla Innovador -->
         <div class="template-card bg-[hsl(var(--card))] rounded-lg overflow-hidden shadow border border-[hsl(var(--border))]">
             <div class="relative h-48 overflow-hidden" style="background: linear-gradient(135deg, #fafbff, #e0e7ff);">
-                <img src="https://images.unsplash.com/photo-1550355291-bbee04a92027?w=400&h=300&fit=crop" alt="Innovador" class="w-full h-full object-cover opacity-30">
+                <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=400&h=300&fit=crop" alt="Innovador" class="w-full h-full object-cover opacity-30">
                 <div class="absolute inset-0 flex items-center justify-center">
                     <div class="text-center">
                         <div class="text-3xl font-extrabold mb-1" style="background: linear-gradient(135deg, #2563eb, #7c3aed); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Innovador</div>
@@ -265,19 +265,48 @@
             </div>
         </div>
 
+        <!-- Plantilla Autono -->
+        <div class="template-card bg-[hsl(var(--card))] rounded-lg overflow-hidden shadow border border-[hsl(var(--border))]">
+            <div class="relative h-48 overflow-hidden" style="background: linear-gradient(135deg, #0a0a0a, #111827);">
+                <img src="https://images.unsplash.com/photo-1494976388531-d1058494cdd8?w=400&h=300&fit=crop" alt="Autono" class="w-full h-full object-cover opacity-35">
+                <div class="absolute inset-0 flex items-center justify-center text-white">
+                    <div class="text-center">
+                        <div class="text-3xl font-extrabold mb-1" style="letter-spacing: 0.06em;">AUTONO</div>
+                        <div class="text-xs tracking-wider text-blue-300">DARK CLEAN</div>
+                    </div>
+                </div>
+            </div>
+            <div class="p-4">
+                <h3 class="text-base font-bold mb-2 text-[hsl(var(--foreground))]">Autono</h3>
+                <p class="text-[hsl(var(--muted-foreground))] mb-3 text-xs line-clamp-2">Diseño oscuro minimal con hero limpio, panel de contacto y tarjetas premium de inventario.</p>
+                <div class="flex gap-2">
+                    <button onclick="previewTemplate('autono')" class="flex-1 px-3 py-2 border border-[hsl(var(--border))] text-[hsl(var(--foreground))] rounded text-xs font-semibold hover:bg-[hsl(var(--secondary))] transition">
+                        Preview
+                    </button>
+                    <form action="{{ route('admin.landing-template.store') }}" method="POST" class="flex-1">
+                        @csrf
+                        <input type="hidden" name="template" value="autono">
+                        <button type="submit" class="w-full px-3 py-2 bg-[#2563eb] text-white rounded text-xs font-semibold hover:bg-[#1d4ed8] transition">
+                            Usar
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
         <!-- Card Web Personalizada -->
-        <div class="template-card bg-gradient-to-br from-fuchsia-600 to-indigo-600 rounded-lg overflow-hidden shadow border border-[hsl(var(--border))] flex flex-col justify-between">
-            <div class="relative h-48 flex items-center justify-center" style="background: linear-gradient(135deg, #f3e8ff, #e0e7ff);">
-                <div class="text-center w-full">
-                    <div class="text-2xl md:text-3xl font-extrabold mb-2 text-indigo-900" style="letter-spacing: 0.01em;">Quiero una web personalizada</div>
-                    <div class="text-xs md:text-sm text-indigo-700">¿Necesitas algo único para tu agencia?</div>
+        <div class="template-card bg-[hsl(var(--card))] rounded-lg overflow-hidden shadow border border-[hsl(var(--border))] flex flex-col justify-between">
+            <div class="relative h-48 flex items-center justify-center" style="background: linear-gradient(135deg, #4f46e5, #7c3aed);">
+                <div class="text-center w-full px-4">
+                    <div class="text-2xl md:text-3xl font-extrabold mb-2 text-white" style="letter-spacing: 0.01em; text-shadow: 0 2px 8px rgba(0,0,0,0.3);">Quiero una web personalizada</div>
+                    <div class="text-xs md:text-sm text-indigo-200">¿Necesitas algo único para tu agencia?</div>
                 </div>
             </div>
             <div class="p-4 flex flex-col flex-1 justify-between">
                 <h3 class="text-base font-bold mb-2 text-[hsl(var(--foreground))]">Web a Medida</h3>
                 <p class="text-[hsl(var(--muted-foreground))] mb-3 text-xs line-clamp-2">Solicita una cotización para un desarrollo web completamente personalizado según tus necesidades.</p>
                 <div class="flex gap-2 mt-auto">
-                    <a href="mailto:ventas@tusitio.com?subject=Solicitud%20de%20cotizaci%C3%B3n%20web%20personalizada" class="flex-1 px-3 py-2 bg-gradient-to-r from-fuchsia-600 to-indigo-600 text-white rounded text-xs font-semibold text-center hover:opacity-90 transition" style="display: block;">
+                    <a href="https://wa.me/5493413365206?text=Quiero%20una%20web%20personalizada" target="_blank" class="flex-1 px-3 py-2 bg-gradient-to-r from-fuchsia-600 to-indigo-600 text-white rounded text-xs font-semibold text-center hover:opacity-90 transition" style="display: block;">
                         Solicitar cotización
                     </a>
                 </div>
@@ -313,7 +342,8 @@ function previewTemplate(template) {
         'elegante': 'Elegante',
         'corporativo': 'Corporativo',
         'tecnologico': 'Tecnológico',
-        'innovador': 'Innovador'
+        'innovador': 'Innovador',
+        'autono': 'Autono'
     };
     
     document.getElementById('templateName').textContent = names[template];

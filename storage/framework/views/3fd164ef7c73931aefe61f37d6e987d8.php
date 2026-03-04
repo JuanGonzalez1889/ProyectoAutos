@@ -335,6 +335,16 @@
                         <span class="sidebar-label flex-1">Mis Dominios</span>
                     </a>
                 <?php endif; ?>
+                <!-- Instructivos -->
+                <a href="<?php echo e(route('admin.instructivos')); ?>"
+                    class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors <?php echo e(request()->routeIs('admin.instructivos') ? 'bg-[hsl(var(--primary))] text-white' : 'text-[hsl(var(--muted-foreground))] hover:bg-[hsl(var(--secondary))] hover:text-[hsl(var(--foreground))]'); ?>">
+                    <svg class="sidebar-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    <span class="sidebar-label flex-1">Instructivos</span>
+                </a>
+
                 <?php if(canSeeMenu('planes y facturacion')): ?>
                     <a href="<?php echo e(route('subscriptions.index')); ?>"
                         class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors <?php echo e(request()->routeIs('subscriptions.*') ? 'bg-[hsl(var(--primary))] text-white' : 'text-[hsl(var(--muted-foreground))] hover:bg-[hsl(var(--secondary))] hover:text-[hsl(var(--foreground))]'); ?>">

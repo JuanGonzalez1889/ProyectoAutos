@@ -49,17 +49,29 @@
                             <th class="px-2 py-1">Tenant</th>
                             <th class="px-2 py-1">Plan</th>
                             <th class="px-2 py-1">Estado</th>
+                            <th class="px-2 py-1">Renovación activada</th>
                             <th class="px-2 py-1">Inicio</th>
                             <th class="px-2 py-1">Fin</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php $__currentLoopData = $allSubscriptions; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $sub): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <?php
+                            $hasPreapprovalId = !empty($sub->mercadopago_id) && !is_numeric((string) $sub->mercadopago_id);
+                            $autoRenewEnabled = $sub->payment_method === 'mercadopago'
+                                && $hasPreapprovalId
+                                && $sub->status === 'active'
+                                && (string) $sub->mercadopago_status === 'authorized';
+                        ?>
                         <tr>
                             <td class="border px-2 py-1"><?php echo e($sub->id); ?></td>
                             <td class="border px-2 py-1"><?php echo e($sub->tenant->name ?? '-'); ?></td>
                             <td class="border px-2 py-1"><?php echo e($sub->plan); ?></td>
                             <td class="border px-2 py-1"><?php echo e($sub->status); ?></td>
+                            <td class="border px-2 py-1 font-semibold <?php echo e($autoRenewEnabled ? 'text-emerald-600' : 'text-red-600'); ?>">
+                                <?php echo e($autoRenewEnabled ? 'SI' : 'NO'); ?>
+
+                            </td>
                             <td class="border px-2 py-1"><?php echo e($sub->current_period_start ? $sub->current_period_start->format('Y-m-d') : '-'); ?></td>
                             <td class="border px-2 py-1"><?php echo e($sub->current_period_end ? $sub->current_period_end->format('Y-m-d') : '-'); ?></td>
                         </tr>
@@ -400,7 +412,8 @@
                      
         </div>
 
-        <!-- Plan Test $100 -->
+        <!-- Plan Test $100 (solo visible para superadmin) -->
+        <?php if(in_array(auth()->user()->email, ['superadmin@autos.com', 'admin@autowebpro.com.ar'])): ?>
         <div class="flex justify-center mb-12">
             <form action="<?php echo e(route('subscriptions.checkout')); ?>" method="POST" class="inline-block">
                 <?php echo csrf_field(); ?>
@@ -410,6 +423,7 @@
                 </button>
             </form>
         </div>
+        <?php endif; ?>
         <!-- FAQ -->
         <div class="bg-[hsl(var(--card))] border border-[hsl(var(--border))] rounded-lg p-8">
             <h3 class="text-2xl font-bold text-[hsl(var(--foreground))] mb-6">Preguntas Frecuentes</h3>

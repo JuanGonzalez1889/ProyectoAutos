@@ -60,9 +60,15 @@ class VehiculoController extends Controller
         $host = $request->getHost();
         $domain = str_replace('www.', '', $host);
 
-        // Si es localhost o 127.0.0.1, usar el primer tenant para desarrollo
+        // Si es localhost o 127.0.0.1, usar el tenant del usuario logueado o el primero
         if (in_array($domain, ['localhost', '127.0.0.1'])) {
-            $tenant = \App\Models\Tenant::first();
+            $user = \Illuminate\Support\Facades\Auth::user();
+            if ($user && $user->tenant_id) {
+                $tenant = \App\Models\Tenant::find($user->tenant_id);
+            }
+            if (!isset($tenant) || !$tenant) {
+                $tenant = \App\Models\Tenant::first();
+            }
             if (!$tenant) abort(404, 'No hay tenants en la base de datos.');
             $settings = $tenant->settings ?? null;
         } else {
@@ -94,9 +100,15 @@ class VehiculoController extends Controller
         $host = $request->getHost();
         $domain = str_replace('www.', '', $host);
 
-        // Si es localhost o 127.0.0.1, usar el primer tenant para desarrollo
+        // Si es localhost o 127.0.0.1, usar el tenant del usuario logueado o el primero
         if (in_array($domain, ['localhost', '127.0.0.1'])) {
-            $tenant = \App\Models\Tenant::first();
+            $user = \Illuminate\Support\Facades\Auth::user();
+            if ($user && $user->tenant_id) {
+                $tenant = \App\Models\Tenant::find($user->tenant_id);
+            }
+            if (!isset($tenant) || !$tenant) {
+                $tenant = \App\Models\Tenant::first();
+            }
             if (!$tenant) abort(404, 'No hay tenants en la base de datos.');
             $settings = $tenant->settings ?? null;
         } else {
@@ -115,6 +127,10 @@ class VehiculoController extends Controller
         if (!view()->exists($view)) {
             $view = 'public.vehiculos.show'; // fallback minimalista
         }
+
+        // Incrementar contador de vistas
+        $vehicle->increment('views');
+
         return view($view, compact('vehicle', 'settings', 'tenant'));
     }
 }
