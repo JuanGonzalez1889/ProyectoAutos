@@ -94,7 +94,79 @@
     @yield('extra-styles')
 </head>
 <body class="antialiased text-white">
-    @yield('content')
+        <canvas id="particle-canvas" style="position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:0;pointer-events:none;"></canvas>
+        @yield('content')
+
+        <script>
+        function normal({ mean = 0, dev = 1 }) {
+            let u = 0, v = 0;
+            while (u === 0) u = Math.random();
+            while (v === 0) v = Math.random();
+            return mean + dev * Math.sqrt(-2.0 * Math.log(u)) * Math.cos(2.0 * Math.PI * v);
+        }
+
+        const P = 0.1, I = 30000;
+        let particles = [];
+
+        function rand(a, b) {
+            return Math.random() * (b - a) + a;
+        }
+
+        function animateParticles(now, canvas, ctx) {
+            particles.forEach((p, i) => {
+                let t = ((now - p.startTime) % p.duration) / p.duration;
+                particles[i] = {
+                    ...p,
+                    x: t,
+                    y: Math.sin(t * p.arc) * p.amplitude + p.offsetY
+                };
+            });
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach((p) => {
+                let n = canvas.height / 100;
+                ctx.fillStyle = p.colour;
+                ctx.beginPath();
+                ctx.ellipse(
+                    p.x * canvas.width,
+                    p.y * n + canvas.height / 2,
+                    p.diameter * n,
+                    p.diameter * n,
+                    0,
+                    0,
+                    2 * Math.PI
+                );
+                ctx.fill();
+            });
+            requestAnimationFrame((e) => animateParticles(e, canvas, ctx));
+        }
+
+        window.addEventListener("DOMContentLoaded", () => {
+            const canvas = document.getElementById("particle-canvas");
+            let ctx = canvas.getContext("2d");
+            function resize() {
+                canvas.width = canvas.offsetWidth * window.devicePixelRatio;
+                canvas.height = canvas.offsetHeight * window.devicePixelRatio;
+                ctx = canvas.getContext("2d");
+            }
+            window.addEventListener("resize", resize);
+            resize();
+
+            for (let i = 0; i < 1000; i++) {
+                particles.push({
+                    x: -2,
+                    y: -2,
+                    diameter: Math.max(0, normal({ mean: P, dev: P / 2 })),
+                    duration: normal({ mean: I, dev: 0.1 * I }),
+                    amplitude: normal({ mean: 16, dev: 2 }),
+                    offsetY: normal({ mean: 0, dev: 10 }),
+                    arc: 2 * Math.PI,
+                    startTime: performance.now() - rand(0, I),
+                    colour: `rgba(200,255,230,${rand(0.05,0.35)})`
+                });
+            }
+            requestAnimationFrame((e) => animateParticles(e, canvas, ctx));
+        });
+        </script>
     
     <script>
         (function () {

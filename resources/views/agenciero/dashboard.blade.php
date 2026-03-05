@@ -5,6 +5,14 @@
 
 @section('content')
 <div class="space-y-6">
+    @if(isset($stats['agencia']) && $stats['agencia']->tenant && $stats['agencia']->tenant->settings && $stats['agencia']->tenant->settings->template)
+        <div class="mb-6">
+            <div class="inline-block px-4 py-2 rounded-lg bg-gray-700 text-white text-base font-semibold shadow">
+                <span class="mr-2">Plantilla actual:</span>
+                <span class="px-2 py-1 rounded bg-[hsl(var(--primary))] text-[#0a0f14] font-bold">{{ ucfirst($stats['agencia']->tenant->settings->template) }}</span>
+            </div>
+        </div>
+    @endif
     @if(($onboarding['show'] ?? false))
     <style>
         .onboarding-backdrop {

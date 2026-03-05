@@ -29,6 +29,32 @@
     <div class="mb-8">
         <h1 class="text-3xl font-bold text-white">Elige tu Plantilla de Landing</h1>
         <p class="text-slate-400 mt-2">Selecciona el diseño que mejor se adapte a tu agencia. Podrás personalizarlo después.</p>
+
+        @php
+            $templateNames = [
+                'moderno' => 'Moderno',
+                'minimalista' => 'Minimalista',
+                'clasico' => 'Clásico',
+                'deportivo' => 'Deportivo',
+                'elegante' => 'Elegante',
+                'corporativo' => 'Corporativo',
+                'tecnologico' => 'Tecnológico',
+                'innovador' => 'Innovador',
+                'autono' => 'Autono',
+            ];
+            $currentTemplate = optional($tenant->settings)->template;
+        @endphp
+        @if(is_string($currentTemplate) && array_key_exists($currentTemplate, $templateNames))
+            <div class="mt-4 mb-2 flex items-center gap-2">
+                <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-green-600 text-white shadow">
+                    <svg class="w-4 h-4 mr-1 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+                    Plantilla actual:
+                </span>
+                <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-gray-800 text-white border border-gray-600">
+                    {{ $templateNames[$currentTemplate] }}
+                </span>
+            </div>
+        @endif
     </div>
 
     <!-- Grid de Plantillas -->
@@ -318,6 +344,13 @@
     <div class="bg-blue-50 border-l-4 border-blue-500 p-6 rounded">
         <h4 class="font-bold text-blue-900 mb-2">💡 Cambiar de plantilla después</h4>
         <p class="text-blue-800">Una vez selecciones una plantilla, podrás cambiarla en cualquier momento. Tu contenido (textos, imágenes, datos de contacto) se mantendrá.</p>
+
+    </div>
+     <!-- Info sobre cambios futuros -->
+    <div class="bg-blue-50 border-l-4 border-blue-500 p-6 rounded">
+        <h4 class="font-bold text-blue-900 mb-2">💡 Ayuda con la configuración</h4>
+        <p class="text-blue-800">Si necesitas ayuda para configurar tu web, nosotros lo hacemos por vos! Comunicate con nosotros <a href="https://wa.me/5493413365206" target="_blank" class="text-blue-800 underline">aquí</a>.</p>
+
     </div>
 </div>
 

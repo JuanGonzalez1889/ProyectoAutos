@@ -3382,3 +3382,1293 @@
 
    INFO  No scheduled commands are ready to run.  
 
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+  2026-03-04 23:10:02 Running ["artisan" subscriptions:reconcile-mercadopago] ................................ 1s DONE
+  Ôçé "C:\Users\Juan Gonzalez\Desktop\php\php.exe" "artisan" subscriptions:reconcile-mercadopago > "NUL" 2>&1  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+  2026-03-05 09:30:02 Running ["artisan" subscriptions:reconcile-mercadopago] ................................ 1s DONE
+  Ôçé "C:\Users\Juan Gonzalez\Desktop\php\php.exe" "artisan" subscriptions:reconcile-mercadopago > "NUL" 2>&1  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+  2026-03-05 09:40:02 Running ["artisan" subscriptions:reconcile-mercadopago] ................................ 1s DONE
+  Ôçé "C:\Users\Juan Gonzalez\Desktop\php\php.exe" "artisan" subscriptions:reconcile-mercadopago > "NUL" 2>&1  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+  2026-03-05 09:50:02 Running ["artisan" subscriptions:reconcile-mercadopago] ................................ 1s DONE
+  Ôçé "C:\Users\Juan Gonzalez\Desktop\php\php.exe" "artisan" subscriptions:reconcile-mercadopago > "NUL" 2>&1  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+  2026-03-05 10:00:39 Running ["artisan" inspire] ...................................................... 952.85ms DONE
+  Ôçé "C:\Users\Juan Gonzalez\Desktop\php\php.exe" "artisan" inspire > "NUL" 2>&1  
+  2026-03-05 10:00:43 Running ["artisan" subscriptions:reconcile-mercadopago] ................................ 3s DONE
+  Ôçé "C:\Users\Juan Gonzalez\Desktop\php\php.exe" "artisan" subscriptions:reconcile-mercadopago > "NUL" 2>&1  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+  2026-03-05 10:10:02 Running ["artisan" subscriptions:reconcile-mercadopago] ................................ 1s DONE
+  Ôçé "C:\Users\Juan Gonzalez\Desktop\php\php.exe" "artisan" subscriptions:reconcile-mercadopago > "NUL" 2>&1  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+  2026-03-05 10:20:02 Running ["artisan" subscriptions:reconcile-mercadopago] ................................ 1s DONE
+  Ôçé "C:\Users\Juan Gonzalez\Desktop\php\php.exe" "artisan" subscriptions:reconcile-mercadopago > "NUL" 2>&1  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+  2026-03-05 10:30:02 Running ["artisan" subscriptions:reconcile-mercadopago] ................................ 1s DONE
+  Ôçé "C:\Users\Juan Gonzalez\Desktop\php\php.exe" "artisan" subscriptions:reconcile-mercadopago > "NUL" 2>&1  
+
+
+  2026-03-05 10:50:37 Running ["artisan" subscriptions:reconcile-mercadopago] ................................ 1s DONE
+  Ôçé "C:\Users\Juan Gonzalez\Desktop\php\php.exe" "artisan" subscriptions:reconcile-mercadopago > "NUL" 2>&1  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+  2026-03-05 11:10:01 Running ["artisan" subscriptions:reconcile-mercadopago] ................................ 1s DONE
+  Ôçé "C:\Users\Juan Gonzalez\Desktop\php\php.exe" "artisan" subscriptions:reconcile-mercadopago > "NUL" 2>&1  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+  2026-03-05 11:20:02 Running ["artisan" subscriptions:reconcile-mercadopago] ................................ 7s DONE
+  Ôçé "C:\Users\Juan Gonzalez\Desktop\php\php.exe" "artisan" subscriptions:reconcile-mercadopago > "NUL" 2>&1  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+  2026-03-05 11:30:02 Running ["artisan" subscriptions:reconcile-mercadopago] ................................ 1s DONE
+  Ôçé "C:\Users\Juan Gonzalez\Desktop\php\php.exe" "artisan" subscriptions:reconcile-mercadopago > "NUL" 2>&1  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+  2026-03-05 11:40:02 Running ["artisan" subscriptions:reconcile-mercadopago] ................................ 1s DONE
+  Ôçé "C:\Users\Juan Gonzalez\Desktop\php\php.exe" "artisan" subscriptions:reconcile-mercadopago > "NUL" 2>&1  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+  2026-03-05 11:50:02 Running ["artisan" subscriptions:reconcile-mercadopago] ................................ 1s DONE
+  Ôçé "C:\Users\Juan Gonzalez\Desktop\php\php.exe" "artisan" subscriptions:reconcile-mercadopago > "NUL" 2>&1  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+  2026-03-05 12:00:02 Running ["artisan" inspire] ...................................................... 655.49ms DONE
+  Ôçé "C:\Users\Juan Gonzalez\Desktop\php\php.exe" "artisan" inspire > "NUL" 2>&1  
+  2026-03-05 12:00:03 Running ["artisan" subscriptions:reconcile-mercadopago] ................................ 1s DONE
+  Ôçé "C:\Users\Juan Gonzalez\Desktop\php\php.exe" "artisan" subscriptions:reconcile-mercadopago > "NUL" 2>&1  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+  2026-03-05 12:10:02 Running ["artisan" subscriptions:reconcile-mercadopago] ................................ 1s DONE
+  Ôçé "C:\Users\Juan Gonzalez\Desktop\php\php.exe" "artisan" subscriptions:reconcile-mercadopago > "NUL" 2>&1  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+  2026-03-05 12:20:02 Running ["artisan" subscriptions:reconcile-mercadopago] ................................ 1s DONE
+  Ôçé "C:\Users\Juan Gonzalez\Desktop\php\php.exe" "artisan" subscriptions:reconcile-mercadopago > "NUL" 2>&1  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+  2026-03-05 12:30:03 Running ["artisan" subscriptions:reconcile-mercadopago] ................................ 1s DONE
+  Ôçé "C:\Users\Juan Gonzalez\Desktop\php\php.exe" "artisan" subscriptions:reconcile-mercadopago > "NUL" 2>&1  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+  2026-03-05 12:40:02 Running ["artisan" subscriptions:reconcile-mercadopago] ................................ 1s DONE
+  Ôçé "C:\Users\Juan Gonzalez\Desktop\php\php.exe" "artisan" subscriptions:reconcile-mercadopago > "NUL" 2>&1  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+  2026-03-05 12:50:01 Running ["artisan" subscriptions:reconcile-mercadopago] ................................ 1s DONE
+  Ôçé "C:\Users\Juan Gonzalez\Desktop\php\php.exe" "artisan" subscriptions:reconcile-mercadopago > "NUL" 2>&1  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+  2026-03-05 13:00:01 Running ["artisan" inspire] ...................................................... 418.94ms DONE
+  Ôçé "C:\Users\Juan Gonzalez\Desktop\php\php.exe" "artisan" inspire > "NUL" 2>&1  
+  2026-03-05 13:00:02 Running ["artisan" subscriptions:reconcile-mercadopago] ................................ 1s DONE
+  Ôçé "C:\Users\Juan Gonzalez\Desktop\php\php.exe" "artisan" subscriptions:reconcile-mercadopago > "NUL" 2>&1  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+  2026-03-05 13:10:01 Running ["artisan" subscriptions:reconcile-mercadopago] ................................ 1s DONE
+  Ôçé "C:\Users\Juan Gonzalez\Desktop\php\php.exe" "artisan" subscriptions:reconcile-mercadopago > "NUL" 2>&1  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+  2026-03-05 13:20:02 Running ["artisan" subscriptions:reconcile-mercadopago] ................................ 1s DONE
+  Ôçé "C:\Users\Juan Gonzalez\Desktop\php\php.exe" "artisan" subscriptions:reconcile-mercadopago > "NUL" 2>&1  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+  2026-03-05 13:30:02 Running ["artisan" subscriptions:reconcile-mercadopago] ................................ 1s DONE
+  Ôçé "C:\Users\Juan Gonzalez\Desktop\php\php.exe" "artisan" subscriptions:reconcile-mercadopago > "NUL" 2>&1  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+  2026-03-05 13:40:02 Running ["artisan" subscriptions:reconcile-mercadopago] ................................ 1s DONE
+  Ôçé "C:\Users\Juan Gonzalez\Desktop\php\php.exe" "artisan" subscriptions:reconcile-mercadopago > "NUL" 2>&1  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+  2026-03-05 13:50:02 Running ["artisan" subscriptions:reconcile-mercadopago] ................................ 1s DONE
+  Ôçé "C:\Users\Juan Gonzalez\Desktop\php\php.exe" "artisan" subscriptions:reconcile-mercadopago > "NUL" 2>&1  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+  2026-03-05 14:00:02 Running ["artisan" inspire] ...................................................... 416.66ms DONE
+  Ôçé "C:\Users\Juan Gonzalez\Desktop\php\php.exe" "artisan" inspire > "NUL" 2>&1  
+  2026-03-05 14:00:02 Running ["artisan" subscriptions:reconcile-mercadopago] ................................ 1s DONE
+  Ôçé "C:\Users\Juan Gonzalez\Desktop\php\php.exe" "artisan" subscriptions:reconcile-mercadopago > "NUL" 2>&1  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+  2026-03-05 14:10:02 Running ["artisan" subscriptions:reconcile-mercadopago] ................................ 1s DONE
+  Ôçé "C:\Users\Juan Gonzalez\Desktop\php\php.exe" "artisan" subscriptions:reconcile-mercadopago > "NUL" 2>&1  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+  2026-03-05 14:20:02 Running ["artisan" subscriptions:reconcile-mercadopago] ................................ 1s DONE
+  Ôçé "C:\Users\Juan Gonzalez\Desktop\php\php.exe" "artisan" subscriptions:reconcile-mercadopago > "NUL" 2>&1  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+  2026-03-05 14:30:02 Running ["artisan" subscriptions:reconcile-mercadopago] ................................ 1s DONE
+  Ôçé "C:\Users\Juan Gonzalez\Desktop\php\php.exe" "artisan" subscriptions:reconcile-mercadopago > "NUL" 2>&1  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+  2026-03-05 14:40:02 Running ["artisan" subscriptions:reconcile-mercadopago] ................................ 1s DONE
+  Ôçé "C:\Users\Juan Gonzalez\Desktop\php\php.exe" "artisan" subscriptions:reconcile-mercadopago > "NUL" 2>&1  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+  2026-03-05 14:50:02 Running ["artisan" subscriptions:reconcile-mercadopago] ................................ 1s DONE
+  Ôçé "C:\Users\Juan Gonzalez\Desktop\php\php.exe" "artisan" subscriptions:reconcile-mercadopago > "NUL" 2>&1  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+  2026-03-05 15:40:02 Running ["artisan" subscriptions:reconcile-mercadopago] ................................ 1s DONE
+  Ôçé "C:\Users\Juan Gonzalez\Desktop\php\php.exe" "artisan" subscriptions:reconcile-mercadopago > "NUL" 2>&1  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+  2026-03-05 15:50:02 Running ["artisan" subscriptions:reconcile-mercadopago] ................................ 1s DONE
+  Ôçé "C:\Users\Juan Gonzalez\Desktop\php\php.exe" "artisan" subscriptions:reconcile-mercadopago > "NUL" 2>&1  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+  2026-03-05 16:00:02 Running ["artisan" inspire] ...................................................... 427.90ms DONE
+  Ôçé "C:\Users\Juan Gonzalez\Desktop\php\php.exe" "artisan" inspire > "NUL" 2>&1  
+  2026-03-05 16:00:02 Running ["artisan" subscriptions:reconcile-mercadopago] ................................ 1s DONE
+  Ôçé "C:\Users\Juan Gonzalez\Desktop\php\php.exe" "artisan" subscriptions:reconcile-mercadopago > "NUL" 2>&1  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+  2026-03-05 16:10:02 Running ["artisan" subscriptions:reconcile-mercadopago] ................................ 1s DONE
+  Ôçé "C:\Users\Juan Gonzalez\Desktop\php\php.exe" "artisan" subscriptions:reconcile-mercadopago > "NUL" 2>&1  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+  2026-03-05 16:20:02 Running ["artisan" subscriptions:reconcile-mercadopago] ................................ 1s DONE
+  Ôçé "C:\Users\Juan Gonzalez\Desktop\php\php.exe" "artisan" subscriptions:reconcile-mercadopago > "NUL" 2>&1  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+  2026-03-05 16:30:02 Running ["artisan" subscriptions:reconcile-mercadopago] ................................ 1s DONE
+  Ôçé "C:\Users\Juan Gonzalez\Desktop\php\php.exe" "artisan" subscriptions:reconcile-mercadopago > "NUL" 2>&1  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+  2026-03-05 16:40:01 Running ["artisan" subscriptions:reconcile-mercadopago] ................................ 1s DONE
+  Ôçé "C:\Users\Juan Gonzalez\Desktop\php\php.exe" "artisan" subscriptions:reconcile-mercadopago > "NUL" 2>&1  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+  2026-03-05 16:50:01 Running ["artisan" subscriptions:reconcile-mercadopago] ................................ 1s DONE
+  Ôçé "C:\Users\Juan Gonzalez\Desktop\php\php.exe" "artisan" subscriptions:reconcile-mercadopago > "NUL" 2>&1  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+  2026-03-05 17:00:02 Running ["artisan" inspire] ...................................................... 435.36ms DONE
+  Ôçé "C:\Users\Juan Gonzalez\Desktop\php\php.exe" "artisan" inspire > "NUL" 2>&1  
+  2026-03-05 17:00:02 Running ["artisan" subscriptions:reconcile-mercadopago] ................................ 1s DONE
+  Ôçé "C:\Users\Juan Gonzalez\Desktop\php\php.exe" "artisan" subscriptions:reconcile-mercadopago > "NUL" 2>&1  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+  2026-03-05 17:10:02 Running ["artisan" subscriptions:reconcile-mercadopago] ................................ 1s DONE
+  Ôçé "C:\Users\Juan Gonzalez\Desktop\php\php.exe" "artisan" subscriptions:reconcile-mercadopago > "NUL" 2>&1  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+

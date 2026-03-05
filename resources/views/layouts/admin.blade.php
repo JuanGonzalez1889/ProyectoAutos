@@ -140,6 +140,7 @@
         <!-- Sidebar -->
         <aside id="sidebar"
             class="fixed left-0 top-0 h-full bg-[hsl(var(--card))] border-r border-[hsl(var(--border))] p-6 flex flex-col z-50 transition-all duration-300">
+            <canvas id="sidebar-particle-canvas" style="position:absolute;top:0;left:0;width:100%;height:100%;z-index:10;pointer-events:none;"></canvas>
             <!-- Botón Flecha Sidebar -->
             <button id="sidebar-toggle" aria-label="Contraer menú"
                 class="absolute -right-4 top-6 w-8 h-8 bg-[hsl(var(--card))] border border-[hsl(var(--border))] rounded-full shadow flex items-center justify-center z-50 transition-transform duration-300 focus:outline-none">
@@ -194,7 +195,7 @@
 ">
                 @if(canSeeMenu('personalizar mi web'))
                 <a href="{{ route('admin.landing-template.select') }}"
-                    class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors {{ request()->routeIs('landing-template.*') ? 'bg-[hsl(var(--primary))] text-white' : 'text-[hsl(var(--muted-foreground))] hover:bg-[hsl(var(--secondary))] hover:text-[hsl(var(--foreground))]' }}">
+                    class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors {{ (request()->routeIs('admin.landing-template.*') || request()->routeIs('admin.landing-config.*')) ? 'bg-[hsl(var(--primary))] text-white' : 'text-[hsl(var(--muted-foreground))] hover:bg-[hsl(var(--secondary))] hover:text-[hsl(var(--foreground))]' }}">
                         <svg class="sidebar-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M4 5a2 2 0 012-2h6a2 2 0 012 2v14a2 2 0 01-2 2H6a2 2 0 01-2-2V5z"></path>
@@ -476,6 +477,72 @@
         </div>
     </div>
     <script>
+    // Partículas sutiles en el sidebar
+    (function(){
+        const canvas = document.getElementById('sidebar-particle-canvas');
+        if (!canvas) return;
+        let ctx = canvas.getContext('2d');
+        function resize() {
+            canvas.width = canvas.offsetWidth * window.devicePixelRatio;
+            canvas.height = canvas.offsetHeight * window.devicePixelRatio;
+            ctx = canvas.getContext('2d');
+        }
+        window.addEventListener('resize', resize);
+        resize();
+        // Menos partículas, más pequeñas y más transparentes
+        const P = 0.07, I = 22000;
+        let particles = [];
+        function normal({ mean = 0, dev = 1 }) {
+            let u = 0, v = 0;
+            while (u === 0) u = Math.random();
+            while (v === 0) v = Math.random();
+            return mean + dev * Math.sqrt(-2.0 * Math.log(u)) * Math.cos(2.0 * Math.PI * v);
+        }
+        function rand(a, b) {
+            return Math.random() * (b - a) + a;
+        }
+        for (let i = 0; i < 60; i++) {
+            particles.push({
+                x: -2,
+                y: -2,
+                diameter: Math.max(0, normal({ mean: P, dev: P/2 })),
+                duration: normal({ mean: I, dev: 0.1 * I }),
+                amplitude: normal({ mean: 8, dev: 2 }),
+                offsetY: normal({ mean: 0, dev: 10 }),
+                arc: 2 * Math.PI,
+                startTime: performance.now() - rand(0, I),
+                colour: `rgba(180,220,255,${rand(0.04,0.13)})`
+            });
+        }
+        function animateParticles(now) {
+            particles.forEach((p, i) => {
+                let t = ((now - p.startTime) % p.duration) / p.duration;
+                particles[i] = {
+                    ...p,
+                    x: t,
+                    y: Math.sin(t * p.arc) * p.amplitude + p.offsetY
+                };
+            });
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach((p) => {
+                let n = canvas.height / 100;
+                ctx.fillStyle = p.colour;
+                ctx.beginPath();
+                ctx.ellipse(
+                    p.x * canvas.width,
+                    p.y * n + canvas.height / 2,
+                    p.diameter * n,
+                    p.diameter * n,
+                    0,
+                    0,
+                    2 * Math.PI
+                );
+                ctx.fill();
+            });
+            requestAnimationFrame(animateParticles);
+        }
+        requestAnimationFrame(animateParticles);
+    })();
         // Sidebar toggle logic con persistencia
         const sidebar = document.getElementById('sidebar');
         const mainContent = document.getElementById('main-content');

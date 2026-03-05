@@ -75,15 +75,19 @@
                             <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
                         </div>
                     @endif
-                    <div class="edit-btn" onclick="editImage('logo_url')">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="18" height="18"><path d="M17.414 2.586a2 2 0 0 0-2.828 0l-9.192 9.192a2 2 0 0 0-.516.878l-1.414 4.243a1 1 0 0 0 1.272 1.272l4.243-1.414a2 2 0 0 0 .878-.516l9.192-9.192a2 2 0 0 0 0-2.828l-2.121-2.121zm-2.828 2.828l2.121 2.121-9.192 9.192-2.121-2.121 9.192-9.192z"/></svg>
-                    </div>
+                    @if(isset($editMode) && $editMode)
+                        <div class="edit-btn" onclick="editImage('logo_url')">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="18" height="18"><path d="M17.414 2.586a2 2 0 0 0-2.828 0l-9.192 9.192a2 2 0 0 0-.516.878l-1.414 4.243a1 1 0 0 0 1.272 1.272l4.243-1.414a2 2 0 0 0 .878-.516l9.192-9.192a2 2 0 0 0 0-2.828l-2.121-2.121zm-2.828 2.828l2.121 2.121-9.192 9.192-2.121-2.121 9.192-9.192z"/></svg>
+                        </div>
+                    @endif
                 </div>
                 <div class="editable-section inline-block relative ml-2">
                     <span class="font-semibold" style="color: {{ $settings->navbar_agency_name_color ?? '#fff' }}">{{ $settings->navbar_agency_name }}</span>
-                    <div class="edit-btn" onclick="editText('navbar_agency_name', 'Editar Nombre de Agencia')">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="18" height="18"><path d="M17.414 2.586a2 2 0 0 0-2.828 0l-9.192 9.192a2 2 0 0 0-.516.878l-1.414 4.243a1 1 0 0 0 1.272 1.272l4.243-1.414a2 2 0 0 0 .878-.516l9.192-9.192a2 2 0 0 0 0-2.828l-2.121-2.121zm-2.828 2.828l2.121 2.121-9.192 9.192-2.121-2.121 9.192-9.192z"/></svg>
-                    </div>
+                    @if(isset($editMode) && $editMode)
+                        <div class="edit-btn" onclick="editText('navbar_agency_name', 'Editar Nombre de Agencia')">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="18" height="18"><path d="M17.414 2.586a2 2 0 0 0-2.828 0l-9.192 9.192a2 2 0 0 0-.516.878l-1.414 4.243a1 1 0 0 0 1.272 1.272l4.243-1.414a2 2 0 0 0 .878-.516l9.192-9.192a2 2 0 0 0 0-2.828l-2.121-2.121zm-2.828 2.828l2.121 2.121-9.192 9.192-2.121-2.121 9.192-9.192z"/></svg>
+                        </div>
+                    @endif
                 </div>
             </div>
             <div class="flex items-center gap-6">
@@ -285,15 +289,33 @@
                             @endif
                         </div>
                         <div class="space-y-2">
-                            <div>
-                                <span class="font-bold text-white">Teléfono:</span> <span class="text-gray-300">{{ $settings->phone }}</span>
-                            </div>
-                            <div>
-                                <span class="font-bold text-white">Email:</span> <span class="text-gray-300">{{ $settings->email }}</span>
-                            </div>
-                            <div>
-                                <span class="font-bold text-white">WhatsApp:</span> <span class="text-gray-300">{{ $settings->whatsapp }}</span>
-                            </div>
+                            @if($settings->phone)
+                                <div class="flex items-start gap-4 mb-4">
+                                    <span class="text-2xl">📞</span>
+                                    <div>
+                                        <p class="font-bold text-white text-base mb-0">Teléfono</p>
+                                        <a href="tel:{{ $settings->phone }}" class="text-gray-300 hover:text-white transition">{{ $settings->phone }}</a>
+                                    </div>
+                                </div>
+                            @endif
+                            @if($settings->email)
+                                <div class="flex items-start gap-4 mb-4">
+                                    <span class="text-2xl">✉️</span>
+                                    <div>
+                                        <p class="font-bold text-white text-base mb-0">Email</p>
+                                        <a href="mailto:{{ $settings->email }}" class="text-gray-300 hover:text-white transition">{{ $settings->email }}</a>
+                                    </div>
+                                </div>
+                            @endif
+                            @if($settings->whatsapp)
+                                <div class="flex items-start gap-4 mb-4">
+                                    <span class="text-2xl">💬</span>
+                                    <div>
+                                        <p class="font-bold text-white text-base mb-0">WhatsApp</p>
+                                        <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $settings->whatsapp) }}" target="_blank" class="text-gray-300 hover:text-white transition">{{ $settings->whatsapp }}</a>
+                                    </div>
+                                </div>
+                            @endif
                         </div>
                     </div>
 
