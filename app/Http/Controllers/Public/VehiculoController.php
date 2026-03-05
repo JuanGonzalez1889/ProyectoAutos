@@ -82,6 +82,15 @@ class VehiculoController extends Controller
             $settings = $tenant->settings ?? null;
         }
 
+
+        // Vehículo más visto (destacado)
+        $vehiculoDestacado = Vehicle::where('is_active', true)
+            ->where('tenant_id', $tenant->id)
+            ->where('status', 'published')
+            ->orderByDesc('views')
+            ->first();
+
+        // Listado de vehículos (puede incluir el destacado, o filtrarlo si querés)
         $vehicles = Vehicle::where('is_active', true)
             ->where('tenant_id', $tenant->id)
             ->where('status', 'published')
@@ -93,7 +102,7 @@ class VehiculoController extends Controller
         if (!view()->exists($view)) {
             $view = 'public.vehiculos.index'; // fallback minimalista
         }
-        return view($view, compact('vehicles', 'settings', 'tenant'));
+        return view($view, compact('vehicles', 'settings', 'tenant', 'vehiculoDestacado'));
     }
 
     public function show(Request $request, Vehicle $vehicle)
