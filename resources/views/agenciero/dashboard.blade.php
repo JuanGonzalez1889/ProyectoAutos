@@ -359,26 +359,18 @@
                 @php $vehicle = $stats['top_vehicles']->first(); @endphp
                 <div class="card p-0 overflow-hidden relative">
                     <div class="relative h-40 bg-gradient-to-br from-gray-700 to-gray-900">
-                        @if($vehicle->image_url)
-                            <img src="{{ $vehicle->image_url }}" 
-                                 alt="{{ $vehicle->marca }} {{ $vehicle->modelo }}" 
-                                 class="w-full h-full object-cover">
-                        @else
-                            <div class="w-full h-full flex items-center justify-center bg-gray-800">
-                                <svg class="w-16 h-16 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"></path>
-                                </svg>
-                            </div>
-                        @endif
+                        <img src="{{ $vehicle->main_image }}"
+                             alt="{{ $vehicle->title }}"
+                             class="w-full h-full object-cover">
                         <div class="absolute top-3 right-3">
                             <span class="px-2 py-1 bg-[hsl(var(--primary))] text-[#0a0f14] text-[10px] font-medium rounded">MÁS VISTO</span>
                         </div>
                     </div>
                     <div class="p-4">
-                        <h3 class="font-semibold text-white mb-1">{{ $vehicle->marca }} {{ $vehicle->modelo }} {{ $vehicle->anio }}</h3>
+                        <h3 class="font-semibold text-white mb-1">{{ $vehicle->title }} {{ $vehicle->year }}</h3>
                         <p class="text-xs text-[hsl(var(--muted-foreground))] mb-2">Vistas: {{ $vehicle->views ?? 0 }}</p>
                         <div class="flex items-center justify-between">
-                            <p class="text-lg font-bold text-[hsl(var(--primary))]">${{ number_format($vehicle->precio, 0) }}</p>
+                            <p class="text-lg font-bold text-[hsl(var(--primary))]">${{ number_format($vehicle->price, 0) }}</p>
                             <a href="{{ route('admin.vehicles.show', $vehicle->id) }}" class="text-xs text-white hover:text-[hsl(var(--primary))] flex items-center gap-1">
                                 <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>

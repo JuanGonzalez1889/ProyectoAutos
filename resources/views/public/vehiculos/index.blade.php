@@ -43,24 +43,6 @@
 </script>
 <div class="max-w-6xl mx-auto px-4 py-12" style="font-family: {{ $settings->font_family ?? 'inherit' }};">
     <h1 class="text-4xl font-bold mb-8" style="color: var(--primary-color)">Vehículos Disponibles</h1>
-    @if($vehiculoDestacado)
-        <div class="mb-10">
-            <div class="rounded-xl shadow-lg overflow-hidden border flex flex-col vehiculo-card-bg relative">
-                <div class="relative">
-                    <img src="{{ $vehiculoDestacado->main_image }}" alt="{{ $vehiculoDestacado->title }}" class="w-full h-64 object-cover">
-                    <span class="absolute top-2 left-2 text-white text-xs px-3 py-1 rounded" style="background: var(--primary-color);">MÁS VISTO</span>
-                    <span class="absolute top-2 right-2 text-white text-xs px-3 py-1 rounded" style="background: var(--primary-color);">Vistas: {{ $vehiculoDestacado->views }}</span>
-                </div>
-                <div class="p-5 flex-1 flex flex-col">
-                    <h2 class="text-2xl font-bold mb-1 vehiculo-card-auto">{{ $vehiculoDestacado->title }}</h2>
-                    <p class="mb-2 vehiculo-card-auto">{{ $vehiculoDestacado->brand }} {{ $vehiculoDestacado->model }}</p>
-                    <p class="text-sm mb-4 flex-1 vehiculo-card-auto">{{ Str::limit($vehiculoDestacado->description, 80) }}</p>
-                    <span class="text-lg font-bold vehiculo-card-auto mb-2">${{ number_format($vehiculoDestacado->price) }}</span>
-                    <a href="{{ route('public.vehiculos.show', $vehiculoDestacado->id) }}" class="mt-auto inline-block px-4 py-2 rounded font-semibold text-center transition" style="background: var(--primary-color); color: var(--secondary-color);">Ver Detalles</a>
-                </div>
-            </div>
-        </div>
-    @endif
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         @foreach($vehicles as $vehicle)
             <div class="rounded-xl shadow-lg overflow-hidden border flex flex-col vehiculo-card-bg">
