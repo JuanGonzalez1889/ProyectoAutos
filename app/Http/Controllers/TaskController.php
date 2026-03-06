@@ -105,12 +105,25 @@ class TaskController extends Controller {
 
     public function updateStatus(Request $request, Task $task)
     {
-        $validated = $request->validate([
-            'status' => 'required|in:todo,in_progress,done',
-        ]);
-        
-        $task->update($validated);
-        
+        // Permitir español e inglés
+        $status = $request->input('status');
+        $map = [
+            'pendiente' => 'todo',
+            'completo' => 'done',
+            'completado' => 'done',
+            'cancelado' => 'done', // Si tienes un estado cancelado, cámbialo aquí
+            'todo' => 'todo',
+            'in_progress' => 'in_progress',
+            'en progreso' => 'in_progress',
+            'done' => 'done',
+        ];
+        $status = strtolower($status);
+        $status = $map[$status] ?? $status;
+        if (!in_array($status, ['todo', 'in_progress', 'done'])) {
+            return response()->json(['success' => false, 'error' => 'Estado inválido'], 422);
+        }
+        $task->status = $status;
+        $task->save();
         return response()->json(['success' => true]);
     }
 
