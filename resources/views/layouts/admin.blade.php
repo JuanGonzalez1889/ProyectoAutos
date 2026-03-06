@@ -205,6 +205,7 @@
                 </a>
                 @endif
 
+
                 @if(canSeeMenu('dashboard'))
                 <a href="{{ route('admin.dashboard') }}"
                     class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors {{ request()->routeIs('admin.dashboard') ? 'bg-[hsl(var(--primary))] text-white' : 'text-[hsl(var(--muted-foreground))] hover:bg-[hsl(var(--secondary))] hover:text-[hsl(var(--foreground))]' }}">
@@ -214,6 +215,16 @@
                         </path>
                     </svg>
                     <span class="sidebar-label">Dashboard</span>
+                </a>
+                @endif
+
+                @if(canSeeMenu('leads'))
+                <a href="{{ route('admin.leads.index') }}"
+                    class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors {{ request()->routeIs('admin.leads.*') ? 'bg-[hsl(var(--primary))] text-white' : 'text-[hsl(var(--muted-foreground))] hover:bg-[hsl(var(--secondary))] hover:text-[hsl(var(--foreground))]' }}">
+                    <svg class="sidebar-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                    </svg>
+                    <span class="sidebar-label flex-1">Leads</span>
                 </a>
                 @endif
 
@@ -346,14 +357,7 @@
                     </a>
                 @endif
                 <!-- Instructivos -->
-                <a href="{{ route('admin.instructivos') }}"
-                    class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors {{ request()->routeIs('admin.instructivos') ? 'bg-[hsl(var(--primary))] text-white' : 'text-[hsl(var(--muted-foreground))] hover:bg-[hsl(var(--secondary))] hover:text-[hsl(var(--foreground))]' }}">
-                    <svg class="sidebar-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path>
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                    </svg>
-                    <span class="sidebar-label flex-1">Instructivos</span>
-                </a>
+                <!-- Instructivos se moverá debajo de Leads -->
 
                 @if(canSeeMenu('planes y facturacion'))
                     <a href="{{ route('subscriptions.index') }}"
@@ -396,12 +400,14 @@
                 </div>
             @endif
             @if(canSeeMenu('leads'))
-                <a href="{{ route('admin.leads.index') }}"
-                    class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors {{ request()->routeIs('admin.leads.*') ? 'bg-[hsl(var(--primary))] text-white' : 'text-[hsl(var(--muted-foreground))] hover:bg-[hsl(var(--secondary))] hover:text-[hsl(var(--foreground))]' }}">
+                <!-- Instructivos resaltado y debajo de Leads -->
+                <a href="{{ route('admin.instructivos') }}"
+                    class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-bold ring-2 ring-yellow-400 bg-yellow-300 shadow-lg animate-pulse transition-colors text-[hsl(var(--foreground))]">
                     <svg class="sidebar-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                     </svg>
-                    <span class="sidebar-label flex-1">Leads</span>
+                    <span class="sidebar-label flex-1">Instructivos</span>
                 </a>
             @endif
 

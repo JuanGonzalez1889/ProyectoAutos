@@ -28,7 +28,7 @@ class SecurityHeadersMiddleware
             . "font-src 'self' https://fonts.gstatic.com; "
             . "img-src 'self' data: https: blob:; "
             . "connect-src 'self' https://api.stripe.com https://api.mercadopago.com; "
-            . "frame-src 'self' https://js.stripe.com https://www.google.com;"
+            . "frame-src 'self' https://js.stripe.com https://www.google.com https://www.youtube.com https://www.youtube-nocookie.com;"
         );
         
         // Prevenir clickjacking

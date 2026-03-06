@@ -30,65 +30,38 @@
             ============================================================
         --}}
 
-        <!-- Video 1: Ejemplo -->
+        <!-- Video 1: Primeros pasos en AutoWebPRO -->
         <div class="card overflow-hidden">
             <div class="relative aspect-video bg-gray-900 rounded-t-lg overflow-hidden">
-                {{-- Reemplazá este placeholder con un iframe de YouTube real:
-                <iframe 
-                    src="https://www.youtube.com/embed/ID_DEL_VIDEO" 
-                    class="w-full h-full"
-                    frameborder="0" 
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                    allowfullscreen>
-                </iframe>
-                --}}
-                <div class="w-full h-full flex flex-col items-center justify-center text-[hsl(var(--muted-foreground))]">
-                    <svg class="w-16 h-16 mb-3 opacity-30" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path>
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                    </svg>
-                    <span class="text-sm">Video próximamente</span>
-                </div>
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/bDGn1PyXpb4?si=dGNkIA2oJqjFJgOo" title="YouTube video player" class="w-full h-full" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
             </div>
             <div class="p-4">
-                <h3 class="font-semibold text-[hsl(var(--foreground))] mb-1">Primeros pasos en AutoWebPRO</h3>
-                <p class="text-sm text-[hsl(var(--muted-foreground))]">Cómo configurar tu agencia, elegir plantilla y publicar tu web.</p>
+                <h3 class="font-semibold text-[hsl(var(--foreground))] mb-1">Registro en AutoWebPRO</h3>
+                <p class="text-sm text-[hsl(var(--muted-foreground))]">Cómo configurar tu agencia, y elegir tu dominio gratis</p>
                 <div class="mt-3 flex items-center gap-2">
                     <span class="px-2 py-0.5 text-[10px] font-medium rounded-full bg-[hsl(var(--primary))]/20 text-[hsl(var(--primary))]">Inicio</span>
                 </div>
             </div>
         </div>
 
-        <!-- Video 2: Ejemplo -->
+        <!-- Video 2: Cómo cargar vehículos -->
         <div class="card overflow-hidden">
             <div class="relative aspect-video bg-gray-900 rounded-t-lg overflow-hidden">
-                <div class="w-full h-full flex flex-col items-center justify-center text-[hsl(var(--muted-foreground))]">
-                    <svg class="w-16 h-16 mb-3 opacity-30" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path>
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                    </svg>
-                    <span class="text-sm">Video próximamente</span>
-                </div>
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/Ywd00Sj10ak?si=yPEDrBijGwm-OTzk" title="YouTube video player" class="w-full h-full" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
             </div>
             <div class="p-4">
-                <h3 class="font-semibold text-[hsl(var(--foreground))] mb-1">Cómo cargar vehículos</h3>
-                <p class="text-sm text-[hsl(var(--muted-foreground))]">Aprende a subir fotos, completar datos y publicar tus vehículos.</p>
+                <h3 class="font-semibold text-[hsl(var(--foreground))] mb-1">Login y Selección de Plan</h3>
+                <p class="text-sm text-[hsl(var(--muted-foreground))]">Aprende a iniciar sesión, seleccionar tu plan y configurar tu cuenta.</p>
                 <div class="mt-3 flex items-center gap-2">
-                    <span class="px-2 py-0.5 text-[10px] font-medium rounded-full bg-blue-500/20 text-blue-400">Inventario</span>
+                    <span class="px-2 py-0.5 text-[10px] font-medium rounded-full bg-blue-500/20 text-blue-400">Login</span>
                 </div>
             </div>
         </div>
 
-        <!-- Video 3: Ejemplo -->
+        <!-- Video 3: Personalizar tu web -->
         <div class="card overflow-hidden">
             <div class="relative aspect-video bg-gray-900 rounded-t-lg overflow-hidden">
-                <div class="w-full h-full flex flex-col items-center justify-center text-[hsl(var(--muted-foreground))]">
-                    <svg class="w-16 h-16 mb-3 opacity-30" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path>
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                    </svg>
-                    <span class="text-sm">Video próximamente</span>
-                </div>
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/29r87Dx5ZoY?si=fBKfz6bde1ZnB4Pa" title="YouTube video player" class="w-full h-full" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
             </div>
             <div class="p-4">
                 <h3 class="font-semibold text-[hsl(var(--foreground))] mb-1">Personalizar tu web</h3>
@@ -99,68 +72,85 @@
             </div>
         </div>
 
-        <!-- Video 4: Ejemplo -->
+        <!-- Video 4: Gestión de leads y clientes -->
         <div class="card overflow-hidden">
             <div class="relative aspect-video bg-gray-900 rounded-t-lg overflow-hidden">
-                <div class="w-full h-full flex flex-col items-center justify-center text-[hsl(var(--muted-foreground))]">
-                    <svg class="w-16 h-16 mb-3 opacity-30" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path>
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                    </svg>
-                    <span class="text-sm">Video próximamente</span>
-                </div>
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/4ykc7LDXDCA?si=L4Ex0o7WD4ocwX18" title="YouTube video player" class="w-full h-full" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
             </div>
             <div class="p-4">
-                <h3 class="font-semibold text-[hsl(var(--foreground))] mb-1">Gestión de leads y clientes</h3>
-                <p class="text-sm text-[hsl(var(--muted-foreground))]">Cómo administrar consultas, seguimientos y convertir leads en ventas.</p>
+                <h3 class="font-semibold text-[hsl(var(--foreground))] mb-1">Carga de Vehículos a nuestra web e inventario</h3>
+                <p class="text-sm text-[hsl(var(--muted-foreground))]">Aprende a subir fotos, completar datos y publicar tus vehículos.</p>
                 <div class="mt-3 flex items-center gap-2">
-                    <span class="px-2 py-0.5 text-[10px] font-medium rounded-full bg-green-500/20 text-green-400">Ventas</span>
+                    <span class="px-2 py-0.5 text-[10px] font-medium rounded-full bg-green-500/20 text-green-400">Inventario</span>
                 </div>
             </div>
         </div>
 
-        <!-- Video 5: Ejemplo -->
+        <!-- Video 5: Dominio y publicación -->
         <div class="card overflow-hidden">
             <div class="relative aspect-video bg-gray-900 rounded-t-lg overflow-hidden">
-                <div class="w-full h-full flex flex-col items-center justify-center text-[hsl(var(--muted-foreground))]">
-                    <svg class="w-16 h-16 mb-3 opacity-30" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path>
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                    </svg>
-                    <span class="text-sm">Video próximamente</span>
-                </div>
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/3GfQJNHGB5A?si=WK7ZcBak_eZMdVcj" title="YouTube video player" class="w-full h-full" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
             </div>
             <div class="p-4">
-                <h3 class="font-semibold text-[hsl(var(--foreground))] mb-1">Dominio y publicación</h3>
-                <p class="text-sm text-[hsl(var(--muted-foreground))]">Cómo conectar tu dominio propio y dejar tu web lista para el mundo.</p>
+                <h3 class="font-semibold text-[hsl(var(--foreground))] mb-1">Crear nuevos usuarios</h3>
+                <p class="text-sm text-[hsl(var(--muted-foreground))]">Cómo agregar y gestionar nuevos usuarios en tu cuenta.</p>
                 <div class="mt-3 flex items-center gap-2">
-                    <span class="px-2 py-0.5 text-[10px] font-medium rounded-full bg-orange-500/20 text-orange-400">Dominio</span>
+                    <span class="px-2 py-0.5 text-[10px] font-medium rounded-full bg-orange-500/20 text-orange-400">Usuarios</span>
                 </div>
             </div>
         </div>
 
-        <!-- Video 6: Ejemplo -->
+        <!-- Video 6: Planes y facturación -->
         <div class="card overflow-hidden">
             <div class="relative aspect-video bg-gray-900 rounded-t-lg overflow-hidden">
-                <div class="w-full h-full flex flex-col items-center justify-center text-[hsl(var(--muted-foreground))]">
-                    <svg class="w-16 h-16 mb-3 opacity-30" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path>
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                    </svg>
-                    <span class="text-sm">Video próximamente</span>
-                </div>
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/L5nPm_FATSQ?si=e-2EAPMoRSjuxEpP" title="YouTube video player" class="w-full h-full" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
             </div>
             <div class="p-4">
-                <h3 class="font-semibold text-[hsl(var(--foreground))] mb-1">Planes y facturación</h3>
-                <p class="text-sm text-[hsl(var(--muted-foreground))]">Cómo elegir tu plan, pagar con MercadoPago y gestionar facturas.</p>
+                <h3 class="font-semibold text-[hsl(var(--foreground))] mb-1">Ingresos mensuales y rendimiento de ventas</h3>
+                <p class="text-sm text-[hsl(var(--muted-foreground))]">Aprende a monitorear tus ingresos y evaluar el rendimiento de tus ventas.</p>
                 <div class="mt-3 flex items-center gap-2">
-                    <span class="px-2 py-0.5 text-[10px] font-medium rounded-full bg-yellow-500/20 text-yellow-400">Facturación</span>
+                    <span class="px-2 py-0.5 text-[10px] font-medium rounded-full bg-yellow-500/20 text-yellow-400">Ventas</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="card overflow-hidden">
+            <div class="flex flex-col items-center justify-center min-h-[220px]">
+                <svg class="w-16 h-16 mb-3 opacity-30" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                <span class="text-sm">Video próximamente</span>
+            </div>
+            <div class="p-4">
+                <h3 class="font-semibold text-[hsl(var(--foreground))] mb-1">Crear nuevas tareas</h3>
+                <p class="text-sm text-[hsl(var(--muted-foreground))]">Aprende a crear y gestionar nuevas tareas en tu cuenta.</p>
+                <div class="mt-3 flex items-center gap-2">
+                    <span class="px-2 py-0.5 text-[10px] font-medium rounded-full bg-yellow-500/20 text-yellow-400">Tareas</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="card overflow-hidden">
+            <div class="flex flex-col items-center justify-center min-h-[220px]">
+                <svg class="w-16 h-16 mb-3 opacity-30" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                <span class="text-sm">Video próximamente</span>
+            </div>
+            <div class="p-4">
+                <h3 class="font-semibold text-[hsl(var(--foreground))] mb-1">Crear nuevos Leads</h3>
+                <p class="text-sm text-[hsl(var(--muted-foreground))]">Aprende a crear y gestionar nuevos leads en tu cuenta.</p>
+                <div class="mt-3 flex items-center gap-2">
+                    <span class="px-2 py-0.5 text-[10px] font-medium rounded-full bg-yellow-500/20 text-yellow-400">Leads</span>
                 </div>
             </div>
         </div>
 
     </div>
 
+         
     <!-- Nota -->
     <div class="mt-8 p-4 bg-[hsl(var(--secondary))]/50 border border-[hsl(var(--border))] rounded-lg">
         <p class="text-sm text-[hsl(var(--muted-foreground))]">
