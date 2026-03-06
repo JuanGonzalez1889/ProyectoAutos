@@ -47,7 +47,7 @@
                 <h3 class="font-semibold text-[hsl(var(--foreground))] mb-1">Primeros pasos en AutoWebPRO</h3>
                 <p class="text-sm text-[hsl(var(--muted-foreground))]">Cómo configurar tu agencia, elegir plantilla y publicar tu web.</p>
                 <div class="mt-3 flex items-center gap-2">
-                    <span class="px-2 py-0.5 text-[10px] font-medium rounded-full bg-[hsl(var(--primary))]/20 text-[hsl(var(--primary))]">Inicio</span>
+                    <span class="px-2 py-0.5 text-[10px] font-medium rounded-full bg-orange-500/20 text-orange-400">Inicio</span>
                 </div>
             </div>
         </div>

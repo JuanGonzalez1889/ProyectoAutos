@@ -69,7 +69,9 @@
         <div class="flex items-center justify-between h-16">
             <!-- Logo -->
             <div class="flex items-center gap-2">
-                <img src="/storage/logo5.png" alt="AutoWeb Pro Logo" class="w-32 h-auto max-w-xs md:w-40 md:h-auto object-contain bg-transparent rounded-lg border-none logo-zoom" style="min-width:80px;" />
+                <a href="{{ route('landing.home') }}">
+                    <img src="/storage/logo5.png" alt="AutoWeb Pro Logo" class="w-32 h-auto max-w-xs md:w-40 md:h-auto object-contain bg-transparent rounded-lg border-none logo-zoom" style="min-width:80px;" />
+                </a>
                 <style>
                 .logo-zoom {
                     transition: transform 0.3s cubic-bezier(.4,2,.6,1);
