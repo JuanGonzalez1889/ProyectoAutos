@@ -280,4 +280,7 @@ Route::get('/subscriptions/failure', [SubscriptionController::class, 'failure'])
     });
 });
 
+// Demo pública de instructivos
+Route::view('/demo-instructivos', 'landing.demo-instructivos')->name('landing.demo-instructivos');
+
 require __DIR__.'/web-vehiculos.php';
