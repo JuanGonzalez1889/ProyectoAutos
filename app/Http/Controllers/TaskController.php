@@ -56,6 +56,10 @@ class TaskController extends Controller {
             'in_progress' => $query->clone()->inProgress()->count(),
             'done' => $query->clone()->done()->count(),
             'high_priority' => $query->clone()->highPriority()->whereIn('status', ['todo', 'in_progress'])->count(),
+            // Alias en español para la vista
+            'pendiente' => $query->clone()->todo()->count(),
+            'completo' => $query->clone()->done()->count(),
+            'cancelado' => $query->clone()->where('status', 'cancelado')->count(),
         ];
         
         return view('tasks.index', compact('tasks', 'stats'));

@@ -152,7 +152,11 @@ class DashboardController extends Controller
             
             // Leads activos
             $activeLeads = $leads->where('status', 'active')->count();
-            // Leads con seguimiento pendiente próximos 5 días
+            // Leads pendientes para el resumen: cualquiera que no sea ganado ni perdido
+            $pendingLeadsDashboard = $leads->filter(function($lead) {
+                return !in_array($lead->status, ['won','ganado','lost','perdido']);
+            });
+            // Leads con seguimiento pendiente próximos 5 días (para la alerta amarilla)
             $pendingLeads = $leads->filter(function($lead) {
                 return !in_array($lead->status, ['won','lost']) && $lead->next_follow_up && $lead->next_follow_up->isBetween(now()->startOfDay(), now()->addDays(5)->endOfDay());
             });
@@ -183,7 +187,7 @@ class DashboardController extends Controller
                 'units_sold' => $unitsSold,
                 'active_inventory' => $activeInventory,
                 'pending_events' => $pendingEvents,
-                'pending_leads' => $pendingLeads->count(),
+                'pending_leads' => $pendingLeadsDashboard->count(),
                 'active_leads' => $activeLeads,
                 'total_vehicles' => $vehicles->count(),
                 'total_invoices' => $invoices->count(),

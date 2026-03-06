@@ -878,13 +878,14 @@
         }
         </script>
     @endif
-            document.getElementById('vehicle_id').value = vehicleId;
-            document.querySelector('textarea[name="message"]').value = `Consulta por: ${vehicleTitle}`;
-            document.getElementById('contacto').scrollIntoView({
-                behavior: 'smooth'
-            });
-            document.querySelector('input[name="name"]').focus();
-        }
+    <script>
+    // Encapsular función para consulta de vehículo
+    function consultarVehiculo(vehicleId, vehicleTitle) {
+        document.getElementById('vehicle_id').value = vehicleId;
+        document.querySelector('textarea[name="message"]').value = `Consulta por: ${vehicleTitle}`;
+        document.getElementById('contacto').scrollIntoView({ behavior: 'smooth' });
+        document.querySelector('input[name="name"]').focus();
+    }
     </script>
 </body>
 
