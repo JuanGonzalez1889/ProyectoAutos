@@ -9,7 +9,7 @@
                 </div>
                 <p class="text-sm text-gray-400 mb-4">La plataforma líder para concesionarias modernas. Potencia las ventas con tecnología de punta.</p>
                 <div class="flex gap-3">
-                    <a href="https://instagram.com/autowebpro" target="_blank" rel="noopener" class="w-8 h-8 rounded-lg bg-white/5 hover:bg-white/10 flex items-center justify-center">
+                    <a href="https://www.instagram.com/autoweb_pro/" target="_blank" rel="noopener" class="w-8 h-8 rounded-lg bg-white/5 hover:bg-white/10 flex items-center justify-center">
                         <svg class="w-5 h-5 text-pink-500" fill="currentColor" viewBox="0 0 24 24">
                             <path d="M7.75 2h8.5A5.75 5.75 0 0 1 22 7.75v8.5A5.75 5.75 0 0 1 16.25 22h-8.5A5.75 5.75 0 0 1 2 16.25v-8.5A5.75 5.75 0 0 1 7.75 2zm0 1.5A4.25 4.25 0 0 0 3.5 7.75v8.5A4.25 4.25 0 0 0 7.75 20.5h8.5A4.25 4.25 0 0 0 20.5 16.25v-8.5A4.25 4.25 0 0 0 16.25 3.5h-8.5zm4.25 3.25a5.25 5.25 0 1 1 0 10.5a5.25 5.25 0 0 1 0-10.5zm0 1.5a3.75 3.75 0 1 0 0 7.5a3.75 3.75 0 0 0 0-7.5zm5.25.75a1 1 0 1 1 0 2a1 1 0 0 1 0-2z"/>
                         </svg>
