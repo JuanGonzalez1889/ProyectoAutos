@@ -7,6 +7,17 @@ use Illuminate\Validation\Rule;
 use App\Rules\Recaptcha;
 
 class StoreAgenciaRequest extends FormRequest
+    /**
+     * Forzar el campo dominio a minúsculas antes de validar
+     */
+    protected function prepareForValidation()
+    {
+        if ($this->has('dominio')) {
+            $this->merge([
+                'dominio' => strtolower($this->input('dominio')),
+            ]);
+        }
+    }
 {
     /**
      * Determine if the user is authorized to make this request.

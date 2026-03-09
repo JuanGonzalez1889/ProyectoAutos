@@ -1,8 +1,8 @@
-@extends('layouts.public')
 
-@section('title', 'Registrar Nueva Agencia - ProyectoAutos SaaS')
 
-@section('content')
+<?php $__env->startSection('title', 'Registrar Nueva Agencia - ProyectoAutos SaaS'); ?>
+
+<?php $__env->startSection('content'); ?>
 <style>
     .lamborghini-bg {
         position: fixed;
@@ -39,19 +39,19 @@
 
         <!-- Tarjeta de Registro -->
         <div class="bg-[hsl(var(--card))] border border-[hsl(var(--border))] rounded-lg shadow-lg p-8">
-            @if ($errors->any())
+            <?php if($errors->any()): ?>
                 <div class="mb-6 p-4 bg-red-500/10 border border-red-500/20 rounded-lg">
                     <p class="text-red-500 font-semibold mb-2 text-sm">❌ Errores encontrados:</p>
                     <ul class="text-red-400 text-xs space-y-1">
-                        @foreach($errors->all() as $error)
-                            <li>• {{ $error }}</li>
-                        @endforeach
+                        <?php $__currentLoopData = $errors->all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $error): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <li>• <?php echo e($error); ?></li>
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     </ul>
                 </div>
-            @endif
+            <?php endif; ?>
 
-            <form action="{{ route('tenants.register') }}" method="POST" class="space-y-5">
-                @csrf
+            <form action="<?php echo e(route('tenants.register')); ?>" method="POST" class="space-y-5">
+                <?php echo csrf_field(); ?>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <!-- Nombre de la Agencia -->
@@ -63,12 +63,19 @@
                                name="agencia_name" 
                                id="agencia_name"
                                required
-                               value="{{ old('agencia_name') }}"
+                               value="<?php echo e(old('agencia_name')); ?>"
                                class="w-full px-4 py-2.5 bg-[hsl(var(--background))] border border-[hsl(var(--border))] rounded-lg text-[hsl(var(--foreground))] focus:outline-none focus:ring-2 focus:ring-[hsl(var(--primary))] focus:border-transparent"
                                placeholder="Agencia Mi Auto">
-                        @error('agencia_name')
-                        <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
-                        @enderror
+                        <?php $__errorArgs = ['agencia_name'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                        <p class="mt-1 text-sm text-red-500"><?php echo e($message); ?></p>
+                        <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                     </div>
 
                     <!-- Nombre del Administrador -->
@@ -80,12 +87,19 @@
                                name="admin_name" 
                                id="admin_name"
                                required
-                               value="{{ old('admin_name') }}"
+                               value="<?php echo e(old('admin_name')); ?>"
                                class="w-full px-4 py-2.5 bg-[hsl(var(--background))] border border-[hsl(var(--border))] rounded-lg text-[hsl(var(--foreground))] focus:outline-none focus:ring-2 focus:ring-[hsl(var(--primary))] focus:border-transparent"
                                placeholder="Juan Pérez">
-                        @error('admin_name')
-                        <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
-                        @enderror
+                        <?php $__errorArgs = ['admin_name'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                        <p class="mt-1 text-sm text-red-500"><?php echo e($message); ?></p>
+                        <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                     </div>
 
                     <!-- Email del Administrador -->
@@ -97,12 +111,19 @@
                                name="admin_email" 
                                id="admin_email"
                                required
-                               value="{{ old('admin_email') }}"
+                               value="<?php echo e(old('admin_email')); ?>"
                                class="w-full px-4 py-2.5 bg-[hsl(var(--background))] border border-[hsl(var(--border))] rounded-lg text-[hsl(var(--foreground))] focus:outline-none focus:ring-2 focus:ring-[hsl(var(--primary))] focus:border-transparent"
                                placeholder="tu@email.com">
-                        @error('admin_email')
-                        <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
-                        @enderror
+                        <?php $__errorArgs = ['admin_email'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                        <p class="mt-1 text-sm text-red-500"><?php echo e($message); ?></p>
+                        <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                     </div>
 
                     <!-- Contraseña -->
@@ -116,9 +137,16 @@
                                required
                                class="w-full px-4 py-2.5 bg-[hsl(var(--background))] border border-[hsl(var(--border))] rounded-lg text-[hsl(var(--foreground))] focus:outline-none focus:ring-2 focus:ring-[hsl(var(--primary))] focus:border-transparent"
                                placeholder="Mínimo 8 caracteres">
-                        @error('password')
-                        <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
-                        @enderror
+                        <?php $__errorArgs = ['password'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                        <p class="mt-1 text-sm text-red-500"><?php echo e($message); ?></p>
+                        <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                     </div>
 
                     <!-- Confirmar Contraseña -->
@@ -144,7 +172,7 @@
                                    name="domain" 
                                    id="domain"
                                    required
-                                   value="{{ old('domain') }}"
+                                   value="<?php echo e(old('domain')); ?>"
                                    class="flex-1 px-4 py-2.5 bg-[hsl(var(--background))] border border-[hsl(var(--border))] rounded-lg text-[hsl(var(--foreground))] focus:outline-none focus:ring-2 focus:ring-[hsl(var(--primary))] focus:border-transparent"
                                    placeholder="miagencia"
                                    oninput="this.value = this.value.toLowerCase(); validateDomainInput(this.value)">
@@ -155,9 +183,16 @@
                             Ej: Si pones "miagencia", tu URL será miagencia.autowebpro.com.ar
                         </p>
                         <p id="domainMessage" class="mt-2 text-sm text-gray-400"></p>
-                        @error('domain')
-                        <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
-                        @enderror
+                        <?php $__errorArgs = ['domain'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                        <p class="mt-1 text-sm text-red-500"><?php echo e($message); ?></p>
+                        <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                     </div>
 
                     <!-- Teléfono -->
@@ -168,12 +203,19 @@
                         <input type="tel" 
                                name="phone" 
                                id="phone"
-                               value="{{ old('phone') }}"
+                               value="<?php echo e(old('phone')); ?>"
                                class="w-full px-4 py-2.5 bg-[hsl(var(--background))] border border-[hsl(var(--border))] rounded-lg text-[hsl(var(--foreground))] focus:outline-none focus:ring-2 focus:ring-[hsl(var(--primary))] focus:border-transparent"
                                placeholder="+54 9 11 1234-5678">
-                        @error('phone')
-                        <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
-                        @enderror
+                        <?php $__errorArgs = ['phone'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                        <p class="mt-1 text-sm text-red-500"><?php echo e($message); ?></p>
+                        <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                     </div>
 
                     <!-- Dirección -->
@@ -184,22 +226,24 @@
                         <input type="text" 
                                name="address" 
                                id="address"
-                               value="{{ old('address') }}"
+                               value="<?php echo e(old('address')); ?>"
                                class="w-full px-4 py-2.5 bg-[hsl(var(--background))] border border-[hsl(var(--border))] rounded-lg text-[hsl(var(--foreground))] focus:outline-none focus:ring-2 focus:ring-[hsl(var(--primary))] focus:border-transparent"
                                placeholder="Calle Principal 123">
-                        @error('address')
-                        <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
-                        @enderror
+                        <?php $__errorArgs = ['address'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                        <p class="mt-1 text-sm text-red-500"><?php echo e($message); ?></p>
+                        <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                     </div>
                 </div>
 
                 <!-- Aviso de Términos -->
-                {{-- <div class="bg-blue-500/10 border border-blue-500/20 rounded-lg p-3">
-                    <p class="text-sm text-[hsl(var(--foreground))] register-aviso-mobile">
-                        <span class="font-medium">Prueba Gratuita:</span> 
-                        Obtén 30 días de acceso completo sin necesidad de tarjeta de crédito.
-                    </p>
-                </div> --}}
+                
 
                 <!-- Botones -->
                 <div class="flex gap-3 pt-4">
@@ -207,7 +251,7 @@
                             class="flex-1 px-6 py-3 bg-[hsl(var(--primary))] hover:opacity-90 text-[#0a0f14] rounded-lg font-semibold transition-opacity">
                         Registrar Agencia
                     </button>
-                    <a href="{{ route('login') }}" 
+                    <a href="<?php echo e(route('login')); ?>" 
                        class="flex-1 px-6 py-3 bg-[hsl(var(--secondary))] hover:bg-[hsl(var(--secondary))]/80 text-[hsl(var(--foreground))] rounded-lg font-semibold transition-colors text-center">
                         Ya tengo cuenta
                     </a>
@@ -240,7 +284,7 @@ function validateDomainInput(domain) {
     // Debounce: esperar a que el usuario deje de escribir
     clearTimeout(domainValidationTimeout);
     domainValidationTimeout = setTimeout(() => {
-        fetch(`{{ route('api.validate-domain') }}?domain=${encodeURIComponent(domain)}`)
+        fetch(`<?php echo e(route('api.validate-domain')); ?>?domain=${encodeURIComponent(domain)}`)
             .then(response => response.json())
             .then(data => {
                 if (data.available) {
@@ -272,5 +316,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 </div>
-@endsection
+<?php $__env->stopSection(); ?>
  </div>
+
+<?php echo $__env->make('layouts.public', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\Proyectos\ProyectoAutos\resources\views/tenants/register.blade.php ENDPATH**/ ?>
