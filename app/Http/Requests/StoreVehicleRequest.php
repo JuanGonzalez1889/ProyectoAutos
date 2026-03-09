@@ -131,7 +131,7 @@ class StoreVehicleRequest extends FormRequest
             'imagenes.*' => [
                 'image',
                 'mimes:jpeg,jpg,png,webp',
-                'max:5120', // 5MB por imagen
+                'max:153600', // 150MB por imagen
             ],
             'imagen_principal' => [
                 'nullable',
@@ -204,7 +204,7 @@ class StoreVehicleRequest extends FormRequest
             'imagenes.max' => 'No puedes subir más de :max imágenes.',
             'imagenes.*.image' => 'El archivo debe ser una imagen.',
             'imagenes.*.mimes' => 'La imagen debe ser de tipo: :values.',
-            'imagenes.*.max' => 'Cada imagen no puede exceder :max KB (5MB).',
+            'imagenes.*.max' => 'Cada imagen no puede exceder :max KB (150MB).',
             
             // Contacto
             'telefono_contacto.regex' => 'El formato del teléfono no es válido.',
