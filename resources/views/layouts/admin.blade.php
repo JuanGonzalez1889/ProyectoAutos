@@ -231,22 +231,22 @@
                 @if(canSeeMenu('tareas'))
                     <a href="{{ route('admin.tasks.list') }}"
                         class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors {{ request()->routeIs('admin.tasks.*') ? 'bg-[hsl(var(--primary))] text-white' : 'text-[hsl(var(--muted-foreground))] hover:bg-[hsl(var(--secondary))] hover:text-[hsl(var(--foreground))]' }}">
-                                <svg class="sidebar-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                            </svg>
-                            <span class="flex-1">Mis Tareas</span>
-                            @php
-                                $pendingTasksCount = \App\Models\Task::where('user_id', auth()->id())
-                                    ->whereIn('status', ['todo', 'in_progress'])
-                                    ->count();
-                            @endphp
-                            @if ($pendingTasksCount > 0)
-                                <span
-                                    class="px-1.5 py-0.5 text-[10px] font-medium rounded-full bg-green-500/20 text-green-500">{{ $pendingTasksCount }}</span>
-                            @endif
-                        </a>
+                        <svg class="sidebar-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        <span class="sidebar-label flex-1">Mis Tareas</span>
+                        @php
+                            $pendingTasksCount = \App\Models\Task::where('user_id', auth()->id())
+                                ->whereIn('status', ['todo', 'in_progress'])
+                                ->count();
+                        @endphp
+                        @if ($pendingTasksCount > 0)
+                            <span
+                                class="px-1.5 py-0.5 text-[10px] font-medium rounded-full bg-green-500/20 text-green-500">{{ $pendingTasksCount }}</span>
                         @endif
+                    </a>
+                @endif
 
                     
 
@@ -378,10 +378,10 @@
                             class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors {{ request()->routeIs('admin.tenants.*') ? 'bg-[hsl(var(--primary))] text-white' : 'text-[hsl(var(--muted-foreground))] hover:bg-[hsl(var(--secondary))] hover:text-[hsl(var(--foreground))]' }}">
                             <svg class="sidebar-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9">
+                                    d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9">
                                 </path>
                             </svg>
-                            Multi-Tenancy
+                            <span class="sidebar-label">Multi-Tenancy</span>
                         </a>
                     </div>
                 @endif
@@ -395,7 +395,7 @@
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4">
                         </svg>
-                        Nuevo Lead
+                        <span class="sidebar-label">Nuevo Lead</span>
                     </a>
                 </div>
             @endif
