@@ -143,7 +143,7 @@ class VehicleController extends Controller
             'contact_email' => 'nullable|email|max:255',
             'status' => 'required|in:draft,published,sold',
             'featured' => 'boolean',
-            'images.*' => 'nullable|image|max:5120', // 5MB max
+            'images.*' => 'nullable|image|max:153600', // 150MB max
             'features' => 'nullable|array',
         ]);
 
@@ -197,7 +197,7 @@ class VehicleController extends Controller
             'contact_email' => 'nullable|email|max:255',
             'status' => 'required|in:draft,published,sold',
             'featured' => 'boolean',
-            'images.*' => 'nullable|image|max:5120',
+            'images.*' => 'nullable|image|max:153600',
             'features' => 'nullable|array',
             'existing_images' => 'nullable|array',
         ]);

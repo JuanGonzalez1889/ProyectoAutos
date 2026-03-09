@@ -130,7 +130,7 @@ class LandingConfigController extends Controller
     {
         try {
             $validated = $request->validate([
-                'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:5120', // 5MB máximo
+                'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:153600', // 150MB máximo
                 'field' => 'required|string',
             ]);
         } catch (\Illuminate\Validation\ValidationException $e) {

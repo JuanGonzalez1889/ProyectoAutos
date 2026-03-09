@@ -26,9 +26,9 @@ class LandingTemplateController extends Controller
         }
         $validated = $request->validate([
             'hero_title' => 'nullable|string|max:120',
-            'hero_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120',
+            'hero_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:153600',
             'home_title' => 'nullable|string|max:120',
-            'banner_url' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120',
+            'banner_url' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:153600',
         ]);
         if ($request->hasFile('hero_image')) {
             $path = $request->file('hero_image')->store('landing-images', 'public');
@@ -266,7 +266,7 @@ class LandingTemplateController extends Controller
     public function uploadImage(Request $request)
     {
         $request->validate([
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:5120', // 5MB máximo
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:153600', // 150MB máximo
             'field' => 'required|string',
         ]);
 
