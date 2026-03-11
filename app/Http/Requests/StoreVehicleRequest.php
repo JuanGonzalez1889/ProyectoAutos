@@ -124,8 +124,9 @@ class StoreVehicleRequest extends FormRequest
             
             // Imágenes
             'imagenes' => [
-                'nullable',
+                'required',
                 'array',
+                'min:1',
                 'max:10', // Máximo 10 imágenes
             ],
             'imagenes.*' => [

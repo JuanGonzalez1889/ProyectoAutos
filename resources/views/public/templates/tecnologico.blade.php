@@ -454,12 +454,14 @@
                                         style="background: var(--primary-color); color: white;">{{ $vehicle->year }}</span>
                                 </div>
                                 <div class="absolute top-3 right-3">
-                                    @if ($index % 3 !== 1)
-                                        <span
-                                            class="status-available px-2.5 py-1 rounded-lg text-[10px] font-bold uppercase tracking-wider">Disponible</span>
+                                    @if ($vehicle->status === 'published')
+                                        <span class="status-available px-2.5 py-1 rounded-lg text-[10px] font-bold uppercase tracking-wider">Disponible</span>
+                                    @elseif ($vehicle->status === 'reserved')
+                                        <span class="status-reserved px-2.5 py-1 rounded-lg text-[10px] font-bold uppercase tracking-wider">Reservado</span>
+                                    @elseif ($vehicle->status === 'sold')
+                                        <span class="status-sold px-2.5 py-1 rounded-lg text-[10px] font-bold uppercase tracking-wider">Vendido</span>
                                     @else
-                                        <span
-                                            class="status-reserved px-2.5 py-1 rounded-lg text-[10px] font-bold uppercase tracking-wider">Reservado</span>
+                                        <span class="status-other px-2.5 py-1 rounded-lg text-[10px] font-bold uppercase tracking-wider">{{ ucfirst($vehicle->status) }}</span>
                                     @endif
                                 </div>
                             </a>

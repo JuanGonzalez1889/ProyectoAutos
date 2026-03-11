@@ -367,12 +367,14 @@
                                 <img src="{{ $vehicle->main_image }}" alt="{{ $vehicle->title }}"
                                     class="w-full h-52 object-cover transition duration-500 group-hover:scale-105">
                                 <div class="absolute top-3 right-3">
-                                    @if ($index % 3 !== 1)
-                                        <span
-                                            class="status-available-light px-2.5 py-1 rounded-lg text-[10px] font-bold uppercase tracking-wider">Disponible</span>
+                                    @if ($vehicle->status === 'published')
+                                        <span class="status-available-light px-2.5 py-1 rounded-lg text-[10px] font-bold uppercase tracking-wider">Disponible</span>
+                                    @elseif ($vehicle->status === 'reserved')
+                                        <span class="status-reserved-light px-2.5 py-1 rounded-lg text-[10px] font-bold uppercase tracking-wider">Reservado</span>
+                                    @elseif ($vehicle->status === 'sold')
+                                        <span class="status-sold-light px-2.5 py-1 rounded-lg text-[10px] font-bold uppercase tracking-wider">Vendido</span>
                                     @else
-                                        <span
-                                            class="status-reserved-light px-2.5 py-1 rounded-lg text-[10px] font-bold uppercase tracking-wider">Reservado</span>
+                                        <span class="status-other-light px-2.5 py-1 rounded-lg text-[10px] font-bold uppercase tracking-wider">{{ ucfirst($vehicle->status) }}</span>
                                     @endif
                                 </div>
                             </a>
