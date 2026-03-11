@@ -10109,3 +10109,22 @@
 
    INFO  No scheduled commands are ready to run.  
 
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+  2026-03-11 14:20:02 Running ["artisan" subscriptions:reconcile-mercadopago] ................................ 1s DONE
+  Ôçé "C:\Users\Juan Gonzalez\Desktop\php\php.exe" "artisan" subscriptions:reconcile-mercadopago > "NUL" 2>&1  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
+
+   INFO  No scheduled commands are ready to run.  
+
